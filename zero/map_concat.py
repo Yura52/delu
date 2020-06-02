@@ -14,7 +14,6 @@ def concat(iterable: Iterable):
     assert data, 'iterable must be non-empty'
 
     def concat_fn(sequence):
-        # breakpoint()
         if not isinstance(sequence, list):
             sequence = list(sequence)
         x = sequence[0]
