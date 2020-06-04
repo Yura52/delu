@@ -11,22 +11,15 @@ def test_metrics_containers():
     a = ObjectCounter(1)
     b = ObjectCounter(-1)
 
-    # fmt: off
     params = [
-        (
-            MetricsList([a, b]),
-            [2, -2],
-            [4, -4],
-            [0, 1]
-        ),
+        (MetricsList([a, b]), [2, -2], [4, -4], [0, 1]),
         (
             MetricsDict({'a': a, 'b': b}),
             {'a': 2, 'b': -2},
             {'a': 4, 'b': -4},
-            ['a', 'b']
+            ['a', 'b'],
         ),
     ]
-    # fmt: on
     for metric_fn, first, second, keys in params:
         assert metric_fn.apply(data) == first
         metric_fn.update(data)

@@ -61,10 +61,9 @@ def test_concat():
 def test_zmap():
     assert concat(zmap(lambda x: x * 2, range(3))) == [0, 2, 4]
 
-    # fmt: off
-    actual = concat(zmap(
-        lambda x: (x, [x], [[x]], np.array([x]), tr.tensor([[x]])), range(2)
-    ))
+    actual = concat(
+        zmap(lambda x: (x, [x], [[x]], np.array([x]), tr.tensor([[x]])), range(2))
+    )
     correct = ([0, 1], [0, 1], [[0], [1]], np.array([0, 1]), tr.tensor([[0], [1]]))
     assert actual[0] == correct[0]
     assert actual[1] == correct[1]
@@ -72,10 +71,11 @@ def test_zmap():
     assert np.array_equal(actual[3], correct[3])
     assert tr.equal(actual[4], correct[4])
 
-    assert (
-        concat(zmap(lambda a, b: a + b, zip(range(3), range(3)), star=True)) == [0, 2, 4]
-    )
-    # fmt: on
+    assert concat(zmap(lambda a, b: a + b, zip(range(3), range(3)), star=True)) == [
+        0,
+        2,
+        4,
+    ]
 
     model = tr.nn.Linear(3, 1)
     model.weight.requires_grad = False

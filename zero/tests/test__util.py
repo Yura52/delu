@@ -38,9 +38,11 @@ def test_traverse():
     assert traverse(fn, {'a': []}) == {'a': []}
 
     assert traverse(fn, ([1, 2], (3, 4))) == ([2, 4], (6, 8))
-    # fmt: off
-    assert traverse(fn, [(), [1, 2], {'a': 3, 'b': 4}]) == [(), [2, 4], {'a': 6, 'b': 8}]
-    # fmt: on
+    assert traverse(fn, [(), [1, 2], {'a': 3, 'b': 4}]) == [
+        (),
+        [2, 4],
+        {'a': 6, 'b': 8},
+    ]
 
     input_ = {
         'a': [{'b': 1}, {'c': (2, 3)}],
