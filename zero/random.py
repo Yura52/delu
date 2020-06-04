@@ -20,7 +20,9 @@ def set_seed_everywhere(seed_sequence=None, callback=_DEFAULT_CALLBACK) -> Gener
         torch.cuda.manual_seed_all(seed)
     if callback is not None:
         if callback is _DEFAULT_CALLBACK:
-            print(f'Seed sequence: {seed_sequence} (see zero.random.set_seed_everywhere)')
+            print(
+                f'Seed sequence: {seed_sequence} (see zero.random.set_seed_everywhere)'
+            )
         else:
             callback(seed_sequence)
     return default_rng(seed_sequence)

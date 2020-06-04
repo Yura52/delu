@@ -9,24 +9,14 @@ from zero._util import flatten
 
 
 def test_free_memory():
-    with (
-        patch('gc.collect')
-    ) as _, (
-        patch('torch.cuda.empty_cache')
-    ) as _:
+    with (patch('gc.collect')) as _, (patch('torch.cuda.empty_cache')) as _:
         hardware.free_memory()
         gc.collect.call_count == 2
         torch.cuda.empty_cache.assert_not_called()
 
-    with (
-        patch('gc.collect')
-    ) as _, (
-        patch('torch.cuda.empty_cache')
-    ) as _, (
+    with (patch('gc.collect')) as _, (patch('torch.cuda.empty_cache')) as _, (
         patch('torch.cuda.synchronize')
-    ) as _, (
-        patch('torch.cuda.is_available', lambda: True)
-    ) as _:
+    ) as _, (patch('torch.cuda.is_available', lambda: True)) as _:
         hardware.free_memory()
         gc.collect.call_count == 2
         torch.cuda.empty_cache.assert_called_once()
@@ -35,20 +25,28 @@ def test_free_memory():
 
 class mocked_nvidia_smi:
     # taken from a real machine with 2xRTX 2080 (idle)
-    raw_info = {'gpu': [
-        {
-            'fb_memory_usage': {
-                'total': 11019.4375, 'used': 0.0625, 'free': 11019.375, 'unit': 'MiB'
+    raw_info = {
+        'gpu': [
+            {
+                'fb_memory_usage': {
+                    'total': 11019.4375,
+                    'used': 0.0625,
+                    'free': 11019.375,
+                    'unit': 'MiB',
+                },
+                'utilization': {'gpu_util': 0, 'unit': '%'},
             },
-            'utilization': {'gpu_util': 0, 'unit': '%'}
-        },
-        {
-            'fb_memory_usage': {
-                'total': 11016.9375, 'used': 0.0625, 'free': 11016.875, 'unit': 'MiB'
+            {
+                'fb_memory_usage': {
+                    'total': 11016.9375,
+                    'used': 0.0625,
+                    'free': 11016.875,
+                    'unit': 'MiB',
+                },
+                'utilization': {'gpu_util': 0, 'unit': '%'},
             },
-            'utilization': {'gpu_util': 0, 'unit': '%'}
-        }
-    ]}
+        ]
+    }
 
     @staticmethod
     def getInstance():
@@ -69,7 +67,7 @@ def test_get_gpu_info():
             'used': 0,
             'free': 11019,
             'used%': 0,
-            'free%': 100
+            'free%': 100,
         },
         {
             'util%': 0,
@@ -77,8 +75,8 @@ def test_get_gpu_info():
             'used': 0,
             'free': 11016,
             'used%': 0,
-            'free%': 100
-        }
+            'free%': 100,
+        },
     ]
     assert hardware.get_gpu_info() == correct
 
@@ -89,7 +87,7 @@ def test_get_gpu_info():
             'used': 0.0625,
             'free': 11019.375,
             'used%': 0.0005671795860723381,
-            'free%': 99.99943282041393
+            'free%': 99.99943282041393,
         },
         {
             'util%': 0.0,
@@ -97,8 +95,8 @@ def test_get_gpu_info():
             'used': 0.0625,
             'free': 11016.875,
             'used%': 0.0005673082923453092,
-            'free%': 99.99943269170765
-        }
+            'free%': 99.99943269170765,
+        },
     ]
     actual = hardware.get_gpu_info(True)
     assert len(actual) == len(correct)
@@ -142,7 +140,7 @@ def test_to_device():
 
     data = {
         'a': [Tensor('cpu'), (Tensor('cpu'), Tensor('cpu'))],
-        'b': {'c': {'d': [[[Tensor('cpu')]]]}}
+        'b': {'c': {'d': [[[Tensor('cpu')]]]}},
     }
     for x, y in zip(flatten(hardware.to_device(data, 'cpu')), flatten(data)):
         assert x is y

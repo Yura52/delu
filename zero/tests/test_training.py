@@ -19,8 +19,11 @@ def test_train_context(train, grad, n_models):
     def make_model():
         model = tr.nn.Linear(data.shape[1], 1)
         return Model(
-            model, model.weight.clone(), model.bias.clone(),
-            lambda: model(data).sum(), tr.optim.SGD(model.parameters(), 0.0001)
+            model,
+            model.weight.clone(),
+            model.bias.clone(),
+            lambda: model(data).sum(),
+            tr.optim.SGD(model.parameters(), 0.0001),
         )
 
     if not n_models:
@@ -80,10 +83,12 @@ def test_train_context(train, grad, n_models):
     # test an unusual form of losses
     models = [make_model() for _ in range(n_models)]
     with TrainContext([x.model for x in models], [x.optimizer for x in models]) as tc:
-        tc.backward([
-            ({i: [x.model(data).sum()]}, [x.model(data).sum()])
-            for i, x in enumerate(models)
-        ])
+        tc.backward(
+            [
+                ({i: [x.model(data).sum()]}, [x.model(data).sum()])
+                for i, x in enumerate(models)
+            ]
+        )
     for x in models:
         check_after_1(x)
 

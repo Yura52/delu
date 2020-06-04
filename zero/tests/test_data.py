@@ -21,13 +21,15 @@ def test_named_tensor_dataset():
 
     for x in [
         NamedTensorDataset(a, b, names=('a', 'b')),
-        NamedTensorDataset.from_dict({'a': a, 'b': b})
+        NamedTensorDataset.from_dict({'a': a, 'b': b}),
     ]:
         assert x.names == ('a', 'b')
         assert x.a is a and x.b is b
         assert len(x) == 3
         assert x[1] == x._tuple_cls(tr.tensor(1), tr.tensor(1))
-        for correct, actual in zip(zip(['a', 'b'], [a, b]), x.tensors._asdict().items()):
+        for correct, actual in zip(
+            zip(['a', 'b'], [a, b]), x.tensors._asdict().items()
+        ):
             assert actual[0] == correct[0] and tr.equal(actual[1], correct[1])
         with raises(AssertionError):
             x.a = 0

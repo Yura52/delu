@@ -19,7 +19,7 @@ def test_set_seed_everywhere():
                 random.randint(0, high),
                 np_random.randint(high),
                 torch.randint(high, (1,))[0].item(),
-                rng.integers(high)
+                rng.integers(high),
             ]
         assert x[0] == x[1]
 

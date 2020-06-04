@@ -61,6 +61,7 @@ def test_concat():
 def test_zmap():
     assert concat(zmap(lambda x: x * 2, range(3))) == [0, 2, 4]
 
+    # fmt: off
     actual = concat(zmap(
         lambda x: (x, [x], [[x]], np.array([x]), tr.tensor([[x]])), range(2)
     ))
@@ -74,6 +75,7 @@ def test_zmap():
     assert (
         concat(zmap(lambda a, b: a + b, zip(range(3), range(3)), star=True)) == [0, 2, 4]
     )
+    # fmt: on
 
     model = tr.nn.Linear(3, 1)
     model.weight.requires_grad = False
@@ -84,5 +86,5 @@ def test_zmap():
     loader = tr.utils.data.DataLoader(dataset, 2)
     assert tr.equal(
         concat(zmap(model, loader, star=True)),
-        tr.tensor([[0.0], [0.0], [0.0], [0.0], [0.0]])
+        tr.tensor([[0.0], [0.0], [0.0], [0.0], [0.0]]),
     )

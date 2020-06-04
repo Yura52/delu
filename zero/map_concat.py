@@ -31,16 +31,20 @@ def concat(iterable: Iterable):
     first = data[0]
     return (
         tuple(concat_fn(x[i] for x in data) for i, _ in enumerate(first))
-        if isinstance(first, tuple) else
-        dict((key, concat_fn(x[key] for x in data)) for key in first)
-        if isinstance(first, dict) else
-        concat_fn(data)
+        if isinstance(first, tuple)
+        else dict((key, concat_fn(x[key] for x in data)) for key in first)
+        if isinstance(first, dict)
+        else concat_fn(data)
     )
 
 
 def zmap(
-    fn: Callable, iterable: Iterable,
-    in_device=None, out_device=None, non_blocking=False, star=False
+    fn: Callable,
+    iterable: Iterable,
+    in_device=None,
+    out_device=None,
+    non_blocking=False,
+    star=False,
 ):
     @functools.wraps(fn)
     def wrapper(x):
@@ -50,4 +54,5 @@ def zmap(
         if out_device is not None:
             result = to_device(result, out_device, non_blocking)
         return result
+
     return map(wrapper, iterable)

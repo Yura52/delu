@@ -51,9 +51,7 @@ class ProgressTracker:
         else:
             self._bad_counter += 1
             self._status = (
-                _Status.FAIL
-                if self._bad_counter > self._patience else
-                _Status.NEUTRAL
+                _Status.FAIL if self._bad_counter > self._patience else _Status.NEUTRAL
             )
 
     def forget_bad_updates(self):

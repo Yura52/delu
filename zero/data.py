@@ -78,14 +78,18 @@ def iloader(size: int, *args, **kwargs):
 
 def iter_batches(
     data: Union[
-        np.ndarray, torch.Tensor,
-        Tuple[np.ndarray], Tuple[torch.Tensor],
-        TensorDataset, NamedTensorDataset
+        np.ndarray,
+        torch.Tensor,
+        Tuple[np.ndarray],
+        Tuple[torch.Tensor],
+        TensorDataset,
+        NamedTensorDataset,
     ],
-    *args, **kwargs
+    *args,
+    **kwargs,
 ):
     return (
         (tuple(x[idx] for x in data) for idx in iloader(len(data[0]), *args, **kwargs))
-        if isinstance(data, tuple) else
-        (data[idx] for idx in iloader(len(data), *args, **kwargs))
+        if isinstance(data, tuple)
+        else (data[idx] for idx in iloader(len(data), *args, **kwargs))
     )
