@@ -1,7 +1,6 @@
 import numpy as np
-import pytest
 import torch as tr
-from pytest import raises
+from pytest import mark, raises
 from torch.utils.data import DataLoader, TensorDataset
 
 from zero.data import NamedTensorDataset, Enumerate, iloader, iter_batches
@@ -59,7 +58,7 @@ def test_iloader():
             assert tr.equal(x, y)
 
 
-@pytest.mark.parametrize('batch_size', list(range(1, 11)))
+@mark.parametrize('batch_size', list(range(1, 11)))
 def test_iter_batches(batch_size):
     # test batch size only
     x = np.arange(10)
