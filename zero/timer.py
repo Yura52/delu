@@ -2,7 +2,6 @@ import math
 import time
 from typing import Union
 
-
 _CONTEXT_MANAGER_HELP = (
     'Timer can be used as a context manager only using the .pause method:\n'
     '    timer = Timer().start()\n'

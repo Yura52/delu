@@ -3,7 +3,7 @@ import torch as tr
 from pytest import mark, raises
 from torch.utils.data import DataLoader, TensorDataset
 
-from zero.data import NamedTensorDataset, Enumerate, iloader, iter_batches
+from zero.data import Enumerate, NamedTensorDataset, iloader, iter_batches
 
 
 def test_named_tensor_dataset():

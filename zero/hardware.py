@@ -7,7 +7,6 @@ from pynvml.smi import nvidia_smi
 
 from ._util import traverse
 
-
 _GPU_INFO_QUERY = 'memory.total, memory.used, memory.free, utilization.gpu'
 
 

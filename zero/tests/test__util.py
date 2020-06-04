@@ -1,5 +1,6 @@
 from collections import UserDict
-from zero._util import to_list, flatten, traverse
+
+from zero._util import flatten, to_list, traverse
 
 
 def test_to_list():

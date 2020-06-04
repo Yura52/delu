@@ -4,8 +4,8 @@ from unittest.mock import patch
 import torch
 from pytest import raises
 
-from zero._util import flatten
 import zero.hardware as hardware
+from zero._util import flatten
 
 
 def test_free_memory():

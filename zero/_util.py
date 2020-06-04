@@ -1,4 +1,4 @@
-from collections.abc import Sequence, Mapping
+from collections.abc import Mapping, Sequence
 
 
 def to_list(x):

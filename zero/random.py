@@ -5,7 +5,6 @@ import numpy as np
 import torch
 from numpy.random import Generator, default_rng
 
-
 _DEFAULT_CALLBACK = object()
 
 
