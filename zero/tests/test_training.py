@@ -10,30 +10,31 @@ from .util import ObjectCounter
 Model = namedtuple('Model', ['model', 'weight', 'bias', 'loss', 'optimizer'])
 
 
+def make_model(data):
+    model = tr.nn.Linear(data.shape[1], 1)
+    return Model(
+        model,
+        model.weight.clone(),
+        model.bias.clone(),
+        lambda: model(data).sum(),
+        tr.optim.SGD(model.parameters(), 0.0001),
+    )
+
+
 @mark.parametrize('train', [False, True])
 @mark.parametrize('grad', [False, True])
 @mark.parametrize('n_models', range(3))
 def test_train_context(train, grad, n_models):
     data = tr.ones(4, 3, dtype=tr.float32)
 
-    def make_model():
-        model = tr.nn.Linear(data.shape[1], 1)
-        return Model(
-            model,
-            model.weight.clone(),
-            model.bias.clone(),
-            lambda: model(data).sum(),
-            tr.optim.SGD(model.parameters(), 0.0001),
-        )
-
     if not n_models:
-        loss = make_model().loss
+        loss = make_model(data).loss
         tc = TrainContext([], [])
         with raises(AssertionError):
             tc.backward(loss())
         return
 
-    models = [make_model() for _ in range(n_models)]
+    models = [make_model(data) for _ in range(n_models)]
     for x in models:
         x.model.train(train)
 
@@ -81,7 +82,7 @@ def test_train_context(train, grad, n_models):
         check_after_1(x)
 
     # test an unusual form of losses
-    models = [make_model() for _ in range(n_models)]
+    models = [make_model(data) for _ in range(n_models)]
     with TrainContext([x.model for x in models], [x.optimizer for x in models]) as tc:
         tc.backward(
             [
@@ -91,6 +92,18 @@ def test_train_context(train, grad, n_models):
         )
     for x in models:
         check_after_1(x)
+
+
+def test_train_context_exception():
+    data = tr.randn(1, 1)
+    x = make_model(data)
+    with raises(RuntimeError):
+        with TrainContext(x.model, x.optimizer) as tc:
+            tc.backward(x.loss())
+            raise RuntimeError
+        # step must not be taken
+        assert tr.equal(x.model.weight, x.weight)
+        assert tr.equal(x.model.bias, x.bias)
 
 
 @mark.parametrize('train', [False, True])
