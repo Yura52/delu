@@ -17,4 +17,4 @@ class ObjectCounter(Metric):
         return self.sign * self.count
 
     def empty(self):
-        return bool(self.count)
+        return not self.count
