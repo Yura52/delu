@@ -5,7 +5,7 @@ from pytest import mark, raises
 
 from zero.training import EvalContext, TrainContext
 
-from .util import ObjectCounter
+from .util import ObjectCounter, Point
 
 Model = namedtuple('Model', ['model', 'weight', 'bias', 'loss', 'optimizer'])
 
@@ -84,12 +84,20 @@ def test_train_context(train, grad, n_models):
     # test an unusual form of losses
     models = [make_model(data) for _ in range(n_models)]
     with TrainContext([x.model for x in models], [x.optimizer for x in models]) as tc:
-        tc.backward(
+        actual = tc.backward(
             [
-                ({i: [x.model(data).sum()]}, [x.model(data).sum()])
+                Point({i: [x.model(data).sum()]}, (x.model(data).sum(),))
                 for i, x in enumerate(models)
             ]
         )
+        for i, x in enumerate(actual):
+            assert isinstance(x, Point)
+            assert (
+                isinstance(x.x, dict)
+                and list(x.x) == [i]
+                and isinstance(x.x[i][0], float)
+            )
+            assert isinstance(x.y, tuple) and isinstance(x.y[0], float)
     for x in models:
         check_after_1(x)
 

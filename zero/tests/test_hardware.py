@@ -7,6 +7,8 @@ from pytest import raises
 import zero.hardware as hardware
 from zero._util import flatten
 
+from .util import Point
+
 
 def test_free_memory():
     with (patch('gc.collect')) as _, (patch('torch.cuda.empty_cache')) as _:
@@ -126,23 +128,31 @@ class Tensor:
 def test_to_device():
     data = Tensor('cpu')
     assert hardware.to_device(data, 'cpu') is data
+    assert hardware.to_device(data, 'cuda').device == 'cuda'
 
-    for Container in tuple, list:
-        data = Container([Tensor('cpu'), Tensor('cpu')])
-        out = hardware.to_device(data, 'cpu')
-        assert isinstance(out, Container)
-        for x, y in zip(hardware.to_device(data, 'cpu'), data):
-            assert x is y
+    for Container in tuple, Point, list:
+        constructor = Container._make if Container is Point else Container
+        for device in ['cpu', 'cuda']:
+            data = constructor([Tensor('cpu'), Tensor('cpu')])
+            out = hardware.to_device(data, device)
+            assert isinstance(out, Container)
+            assert all(x.device == device for x in out)
+            if device == 'cpu':
+                for x, y in zip(out, data):
+                    assert x is y
 
     data = [Tensor('cpu'), Tensor('cpu')]
     for x, y in zip(hardware.to_device(data, 'cpu'), data):
         assert x is y
+    assert all(x.device == 'cuda' for x in hardware.to_device(data, 'cuda'))
 
     data = {
         'a': [Tensor('cpu'), (Tensor('cpu'), Tensor('cpu'))],
         'b': {'c': {'d': [[[Tensor('cpu')]]]}},
+        'c': Point(Tensor('cpu'), {'d': Tensor('cpu')}),
     }
     for x, y in zip(flatten(hardware.to_device(data, 'cpu')), flatten(data)):
         assert x is y
-    for x in flatten(hardware.to_device(data, 'cuda')):
+    for x, y in zip(flatten(hardware.to_device(data, 'cuda')), flatten(data)):
         assert x.device == 'cuda'
+        assert type(x) == type(y)
