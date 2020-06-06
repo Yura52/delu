@@ -1,4 +1,8 @@
+from collections import namedtuple
+
 from zero.metrics import Metric
+
+Point = namedtuple('Point', ['x', 'y'])
 
 
 class ObjectCounter(Metric):
