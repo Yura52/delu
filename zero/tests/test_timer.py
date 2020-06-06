@@ -1,58 +1,42 @@
 from time import perf_counter, sleep
 
-from pytest import approx, raises
+from pytest import approx
 
 from zero.timer import Timer
 
 
 def test_timer():
-    # test initial state, start
+    # initial state, start
     timer = Timer()
     sleep(0.001)
     assert not timer()
     timer.start()
-    with raises(AssertionError):
-        timer.start()
     assert timer()
 
-    # test pause
-    timer.pause()
-    with raises(AssertionError):
-        timer.pause()
+    # stop
+    timer.stop()
     x = timer()
     sleep(0.001)
     assert timer() == x
 
-    # test add, sub
+    # add, sub
     timer.add(1.0)
     assert timer() - x == approx(1)
     timer.sub(1.0)
     assert timer() == x
 
-    # test resume
-    timer.resume()
-    with raises(AssertionError):
-        timer.resume()
-    sleep(0.001)
+    # start
+    timer.stop()
+    x = timer()
+    timer.start()
     assert timer() != x
-    timer.pause()
+    timer.stop()
     x = timer()
     sleep(0.001)
     assert timer() == x
-    timer.resume()
+    timer.start()
 
-    # test context manager
-    with raises(AssertionError):
-        with timer:
-            pass
-    with timer.pause():
-        x = timer()
-        sleep(0.001)
-        assert timer() == x
-    sleep(0.001)
-    assert timer() != x
-
-    # test reset
+    # reset
     timer.reset()
     assert not timer()
 
