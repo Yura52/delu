@@ -2,7 +2,7 @@ import numpy as np
 import torch as tr
 from pytest import raises
 
-from zero.map_concat import concat, zmap
+from zero.map_concat import concat, dmap
 
 
 def test_concat():
@@ -58,11 +58,11 @@ def test_concat():
         concat(['a', 0])
 
 
-def test_zmap():
-    assert concat(zmap(lambda x: x * 2, range(3))) == [0, 2, 4]
+def test_dmap():
+    assert concat(dmap(lambda x: x * 2, range(3))) == [0, 2, 4]
 
     actual = concat(
-        zmap(lambda x: (x, [x], [[x]], np.array([x]), tr.tensor([[x]])), range(2))
+        dmap(lambda x: (x, [x], [[x]], np.array([x]), tr.tensor([[x]])), range(2))
     )
     correct = ([0, 1], [0, 1], [[0], [1]], np.array([0, 1]), tr.tensor([[0], [1]]))
     assert actual[0] == correct[0]
@@ -71,7 +71,7 @@ def test_zmap():
     assert np.array_equal(actual[3], correct[3])
     assert tr.equal(actual[4], correct[4])
 
-    assert concat(zmap(lambda a, b: a + b, zip(range(3), range(3)), star=True)) == [
+    assert concat(dmap(lambda a, b: a + b, zip(range(3), range(3)), star=True)) == [
         0,
         2,
         4,
@@ -85,6 +85,6 @@ def test_zmap():
     dataset = tr.utils.data.TensorDataset(tr.randn(5, 3))
     loader = tr.utils.data.DataLoader(dataset, 2)
     assert tr.equal(
-        concat(zmap(model, loader, star=True)),
+        concat(dmap(model, loader, star=True)),
         tr.tensor([[0.0], [0.0], [0.0], [0.0], [0.0]]),
     )

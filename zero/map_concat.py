@@ -38,7 +38,7 @@ def concat(iterable: Iterable):
     )
 
 
-def zmap(
+def dmap(
     fn: Callable,
     iterable: Iterable,
     in_device=None,
