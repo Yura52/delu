@@ -1,14 +1,19 @@
 import functools
 import itertools
-from typing import Callable, Iterable
+from typing import Any, Callable, Dict, Iterable, Iterator, List, Tuple, Union
 
 import numpy as np
 import torch
 
 from .hardware import to_device
+from .types import Device, S, T
+
+OutputItem = Union[List, np.ndarray, torch.Tensor]
 
 
-def concat(iterable: Iterable):
+def concat(
+    iterable: Iterable[T],
+) -> Union[OutputItem, Tuple[OutputItem], Dict[Any, OutputItem]]:
     # TODO (docs): the first batch determines everything
     data = iterable if isinstance(iterable, list) else list(iterable)
     assert data, 'iterable must be non-empty'
@@ -39,20 +44,21 @@ def concat(iterable: Iterable):
 
 
 def dmap(
-    fn: Callable,
-    iterable: Iterable,
-    in_device=None,
-    out_device=None,
-    non_blocking=False,
-    star=False,
-):
+    fn: Union[Callable[[T], S], Callable[..., S]],
+    iterable: Iterable[T],
+    in_device: Device = None,
+    out_device: Device = None,
+    non_blocking: bool = False,
+    star: bool = False,
+) -> Iterator[S]:
     @functools.wraps(fn)
     def wrapper(x):
         if in_device is not None:
             x = to_device(x, in_device, non_blocking)
         result = fn(*x) if star else fn(x)
         if out_device is not None:
-            result = to_device(result, out_device, non_blocking)
+            # mypy: NaN
+            result = to_device(result, out_device, non_blocking)  # type: ignore
         return result
 
     return map(wrapper, iterable)

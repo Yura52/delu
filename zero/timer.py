@@ -1,10 +1,15 @@
 import math
 import time
-from typing import Union
+from typing import Optional, Union
 
 
 class Timer:
-    def __init__(self):
+    # mypy cannot infer types from .reset(), so they must be given here
+    _start_time: Optional[float]
+    _pause_start_time: Optional[float]
+    _shift: float
+
+    def __init__(self) -> None:
         self.reset()
 
     def start(self) -> 'Timer':
@@ -15,19 +20,19 @@ class Timer:
             self._pause_start_time = None
         return self  # enables the pattern `timer = Timer().start()`
 
-    def stop(self):
+    def stop(self) -> None:
         if self._pause_start_time is None:
             self._pause_start_time = time.perf_counter()
 
-    def reset(self):
+    def reset(self) -> None:
         self._start_time = None
         self._pause_start_time = None
         self._shift = 0.0
 
-    def add(self, shift: float):
+    def add(self, shift: float) -> None:
         self._shift += shift
 
-    def sub(self, shift: float):
+    def sub(self, shift: float) -> None:
         self._shift -= shift
 
     def __call__(self, round_up: bool = False) -> Union[float, int]:

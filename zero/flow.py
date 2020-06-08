@@ -1,8 +1,9 @@
+import math
+from typing import Iterable, Iterator, Optional, Sized, Union
+
+
 def _try_len(x):
-    try:
-        return len(x)
-    except Exception:
-        return None
+    return len(x) if isinstance(x, Sized) else None
 
 
 class Flow:
@@ -25,51 +26,58 @@ class Flow:
                 raise StopIteration()
             return flow.next(self._increment_iteration)
 
-    def __init__(self, loader):
+    def __init__(self, loader: Iterable) -> None:
         assert _try_len(loader) != 0
         self._epoch = 0
         self._iteration = 0
         self._count = 0
         self._loader = loader
-        self._iter = None
+        self._iter: Optional[Iterator] = None
 
     @property
-    def iteration(self):
+    def iteration(self) -> int:
         return self._iteration
 
     @property
-    def epoch(self):
+    def epoch(self) -> int:
         return self._epoch
 
     @property
-    def count(self):
+    def count(self) -> int:
         return self._count
 
     @property
-    def loader(self):
+    def loader(self) -> Iterable:
         return self._loader
 
-    def increment_epoch(self, max=None):
+    def increment_epoch(self, max: Union[None, int, float] = None) -> bool:
+        if isinstance(max, float):
+            assert math.isinf(max)
         should_increment = max is None or self.epoch < max
         if should_increment:
             self._epoch += 1
         return should_increment
 
-    def increment_iteration(self):
+    def increment_iteration(self) -> None:
         self._iteration += 1
 
     def _increment_count(self):
         self._count += 1
 
-    def data(self, n_iterations=None, increment_iteration=True):
+    def data(
+        self,
+        n_iterations: Union[None, int, float] = None,
+        increment_iteration: bool = True,
+    ) -> Iterator:
+        if isinstance(n_iterations, float):
+            assert math.isinf(n_iterations)
         if n_iterations is None:
-            try:
-                n_iterations = len(self.loader)
-            except Exception:
+            if not isinstance(self.loader, Sized):
                 raise ValueError()
+            n_iterations = len(self.loader)
         return Flow._EpochData(self, n_iterations, increment_iteration)
 
-    def next(self, increment_iteration=True):
+    def next(self, increment_iteration: bool = True):
         if self._iter is None:
             self._iter = iter(self._loader)
         try:
@@ -84,10 +92,10 @@ class Flow:
         self._increment_count()
         return value
 
-    def reset_iterator(self):
+    def reset_iterator(self) -> None:
         self._iter = iter(self._loader)
 
-    def set_loader(self, loader):
+    def set_loader(self, loader: Iterable) -> None:
         assert _try_len(loader) != 0
         self._loader = loader
         if self._iter is not None:

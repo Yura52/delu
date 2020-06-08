@@ -1,13 +1,17 @@
 from collections.abc import Mapping, Sequence
+from typing import Callable, Generator, List
+
+from .types import OneOrList, Recursive, S, T
 
 
-def to_list(x):
+def to_list(x: OneOrList[T]) -> List[T]:
     return x if isinstance(x, list) else [x]
 
 
-def flatten(data):
+def flatten(data: Recursive[T]) -> Generator[T, None, None]:
     if isinstance(data, (str, bytes)):
-        yield data
+        # mypy: NaN
+        yield data  # type: ignore
     elif isinstance(data, Sequence):
         for x in data:
             yield from flatten(x)
@@ -18,14 +22,16 @@ def flatten(data):
         yield data
 
 
-def traverse(fn, data):
+def traverse(fn: Callable[[T], S], data: Recursive[T]) -> Recursive[S]:
     if isinstance(data, (str, bytes)):
-        return fn(data)
+        # mypy: NaN
+        return fn(data)  # type: ignore
     elif isinstance(data, tuple):
         is_namedtuple = all(
             hasattr(data, x) for x in ['_make', '_asdict', '_replace', '_fields']
         )
-        return (type(data)._make if is_namedtuple else type(data))(
+        # mypy doesn't understand the branch for named tuples
+        return (type(data)._make if is_namedtuple else type(data))(  # type: ignore
             traverse(fn, x) for x in data
         )
     elif isinstance(data, list):
