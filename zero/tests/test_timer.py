@@ -15,11 +15,13 @@ def test_timer():
 
     # stop
     timer.stop()
+    timer.stop()  # two stops in a row
     x = timer()
     sleep(0.001)
     assert timer() == x
 
     # add, sub
+    timer.stop()
     timer.add(1.0)
     assert timer() - x == approx(1)
     timer.sub(1.0)
@@ -29,6 +31,7 @@ def test_timer():
     timer.stop()
     x = timer()
     timer.start()
+    timer.start()  # two starts in a row
     assert timer() != x
     timer.stop()
     x = timer()
