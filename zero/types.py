@@ -13,7 +13,7 @@ TensorIndex = Union[ArrayIndex, torch.Tensor]
 
 OneOrList = Union[T, List[T]]
 # mypy cannot resolve recursive types
-Recursive = Union[T, Tuple['Recursive'], List['Recursive'], Dict[Any, 'Recursive']]  # type: ignore
+Recursive = Union[T, Tuple['Recursive', ...], List['Recursive'], Dict[Any, 'Recursive']]  # type: ignore
 JSON = Union[None, bool, int, float, str, List['JSON'], Mapping[str, 'JSON']]  # type: ignore
 
 # Inspired by:
