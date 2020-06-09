@@ -4,12 +4,17 @@ from pytest import raises
 
 from zero.map_concat import concat, dmap
 
+from .util import Point
+
 
 def test_concat():
     a = [0, 1, 2]
     b = list(map(float, range(3)))
     assert concat(a) == [0, 1, 2]
     assert concat(zip(a, b)) == (a, b)
+    correct = Point(a, b)
+    actual = concat(map(Point._make, zip(a, b)))
+    assert isinstance(actual, Point) and actual == correct
     assert concat({'a': x, 'b': y} for x, y in zip(a, b)) == {'a': a, 'b': b}
 
     for container, equal in (np.array, np.array_equal), (tr.tensor, tr.equal):
@@ -52,10 +57,11 @@ def test_concat():
     assert list(actual) == ['a', 'b', 'c', 'd']
     assert_correct(actual, ['a', 'b', 'c', 'd'])
 
+    data = ['a', 0, (1, 2), {'1', '2'}]
+    assert concat(data) is data
+
     with raises(AssertionError):
         concat([])
-    with raises(ValueError):
-        concat(['a', 0])
 
 
 def test_dmap():

@@ -4,7 +4,7 @@ from typing import Callable, Generator, List
 from .types import OneOrList, Recursive, S, T
 
 
-def is_namedtuple(x):
+def is_namedtuple(x) -> bool:
     return isinstance(x, tuple) and all(
         hasattr(x, attr) for attr in ['_make', '_asdict', '_replace', '_fields']
     )

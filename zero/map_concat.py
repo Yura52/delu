@@ -5,6 +5,7 @@ from typing import Any, Callable, Dict, Iterable, Iterator, List, Tuple, Union
 import numpy as np
 import torch
 
+from ._util import is_namedtuple
 from .hardware import to_device
 from .types import Device, S, T
 
@@ -22,22 +23,23 @@ def concat(
         if not isinstance(sequence, list):
             sequence = list(sequence)
         x = sequence[0]
-        if x is None or isinstance(x, (int, float)):
-            return sequence
-        elif isinstance(x, list):
-            return list(itertools.chain.from_iterable(sequence))
-        elif isinstance(x, np.ndarray):
-            return np.concatenate(sequence)
-        elif isinstance(x, torch.Tensor):
-            return torch.cat(sequence)
-        else:
-            raise ValueError()
+        return (
+            list(itertools.chain.from_iterable(sequence))
+            if isinstance(x, list)
+            else np.concatenate(sequence)
+            if isinstance(x, np.ndarray)
+            else torch.cat(sequence)
+            if isinstance(x, torch.Tensor)
+            else sequence
+        )
 
     first = data[0]
     return (
-        tuple(concat_fn(x[i] for x in data) for i, _ in enumerate(first))
+        type(first)._make(concat_fn(x[i] for x in data) for i, _ in enumerate(first))
+        if is_namedtuple(first)
+        else type(first)(concat_fn(x[i] for x in data) for i, _ in enumerate(first))
         if isinstance(first, tuple)
-        else dict((key, concat_fn(x[key] for x in data)) for key in first)
+        else type(first)((key, concat_fn(x[key] for x in data)) for key in first)
         if isinstance(first, dict)
         else concat_fn(data)
     )
