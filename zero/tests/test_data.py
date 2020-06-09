@@ -1,9 +1,10 @@
-import numpy as np
 import torch as tr
 from pytest import mark, raises
 from torch.utils.data import DataLoader, TensorDataset
 
 from zero.data import Enumerate, NamedTensorDataset, iloader, iter_batches
+
+from .util import Point
 
 
 def test_named_tensor_dataset():
@@ -62,37 +63,68 @@ def test_iloader():
 
 @mark.parametrize('batch_size', list(range(1, 11)))
 def test_iter_batches(batch_size):
+    def check(batches, correct):
+        sizes = list(map(len, batches))
+        assert sum(sizes) == len(correct)
+        assert (
+            set(sizes) == {batch_size}
+            or set(sizes[:-1]) == {batch_size}
+            and sizes[-1] == len(correct) % batch_size
+        )
+        assert tr.equal(tr.cat(batches), correct)
+
+    n = 10
+
     # test batch size only
-    x = np.arange(10)
-    assert np.array_equal(np.hstack(tuple(iter_batches(x, batch_size))), x)
+    data = tr.arange(n)
+    batches = list(iter_batches(data, batch_size))
+    check(batches, data)
 
-    x = tr.arange(10)
-    assert tr.equal(tr.cat(tuple(iter_batches(x, batch_size))), x)
+    data = Point(tr.arange(n), tr.arange(n))
+    batches = list(iter_batches(data, batch_size))
+    assert all(isinstance(t, Point) for t in batches)
+    for i in range(2):
+        batches_i = list(x[i] for x in batches)
+        check(batches_i, data[i])
 
-    x = (np.arange(10), np.arange(10))
-    batches = tuple(iter_batches(x, batch_size))
-    batches = [np.hstack(tuple(x[i] for x in batches)) for i in range(2)]
-    assert np.array_equal(batches[0], x[0]) and np.array_equal(batches[1], x[1])
+    data = (tr.arange(n), tr.arange(n))
+    batches = list(iter_batches(data, batch_size))
+    for i in range(2):
+        batches_i = list(x[i] for x in batches)
+        check(batches_i, data[i])
 
-    x = (tr.arange(10), tr.arange(10))
-    batches = tuple(iter_batches(x, batch_size))
-    batches = [tr.cat(tuple(x[i] for x in batches)) for i in range(2)]
-    assert tr.equal(batches[0], x[0]) and tr.equal(batches[1], x[1])
+    data = {'a': tr.arange(n), 'b': tr.arange(n)}
+    batches = list(iter_batches(data, batch_size))
+    for key in data:
+        batches_i = list(x[key] for x in batches)
+        check(batches_i, data[key])
 
-    batches = tuple(iter_batches(TensorDataset(*x), batch_size))
-    batches = [tr.cat(tuple(x[i] for x in batches)) for i in range(2)]
-    assert tr.equal(batches[0], x[0]) and tr.equal(batches[1], x[1])
+    data = (tr.arange(n), tr.arange(n))
+    batches = list(iter_batches(TensorDataset(*data), batch_size))
+    for i in range(2):
+        batches_i = list(x[i] for x in batches)
+        check(batches_i, data[i])
 
-    names = ('a', 'b')
-    batches = tuple(iter_batches(NamedTensorDataset(*x, names=names), batch_size))
-    batches = [tr.cat(tuple(getattr(x, n) for x in batches)) for n in names]
-    assert tr.equal(batches[0], x[0]) and tr.equal(batches[1], x[1])
+    data = {'a': tr.arange(n), 'b': tr.arange(n)}
+    batches = list(iter_batches(NamedTensorDataset.from_dict(data), batch_size))
+    for key in data:
+        batches_i = list(getattr(x, key) for x in batches)
+        check(batches_i, data[key])
 
     # test DataLoader kwargs
-    x = np.arange(10)
+    data = tr.arange(n)
     kwargs = {'shuffle': True, 'drop_last': True}
     tr.manual_seed(0)
-    correct_batches = np.hstack(tuple(DataLoader(x, batch_size, **kwargs)))
+    correct_batches = tr.cat(list(DataLoader(data, batch_size, **kwargs)))
     tr.manual_seed(0)
-    actual_batches = np.hstack(tuple(iter_batches(x, batch_size, **kwargs)))
-    assert np.array_equal(actual_batches, correct_batches)
+    actual_batches = tr.cat(list(iter_batches(data, batch_size, **kwargs)))
+    assert tr.equal(actual_batches, correct_batches)
+
+
+def test_iter_batches_bad_input():
+    with raises(AssertionError):
+        iter_batches((), 1)
+    with raises(AssertionError):
+        iter_batches({}, 1)
+    with raises(AssertionError):
+        iter_batches(tr.empty(0), 1)

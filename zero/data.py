@@ -1,10 +1,10 @@
 from collections import namedtuple
-from typing import Any, Dict, Tuple, Union
+from typing import Any, Dict, Iterator, NamedTuple, Tuple, Union
 
-import numpy as np
 import torch
 from torch.utils.data import DataLoader, Dataset, TensorDataset
 
+from ._util import is_namedtuple
 from .types import TensorIndex
 
 
@@ -28,7 +28,7 @@ class NamedTensorDataset(Dataset):
         return cls(*data.values(), names=tuple(data.keys()))
 
     @property
-    def tensors(self) -> Tuple[torch.Tensor]:
+    def tensors(self) -> Tuple[torch.Tensor, ...]:
         return self._tensors
 
     @property
@@ -38,7 +38,7 @@ class NamedTensorDataset(Dataset):
     def __len__(self) -> int:
         return len(self.tensors[0])
 
-    def __getitem__(self, idx: TensorIndex) -> Tuple[torch.Tensor]:
+    def __getitem__(self, idx: TensorIndex) -> NamedTuple:
         return self._tuple_cls._make(x[idx] for x in self.tensors)
 
     def __setattr__(self, attr, value):
@@ -81,18 +81,33 @@ def iloader(size: int, *args, **kwargs) -> DataLoader:
 
 def iter_batches(
     data: Union[
-        np.ndarray,
         torch.Tensor,
-        Tuple[np.ndarray],
-        Tuple[torch.Tensor],
+        Tuple[torch.Tensor, ...],
+        Dict[Any, torch.Tensor],
         TensorDataset,
         NamedTensorDataset,
     ],
     *args,
     **kwargs,
-):
-    return (
-        (tuple(x[idx] for x in data) for idx in iloader(len(data[0]), *args, **kwargs))
-        if isinstance(data, tuple)
-        else (data[idx] for idx in iloader(len(data), *args, **kwargs))
-    )
+) -> Iterator:
+    # TODO (docs): numpy is not supported because of the following problem that occurs
+    # when batch_size == 1 or len % batch_size == 1:
+    # https://github.com/numpy/numpy/issues/16543
+
+    # mypy understands very little about this function
+    if is_namedtuple(data):
+        assert data
+        f = lambda idx: type(data)._make(x[idx] for x in data)  # type: ignore # noqa
+        size = len(data[0])
+    elif isinstance(data, tuple):
+        assert data
+        f = lambda idx: type(data)(x[idx] for x in data)  # type: ignore # noqa
+        size = len(data[0])
+    elif isinstance(data, dict):
+        assert data
+        f = lambda idx: type(data)({k: v[idx] for k, v in data.items()})  # type: ignore # noqa
+        size = len(next(iter(data.values())))
+    else:
+        f = data.__getitem__
+        size = len(data)
+    return (f(idx) for idx in iloader(size, *args, **kwargs))
