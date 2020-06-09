@@ -37,6 +37,11 @@ def test_epoch_iteration():
     assert not flow.increment_epoch(n)
     assert flow.epoch == n
 
+    with raises(AssertionError):
+        flow.increment_epoch(10.0)
+    for _ in range(1000):
+        assert flow.increment_epoch(math.inf)
+
 
 @mark.parametrize('n', range(1, 5))
 def test_count_next(n):
