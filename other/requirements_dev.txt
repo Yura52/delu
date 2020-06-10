@@ -1,0 +1,8 @@
+black
+coverage
+flake8
+ipdb
+jupyterlab
+mypy
+pre-commit-hooks
+pytest
