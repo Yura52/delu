@@ -2,27 +2,25 @@ import gc
 from unittest.mock import patch
 
 import torch
-from pytest import raises
+from pynvml import NVMLError_LibraryNotFound
+from pytest import mark, raises
 
 import zero.hardware as hardware
 from zero._util import flatten
 
-from .util import Point
+from .util import Point, requires_gpu
 
 
-def test_free_memory():
-    with (patch('gc.collect')) as _, (patch('torch.cuda.empty_cache')) as _:
-        hardware.free_memory()
-        gc.collect.call_count == 2
-        torch.cuda.empty_cache.assert_not_called()
-
+@mark.parametrize('gpu', [False, True])
+def test_free_memory(gpu):
     with (patch('gc.collect')) as _, (patch('torch.cuda.empty_cache')) as _, (
         patch('torch.cuda.synchronize')
-    ) as _, (patch('torch.cuda.is_available', lambda: True)) as _:
+    ) as _, (patch('torch.cuda.is_available', lambda: gpu)) as _:
         hardware.free_memory()
         gc.collect.call_count == 2
-        torch.cuda.empty_cache.assert_called_once()
-        torch.cuda.synchronize.assert_called_once()
+        if gpu:
+            torch.cuda.synchronize.assert_called_once()
+            torch.cuda.empty_cache.assert_called_once()
 
 
 class mocked_nvidia_smi:
@@ -111,48 +109,48 @@ def test_get_gpu_info():
     assert hardware.get_gpu_info(True) == correct
 
 
-def test_get_gpu_info_cpu_fail():
-    with raises(RuntimeError):
-        hardware.get_gpu_info()
+def test_get_gpu_info_without_gpu():
+    with patch(
+        'zero.hardware.nvidia_smi.getInstance', side_effect=NVMLError_LibraryNotFound()
+    ):
+        with raises(RuntimeError):
+            hardware.get_gpu_info()
 
 
-class Tensor:
-    def __init__(self, device):
-        self.device = device
-
-    def to(self, device, non_blocking):
-        del non_blocking
-        return self if device == self.device else Tensor(device)
-
-
+@requires_gpu
 def test_to_device():
-    data = Tensor('cpu')
-    assert hardware.to_device(data, 'cpu') is data
-    assert hardware.to_device(data, 'cuda').device == 'cuda'
+    t = lambda x: torch.tensor(0, device=x)  # noqa
+    cpu = torch.device('cpu')
+    cuda = torch.device('cuda', 0)
+
+    for x in cpu, cuda:
+        data = t(x)
+        assert hardware.to_device(data, x) is data
+    assert hardware.to_device(t(cpu), cuda).device == cuda
 
     for Container in tuple, Point, list:
         constructor = Container._make if Container is Point else Container
-        for device in ['cpu', 'cuda']:
-            data = constructor([Tensor('cpu'), Tensor('cpu')])
+        for device in [cpu, cuda]:
+            data = constructor([t(cpu), t(cpu)])
             out = hardware.to_device(data, device)
             assert isinstance(out, Container)
             assert all(x.device == device for x in out)
-            if device == 'cpu':
+            if device == cpu:
                 for x, y in zip(out, data):
                     assert x is y
 
-    data = [Tensor('cpu'), Tensor('cpu')]
-    for x, y in zip(hardware.to_device(data, 'cpu'), data):
+    data = [t(cpu), t(cpu)]
+    for x, y in zip(hardware.to_device(data, cpu), data):
         assert x is y
-    assert all(x.device == 'cuda' for x in hardware.to_device(data, 'cuda'))
+    assert all(x.device == cuda for x in hardware.to_device(data, cuda))
 
     data = {
-        'a': [Tensor('cpu'), (Tensor('cpu'), Tensor('cpu'))],
-        'b': {'c': {'d': [[[Tensor('cpu')]]]}},
-        'c': Point(Tensor('cpu'), {'d': Tensor('cpu')}),
+        'a': [t(cpu), (t(cpu), t(cpu))],
+        'b': {'c': {'d': [[[t(cpu)]]]}},
+        'c': Point(t(cpu), {'d': t(cpu)}),
     }
-    for x, y in zip(flatten(hardware.to_device(data, 'cpu')), flatten(data)):
+    for x, y in zip(flatten(hardware.to_device(data, cpu)), flatten(data)):
         assert x is y
-    for x, y in zip(flatten(hardware.to_device(data, 'cuda')), flatten(data)):
-        assert x.device == 'cuda'
+    for x, y in zip(flatten(hardware.to_device(data, cuda)), flatten(data)):
+        assert x.device == cuda
         assert type(x) == type(y)

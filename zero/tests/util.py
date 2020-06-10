@@ -1,5 +1,8 @@
 from collections import namedtuple
 
+import pytest
+import torch
+
 from zero.metrics import Metric
 
 Point = namedtuple('Point', ['x', 'y'])
@@ -22,3 +25,8 @@ class ObjectCounter(Metric):
 
     def empty(self):
         return not self.count
+
+
+requires_gpu = pytest.mark.skipif(
+    not torch.cuda.is_available(), reason="GPU is required for this test"
+)

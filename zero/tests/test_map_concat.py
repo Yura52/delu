@@ -1,6 +1,6 @@
 import numpy as np
 import torch as tr
-from pytest import raises
+from pytest import mark, raises
 
 from zero.map_concat import concat, dmap
 
@@ -64,7 +64,7 @@ def test_concat():
         concat([])
 
 
-def test_dmap():
+def test_dmap_correctness():
     assert concat(dmap(lambda x: x * 2, range(3))) == [0, 2, 4]
 
     actual = concat(
@@ -83,14 +83,24 @@ def test_dmap():
         4,
     ]
 
+
+_devices = ['cpu', 'cuda'] if tr.cuda.is_available() else ['cpu']
+
+
+@mark.parametrize('in_device', _devices)
+@mark.parametrize('out_device', _devices)
+def test_dmap_devices(in_device, out_device):
     model = tr.nn.Linear(3, 1)
+    model.to(in_device)
     model.weight.requires_grad = False
     model.bias.requires_grad = False
     model.weight.zero_()
     model.bias.zero_()
     dataset = tr.utils.data.TensorDataset(tr.randn(5, 3))
     loader = tr.utils.data.DataLoader(dataset, 2)
-    assert tr.equal(
-        concat(dmap(model, loader, star=True)),
-        tr.tensor([[0.0], [0.0], [0.0], [0.0], [0.0]]),
+    actual = concat(
+        dmap(model, loader, in_device=in_device, out_device=out_device, star=True)
     )
+    correct = tr.tensor([[0.0], [0.0], [0.0], [0.0], [0.0]], device=out_device)
+    assert actual.device.type == out_device
+    assert tr.equal(actual, correct)
