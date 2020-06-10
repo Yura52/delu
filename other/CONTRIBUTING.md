@@ -9,8 +9,8 @@ Create a virtual environment, install packages:
 ```bash
 $ conda create -n zero "python=3.6.*"
 $ conda activate zero
-$ pip install numpy pynvml
-$ <install torch, see https://pytorch.org/get-started/locally>
+$ pip install "numpy==1.18.*" "pynvml==8.0.*"
+$ <install torch==1.5.*, see https://pytorch.org/get-started/locally>
 $ pip install -r other/requirements_dev.txt
 ```
 
