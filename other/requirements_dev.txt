@@ -2,6 +2,7 @@ black
 coverage
 flake8
 ipdb
+isort
 jupyterlab
 mypy
 pre-commit-hooks
