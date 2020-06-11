@@ -5,9 +5,9 @@ import torch
 import torch.nn as nn
 from torch.optim.optimizer import Optimizer
 
-from ._util import to_list, traverse
+from ._util import to_list
 from .metrics import Metric
-from .types import OneOrList, Recursive
+from .types import OneOrList
 
 
 class _ModelsContext:
@@ -29,11 +29,16 @@ class _ModelsContext:
 
 class TrainContext:
     def __init__(
-        self, models: OneOrList[nn.Module], optimizers: OneOrList[Optimizer]
+        self,
+        models: OneOrList[nn.Module],
+        optimizers: OneOrList[Optimizer],
+        n_backwards: int = 1,
     ) -> None:
+        assert n_backwards >= 0
         self._models = to_list(models)
         self._optimizers = to_list(optimizers)
-        self._backward = False
+        self._n_backwards = n_backwards
+        self._current_n_backwards = 0
         self._exit_stack: Optional[ExitStack] = None
 
     @property
@@ -47,30 +52,24 @@ class TrainContext:
         self._exit_stack.enter_context(torch.enable_grad())
         for x in self._optimizers:
             x.zero_grad()
-        self._backward = False
         return self
 
-    def backward(self, loss: Recursive[torch.Tensor]) -> Recursive[float]:
+    def backward(self, x: torch.Tensor, *args, **kwargs) -> float:
         assert self._in_context
-        assert not self._backward
-
-        def f(x):
-            x.backward()
-            return x.item()
-
-        result = traverse(f, loss)
-        self._backward = True
-        return result
+        assert self._current_n_backwards < self._n_backwards
+        x.backward(*args, **kwargs)
+        self._current_n_backwards += 1
+        return x.item()
 
     # https://github.com/python/mypy/pull/7655
     def __exit__(self, *args) -> bool:  # type: ignore
         # TODO (docs): mention that .step() is performed only if no exceptions occur
         if args == (None, None, None):
-            assert self._backward
+            assert self._current_n_backwards == self._n_backwards
             for x in self._optimizers:
                 x.step()
-        self._backward = False
-        assert self._exit_stack is not None  # fix mypy
+        self._current_n_backwards = 0
+        assert self._exit_stack is not None  # help mypy
         self._exit_stack.__exit__(*args)
         self._exit_stack = None
         return False
@@ -90,7 +89,7 @@ class EvalContext:
             self._metric.reset()
 
     def __exit__(self, *args) -> bool:  # type: ignore
-        assert self._exit_stack is not None  # fix mypy
+        assert self._exit_stack is not None  # help mypy
         self._exit_stack.__exit__(*args)
         self._exit_stack = None
         return False

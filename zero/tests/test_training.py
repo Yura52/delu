@@ -5,7 +5,7 @@ from pytest import mark, raises
 
 from zero.training import EvalContext, TrainContext
 
-from .util import ObjectCounter, Point
+from .util import ObjectCounter
 
 Model = namedtuple('Model', ['model', 'weight', 'bias', 'loss', 'optimizer'])
 
@@ -21,85 +21,88 @@ def make_model(data):
     )
 
 
-@mark.parametrize('train', [False, True])
-@mark.parametrize('grad', [False, True])
-@mark.parametrize('n_models', range(3))
-def test_train_context(train, grad, n_models):
+def test_train_context_incorrect_usage():
+    # negative n_backwards
+    with raises(AssertionError):
+        TrainContext([], [], -1)
+
     data = tr.ones(4, 3, dtype=tr.float32)
 
-    if not n_models:
-        loss = make_model(data).loss
-        tc = TrainContext([], [])
-        with raises(AssertionError):
-            tc.backward(loss())
-        return
+    # backward outside of a context
+    tc = TrainContext([], [])
+    with raises(AssertionError):
+        tc.backward(make_model(data).loss())
 
-    models = [make_model(data) for _ in range(n_models)]
+    for n_backwards in range(1, 4):
+        # not enough backwards
+        for actual_n_backwards in range(n_backwards - 1):
+            with raises(AssertionError):
+                with TrainContext([], [], n_backwards) as tctx:
+                    for _ in range(actual_n_backwards):
+                        tctx.backward(make_model(data).loss())
+        # too many backwards
+        with TrainContext([], [], n_backwards) as tctx:
+            for _ in range(n_backwards):
+                tctx.backward(make_model(data).loss())
+            with raises(AssertionError):
+                tctx.backward(make_model(data).loss())
+
+
+@mark.parametrize('train', [False, True])
+@mark.parametrize('grad', [False, True])
+def test_train_context_train_grad(train, grad):
+    data = tr.ones(4, 3, dtype=tr.float32)
+    models = [make_model(data) for _ in range(3)]
+
     for x in models:
         x.model.train(train)
-
     tr.set_grad_enabled(grad)
     if grad:
+        # for testing that .zero_grad is called in __enter__
         for x in models:
             x.loss().backward()
 
-    def check_before(m):
-        assert m.model.training
+    def check_inside_context(x):
+        assert x.model.training
         assert tr.is_grad_enabled()
         if grad:
-            # in this case .backward was called before entering a context, so zero_grad
+            # in this case .backward is called before entering a context, so .zero_grad
             # should take effect (without .backward .grad is None)
-            assert not m.model.weight.grad.bool().any()
-            assert not m.model.bias.grad.bool().any()
+            assert not x.model.weight.grad.bool().any()
+            assert not x.model.bias.grad.bool().any()
+        loss = x.loss()
+        loss_item = tctx.backward(loss)
+        assert loss_item == loss.item()
+        assert x.model.weight.grad is not None
+        assert x.model.bias.grad is not None
 
-    def check_after_0(m, tc):
-        assert m.model.weight.grad is not None
-        assert m.model.bias.grad is not None
-        with raises(AssertionError):
-            tc.backward(m.loss())
-
-    def check_after_1(m):
-        assert not tr.equal(m.model.weight.data, m.weight)
-        assert not tr.equal(m.model.bias.data, m.bias)
+    def check_exit(x):
+        assert not tr.equal(x.model.weight.data, x.weight)
+        assert not tr.equal(x.model.bias.data, x.bias)
         assert tr.is_grad_enabled() == grad
-        m.model.training == train
+        x.model.training == train
 
     x = models[-1]
-    with TrainContext(x.model, x.optimizer) as tc:
-        check_before(x)
-        tc.backward(x.loss())
-        check_after_0(x, tc)
-    check_after_1(x)
+    with TrainContext(x.model, x.optimizer) as tctx:
+        check_inside_context(x)
+    check_exit(x)
 
-    models = models[:-1]
-    with TrainContext([x.model for x in models], [x.optimizer for x in models]) as tc:
-        for x in models:
-            check_before(x)
-        tc.backward([x.loss() for x in models])
-        for x in models:
-            check_after_0(x, tc)
-    for x in models:
-        check_after_1(x)
+    two_models = models[:-1]
+    with TrainContext(
+        [x.model for x in two_models], [x.optimizer for x in two_models], 2
+    ) as tctx:
+        for x in two_models:
+            check_inside_context(x)
+    for x in two_models:
+        check_exit(x)
 
-    # test an unusual form of losses
-    models = [make_model(data) for _ in range(n_models)]
-    with TrainContext([x.model for x in models], [x.optimizer for x in models]) as tc:
-        actual = tc.backward(
-            [
-                Point({i: [x.model(data).sum()]}, (x.model(data).sum(),))
-                for i, x in enumerate(models)
-            ]
-        )
-        for i, x in enumerate(actual):
-            assert isinstance(x, Point)
-            assert (
-                isinstance(x.x, dict)
-                and list(x.x) == [i]
-                and isinstance(x.x[i][0], float)
-            )
-            assert isinstance(x.y, tuple) and isinstance(x.y[0], float)
-    for x in models:
-        check_after_1(x)
+    # test *args, **kwargs
+    x = models[-1]
+    with TrainContext(x.model, x.optimizer, 3) as tctx:
+        loss = x.loss()
+        tctx.backward(loss, None, True)  # gradients, retain_graph
+        tctx.backward(loss, None, retain_graph=True)  # gradients, retain_graph
+        tctx.backward(loss)
 
 
 def test_train_context_exception():
