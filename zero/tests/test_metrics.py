@@ -1,4 +1,4 @@
-import torch as tr
+import torch
 from pytest import raises
 
 from zero.metrics import MetricsDict, MetricsList
@@ -7,7 +7,7 @@ from .util import ObjectCounter
 
 
 def test_metrics_containers():
-    data = (tr.tensor([0, 0]), tr.tensor([1, 1]))
+    data = (torch.tensor([0, 0]), torch.tensor([1, 1]))
     a = ObjectCounter(1)
     b = ObjectCounter(-1)
 
@@ -34,7 +34,7 @@ def test_metrics_containers():
 
 def test_metrics_dict():
     metric_fn = MetricsDict({'a': ObjectCounter(1), 'b': ObjectCounter(-1)})
-    data = (tr.tensor([0, 0]), tr.tensor([1, 1]))
+    data = (torch.tensor([0, 0]), torch.tensor([1, 1]))
     assert metric_fn.apply(data) == {'a': 2, 'b': -2}
     metric_fn.update(data)
     metric_fn.update(data)

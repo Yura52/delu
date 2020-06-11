@@ -1,5 +1,5 @@
 import numpy as np
-import torch as tr
+import torch
 from pytest import mark, raises
 
 from zero.map_concat import concat, dmap
@@ -17,7 +17,7 @@ def test_concat():
     assert isinstance(actual, Point) and actual == correct
     assert concat({'a': x, 'b': y} for x, y in zip(a, b)) == {'a': a, 'b': b}
 
-    for container, equal in (np.array, np.array_equal), (tr.tensor, tr.equal):
+    for container, equal in (np.array, np.array_equal), (torch.tensor, torch.equal):
         a = [container([0, 1]), container([2, 3])]
         b = [container([[0, 1]]), container([[2, 3]])]
         a_correct = container([0, 1, 2, 3])
@@ -33,21 +33,21 @@ def test_concat():
     a0 = 0
     b0 = [0, 0]
     c0 = np.array([0, 0])
-    d0 = tr.tensor([[0, 0]])
+    d0 = torch.tensor([[0, 0]])
     a1 = 1
     b1 = [1, 1]
     c1 = np.array([1, 1])
-    d1 = tr.tensor([[1, 1]])
+    d1 = torch.tensor([[1, 1]])
     a_correct = [0, 1]
     b_correct = [0, 0, 1, 1]
     c_correct = np.array([0, 0, 1, 1])
-    d_correct = tr.tensor([[0, 0], [1, 1]])
+    d_correct = torch.tensor([[0, 0], [1, 1]])
 
     def assert_correct(actual, keys):
         assert actual[keys[0]] == a_correct
         assert actual[keys[1]] == b_correct
         assert np.array_equal(actual[keys[2]], c_correct)
-        assert tr.equal(actual[keys[3]], d_correct)
+        assert torch.equal(actual[keys[3]], d_correct)
 
     data = [(a0, b0, c0, d0), (a1, b1, c1, d1)]
     actual = concat(data)
@@ -68,14 +68,14 @@ def test_dmap_correctness():
     assert concat(dmap(lambda x: x * 2, range(3))) == [0, 2, 4]
 
     actual = concat(
-        dmap(lambda x: (x, [x], [[x]], np.array([x]), tr.tensor([[x]])), range(2))
+        dmap(lambda x: (x, [x], [[x]], np.array([x]), torch.tensor([[x]])), range(2))
     )
-    correct = ([0, 1], [0, 1], [[0], [1]], np.array([0, 1]), tr.tensor([[0], [1]]))
+    correct = ([0, 1], [0, 1], [[0], [1]], np.array([0, 1]), torch.tensor([[0], [1]]))
     assert actual[0] == correct[0]
     assert actual[1] == correct[1]
     assert actual[2] == correct[2]
     assert np.array_equal(actual[3], correct[3])
-    assert tr.equal(actual[4], correct[4])
+    assert torch.equal(actual[4], correct[4])
 
     assert concat(dmap(lambda a, b: a + b, zip(range(3), range(3)), star=True)) == [
         0,
@@ -84,23 +84,23 @@ def test_dmap_correctness():
     ]
 
 
-_devices = ['cpu', 'cuda'] if tr.cuda.is_available() else ['cpu']
+_devices = ['cpu', 'cuda'] if torch.cuda.is_available() else ['cpu']
 
 
 @mark.parametrize('in_device', _devices)
 @mark.parametrize('out_device', _devices)
 def test_dmap_devices(in_device, out_device):
-    model = tr.nn.Linear(3, 1)
+    model = torch.nn.Linear(3, 1)
     model.to(in_device)
     model.weight.requires_grad = False
     model.bias.requires_grad = False
     model.weight.zero_()
     model.bias.zero_()
-    dataset = tr.utils.data.TensorDataset(tr.randn(5, 3))
-    loader = tr.utils.data.DataLoader(dataset, 2)
+    dataset = torch.utils.data.TensorDataset(torch.randn(5, 3))
+    loader = torch.utils.data.DataLoader(dataset, 2)
     actual = concat(
         dmap(model, loader, in_device=in_device, out_device=out_device, star=True)
     )
-    correct = tr.tensor([[0.0], [0.0], [0.0], [0.0], [0.0]], device=out_device)
+    correct = torch.tensor([[0.0], [0.0], [0.0], [0.0], [0.0]], device=out_device)
     assert actual.device.type == out_device
-    assert tr.equal(actual, correct)
+    assert torch.equal(actual, correct)

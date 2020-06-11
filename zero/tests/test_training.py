@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-import torch as tr
+import torch
 from pytest import mark, raises
 
 from zero.training import EvalContext, TrainContext
@@ -11,13 +11,13 @@ Model = namedtuple('Model', ['model', 'weight', 'bias', 'loss', 'optimizer'])
 
 
 def make_model(data):
-    model = tr.nn.Linear(data.shape[1], 1)
+    model = torch.nn.Linear(data.shape[1], 1)
     return Model(
         model,
         model.weight.clone(),
         model.bias.clone(),
         lambda: model(data).sum(),
-        tr.optim.SGD(model.parameters(), 0.0001),
+        torch.optim.SGD(model.parameters(), 0.0001),
     )
 
 
@@ -26,7 +26,7 @@ def test_train_context_incorrect_usage():
     with raises(AssertionError):
         TrainContext([], [], -1)
 
-    data = tr.ones(4, 3, dtype=tr.float32)
+    data = torch.ones(4, 3, dtype=torch.float32)
 
     # backward outside of a context
     tc = TrainContext([], [])
@@ -51,12 +51,12 @@ def test_train_context_incorrect_usage():
 @mark.parametrize('train', [False, True])
 @mark.parametrize('grad', [False, True])
 def test_train_context_train_grad(train, grad):
-    data = tr.ones(4, 3, dtype=tr.float32)
+    data = torch.ones(4, 3, dtype=torch.float32)
     models = [make_model(data) for _ in range(3)]
 
     for x in models:
         x.model.train(train)
-    tr.set_grad_enabled(grad)
+    torch.set_grad_enabled(grad)
     if grad:
         # for testing that .zero_grad is called in __enter__
         for x in models:
@@ -64,7 +64,7 @@ def test_train_context_train_grad(train, grad):
 
     def check_inside_context(x):
         assert x.model.training
-        assert tr.is_grad_enabled()
+        assert torch.is_grad_enabled()
         if grad:
             # in this case .backward is called before entering a context, so .zero_grad
             # should take effect (without .backward .grad is None)
@@ -77,9 +77,9 @@ def test_train_context_train_grad(train, grad):
         assert x.model.bias.grad is not None
 
     def check_exit(x):
-        assert not tr.equal(x.model.weight.data, x.weight)
-        assert not tr.equal(x.model.bias.data, x.bias)
-        assert tr.is_grad_enabled() == grad
+        assert not torch.equal(x.model.weight.data, x.weight)
+        assert not torch.equal(x.model.bias.data, x.bias)
+        assert torch.is_grad_enabled() == grad
         x.model.training == train
 
     x = models[-1]
@@ -106,30 +106,30 @@ def test_train_context_train_grad(train, grad):
 
 
 def test_train_context_exception():
-    data = tr.randn(1, 1)
+    data = torch.randn(1, 1)
     x = make_model(data)
     with raises(RuntimeError):
         with TrainContext(x.model, x.optimizer) as tc:
             tc.backward(x.loss())
             raise RuntimeError
         # step must not be taken
-        assert tr.equal(x.model.weight, x.weight)
-        assert tr.equal(x.model.bias, x.bias)
+        assert torch.equal(x.model.weight, x.weight)
+        assert torch.equal(x.model.bias, x.bias)
 
 
 @mark.parametrize('train', [False, True])
 @mark.parametrize('grad', [False, True])
 @mark.parametrize('n_models', range(3))
 def test_eval_context(train, grad, n_models):
-    tr.set_grad_enabled(grad)
+    torch.set_grad_enabled(grad)
     with EvalContext([], None):
-        assert not tr.is_grad_enabled()
-    assert tr.is_grad_enabled() == grad
+        assert not torch.is_grad_enabled()
+    assert torch.is_grad_enabled() == grad
 
     if not n_models:
         return
 
-    models = [tr.nn.Linear(1, 1) for _ in range(n_models)]
+    models = [torch.nn.Linear(1, 1) for _ in range(n_models)]
     for x in models:
         x.train(train)
     metric = ObjectCounter(1)

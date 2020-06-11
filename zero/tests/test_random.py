@@ -2,7 +2,7 @@ import random
 from unittest.mock import Mock
 
 import numpy as np
-import torch as tr
+import torch
 
 from zero.random import set_seed_everywhere
 
@@ -31,7 +31,7 @@ def test_set_seed_everywhere_cpu():
         [
             lambda _, x: random.randint(0, x),
             lambda _, x: np.random.randint(x),
-            lambda _, x: tr.randint(x, (1,))[0].item(),
+            lambda _, x: torch.randint(x, (1,))[0].item(),
             lambda rng, x: rng.integers(x),
         ]
     )
@@ -40,10 +40,10 @@ def test_set_seed_everywhere_cpu():
 @requires_gpu
 def test_set_seed_everywhere_gpu():
     functions = []
-    for i in range(tr.cuda.device_count()):
+    for i in range(torch.cuda.device_count()):
 
         def f(_, x):
-            return (tr.randint(x, (1,), device=f'cuda:{i}')[0].item(),)
+            return (torch.randint(x, (1,), device=f'cuda:{i}')[0].item(),)
 
         functions.append(f)
     _test_set_seed_everywhere(functions)
