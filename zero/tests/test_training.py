@@ -3,7 +3,7 @@ from collections import namedtuple
 import torch
 from pytest import mark, raises
 
-from zero.training import EvalContext, TrainContext
+from zero.training import EvalContext, TrainContext, backward
 
 from .util import ObjectCounter
 
@@ -19,33 +19,6 @@ def make_model(data):
         lambda: model(data).sum(),
         torch.optim.SGD(model.parameters(), 0.0001),
     )
-
-
-def test_train_context_incorrect_usage():
-    # negative n_backwards
-    with raises(AssertionError):
-        TrainContext([], [], -1)
-
-    data = torch.ones(4, 3, dtype=torch.float32)
-
-    # backward outside of a context
-    tc = TrainContext([], [])
-    with raises(AssertionError):
-        tc.backward(make_model(data).loss())
-
-    for n_backwards in range(1, 4):
-        # not enough backwards
-        for actual_n_backwards in range(n_backwards - 1):
-            with raises(AssertionError):
-                with TrainContext([], [], n_backwards) as tctx:
-                    for _ in range(actual_n_backwards):
-                        tctx.backward(make_model(data).loss())
-        # too many backwards
-        with TrainContext([], [], n_backwards) as tctx:
-            for _ in range(n_backwards):
-                tctx.backward(make_model(data).loss())
-            with raises(AssertionError):
-                tctx.backward(make_model(data).loss())
 
 
 @mark.parametrize('train', [False, True])
@@ -70,9 +43,7 @@ def test_train_context_train_grad(train, grad):
             # should take effect (without .backward .grad is None)
             assert not x.model.weight.grad.bool().any()
             assert not x.model.bias.grad.bool().any()
-        loss = x.loss()
-        loss_item = tctx.backward(loss)
-        assert loss_item == loss.item()
+        x.loss().backward()
         assert x.model.weight.grad is not None
         assert x.model.bias.grad is not None
 
@@ -83,34 +54,24 @@ def test_train_context_train_grad(train, grad):
         x.model.training == train
 
     x = models[-1]
-    with TrainContext(x.model, x.optimizer) as tctx:
+    with TrainContext(x.model, x.optimizer):
         check_inside_context(x)
     check_exit(x)
 
     two_models = models[:-1]
-    with TrainContext(
-        [x.model for x in two_models], [x.optimizer for x in two_models], 2
-    ) as tctx:
+    with TrainContext([x.model for x in two_models], [x.optimizer for x in two_models]):
         for x in two_models:
             check_inside_context(x)
     for x in two_models:
         check_exit(x)
-
-    # test *args, **kwargs
-    x = models[-1]
-    with TrainContext(x.model, x.optimizer, 3) as tctx:
-        loss = x.loss()
-        tctx.backward(loss, None, True)  # gradients, retain_graph
-        tctx.backward(loss, None, retain_graph=True)  # gradients, retain_graph
-        tctx.backward(loss)
 
 
 def test_train_context_exception():
     data = torch.randn(1, 1)
     x = make_model(data)
     with raises(RuntimeError):
-        with TrainContext(x.model, x.optimizer) as tc:
-            tc.backward(x.loss())
+        with TrainContext(x.model, x.optimizer):
+            x.loss().backward()
             raise RuntimeError
         # step must not be taken
         assert torch.equal(x.model.weight, x.weight)
@@ -146,3 +107,14 @@ def test_eval_context(train, grad, n_models):
         assert all(not x.training for x in models[:-1])
         assert metric.empty()
     assert all(x.training == train for x in models)
+
+
+def test_backward():
+    data = torch.ones(4, 3, dtype=torch.float32)
+    model = make_model(data)
+
+    loss = model.loss()
+    backward(loss, None, True)  # gradients, retain_graph
+    backward(loss, None, retain_graph=True)  # gradients, retain_graph
+    value = backward(loss)
+    assert value == loss.item()
