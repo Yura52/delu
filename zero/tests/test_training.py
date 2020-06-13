@@ -3,7 +3,7 @@ from collections import namedtuple
 import torch
 from pytest import mark, raises
 
-from zero.training import EvalContext, TrainContext, backward
+from zero.training import Eval, Train, backward
 
 from .util import ObjectCounter
 
@@ -54,12 +54,12 @@ def test_train_context_train_grad(train, grad):
         x.model.training == train
 
     x = models[-1]
-    with TrainContext(x.model, x.optimizer):
+    with Train(x.model, x.optimizer):
         check_inside_context(x)
     check_exit(x)
 
     two_models = models[:-1]
-    with TrainContext([x.model for x in two_models], [x.optimizer for x in two_models]):
+    with Train([x.model for x in two_models], [x.optimizer for x in two_models]):
         for x in two_models:
             check_inside_context(x)
     for x in two_models:
@@ -70,7 +70,7 @@ def test_train_context_exception():
     data = torch.randn(1, 1)
     x = make_model(data)
     with raises(RuntimeError):
-        with TrainContext(x.model, x.optimizer):
+        with Train(x.model, x.optimizer):
             x.loss().backward()
             raise RuntimeError
         # step must not be taken
@@ -83,7 +83,7 @@ def test_train_context_exception():
 @mark.parametrize('n_models', range(3))
 def test_eval_context(train, grad, n_models):
     torch.set_grad_enabled(grad)
-    with EvalContext([], None):
+    with Eval([], None):
         assert not torch.is_grad_enabled()
     assert torch.is_grad_enabled() == grad
 
@@ -97,13 +97,13 @@ def test_eval_context(train, grad, n_models):
 
     x = models[-1]
     metric.update(([1], None))
-    with EvalContext(x, metric):
+    with Eval(x, metric):
         assert not x.training
         assert metric.empty()
     assert x.training == train
 
     metric.update(([1], None))
-    with EvalContext(models[:-1], metric):
+    with Eval(models[:-1], metric):
         assert all(not x.training for x in models[:-1])
         assert metric.empty()
     assert all(x.training == train for x in models)

@@ -27,7 +27,7 @@ class _ModelsContext:
             model.train(train)
 
 
-class TrainContext:
+class Train:
     def __init__(
         self, models: OneOrList[nn.Module], optimizers: OneOrList[Optimizer]
     ) -> None:
@@ -59,7 +59,7 @@ class TrainContext:
         return False
 
 
-class EvalContext:
+class Eval:
     def __init__(self, models: OneOrList[nn.Module], metric: Optional[Metric]) -> None:
         self._models = to_list(models)
         self._metric = metric
