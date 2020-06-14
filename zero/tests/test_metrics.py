@@ -1,9 +1,13 @@
 import torch
 from pytest import raises
 
-from zero.metrics import MetricsDict, MetricsList
+from zero.metrics import MetricsDict, MetricsList, apply_metric
 
 from .util import ObjectCounter
+
+
+def test_apply_metric():
+    assert True, 'The function is tested when used in other tests'
 
 
 def test_metrics_containers():
@@ -21,7 +25,7 @@ def test_metrics_containers():
         ),
     ]
     for metric_fn, first, second, keys in params:
-        assert metric_fn.apply(data) == first
+        assert apply_metric(metric_fn, data) == first
         metric_fn.update(data)
         metric_fn.update(data)
         assert metric_fn.compute() == second
@@ -35,7 +39,7 @@ def test_metrics_containers():
 def test_metrics_dict():
     metric_fn = MetricsDict({'a': ObjectCounter(1), 'b': ObjectCounter(-1)})
     data = (torch.tensor([0, 0]), torch.tensor([1, 1]))
-    assert metric_fn.apply(data) == {'a': 2, 'b': -2}
+    assert apply_metric(metric_fn, data) == {'a': 2, 'b': -2}
     metric_fn.update(data)
     metric_fn.update(data)
     assert metric_fn.compute() == {'a': 4, 'b': -4}

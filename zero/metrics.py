@@ -5,24 +5,16 @@ from typing import Any, Dict, List
 
 class Metric(ABC):
     @abstractmethod
-    def reset(self):
+    def reset(self) -> None:
         ...  # pragma: no cover
 
     @abstractmethod
-    def update(self, data):
+    def update(self, data) -> None:
         ...  # pragma: no cover
 
     @abstractmethod
     def compute(self):
         ...  # pragma: no cover
-
-    # @typing.final (available in 3.8)
-    def apply(self, data):
-        self.reset()
-        self.update(data)
-        result = self.compute()
-        self.reset()
-        return result
 
 
 class MetricsList(Metric):
@@ -61,3 +53,11 @@ class MetricsDict(Metric):
 
     def __getitem__(self, key) -> Metric:
         return self._metrics[key]
+
+
+def apply_metric(metric_fn: Metric, data):
+    metric_fn.reset()
+    metric_fn.update(data)
+    result = metric_fn.compute()
+    metric_fn.reset()
+    return result
