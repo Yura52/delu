@@ -83,7 +83,7 @@ def test_train_context_exception():
 @mark.parametrize('n_models', range(3))
 def test_eval_context(train, grad, n_models):
     torch.set_grad_enabled(grad)
-    with Eval([], None):
+    with Eval([]):
         assert not torch.is_grad_enabled()
     assert torch.is_grad_enabled() == grad
 

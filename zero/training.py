@@ -60,7 +60,9 @@ class Train:
 
 
 class Eval:
-    def __init__(self, models: OneOrList[nn.Module], metric: Optional[Metric]) -> None:
+    def __init__(
+        self, models: OneOrList[nn.Module], metric: Optional[Metric] = None
+    ) -> None:
         self._models = to_list(models)
         self._metric = metric
         self._exit_stack: Optional[ExitStack] = None
