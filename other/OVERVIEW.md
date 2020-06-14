@@ -150,7 +150,7 @@ class Accuracy(Metric):
     def update(self, data):
         y_pred, y = data
         self.n_objects += len(y)
-        self.n_correct = (y_pred == y).sum()
+        self.n_correct = (y_pred == y).sum().item()
 
     def compute(self):
         assert self.n_objects
