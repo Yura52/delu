@@ -1,13 +1,15 @@
 import torch
 from pytest import raises
 
-from zero.metrics import MetricsDict, MetricsList, apply_metric
+from zero.metrics import MetricsDict, MetricsList
 
 from .util import ObjectCounter
 
 
-def test_apply_metric():
-    assert True, 'The function is tested when used in other tests'
+def apply_metric(metric_fn, data):
+    result = metric_fn.reset().update(data).compute()
+    metric_fn.reset()
+    return result
 
 
 def test_metrics_containers():
