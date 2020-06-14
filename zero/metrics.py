@@ -10,7 +10,7 @@ class Metric(ABC):
         ...  # pragma: no cover
 
     @abstractmethod
-    def update(self, data) -> 'Metric':
+    def update(self, *args, **kwargs) -> 'Metric':
         ...  # pragma: no cover
 
     @abstractmethod
@@ -27,9 +27,9 @@ class MetricsList(Metric):
             x.reset()
         return self
 
-    def update(self, data) -> 'MetricsList':
+    def update(self, *args, **kwargs) -> 'MetricsList':
         for x in self._metrics:
-            x.update(data)
+            x.update(*args, **kwargs)
         return self
 
     def compute(self) -> List:
@@ -48,9 +48,9 @@ class MetricsDict(Metric):
             x.reset()
         return self
 
-    def update(self, data) -> 'MetricsDict':
+    def update(self, *args, **kwargs) -> 'MetricsDict':
         for x in self._metrics.values():
-            x.update(data)
+            x.update(*args, **kwargs)
         return self
 
     def compute(self) -> Dict:

@@ -138,7 +138,7 @@ metric_fn = MetricsDict({
 
 with Eval(model, metric_fn):
     for X, y in val_loader:
-        metric_fn.update((model(X), y))
+        metric_fn.update((model(X), y))  # Ignite metrics expect tuples as input
     metrics = metric_fn.compute()
 ```
 
@@ -155,8 +155,7 @@ class Accuracy(Metric):
         self.n_correct = 0
         return self
     
-    def update(self, data):
-        y_pred, y = data
+    def update(self, y_pred, y):
         self.n_objects += len(y)
         self.n_correct = (y_pred == y).sum().item()
         return self
