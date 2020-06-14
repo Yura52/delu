@@ -112,6 +112,13 @@ with Eval(model, metric_fn):
     metrics = metric_fn.compute()
 ```
 
+*Example*:
+```python
+# in fact, metric_fn is an optional argument:
+with Eval(model):
+    ...
+```
+
 ## `zero.metrics`
 The module provides:
 - containers for metrics (with support of [`ignite.metrics`](https://pytorch.org/ignite/metrics.html#how-to-create-a-custom-metric)) for cases when you have many metrics
