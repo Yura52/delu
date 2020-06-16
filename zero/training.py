@@ -30,10 +30,13 @@ class _ModelsContext:
 
 class Train:
     def __init__(
-        self, models: OneOrSequence[nn.Module], optimizers: OneOrSequence[Optimizer]
+        self,
+        models: OneOrSequence[nn.Module],
+        optimizers: Optional[OneOrSequence[Optimizer]] = None,
     ) -> None:
         self._models = to_list(models)
-        self._optimizers = to_list(optimizers)
+        assert self._models
+        self._optimizers = [] if optimizers is None else to_list(optimizers)
         self._exit_stack: Optional[ExitStack] = None
 
     @property
@@ -63,6 +66,7 @@ class Train:
 class Eval:
     def __init__(self, models: OneOrSequence[nn.Module]) -> None:
         self._models = to_list(models)
+        assert self._models
         self._exit_stack: Optional[ExitStack] = None
 
     def __enter__(self) -> None:

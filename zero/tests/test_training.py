@@ -92,11 +92,19 @@ def test_eval_context(train, grad, n_models):
     assert x.training == train
     assert torch.is_grad_enabled() == grad
 
-    with Eval(models[:-1]):
-        assert all(not x.training for x in models[:-1])
-        assert not torch.is_grad_enabled()
-    assert all(x.training == train for x in models)
-    assert torch.is_grad_enabled() == grad
+    if n_models > 1:
+        with Eval(models[:-1]):
+            assert all(not x.training for x in models[:-1])
+            assert not torch.is_grad_enabled()
+        assert all(x.training == train for x in models)
+        assert torch.is_grad_enabled() == grad
+
+
+def test_no_models():
+    with raises(AssertionError):
+        Train([])
+    with raises(AssertionError):
+        Eval([])
 
 
 def test_backward():
