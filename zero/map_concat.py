@@ -1,4 +1,3 @@
-import functools
 import itertools
 from typing import Any, Callable, Dict, Iterable, Iterator, List, Tuple, Union
 
@@ -53,7 +52,6 @@ def dmap(
     non_blocking: bool = False,
     star: bool = False,
 ) -> Iterator[S]:
-    @functools.wraps(fn)
     def wrapper(x):
         if in_device is not None:
             x = to_device(x, in_device, non_blocking)

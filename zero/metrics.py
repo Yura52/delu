@@ -1,6 +1,6 @@
 # The API intentially follows that of Ignite: https://pytorch.org/ignite/metrics.html
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Sequence
 
 
 class Metric(ABC):
@@ -26,7 +26,7 @@ class Metric(ABC):
 
 
 class MetricsList(Metric):
-    def __init__(self, metrics: List[Metric]) -> None:
+    def __init__(self, metrics: Sequence[Metric]) -> None:
         self._metrics = metrics
 
     def reset(self) -> 'MetricsList':
@@ -68,7 +68,7 @@ class MetricsDict(Metric):
 
 
 class IgniteMetric(Metric):
-    def __init__(self, ignite_metric):
+    def __init__(self, ignite_metric) -> None:
         self.metric = ignite_metric
 
     def reset(self) -> 'IgniteMetric':

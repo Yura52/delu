@@ -1,11 +1,11 @@
 import json
 import pickle
-from typing import Iterable
+from typing import Any, Iterable, List
 
 from .types import JSON, PathLike
 
 
-def load_pickle(path: PathLike):
+def load_pickle(path: PathLike) -> Any:
     with open(path, 'rb') as f:
         return pickle.load(f)
 
@@ -15,7 +15,7 @@ def dump_pickle(x, path: PathLike) -> None:
         pickle.dump(x, f)
 
 
-def load_json(path: PathLike):
+def load_json(path: PathLike) -> JSON:
     with open(path) as f:
         return json.load(f)
 
@@ -25,7 +25,7 @@ def dump_json(x, path: PathLike, **kwargs) -> None:
         json.dump(x, f, **kwargs)
 
 
-def load_jsonl(path: PathLike):
+def load_jsonl(path: PathLike) -> List[JSON]:
     with open(path) as f:
         return list(map(json.loads, f))
 

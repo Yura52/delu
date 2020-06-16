@@ -1,5 +1,5 @@
 import math
-from typing import Iterable, Iterator, Optional, Sized, Union
+from typing import Any, Iterable, Iterator, Optional, Sized, Union
 
 
 def _try_len(x):
@@ -77,7 +77,7 @@ class Flow:
             n_iterations = len(self.loader)
         return Flow._EpochData(self, n_iterations, increment_iteration)
 
-    def next(self, increment_iteration: bool = True):
+    def next(self, increment_iteration: bool = True) -> Any:
         if self._iter is None:
             self._iter = iter(self._loader)
         try:

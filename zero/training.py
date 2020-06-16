@@ -6,7 +6,7 @@ import torch.nn as nn
 from torch.optim.optimizer import Optimizer
 
 from ._util import to_list
-from .types import OneOrList
+from .types import OneOrSequence
 
 
 class _ModelsContext:
@@ -28,7 +28,7 @@ class _ModelsContext:
 
 class Train:
     def __init__(
-        self, models: OneOrList[nn.Module], optimizers: OneOrList[Optimizer]
+        self, models: OneOrSequence[nn.Module], optimizers: OneOrSequence[Optimizer]
     ) -> None:
         self._models = to_list(models)
         self._optimizers = to_list(optimizers)
@@ -38,7 +38,7 @@ class Train:
     def _in_context(self) -> bool:
         return self._exit_stack is not None
 
-    def __enter__(self):
+    def __enter__(self) -> None:
         assert not self._in_context
         self._exit_stack = ExitStack().__enter__()
         self._exit_stack.enter_context(_ModelsContext(self._models, True))
@@ -59,7 +59,7 @@ class Train:
 
 
 class Eval:
-    def __init__(self, models: OneOrList[nn.Module]) -> None:
+    def __init__(self, models: OneOrSequence[nn.Module]) -> None:
         self._models = to_list(models)
         self._exit_stack: Optional[ExitStack] = None
 
