@@ -5,8 +5,6 @@ from pytest import mark, raises
 
 from zero.training import Eval, Train, backward
 
-from .util import ObjectCounter
-
 Model = namedtuple('Model', ['model', 'weight', 'bias', 'loss', 'optimizer'])
 
 
@@ -80,33 +78,25 @@ def test_train_context_exception():
 
 @mark.parametrize('train', [False, True])
 @mark.parametrize('grad', [False, True])
-@mark.parametrize('n_models', range(3))
+@mark.parametrize('n_models', range(1, 4))
 def test_eval_context(train, grad, n_models):
     torch.set_grad_enabled(grad)
-    with Eval([]):
-        assert not torch.is_grad_enabled()
-    assert torch.is_grad_enabled() == grad
-
-    if not n_models:
-        return
-
     models = [torch.nn.Linear(1, 1) for _ in range(n_models)]
     for x in models:
         x.train(train)
-    metric = ObjectCounter(1)
 
     x = models[-1]
-    metric.update(([1], None))
-    with Eval(x, metric):
+    with Eval(x):
         assert not x.training
-        assert metric.empty()
+        assert not torch.is_grad_enabled()
     assert x.training == train
+    assert torch.is_grad_enabled() == grad
 
-    metric.update(([1], None))
-    with Eval(models[:-1], metric):
+    with Eval(models[:-1]):
         assert all(not x.training for x in models[:-1])
-        assert metric.empty()
+        assert not torch.is_grad_enabled()
     assert all(x.training == train for x in models)
+    assert torch.is_grad_enabled() == grad
 
 
 def test_backward():

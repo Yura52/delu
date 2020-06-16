@@ -6,7 +6,6 @@ import torch.nn as nn
 from torch.optim.optimizer import Optimizer
 
 from ._util import to_list
-from .metrics import Metric
 from .types import OneOrList
 
 
@@ -60,19 +59,14 @@ class Train:
 
 
 class Eval:
-    def __init__(
-        self, models: OneOrList[nn.Module], metric: Optional[Metric] = None
-    ) -> None:
+    def __init__(self, models: OneOrList[nn.Module]) -> None:
         self._models = to_list(models)
-        self._metric = metric
         self._exit_stack: Optional[ExitStack] = None
 
     def __enter__(self) -> None:
         self._exit_stack = ExitStack().__enter__()
         self._exit_stack.enter_context(_ModelsContext(self._models, False))
         self._exit_stack.enter_context(torch.no_grad())
-        if self._metric is not None:
-            self._metric.reset()
 
     def __exit__(self, *args) -> bool:  # type: ignore
         assert self._exit_stack is not None  # help mypy

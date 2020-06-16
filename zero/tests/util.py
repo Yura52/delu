@@ -20,9 +20,10 @@ class ObjectCounter(Metric):
         self.count += len(data[0])
 
     def compute(self):
-        assert self.count
+        assert not self.empty
         return self.sign * self.count
 
+    @property
     def empty(self):
         return not self.count
 

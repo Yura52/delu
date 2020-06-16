@@ -1,4 +1,4 @@
-# The design is heavily inspired by Ignite: https://pytorch.org/ignite.
+# The API intentially follows that of Ignite: https://pytorch.org/ignite/metrics.html
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List
 
@@ -6,16 +6,23 @@ from typing import Any, Dict, List
 class Metric(ABC):
     # TODO (docs): pattern metric_fn.reset().update(x).compute()
     @abstractmethod
-    def reset(self) -> 'Metric':
+    def reset(self) -> Any:
         ...  # pragma: no cover
 
     @abstractmethod
-    def update(self, *args, **kwargs) -> 'Metric':
+    def update(self, *args, **kwargs) -> Any:
         ...  # pragma: no cover
 
     @abstractmethod
-    def compute(self):
+    def compute(self) -> Any:
         ...  # pragma: no cover
+
+    def __enter__(self) -> None:
+        self.reset()
+
+    def __exit__(self, *args) -> bool:  # type: ignore
+        self.reset()
+        return False
 
 
 class MetricsList(Metric):
@@ -58,3 +65,19 @@ class MetricsDict(Metric):
 
     def __getitem__(self, key) -> Metric:
         return self._metrics[key]
+
+
+class IgniteMetric(Metric):
+    def __init__(self, ignite_metric):
+        self.metric = ignite_metric
+
+    def reset(self) -> 'IgniteMetric':
+        self.metric.reset()
+        return self
+
+    def update(self, *args, **kwargs) -> 'IgniteMetric':
+        self.metric.update(*args, **kwargs)
+        return self
+
+    def compute(self) -> Any:
+        return self.metric.compute()

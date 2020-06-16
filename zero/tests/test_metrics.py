@@ -38,10 +38,12 @@ def test_metrics_containers():
             metric_fn.compute()
 
 
-def test_metrics_dict():
-    metric_fn = MetricsDict({'a': ObjectCounter(1), 'b': ObjectCounter(-1)})
-    data = (torch.tensor([0, 0]), torch.tensor([1, 1]))
-    assert apply_metric(metric_fn, data) == {'a': 2, 'b': -2}
-    metric_fn.update(data)
-    metric_fn.update(data)
-    assert metric_fn.compute() == {'a': 4, 'b': -4}
+def test_metric_context():
+    metric_fn = ObjectCounter(1)
+    metric_fn.update([[0]])
+    assert not metric_fn.empty
+    with metric_fn:
+        assert metric_fn.empty
+        metric_fn.update([[0]])
+        assert not metric_fn.empty
+    assert metric_fn.empty
