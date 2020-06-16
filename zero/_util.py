@@ -11,7 +11,7 @@ def is_namedtuple(x) -> bool:
 
 
 def to_list(x: OneOrSequence[T]) -> List[T]:
-    return list(x) if isinstance(x, Sequence) else [x]
+    return x if isinstance(x, list) else list(x) if isinstance(x, Sequence) else [x]
 
 
 def flatten(data: Recursive[T]) -> Generator[T, None, None]:

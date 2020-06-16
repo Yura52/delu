@@ -1,3 +1,5 @@
+__all__ = ['Metric', 'MetricsList', 'MetricsDict', 'IgniteMetric']
+
 # The API intentially follows that of Ignite: https://pytorch.org/ignite/metrics.html
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Sequence

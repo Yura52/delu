@@ -1,3 +1,5 @@
+__all__ = ['Timer']
+
 import math
 import time
 from typing import Optional, Union

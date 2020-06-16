@@ -1,0 +1,1 @@
+import zero.all  # noqa

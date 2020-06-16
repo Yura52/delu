@@ -15,9 +15,10 @@ def test_to_list():
     x = [0]
     assert to_list(x) is x
 
-    assert to_list(0) == [0]
+    assert to_list(()) == []
+    assert to_list((0,)) == [0]
 
-    assert to_list((0,)) == [(0,)]
+    assert to_list(0) == [0]
 
 
 def test_traverse():
