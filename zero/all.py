@@ -6,5 +6,5 @@ from .map_concat import *  # noqa
 from .metrics import *  # noqa
 from .progress import *  # noqa
 from .random import *  # noqa
-from .timer import *  # noqa
+from .time import *  # noqa
 from .training import *  # noqa

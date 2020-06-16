@@ -2,7 +2,7 @@ from time import perf_counter, sleep
 
 from pytest import approx
 
-from zero.timer import Timer
+from zero.time import Timer, format_seconds
 
 
 def test_timer():
@@ -44,7 +44,7 @@ def test_timer():
     assert not timer()
 
 
-def test_measurements():
+def test_timer_measurements():
     x = perf_counter()
     sleep(0.1)
     correct = perf_counter() - x
@@ -54,3 +54,9 @@ def test_measurements():
     # the allowed deviation was obtained from manual runs on my laptop so the test may
     # behave differently on other hardware
     assert actual == approx(correct, abs=0.01)
+
+
+def test_format_seconds():
+    assert format_seconds(1) == '00h 00m 01s'
+    assert format_seconds(1.1) == '00h 00m 01s'
+    assert format_seconds(1, '%S%S%S') == '010101'

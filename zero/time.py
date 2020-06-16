@@ -1,4 +1,4 @@
-__all__ = ['Timer']
+__all__ = ['Timer', 'format_seconds']
 
 import math
 import time
@@ -43,3 +43,7 @@ class Timer:
         now = self._stop_time or time.perf_counter()
         result = now - self._start_time + self._shift
         return math.ceil(result) if round_up else result
+
+
+def format_seconds(seconds: Union[int, float], format_str='%Hh %Mm %Ss') -> str:
+    return time.strftime(format_str, time.gmtime(seconds))
