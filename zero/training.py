@@ -1,86 +1,40 @@
-__all__ = ['Train', 'Eval', 'backward']
+__all__ = ['Eval', 'ibackward']
 
-from contextlib import ExitStack
-from typing import Optional
+from typing import ClassVar, List, Optional
 
 import torch
-import torch.nn as nn
-from torch.optim.optimizer import Optimizer
-
-from ._util import to_list
-from .types import OneOrSequence
 
 
 class _ModelsContext:
-    def __init__(self, models, train):
-        self._models = models
-        self._train = train
-        self._training = None
+    # TODO (docs): takes effect only within `with`, not when constructed!
+    _train: ClassVar[bool] = NotImplemented
+    _grad: ClassVar[bool] = NotImplemented
 
-    def __enter__(self):
+    def __init__(self, *models: torch.nn.Module) -> None:
+        assert models
+        self._models = models
+        self._training: Optional[List[bool]] = None
+        self._grad_context = torch.enable_grad() if self._grad else torch.no_grad()
+
+    def __enter__(self) -> None:
         self._training = []
         for x in self._models:
             self._training.append(x.training)
             x.train(self._train)
+        self._grad_context.__enter__()  # type: ignore
 
-    def __exit__(self, *args):
+    def __exit__(self, *args) -> bool:  # type: ignore
         for model, train in zip(self._models, self._training):  # type: ignore
             model.train(train)
-
-
-class Train:
-    def __init__(
-        self,
-        models: OneOrSequence[nn.Module],
-        optimizers: Optional[OneOrSequence[Optimizer]] = None,
-    ) -> None:
-        self._models = to_list(models)
-        assert self._models
-        self._optimizers = [] if optimizers is None else to_list(optimizers)
-        self._exit_stack: Optional[ExitStack] = None
-
-    @property
-    def _in_context(self) -> bool:
-        return self._exit_stack is not None
-
-    def __enter__(self) -> None:
-        assert not self._in_context
-        self._exit_stack = ExitStack().__enter__()
-        self._exit_stack.enter_context(_ModelsContext(self._models, True))
-        self._exit_stack.enter_context(torch.enable_grad())
-        for x in self._optimizers:
-            x.zero_grad()
-
-    # https://github.com/python/mypy/pull/7655
-    def __exit__(self, *args) -> bool:  # type: ignore
-        # TODO (docs): mention that .step() is performed only if no exceptions occur
-        if args == (None, None, None):
-            for x in self._optimizers:
-                x.step()
-        assert self._exit_stack is not None  # help mypy
-        self._exit_stack.__exit__(*args)
-        self._exit_stack = None
+        self._grad_context.__exit__(*args)  # type: ignore
         return False
 
 
-class Eval:
-    def __init__(self, models: OneOrSequence[nn.Module]) -> None:
-        self._models = to_list(models)
-        assert self._models
-        self._exit_stack: Optional[ExitStack] = None
-
-    def __enter__(self) -> None:
-        self._exit_stack = ExitStack().__enter__()
-        self._exit_stack.enter_context(_ModelsContext(self._models, False))
-        self._exit_stack.enter_context(torch.no_grad())
-
-    def __exit__(self, *args) -> bool:  # type: ignore
-        assert self._exit_stack is not None  # help mypy
-        self._exit_stack.__exit__(*args)
-        self._exit_stack = None
-        return False
+class Eval(_ModelsContext):
+    _train = False
+    _grad = False
 
 
-def backward(x: torch.Tensor, *args, **kwargs) -> float:
+def ibackward(x: torch.Tensor, *args, **kwargs) -> float:
     x.backward(*args, **kwargs)
     return x.item()

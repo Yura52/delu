@@ -1,17 +1,13 @@
 from collections.abc import Mapping, Sequence
-from typing import Callable, Generator, List
+from typing import Callable, Generator
 
-from .types import OneOrSequence, Recursive, S, T
+from .types import Recursive, S, T
 
 
 def is_namedtuple(x) -> bool:
     return isinstance(x, tuple) and all(
         hasattr(x, attr) for attr in ['_make', '_asdict', '_replace', '_fields']
     )
-
-
-def to_list(x: OneOrSequence[T]) -> List[T]:
-    return x if isinstance(x, list) else list(x) if isinstance(x, Sequence) else [x]
 
 
 def flatten(data: Recursive[T]) -> Generator[T, None, None]:

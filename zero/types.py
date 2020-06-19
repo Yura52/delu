@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, Dict, List, Mapping, Sequence, Tuple, TypeVar, Union
+from typing import Any, Dict, List, Mapping, Tuple, TypeVar, Union
 
 import numpy as np
 import torch
@@ -11,7 +11,6 @@ PathLike = Union[Path, bytes, str]
 ArrayIndex = Union[int, slice, List[int], np.ndarray]
 TensorIndex = Union[ArrayIndex, torch.Tensor]
 
-OneOrSequence = Union[T, Sequence[T]]
 # mypy cannot resolve recursive types
 Recursive = Union[T, Tuple['Recursive', ...], List['Recursive'], Dict[Any, 'Recursive']]  # type: ignore
 JSON = Union[None, bool, int, float, str, List['JSON'], Mapping[str, 'JSON']]  # type: ignore

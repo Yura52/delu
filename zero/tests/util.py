@@ -6,6 +6,7 @@ import torch
 from zero.metrics import Metric
 
 Point = namedtuple('Point', ['x', 'y'])
+Model = namedtuple('Model', ['model', 'weight', 'bias', 'loss_fn', 'optimizer', 'data'])
 
 
 class ObjectCounter(Metric):
@@ -26,6 +27,18 @@ class ObjectCounter(Metric):
     @property
     def empty(self):
         return not self.count
+
+
+def make_model(data):
+    model = torch.nn.Linear(data.shape[1], 1)
+    return Model(
+        model,
+        model.weight.clone(),
+        model.bias.clone(),
+        lambda: model(data).sum(),
+        torch.optim.SGD(model.parameters(), 0.0001),
+        data,
+    )
 
 
 requires_gpu = pytest.mark.skipif(

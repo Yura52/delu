@@ -1,4 +1,4 @@
-from zero._util import flatten, is_namedtuple, to_list, traverse
+from zero._util import flatten, is_namedtuple, traverse
 
 from .util import Point
 
@@ -6,19 +6,6 @@ from .util import Point
 def test_is_namedtuple():
     assert not is_namedtuple(())
     assert is_namedtuple(Point(1, 2))
-
-
-def test_to_list():
-    x = []
-    assert to_list(x) is x
-
-    x = [0]
-    assert to_list(x) is x
-
-    assert to_list(()) == []
-    assert to_list((0,)) == [0]
-
-    assert to_list(0) == [0]
 
 
 def test_traverse():

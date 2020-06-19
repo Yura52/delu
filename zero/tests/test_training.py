@@ -1,118 +1,45 @@
-from collections import namedtuple
-
 import torch
 from pytest import mark, raises
 
-from zero.training import Eval, Train, backward
+from zero.training import Eval, ibackward
 
-Model = namedtuple('Model', ['model', 'weight', 'bias', 'loss', 'optimizer'])
-
-
-def make_model(data):
-    model = torch.nn.Linear(data.shape[1], 1)
-    return Model(
-        model,
-        model.weight.clone(),
-        model.bias.clone(),
-        lambda: model(data).sum(),
-        torch.optim.SGD(model.parameters(), 0.0001),
-    )
+from .util import make_model
 
 
 @mark.parametrize('train', [False, True])
 @mark.parametrize('grad', [False, True])
-def test_train_context_train_grad(train, grad):
-    data = torch.ones(4, 3, dtype=torch.float32)
-    models = [make_model(data) for _ in range(3)]
+@mark.parametrize('n_models', range(3))
+def test_eval(train, grad, n_models):
+    if not n_models:
+        with raises(AssertionError):
+            Eval()
+        return
 
-    for x in models:
-        x.model.train(train)
-    torch.set_grad_enabled(grad)
-    if grad:
-        # for testing that .zero_grad is called in __enter__
-        for x in models:
-            x.loss().backward()
-
-    def check_inside_context(x):
-        assert x.model.training
-        assert torch.is_grad_enabled()
-        if grad:
-            # in this case .backward is called before entering a context, so .zero_grad
-            # should take effect (without .backward .grad is None)
-            assert not x.model.weight.grad.bool().any()
-            assert not x.model.bias.grad.bool().any()
-        x.loss().backward()
-        assert x.model.weight.grad is not None
-        assert x.model.bias.grad is not None
-
-    def check_exit(x):
-        assert not torch.equal(x.model.weight.data, x.weight)
-        assert not torch.equal(x.model.bias.data, x.bias)
-        assert torch.is_grad_enabled() == grad
-        x.model.training == train
-
-    x = models[-1]
-    with Train(x.model, x.optimizer):
-        check_inside_context(x)
-    check_exit(x)
-
-    two_models = models[:-1]
-    with Train([x.model for x in two_models], [x.optimizer for x in two_models]):
-        for x in two_models:
-            check_inside_context(x)
-    for x in two_models:
-        check_exit(x)
-
-
-def test_train_context_exception():
-    data = torch.randn(1, 1)
-    x = make_model(data)
-    with raises(RuntimeError):
-        with Train(x.model, x.optimizer):
-            x.loss().backward()
-            raise RuntimeError
-        # step must not be taken
-        assert torch.equal(x.model.weight, x.weight)
-        assert torch.equal(x.model.bias, x.bias)
-
-
-@mark.parametrize('train', [False, True])
-@mark.parametrize('grad', [False, True])
-@mark.parametrize('n_models', range(1, 4))
-def test_eval_context(train, grad, n_models):
     torch.set_grad_enabled(grad)
     models = [torch.nn.Linear(1, 1) for _ in range(n_models)]
     for x in models:
         x.train(train)
-
-    x = models[-1]
-    with Eval(x):
-        assert not x.training
+    with Eval(*models):
+        assert all(not x.training for x in models[:-1])
         assert not torch.is_grad_enabled()
-    assert x.training == train
+    assert all(x.training == train for x in models)
     assert torch.is_grad_enabled() == grad
 
-    if n_models > 1:
-        with Eval(models[:-1]):
-            assert all(not x.training for x in models[:-1])
-            assert not torch.is_grad_enabled()
-        assert all(x.training == train for x in models)
-        assert torch.is_grad_enabled() == grad
 
-
-def test_no_models():
-    with raises(AssertionError):
-        Train([])
-    with raises(AssertionError):
-        Eval([])
-
-
-def test_backward():
+def test_ibackward():
     data = torch.ones(4, 3, dtype=torch.float32)
     model = make_model(data)
 
-    loss = model.loss()
-    backward(loss, None, True)  # gradients, retain_graph
-    backward(loss, None, retain_graph=True)  # gradients, retain_graph
-    value = backward(loss)
+    def check_reset():
+        assert all(x.grad is not None for x in model.model.parameters())
+        for x in model.model.parameters():
+            x.grad = None
+
+    loss = model.loss_fn()
+    ibackward(loss, None, True)  # gradients, retain_graph
+    check_reset()
+    ibackward(loss, None, retain_graph=True)  # gradients, retain_graph
+    check_reset()
+    value = ibackward(loss)
+    check_reset()
     assert value == loss.item()
