@@ -1,6 +1,5 @@
 __all__ = ['Timer', 'format_seconds']
 
-import math
 import time
 from typing import Optional, Union
 
@@ -37,12 +36,11 @@ class Timer:
     def sub(self, shift: float) -> None:
         self._shift -= shift
 
-    def __call__(self, round_up: bool = False) -> Union[float, int]:
+    def __call__(self) -> float:
         if self._start_time is None:
-            return 0 if round_up else 0.0
+            return 0.0
         now = self._stop_time or time.perf_counter()
-        result = now - self._start_time + self._shift
-        return math.ceil(result) if round_up else result
+        return now - self._start_time + self._shift
 
 
 def format_seconds(seconds: Union[int, float], format_str='%Hh %Mm %Ss') -> str:
