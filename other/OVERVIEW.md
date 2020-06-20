@@ -14,7 +14,9 @@ import zero.all as zero  # then use zero.Flow
 from zero.all import Flow
 ```
 
-## `zero.flow.Flow`
+## `zero.flow`
+
+#### Flow
 The class simplifies managing for-loops:
 - automatic management of the `epoch` and `iteration` variables
 - allows to customize the size of epoch
@@ -109,29 +111,11 @@ with Eval(model):
 ```
 
 ## `zero.metrics`
-The module provides:
-- containers for metrics (with support of [`ignite.metrics`](https://pytorch.org/ignite/metrics.html#how-to-create-a-custom-metric)) for cases when you have many metrics
-- a simple base class for creating custom metrics in the case Ignite does not fit your needs
 
-*Example 1*:
-```python
-from ignite.metrics import Accuracy, Precision, Recall
-from zero.metrics import MetricsDict
-from zero.training import Eval
+#### Metric
+A simple base class for creating metrics.
 
-metric_fn = MetricsDict({
-    'accuracy': Accuracy(...),
-    'precision': Precision(...),
-    'recall': Recall(...),
-})
-
-with Eval(model), metric_fn:  # metric_fn.reset() is called in __enter__ and __exit__
-    for X, y in val_loader:
-        metric_fn.update((model(X), y))  # Ignite metrics expect tuples as input
-    metrics = metric_fn.compute()  # {'accuracy': <float>, 'precision': <float>, ...}
-```
-
-*Example 2*:
+*Example*:
 ```python
 from zero.metrics import Metric
 
@@ -150,6 +134,39 @@ class Accuracy(Metric):
     def compute(self):
         assert self.n_objects
         return self.n_correct / self.n_objects
+```
+
+#### MetricsList, MetricsDict
+Containers for metrics (with support of [`ignite.metrics`](https://pytorch.org/ignite/metrics.html#how-to-create-a-custom-metric)).
+
+*Example*:
+```python
+from ignite.metrics import Accuracy, Precision, Recall
+from zero.metrics import MetricsDict
+from zero.training import Eval
+
+metric_fn = MetricsDict({
+    'accuracy': Accuracy(...),
+    'precision': Precision(...),
+    'recall': Recall(...),
+    'custom_metric': CustomMetric(...)  # derived from zero.metrics.Metric
+})
+
+with Eval(model), metric_fn:  # metric_fn.reset() is called in __enter__ and __exit__
+    for X, y in val_loader:
+        metric_fn.update((model(X), y))  # Ignite metrics expect tuples as input
+    metrics = metric_fn.compute()  # {'accuracy': <float>, 'precision': <float>, ...}
+```
+
+#### IgniteMetric
+A wrapper for metrics from [`ignite.metrics`](https://pytorch.org/ignite/metrics.html#how-to-create-a-custom-metric) that adds some functionality (e.g. support of the `with` operator).
+
+*Example*:
+```python
+from ignite.metrics import Accuracy
+from zero.metrics import IgniteMetric
+
+metric = IgniteMetric(Accuracy(...))
 ```
 
 ## `zero.optim`
@@ -332,7 +349,9 @@ result = concat(batch_results)
 result = concat(dmap(model, batches, in_device, out_device))
 ```
 
-## `zero.progress.ProgressTracker`
+## `zero.progress`
+
+#### ProgressTracker
 - helps with Early Stopping ("no progress for too many updates")
 - tracks the best score
 - (not implemeted: [issue](https://github.com/Yura52/zero/issues/5)) allows to dump and restore tracker's state
@@ -449,7 +468,9 @@ print(get_gpu_info())
 ]
 ```
 
-## `zero.random.set_seed_everywhere`
+## `zero.random`
+
+#### set_seed_everywhere
 Simplifies reproducibility and following good practices.
 - sets random seed for the following modules: `random`, `np.random`, `torch`, `torch.cuda`
 - if seed is omitted, a high-quality seed is generated
