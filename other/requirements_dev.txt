@@ -1,10 +1,17 @@
+# development
 black
 coverage
 flake8
 flit
 ipdb
 isort
-jupyterlab
 mypy
 pre-commit-hooks
 pytest
+
+# examples
+scikit-learn
+torchvision
+
+# other
+jupyterlab

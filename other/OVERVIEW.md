@@ -1,22 +1,25 @@
 ## Introduction
-The document is a high-level overview of Zero. It covers some modules, classes and functions approximately in the order of their "significance". Pay attention to both code and comments.
-
-If you import a module from Zero, the recommended naming is the following:
-```python
-import zero.some_module as zsome_module
-
-# for example
-import zero.random as zrandom
-```
+The document is a high-level overview of Zero. It covers some modules, classes and functions in the comfortable-to-read order. Pay attention to both code and comments. For fully working examples, see [examples](../examples).
 
 Enjoy!
+
+## How to import
+The recommended style of imports is one of the following at your choice:
+```python
+from zero.flow import Flow
+import zero.flow
+import zero.flow as zflow
+# zero.all contains all content from all modules
+import zero.all as zero  # then use zero.Flow
+from zero.all import Flow
+```
 
 ## `zero.flow.Flow`
 The class simplifies managing for-loops:
 - automatic management of the `epoch` and `iteration` variables
 - allows to customize the size of epoch
-- allows to change the data loader on the fly
-- enables useful patterns that are convenient for implementing by hand
+- allows to change an underlying data loader on the fly
+- enables useful patterns
 - (not implemented: [issue](https://github.com/Yura52/zero/issues/6)) allows to dump and restore loop's state: epoch, iteration, etc.)
 
 *Before*:
@@ -26,8 +29,10 @@ iteration = 0
 for epoch in range(max_epoch):
     for x in loader:
         iteration += 1
-        print('Epoch:', epoch, 'Iteration:', iteration')
+        print('Epoch:', epoch, 'Iteration:', iteration)
         ...
+    if need_new_loader():
+        assert False, 'It is possible, but not convenient'
 ```
 
 *After v1*:
@@ -36,10 +41,12 @@ from zero.flow import Flow
 
 flow = Flow(DataLoader(...))  # any kind of iterable is allowed
 # loader is available as flow.loader
-# "while" instead of "for" enables flexible termination patterns (see zero.progress.ProgressTracker)
+# "while" instead of "for epoch in range(max_epoch)":
+# - is more friendly to resuming after loading a checkpoint (i.e. starting from a non-zero epoch)
+# - enables flexible termination patterns (see zero.progress.ProgressTracker)
 while flow.increment_epoch(max_epoch):
-    for x in flow.data():  # or: for x in flow.data(custom_epoch_size)
-        print('Epoch:', flow.epoch, 'Iteration:', flow.iteration')
+    for x in flow.data():  # or: `for x in flow.data(custom_epoch_size)`
+        print('Epoch:', flow.epoch, 'Iteration:', flow.iteration)
         ...
     if need_new_loader():
         flow.set_loader(other_iterable)
@@ -47,7 +54,7 @@ while flow.increment_epoch(max_epoch):
 
 *After v2*:
 ```python
-# endless loop v1 (semantically similar to `itertools.cycle`)
+# An endless loop
 for x in flow.data(math.inf):
     ...
     if flow.iteration % frequency == 0:
@@ -56,7 +63,7 @@ for x in flow.data(math.inf):
 
 *After v3*:
 ```python
-# endless loop v2 (semantically similar to `itertools.cycle`)
+# An endless loop
 while True:
     x = flow.next()
     ...
@@ -65,56 +72,38 @@ while True:
 ```
 
 ## `zero.training`
-This module makes training more concise and expressive.
 
-#### Training
+#### ibackward
+The function combines two calls: .backward() and .item()
+
 *Before*:
 ```python
-# train step
-model.train()
-optimizer.zero_grad()
-loss = loss_fn(model(X), y)
+loss = loss_fn(...)
 loss.backward()
 loss = loss.item()
-optimizer.step()
 ```
 
 *After*:
 ```python
-from zero.training import Train, backward
+from zero.training import ibackward
 
-# does torch.enable_grad(), .train(), .zero_grad(), .step()
-with Train(model, optimizer):
-    loss = backward(loss_fn(model(X), y))
+loss = ibackward(loss_fn(...))
 ```
 
-#### Validation
+#### Eval
+
 *Before*:
 ```python
 model.eval()
-reset_metrics_variables()  # e.g. for accuracy: n_objects, n_correct
 with torch.no_grad():
-    for X, y in val_loader:
-        y_pred = model(X)
-        update_metrics_variables()
-    metrics = calculate_metrics()
+    ...
 ```
 
 *After*:
 ```python
 from zero.training import Eval
 
-# does torch.no_grad(), .eval(), metric_fn.reset()
-with Eval(model, metric_fn):
-    # see the #zero.metrics section for better understanding of metric_fn
-    for X, y in val_loader:
-        metric_fn.update((model(X), y))
-    metrics = metric_fn.compute()
-```
-
-*Example*:
-```python
-# in fact, metric_fn is an optional argument:
+# also reverts the model's training status in __exit__ to the previous state
 with Eval(model):
     ...
 ```
@@ -136,10 +125,10 @@ metric_fn = MetricsDict({
     'recall': Recall(...),
 })
 
-with Eval(model, metric_fn):
+with Eval(model), metric_fn:  # metric_fn.reset() is called in __enter__ and __exit__
     for X, y in val_loader:
         metric_fn.update((model(X), y))  # Ignite metrics expect tuples as input
-    metrics = metric_fn.compute()
+    metrics = metric_fn.compute()  # {'accuracy': <float>, 'precision': <float>, ...}
 ```
 
 *Example 2*:
@@ -153,16 +142,50 @@ class Accuracy(Metric):
     def reset(self):
         self.n_objects = 0
         self.n_correct = 0
-        return self
     
     def update(self, y_pred, y):
         self.n_objects += len(y)
-        self.n_correct = (y_pred == y).sum().item()
-        return self
+        self.n_correct += (y_pred == y).sum().item()
 
     def compute(self):
         assert self.n_objects
         return self.n_correct / self.n_objects
+```
+
+## `zero.optim`
+The module adds extra functionality to optimizers *without changing the original behavior*.
+
+*Before*:
+```python
+from torch.optim import SGD
+
+optimizer.zero_grad()
+...
+<backward>
+...
+optimizer.step()
+```
+
+*After*:
+```python
+from zero.optim import SGD
+
+with optimizer:
+    ...
+    <backward>
+    ...
+```
+
+In case of optimizers not from PyTorch:
+```python
+from some_library import SuperOptimizer
+from zero.optim import make_zero_optimizer
+
+SuperOptimizer = make_zero_optimizer(SuperOptimizer)
+
+optimizer = SuperOptimizer(model.parameters(), ...)
+with optimizer:
+    ...
 ```
 
 ## `zero.data`
@@ -253,7 +276,7 @@ for batch in iter_batches(data, batch_size):
 ## `zero.map_concat`
 
 #### concat
-If you have a function (**or a model!**) that is applied batchwise (or is applied to some iterable), `concat` will help you to put the results together. It can process batch results that are tensors, numpy-arrays, tuples, dictionaries, lists of arbitrary data and reasonable combinations of the mentioned types. If your workflow involves moving data between devices, use `concat` in combination with [`dmap`](#dmap).
+If you have a function (**or a model**) that is applied to batches, `concat` will help you to combine a list (or iterable) of batch results in one result for the whole data. It can process batch results that are tensors, numpy-arrays, tuples, dictionaries, lists of arbitrary data and reasonable combinations of the mentioned types. If your workflow involves moving data between devices, use `concat` in combination with [`dmap`](#dmap).
 
 *Before*:
 ```python
@@ -334,7 +357,9 @@ while not progress.fail and flow.increment_epoch(max_epoch):
         print('The best score was not updated, but it is still not a fail, because the patience is big enough')
 ```
 
-## `zero.timer.Timer`
+## `zero.time`
+
+#### Timer
 Time-management as simple as two methods.
 - `Timer.start()` for starting/resuming
 - `Timer.stop()` for pausing
@@ -352,13 +377,26 @@ for x in data:
         validation()
 ```
 
+#### format_seconds
+*Before*:
+```python
+from time import strftime, gmtime
+print(strftime('%Hh %Mm %Ss', gmtime(timer())))
+```
+
+*After*:
+```python
+from zero.time import format_seconds
+print(format_seconds(timer()))  # The format is customizable, default: '%Hh %Mm %Ss'
+```
+
 ## `zero.hardware`
 
 #### to_device
 Painlessly transfer tensor-based data between devices.
 
 *Example*:
-```pythor
+```python
 from zero.hardware import to_device
 
 # works for all data given below

@@ -139,9 +139,15 @@ dmypy.json
 cython_debug/
 # <<< GITHUB DEFAULT PYTHON .GIGIGNORE
 
-# Personal
+examples/*
+!examples/*.py
+
+# Other directories
 .DS_Store
 .vscode
 archive
+data
+
+# Other files
 draft.*
 notes.md

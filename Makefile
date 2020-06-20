@@ -19,14 +19,14 @@ coverage:
 
 lint:
 	python -m pre_commit_hooks.debug_statement_hook zero/**/*.py
-	isort --check-only
+	isort zero --recursive --check-only
 	black zero --check
 	flake8 zero
 
 pre-commit: lint test typecheck
 
 pretty:
-	isort -y
+	isort zero --recursive -y
 	black zero
 
 test: clean

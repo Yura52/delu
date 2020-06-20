@@ -32,7 +32,7 @@ make pre-commit
 - [ ] `make pre-commit` succeeds
 - [ ] `make coverage` shows that all new code is covered with tests
 - [ ] docstrings are added
-- [ ] new public API (function, classes) are added to corresponding `__all__` lists
+- [ ] new public API (function, classes) is added to corresponding `__all__` lists
 
 ### Notes
 - "# mypy: NaN" means either "I don't know how to make mypy happy" or "It is impossible to make mypy happy" or "Making mypy happy requires going crazy with type annotations"

@@ -16,9 +16,11 @@ class ObjectCounter(Metric):
 
     def reset(self):
         self.count = 0
+        return self
 
     def update(self, data):
         self.count += len(data[0])
+        return self
 
     def compute(self):
         assert not self.empty
