@@ -1,4 +1,4 @@
-__all__ = [  # noqa
+__all__ = [
     'ASGD',
     'Adadelta',
     'Adagrad',
@@ -10,8 +10,6 @@ __all__ = [  # noqa
     'SGD',
     'SparseAdam',
 ]
-
-import inspect
 
 import torch.optim as optim
 
@@ -28,29 +26,18 @@ class _ZeroOptimizer:
 
 
 def make_zero_optimizer(cls):
+    # TODO (docs): optimizers that require closure in .step() are not supported
     return type(cls.__name__, (cls, _ZeroOptimizer), {})
 
 
-def _is_supported_optimizer_name(name):
-    if (
-        name not in dir(optim)
-        or name.startswith(('_', 'Base'))
-        or name.endswith('Base')
-        or 'Mixin' in name
-    ):
-        return False
-    cls = getattr(optim, name)
-    return (
-        inspect.isclass(cls)
-        and cls is not optim.Optimizer  # type: ignore
-        and issubclass(cls, optim.Optimizer)  # type: ignore
-        # Optimizers that require closure are not supported
-        and inspect.signature(cls.step).parameters['closure'].default is None
-    )
-
-
-_OPTIMIZER_NAMES = list(filter(_is_supported_optimizer_name, __all__))
-
-
-for name in _OPTIMIZER_NAMES:
-    globals()[name] = make_zero_optimizer(getattr(optim, name))
+# for whatever reasons, mypy doesn't undestand what is going on
+ASGD = make_zero_optimizer(optim.ASGD)  # type: ignore
+Adadelta = make_zero_optimizer(optim.Adadelta)  # type: ignore
+Adagrad = make_zero_optimizer(optim.Adagrad)  # type: ignore
+Adam = make_zero_optimizer(optim.Adam)  # type: ignore
+AdamW = make_zero_optimizer(optim.AdamW)  # type: ignore
+Adamax = make_zero_optimizer(optim.Adamax)  # type: ignore
+RMSprop = make_zero_optimizer(optim.RMSprop)  # type: ignore
+Rprop = make_zero_optimizer(optim.Rprop)  # type: ignore
+SGD = make_zero_optimizer(optim.SGD)  # type: ignore
+SparseAdam = make_zero_optimizer(optim.SparseAdam)  # type: ignore

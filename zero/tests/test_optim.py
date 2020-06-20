@@ -1,3 +1,5 @@
+import inspect
+
 import torch
 from pytest import mark
 
@@ -5,10 +7,30 @@ import zero.optim
 
 from .util import make_model
 
-# pytestmark = mark.skipif(True, reason='a')
+
+def _is_optimizer(name):
+    cls = getattr(zero.optim, name)
+    return cls is not None and issubclass(cls, torch.optim.Optimizer)
 
 
-@mark.parametrize('name', zero.optim._OPTIMIZER_NAMES)
+OPTIMIZER_NAMES = list(filter(_is_optimizer, zero.optim.__all__))
+
+
+@mark.parametrize('name', OPTIMIZER_NAMES)
+def test_zero_optimizer_requirements(name):
+    assert name in dir(torch.optim)
+    assert not name.startswith(('_', 'Base'))
+    assert not name.endswith('Base')
+    assert 'Mixin' not in name
+
+    cls = getattr(torch.optim, name)
+    assert inspect.isclass(cls)
+    assert cls is not torch.optim.Optimizer
+    assert issubclass(cls, torch.optim.Optimizer)
+    assert inspect.signature(cls.step).parameters['closure'].default is None
+
+
+@mark.parametrize('name', OPTIMIZER_NAMES)
 @mark.parametrize('error', [False, True])
 def test_zero_optimizer(name, error):
     if 'sparse' in name.lower():
