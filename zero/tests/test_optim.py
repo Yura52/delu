@@ -8,7 +8,7 @@ from .util import make_model
 # pytestmark = mark.skipif(True, reason='a')
 
 
-@mark.parametrize('name', zero.optim._optimizers)
+@mark.parametrize('name', zero.optim._OPTIMIZER_NAMES)
 @mark.parametrize('error', [False, True])
 def test_zero_optimizer(name, error):
     if 'sparse' in name.lower():
