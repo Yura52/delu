@@ -1,5 +1,5 @@
 ## Introduction
-The document is a high-level overview of Zero. It covers some modules, classes and functions in the comfortable-to-read order. Pay attention to both code and comments. For fully working examples, see [examples](../examples).
+The document is a high-level overview of Zero. It covers some modules, classes and functions in a comfortable-to-read order. Pay attention to both code and comments. For fully working examples, see [examples](../examples).
 
 Enjoy!
 
@@ -16,13 +16,13 @@ from zero.all import Flow
 
 ## `zero.flow`
 
-#### Flow
+#### `Flow`
 The class simplifies managing for-loops:
 - automatic management of the `epoch` and `iteration` variables
 - allows to customize the size of epoch
-- allows to change an underlying data loader on the fly
+- allows to change the underlying data loader on the fly
 - enables useful patterns
-- (not implemented: [issue](https://github.com/Yura52/zero/issues/6)) allows to dump and restore loop's state: epoch, iteration, etc.)
+- (not implemented: [issue](https://github.com/Yura52/zero/issues/6)) allows to dump and restore loop's state: epoch, iteration, etc.
 
 *Before*:
 ```python
@@ -56,7 +56,7 @@ while flow.increment_epoch(max_epoch):
 
 *After v2*:
 ```python
-# An endless loop
+# endless loop
 for x in flow.data(math.inf):
     ...
     if flow.iteration % frequency == 0:
@@ -65,7 +65,7 @@ for x in flow.data(math.inf):
 
 *After v3*:
 ```python
-# An endless loop
+# endless loop
 while True:
     x = flow.next()
     ...
@@ -75,7 +75,7 @@ while True:
 
 ## `zero.training`
 
-#### ibackward
+#### `ibackward`
 The function combines two calls: .backward() and .item()
 
 *Before*:
@@ -92,7 +92,7 @@ from zero.training import ibackward
 loss = ibackward(loss_fn(...))
 ```
 
-#### Eval
+#### `Eval`
 
 *Before*:
 ```python
@@ -112,7 +112,7 @@ with Eval(model):
 
 ## `zero.metrics`
 
-#### Metric
+#### `Metric`
 A simple base class for creating metrics.
 
 *Example*:
@@ -134,16 +134,22 @@ class Accuracy(Metric):
     def compute(self):
         assert self.n_objects
         return self.n_correct / self.n_objects
+
+metric_fn = Accuracy(...)
+...
+with Eval(model), metric_fn:  # metric_fn.reset() is called in __enter__ and __exit__
+    for X, y in val_loader:
+        metric_fn.update(model(X), y)
+    metrics = metric_fn.compute()
 ```
 
-#### MetricsList, MetricsDict
+#### `MetricsList`, `MetricsDict`
 Containers for metrics (with support of [`ignite.metrics`](https://pytorch.org/ignite/metrics.html#how-to-create-a-custom-metric)).
 
 *Example*:
 ```python
 from ignite.metrics import Accuracy, Precision, Recall
 from zero.metrics import MetricsDict
-from zero.training import Eval
 
 metric_fn = MetricsDict({
     'accuracy': Accuracy(...),
@@ -152,13 +158,13 @@ metric_fn = MetricsDict({
     'custom_metric': CustomMetric(...)  # derived from zero.metrics.Metric
 })
 
-with Eval(model), metric_fn:  # metric_fn.reset() is called in __enter__ and __exit__
+with Eval(model), metric_fn:
     for X, y in val_loader:
         metric_fn.update((model(X), y))  # Ignite metrics expect tuples as input
     metrics = metric_fn.compute()  # {'accuracy': <float>, 'precision': <float>, ...}
 ```
 
-#### IgniteMetric
+#### `IgniteMetric`
 A wrapper for metrics from [`ignite.metrics`](https://pytorch.org/ignite/metrics.html#how-to-create-a-custom-metric) that adds some functionality (e.g. support of the `with` operator).
 
 *Example*:
@@ -170,12 +176,13 @@ metric = IgniteMetric(Accuracy(...))
 ```
 
 ## `zero.optim`
-The module adds extra functionality to optimizers *without changing the original behavior*.
+The module adds extra functionality to optimizers (*all original functionality is left unchanged*).
 
 *Before*:
 ```python
 from torch.optim import SGD
 
+optimizer = SGD(...)
 optimizer.zero_grad()
 ...
 <backward>
@@ -187,10 +194,12 @@ optimizer.step()
 ```python
 from zero.optim import SGD
 
+optimizer = SGD(...)  # no changes
 with optimizer:
     ...
     <backward>
     ...
+assert issubclass(zero.optim.SGD, torch.optim.SGD)
 ```
 
 In case of optimizers not from PyTorch:
@@ -292,7 +301,7 @@ for batch in iter_batches(data, batch_size):
 
 ## `zero.map_concat`
 
-#### concat
+#### `concat`
 If you have a function (**or a model**) that is applied to batches, `concat` will help you to combine a list (or iterable) of batch results in one result for the whole data. It can process batch results that are tensors, numpy-arrays, tuples, dictionaries, lists of arbitrary data and reasonable combinations of the mentioned types. If your workflow involves moving data between devices, use `concat` in combination with [`dmap`](#dmap).
 
 *Before*:
@@ -351,7 +360,7 @@ result = concat(dmap(model, batches, in_device, out_device))
 
 ## `zero.progress`
 
-#### ProgressTracker
+#### `ProgressTracker`
 - helps with Early Stopping ("no progress for too many updates")
 - tracks the best score
 - (not implemeted: [issue](https://github.com/Yura52/zero/issues/5)) allows to dump and restore tracker's state
@@ -378,7 +387,7 @@ while not progress.fail and flow.increment_epoch(max_epoch):
 
 ## `zero.time`
 
-#### Timer
+#### `Timer`
 Time-management as simple as two methods.
 - `Timer.start()` for starting/resuming
 - `Timer.stop()` for pausing
@@ -396,7 +405,7 @@ for x in data:
         validation()
 ```
 
-#### format_seconds
+#### `format_seconds`
 *Before*:
 ```python
 from time import strftime, gmtime
@@ -411,7 +420,7 @@ print(format_seconds(timer()))  # The format is customizable, default: '%Hh %Mm 
 
 ## `zero.hardware`
 
-#### to_device
+#### `to_device`
 Painlessly transfer tensor-based data between devices.
 
 *Example*:
@@ -429,7 +438,7 @@ data = {
 new_data = to_device(data, 'cuda')
 ```
 
-#### free_memory
+#### `free_memory`
 Runs the garbage collector, frees all unused RAM and GPU memory.
 
 *Example*:
@@ -439,7 +448,7 @@ from zero.hardware import free_memory
 free_memory()
 ```
 
-#### get_gpu_info
+#### `get_gpu_info`
 A handy function for getting information about GPUs.
 
 *Example*:
@@ -470,7 +479,7 @@ print(get_gpu_info())
 
 ## `zero.random`
 
-#### set_seed_everywhere
+#### `set_seed_everywhere`
 Simplifies reproducibility and following good practices.
 - sets random seed for the following modules: `random`, `np.random`, `torch`, `torch.cuda`
 - if seed is omitted, a high-quality seed is generated
