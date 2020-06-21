@@ -1,5 +1,4 @@
 from argparse import ArgumentParser
-from pprint import pprint
 
 import torch
 import torch.nn as nn
@@ -121,7 +120,7 @@ def main():
         )
         if device.type == 'cuda':
             index = device.index or 0
-            msg += f'GPU used memory (%): {get_gpu_info()[index]["used%"]}'
+            msg += f'\nGPU info: {get_gpu_info()[index]}'
         print(msg)
 
     timer.stop()
@@ -142,12 +141,8 @@ def main():
     print(f'The experiment report is saved to {report_path}')
 
     print('Freeing memory (for fun, not for profit) ...')
-    del model
+    del model, optimizer, step
     free_memory()
-    if device.type == 'cuda':
-        index = device.index or 0
-        print('GPU info:')
-        pprint(get_gpu_info()[index])
 
     print('\nDONE.')
 
