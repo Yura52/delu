@@ -3,15 +3,19 @@ The document is a high-level overview of Zero. It covers some modules, classes a
 
 Enjoy!
 
-## How to import
-The recommended style of imports is one of the following at your choice:
+## `zero.all`
+The module contains all content from all submodules. It is neither "better" nor "worse" to use this module instead of explicit imports from submodules, it is completely up to a user. Just keep in mind that if *all* submodules you need do not import `torch` (or any other heavy libraries) under the hood, then they will be imported faster individually then via `zero.all`.
+
+*Example*:
 ```python
-from zero.flow import Flow
-import zero.flow
-import zero.flow as zflow
-# zero.all contains all content from all modules
-import zero.all as zero  # then use zero.Flow
-from zero.all import Flow
+import zero.all as zero
+zero.foo()
+zero.bar()
+
+# or
+from zero.all import foo, bar
+foo()
+bar()
 ```
 
 ## `zero.flow`
