@@ -20,6 +20,7 @@ classifiers = [
 ]
 description-file = "README.md"
 dist-name = "libzero"
+home-page = "https://github.com/Yura52/zero"
 keywords = "artificial intelligence, deep learning, library, python, pytorch, torch"
 module = "zero"
 requires = [
