@@ -1,7 +1,7 @@
 # Zero
 Zero is a *library* for PyTorch users. Zero provides tools that:
 - simplify training loop, models evaluation, models application and other typical Deep Learning tasks
-- are not tied to any "central entity", i.e. they solve small orthogonal problems and can be used together with PyTorch *frameworks* such as [Ignite](https://pytorch.org/ignite), [Lightning](https://pytorch-lightning.readthedocs.io/en/latest), [Catalyst](https://catalyst-team.github.io/catalyst) and [others](https://pytorch.org/ecosystem)
+- are not tied to any "central entity", i.e. they solve small orthogonal problems and can be used together with PyTorch *frameworks* such as [Ignite](https://github.com/pytorch/ignite), [Lightning](https://github.com/PytorchLightning/pytorch-lightning), [Catalyst](https://github.com/catalyst-team/catalyst) and [others](https://pytorch.org/ecosystem)
 - do not affect the way you write and organize code
 
 **NOT READY FOR PRODUCTION USAGE.** Zero is tested, but not battle-tested. You can give it a try in non-mission-critical research.
