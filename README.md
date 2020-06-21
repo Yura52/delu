@@ -28,7 +28,7 @@ $ pip install libzero
 There is a chance that Zero works fine with older versions of the mentioned software, however, it is tested only with the versions given above.
 
 ## How to contribute
-- See issues with the labels ["discussion"](https://github.com/Yura52/zero/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3Adiscussion) and ["help wanted"](https://github.com/Yura52/zero/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)
+- See [issues](https://github.com/Yura52/zero/issues), especially with the labels ["discussion"](https://github.com/Yura52/zero/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3Adiscussion) and ["help wanted"](https://github.com/Yura52/zero/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)
 - Open issues with bugs, ideas and any other kind of feedback
 
 If your contribution includes pull requests, see [CONTRIBUTING.md](./other/CONTRIBUTING.md).
