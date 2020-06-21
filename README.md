@@ -13,7 +13,7 @@ Zero is a *library* for PyTorch users. Zero provides tools that:
 No documentation is currently available, but you can learn Zero from the links above and by reading the source code.
 
 ## Installation
-**Please, note** that if you don't have PyTorch installed, then the CPU-version will be installed together with Zero. If you want to have the GPU-version of PyTorch, install it **before** installing Zero. See the [PyTorch Get Started](https://pytorch.org/get-started/locally/) for corresponding instructions.
+If you plan to use the GPU-version of PyTorch, install it **before** installing Zero (otherwise, the CPU-version will be installed together with Zero).
 
 ```bash
 $ pip install libzero
@@ -28,7 +28,6 @@ $ pip install libzero
 There is a chance that Zero works fine with older versions of the mentioned software, however, it is tested only with the versions given above.
 
 ## How to contribute
-- Take part in the discussions: [GitHub]()
 - See issues with the labels ["discussion"](https://github.com/Yura52/zero/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3Adiscussion) and ["help wanted"](https://github.com/Yura52/zero/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)
 - Open issues with bugs, ideas and any other kind of feedback
 
@@ -36,6 +35,6 @@ If your contribution includes pull requests, see [CONTRIBUTING.md](./other/CONTR
 
 ## Why "Zero"?
 There is no correct explanation, just a set of associations:
-- Zero aims to be [zero-overhead](https://isocpp.org/wiki/faq/big-picture#zero-overhead-principle) in terms of both mental and technical overhead. It means that solutions, provided by Zero, try to be as minimal, intuitive and easy to learn, as possible.
+- Zero aims to be [zero-overhead](https://isocpp.org/wiki/faq/big-picture#zero-overhead-principle) in terms of *mental* overhead. It means that solutions, provided by Zero, try to be as minimal, intuitive and easy to learn, as possible.
 - Zero is the most mimimalistic and easy-to-use number.
 - Zero loss is the unattainable dream we all want to make come true.
