@@ -1,5 +1,5 @@
 ## Introduction
-The document is a high-level overview of Zero. It covers some modules, classes and functions in a comfortable-to-read order. Pay attention to both code and comments. For fully working examples, see [examples](../examples).
+The document is a high-level overview of Zero. It covers all modules in a comfortable-to-read order (while it covers *most* of functions, classes and methods, the only way to learn *all* the details is reading the source code). Pay attention to both code and comments. For fully working examples, see [examples](../examples).
 
 Enjoy!
 
@@ -374,7 +374,7 @@ result = concat(dmap(model, batches, in_device, out_device))
 from zero.flow import Flow
 from zero.progress import ProgressTracker
 
-progress = ProgressTracker(5, 0.0001)  # ProgressTracker(patience, tolerance)
+progress = ProgressTracker(5, 0.0001)  # ProgressTracker(patience, min_delta)
 flow = Flow(...)
 # early stopping
 while not progress.fail and flow.increment_epoch(max_epoch):
