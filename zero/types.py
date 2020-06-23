@@ -6,7 +6,7 @@ import torch
 
 T = TypeVar('T')
 S = TypeVar('S')
-Number = TypeVar('Number', int, float)
+
 PathLike = Union[Path, bytes, str]
 ArrayIndex = Union[int, slice, List[int], np.ndarray]
 TensorIndex = Union[ArrayIndex, torch.Tensor]
