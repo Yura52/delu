@@ -4,8 +4,9 @@ from .hardware import *  # noqa
 from .io import *  # noqa
 from .map_concat import *  # noqa
 from .metrics import *  # noqa
+from .model import *  # noqa
 from .optim import *  # noqa
 from .progress import *  # noqa
 from .random import *  # noqa
+from .tensor import *  # noqa
 from .time import *  # noqa
-from .training import *  # noqa

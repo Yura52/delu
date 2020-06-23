@@ -17,15 +17,16 @@ except ImportError:
 
 from zero.all import (
     Flow,  # zero.flow
-    free_memory, get_gpu_info, to_device,  # zero.hardware
+    free_memory, get_gpu_info,  # zero.hardware
     dump_json,  # zero.io
     concat, dmap,  # zero.map_concat
     Metric,  # zero.metrics
+    Eval,  # zero.model
     SGD,  # zero.optim
     ProgressTracker,  # zero.progress
     set_seed_everywhere,  # zero.random
+    ibackward, to_device,  # zero.tensor
     Timer, format_seconds,  # zero.time
-    Eval, ibackward,  # zero.training
 )
 
 

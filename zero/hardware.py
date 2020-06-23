@@ -1,4 +1,4 @@
-__all__ = ['free_memory', 'get_gpu_info', 'to_device']
+__all__ = ['free_memory', 'get_gpu_info']
 
 import gc
 import math
@@ -7,9 +7,6 @@ from typing import Any, Dict, List
 import torch
 from pynvml import NVMLError_LibraryNotFound
 from pynvml.smi import nvidia_smi
-
-from ._util import traverse
-from .types import Device, Recursive
 
 _GPU_INFO_QUERY = 'memory.total, memory.used, memory.free, utilization.gpu'
 
@@ -46,10 +43,3 @@ def get_gpu_info(precise: bool = False) -> List[Dict[str, Any]]:
         return gpu_info
 
     return list(map(unpack_raw_gpu_info, raw_info['gpu']))
-
-
-def to_device(
-    data: Recursive[torch.Tensor], device: Device, non_blocking: bool = False
-) -> Recursive[torch.Tensor]:
-    # int is missing in .pyi
-    return traverse(lambda x: x.to(device, non_blocking=non_blocking), data)  # type: ignore

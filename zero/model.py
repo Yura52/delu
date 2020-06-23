@@ -1,4 +1,4 @@
-__all__ = ['Eval', 'ibackward']
+__all__ = ['Eval']
 
 from typing import ClassVar, List, Optional
 
@@ -33,8 +33,3 @@ class _ModelsContext:
 class Eval(_ModelsContext):
     _train = False
     _grad = False
-
-
-def ibackward(x: torch.Tensor, *args, **kwargs) -> float:
-    x.backward(*args, **kwargs)
-    return x.item()

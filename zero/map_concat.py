@@ -7,7 +7,7 @@ import numpy as np
 import torch
 
 from ._util import is_namedtuple
-from .hardware import to_device
+from .tensor import to_device
 from .types import Device, S, T
 
 OutputItem = Union[List, np.ndarray, torch.Tensor]
