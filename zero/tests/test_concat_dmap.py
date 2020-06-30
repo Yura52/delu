@@ -2,7 +2,7 @@ import numpy as np
 import torch
 from pytest import mark, raises
 
-from zero.map_concat import concat, dmap
+from zero.concat_dmap import concat, dmap
 
 from .util import Point
 

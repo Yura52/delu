@@ -9,31 +9,27 @@ from zero.flow import Flow
 def test_properties():
     loader = [0]
     flow = Flow(loader)
-    assert flow.epoch == 0
     assert flow.iteration == 0
-    assert flow.count == 0
+    assert flow.epoch == 0
     assert flow.loader is loader
-    for attr in 'epoch', 'iteration', 'count':
+    for attr in 'iteration', 'epoch':
         with raises(AttributeError):
-            setattr(flow, attr, 0)
+            setattr(flow, attr, 1)
     with raises(AttributeError):
         flow.loader = flow.loader
 
 
-def test_epoch_iteration():
+def test_bad_loader():
     with raises(AssertionError):
         Flow([])
 
-    flow = Flow(range(3))
-    assert flow.epoch == 0
-    assert flow.iteration == 0
 
+def test_increment_epoch():
+    flow = Flow(range(3))
     n = 4
     for i in range(1, n + 1):
         flow.increment_epoch()
         assert flow.epoch == i
-        flow.increment_iteration()
-        assert flow.iteration == i
     assert not flow.increment_epoch(n)
     assert flow.epoch == n
 
@@ -44,21 +40,19 @@ def test_epoch_iteration():
 
 
 @mark.parametrize('n', range(1, 5))
-def test_count_next(n):
+def test_next_iteration(n):
     flow = Flow(range(n))
-    assert flow.count == 0
+    assert flow.iteration == 0
 
     for epoch in range(2):
         for x in range(n):
             assert flow.next() == x
             assert flow.iteration == x + epoch * n + 1
-            assert flow.count == flow.iteration
-    for i in range(1, 3):
-        flow.next(False)
-        assert flow.count == flow.iteration + i
 
     flow = Flow(iter(range(n)))
     for _ in range(n):
+        flow.next()
+    with raises(StopIteration):
         flow.next()
     with raises(StopIteration):
         flow.next()
@@ -73,14 +67,13 @@ def test_data(n):
 
     for epoch_size in [None] + list(range(1, 2 * n)):
         effective_epoch_size = n if epoch_size is None else epoch_size
-        max_count = n_epoches * effective_epoch_size
+        max_iteration = n_epoches * effective_epoch_size
         flow = Flow(range(n))
         actual = []
-        while flow.count < max_count:
+        while flow.iteration < max_iteration:
             actual.append(list(flow.data(epoch_size)))
-        assert flow.iteration == max_count
-        assert flow.count == max_count
-        flat_correct = [x % n for x in range(max_count)]
+        assert flow.iteration == max_iteration
+        flat_correct = [x % n for x in range(max_iteration)]
         correct = [
             flat_correct[i * effective_epoch_size : (i + 1) * effective_epoch_size]
             for i in range(n_epoches)
@@ -92,13 +85,6 @@ def test_data(n):
     assert [x for _, x in zip(range(1000), flow.data(math.inf))] == [
         x % n for x in range(1000)
     ]
-
-    # increment_iteration=False
-    flow = Flow(range(n))
-    for x in flow.data(None, False):
-        flow.increment_iteration()
-    assert flow.iteration == n
-    assert flow.count == n
 
     # infinite iterators
     flow = Flow(itertools.count())
@@ -132,18 +118,22 @@ def test_data(n):
         ]
         assert actual == correct
 
+    # bad input
+    with raises(AssertionError):
+        flow.data(10.0)
 
-def test_reset_iterator():
+
+def test_reload_iterator():
     n = 10
     flow = Flow(range(n))
     for x in range(n):
         assert flow.next() == 0
-        flow.reset_iterator()
+        flow.reload_iterator()
 
     flow = Flow(iter(range(n)))
     for x in range(n):
         assert flow.next() == x
-        flow.reset_iterator()
+        flow.reload_iterator()
     with raises(StopIteration):
         flow.next()
 

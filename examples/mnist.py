@@ -19,7 +19,7 @@ from zero.all import (
     Flow,  # zero.flow
     free_memory, get_gpu_info,  # zero.hardware
     dump_json,  # zero.io
-    concat, dmap,  # zero.map_concat
+    concat, dmap,  # zero.concat_dmap
     Metric,  # zero.metrics
     Eval,  # zero.model
     SGD,  # zero.optim

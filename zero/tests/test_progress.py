@@ -1,9 +1,4 @@
-from zero.progress import LossScore, ProgressTracker
-
-
-def test_loss_score():
-    x = 5
-    assert LossScore(lambda: x).loss() == -LossScore(lambda: x).score()
+from zero.progress import ProgressTracker
 
 
 def test_progress_tracker():

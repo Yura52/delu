@@ -1,3 +1,5 @@
+"""Manipulations with hardware (GPU, memory, ...)."""
+
 __all__ = ['free_memory', 'get_gpu_info']
 
 import gc
@@ -12,6 +14,12 @@ _GPU_INFO_QUERY = 'memory.total, memory.used, memory.free, utilization.gpu'
 
 
 def free_memory() -> None:
+    """Free GPU-memory occupied by `torch` and run the garbage collector.
+
+    Warning:
+        There is a small chunk of GPU-memory (occupied by drivers) that is impossible to
+        free. It is a `torch` "limitation", so the function inherits this property.
+    """
     gc.collect()
     if torch.cuda.is_available():
         # torch has wrong .pyi
@@ -22,6 +30,51 @@ def free_memory() -> None:
 
 
 def get_gpu_info(precise: bool = False) -> List[Dict[str, Any]]:
+    """Get statistics about GPU devices.
+
+    Includes information about memory (total, free and used) and utilization. Some
+    figures are represented in two ways: with raw units and with percentage.
+
+    Args:
+        precise: if False, all data is rounded (to Mb for memory, to % for percentages)
+    Returns:
+        Information about GPU devices.
+    Raises:
+        RuntimeError: if necessary cuda-related libraries are not found. Usually, it
+            means that the function is run on a machine without GPU.
+
+    Examples:
+        .. code-block::
+
+            print(get_gpu_info())
+
+        Output example (formatted for convenience):
+
+        .. code-block:: none
+
+            [
+                {
+                    'util%': 0,
+                    'total': 11019,
+                    'used': 0,
+                    'free': 11019,
+                    'used%': 0,
+                    'free%': 100,
+                },
+                {
+                    'util%': 0,
+                    'total': 11016,
+                    'used': 0,
+                    'free': 11016,
+                    'used%': 0,
+                    'free%': 100,
+                },
+            ]
+
+    Note:
+        The function directly collects information using the :code:`pynvml` library,
+        hence, settings like :code:`CUDA_VISIBLE_DEVICES` don't affect the result.
+    """
     try:
         smi = nvidia_smi.getInstance()
     except NVMLError_LibraryNotFound as err:

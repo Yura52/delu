@@ -1,11 +1,14 @@
 from time import perf_counter, sleep
 
-from pytest import approx
+from pytest import approx, raises
 
 from zero.time import Timer, format_seconds
 
 
 def test_timer():
+    with raises(AssertionError):
+        Timer().stop()
+
     # initial state, start
     timer = Timer()
     sleep(0.001)
@@ -22,8 +25,12 @@ def test_timer():
 
     # add, sub
     timer.stop()
+    with raises(AssertionError):
+        timer.add(-1.0)
     timer.add(1.0)
     assert timer() - x == approx(1)
+    with raises(AssertionError):
+        timer.sub(-1.0)
     timer.sub(1.0)
     assert timer() == x
 

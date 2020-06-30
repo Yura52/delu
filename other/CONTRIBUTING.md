@@ -16,7 +16,7 @@ $ <install torch==1.5.*, see https://pytorch.org/get-started/locally>
 $ pip install -r other/requirements_dev.txt
 ```
 
-4. Set up a pre-commit hook (use "`git commit -n ...`" to avoid running it for WIP-like or non-code commits):
+4. Set up a pre-commit hook (use "`git commit -n ...`" to avoid running the hook for WIP-like commits):
 ```bash
 $ echo "#!/bin/sh
 
@@ -27,12 +27,6 @@ make pre-commit
 ```
 
 5. Learn [Makefile](../Makefile). It contains shortcuts for running linters, code formatters, tests, the pre-commit hook and other useful commands.
-
-### Checklist for you Pull Request
-- [ ] `make pre-commit` succeeds
-- [ ] `make coverage` shows that all new code is covered with tests
-- [ ] docstrings are added
-- [ ] new public API (function, classes) is added to corresponding `__all__` lists
 
 ### Notes
 - "# mypy: NaN" means either "I don't know how to make mypy happy" or "It is impossible to make mypy happy" or "Making mypy happy requires going crazy with type annotations"

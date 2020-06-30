@@ -1,7 +1,8 @@
-.PHONY: default clean coverage lint pre-commit pretty test typecheck
+.PHONY: default clean coverage _docs docs dtest lint pre-commit format test typecheck
 
 PYTEST_CMD = pytest zero
 TEST_CMD = PYTHONPATH='.' $(PYTEST_CMD)
+VIEW_HTML_CMD = open
 
 default:
 	echo "Hello, World!"
@@ -12,10 +13,22 @@ clean:
 	rm -rf .ipynb_checkpoints
 	rm -rf .mypy_cache
 	rm -rf .pytest_cache
+	rm -rf dist
+	rm -rf docs/source/reference/api
+	cd docs && make clean
 
 coverage:
 	coverage run -m $(PYTEST_CMD)
 	coverage report -m
+
+_docs:
+	cd docs && make html
+
+docs: _docs
+	$(VIEW_HTML_CMD) docs/build/html/index.html
+
+dtest:
+	cd docs && make doctest
 
 lint:
 	python -m pre_commit_hooks.debug_statement_hook zero/**/*.py
@@ -23,13 +36,14 @@ lint:
 	black zero --check
 	flake8 zero
 
-pre-commit: lint test typecheck
+# the order is important
+pre-commit: clean lint test dtest typecheck _docs
 
-pretty:
+format:
 	isort zero --recursive -y
 	black zero
 
-test: clean
+test:
 	$(TEST_CMD) $(ARGV)
 
 typecheck:

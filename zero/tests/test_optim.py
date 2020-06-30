@@ -10,7 +10,11 @@ from .util import make_model
 
 def _is_optimizer(name):
     cls = getattr(zero.optim, name)
-    return cls is not None and issubclass(cls, torch.optim.Optimizer)
+    return (
+        cls is not None
+        and isinstance(cls, type)
+        and issubclass(cls, torch.optim.Optimizer)
+    )
 
 
 OPTIMIZER_NAMES = list(filter(_is_optimizer, zero.optim.__all__))
