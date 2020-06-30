@@ -5,8 +5,6 @@ zero.flow
 
 .. automodule:: zero.flow
 
-.. _Flow:
-
 Flow
 ^^^^
 

@@ -5,8 +5,6 @@ zero.progress
 
 .. automodule:: zero.progress
 
-.. _ProgressTracker:
-
 ProgressTracker
 ^^^^^^^^^^^^^^^
 

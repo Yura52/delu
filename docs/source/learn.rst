@@ -27,18 +27,20 @@ is enough. To achieve this, you need to walk through some specific parts of Refe
 paying attention to *explanations* and *examples*, without diving into API details. Here
 are the things to learn:
 
-#. :ref:`Flow <Flow>` (simplifies management of training loops)
-#. :ref:`zero.metrics <metrics>` (a convenient API for metrics)
-#. :ref:`zero.optim <optim>` (adds some features to optimizers)
-#. :ref:`Eval <Eval>` (a context-manager for models evaluation)
-#. :ref:`zero.concat_dmap <concat_dmap>` (easy batchwise application of models and functions)
-#. :ref:`ProgressTracker <ProgressTracker>` (remembers your best score and facilitates early stopping)
-#. :ref:`zero.tensor <tensor>` (remove some boilerplate when working with tensors
-   )
-#. :ref:`zero.random <random>` (easier reproducibility)
-#. :ref:`zero.time <time>` (time management)
-#. :ref:`zero.hardware <hardware>` (runtime GPU statistics, memory-management)
-#. :ref:`zero.io <io>` (shortcuts for input and output)
+.. autosummary::
+
+   zero.flow.Flow
+   zero.metrics.Metric
+   zero.optim
+   zero.model.Eval
+   zero.concat_dmap
+   zero.progress.ProgressTracker
+   zero.tensor.to_device
+   zero.tensor.ibackward
+   zero.random.set_seed_everywhere
+   zero.time.Timer
+   zero.hardware
+   zero.io
 
 Congratulations! You are ready to apply Zero in practice. You can also visit
 :ref:`this page <zero>` and explore things that are not covered in the list above (

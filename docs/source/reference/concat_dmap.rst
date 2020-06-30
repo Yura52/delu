@@ -1,5 +1,3 @@
-.. _concat_dmap:
-
 zero.concat_dmap
 ================
 

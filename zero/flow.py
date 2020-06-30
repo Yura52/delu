@@ -18,7 +18,7 @@ class Flow:
 
     `Flow`:
 
-    - simplifies management of the `epoch` and `iteration` variables
+    - simplifies management of the "epoch" and "iteration" variables
     - allows to customize the size of epoch
     - allows to change the underlying data loader on the fly
     - enables useful patterns

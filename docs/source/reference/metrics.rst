@@ -1,5 +1,3 @@
-.. _metrics:
-
 zero.metrics
 ============
 
@@ -7,7 +5,6 @@ zero.metrics
 
 .. automodule:: zero.metrics
 
-.. _zero.metrics.Metric:
 
 Metric
 ^^^^^^

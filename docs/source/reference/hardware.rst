@@ -1,5 +1,3 @@
-.. _hardware:
-
 zero.hardware
 =============
 

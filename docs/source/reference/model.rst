@@ -5,8 +5,6 @@ zero.model
 
 .. automodule:: zero.model
 
-.. _Eval:
-
 Eval
 ^^^^^
 

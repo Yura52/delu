@@ -1,5 +1,3 @@
-.. _optim:
-
 zero.optim
 ==========
 

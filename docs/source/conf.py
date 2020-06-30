@@ -70,7 +70,7 @@ html_theme_options = {
     'base_url': repo_url,
     # available colors: https://squidfunk.github.io/mkdocs-material/getting-started/#primary-color
     'color_primary': 'white',
-    'globaltoc_depth': 1,
+    'globaltoc_depth': 2,
     'nav_title': ' ',  # don't change this to an empty string
     'repo_name': project,
     'repo_url': repo_url,
@@ -78,7 +78,7 @@ html_theme_options = {
     'nav_links': []
 }
 html_sidebars = {
-    '**': ['logo-text.html', 'globaltoc.html', 'localtoc.html', 'searchbox.html'],
+    '**': ['logo-text.html', 'globaltoc.html', 'searchbox.html'],
 }
 
 # import sphinx_rtd_theme  # noqa

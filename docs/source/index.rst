@@ -9,7 +9,6 @@ Zero
    :hidden:
 
    learn
-   blog
 
 .. toctree::
    :caption: REFERENCE

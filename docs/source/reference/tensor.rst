@@ -1,5 +1,3 @@
-.. _tensor:
-
 zero.tensor
 ===========
 

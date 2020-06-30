@@ -11,9 +11,9 @@ Using this library together with `zero.model.Eval` makes evaluation look like th
 
 In order to create your own metric, inherit from `Metric` and implement its interface.
 The API throughout the module intentionally follows that of
-https://pytorch.org/ignite/metrics.html, hence, Ignite metrics are supported almost
-everywhere where `Metric` is supported. For giving Ignite metrics all functionality of
-`Metric`, use `IgniteMetric`.
+`ignite.metrics <https://pytorch.org/ignite/metrics.html>`_, hence, Ignite metrics are
+supported almost everywhere where `Metric` is supported. For giving Ignite metrics all
+functionality of `Metric`, use `IgniteMetric`.
 """
 
 __all__ = ['Metric', 'MetricsList', 'MetricsDict', 'IgniteMetric']

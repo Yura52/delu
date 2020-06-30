@@ -1,5 +1,0 @@
-Blog
-====
-
-Release Announcement
---------------------

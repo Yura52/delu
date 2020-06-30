@@ -1,5 +1,3 @@
-.. _random:
-
 zero.random
 ===========
 

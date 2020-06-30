@@ -22,7 +22,7 @@ class NamedTensorDataset(Dataset):
     Examples:
         .. testcode::
 
-            X, y = torch.randn(10, 2), torch.randn(10)
+            X, y = torch.randn(10, 3), torch.randn(10)
             dataset = NamedTensorDataset(X, y, names=['X', 'y'])
             # or
             dataset = NamedTensorDataset.from_dict({'X': X, 'y': y})
@@ -33,7 +33,7 @@ class NamedTensorDataset(Dataset):
             def step_fn(X, y):
                 ...
 
-            for batch in torch.utils.data.DataLoader(dataset, 2):
+            for batch in torch.utils.data.DataLoader(dataset, batch_size=2):
                 # batch is a named tuple
                 step_fn(batch.X, batch.y)
     """
@@ -237,8 +237,8 @@ def iter_batches(
 ) -> Iterator:
     """*Efficiently* iterate over data in a batchwise manner.
 
-    The function is useful when you want to efficiently iterate **once** over
-    tensor-based data. See examples below for typical use cases.
+    The function is useful when you want to *efficiently* iterate **once** over
+    tensor-based data in a batchwise manner. See examples below for typical use cases.
 
     The function is a more efficient alternative to `torch.utils.data.DataLoader` when
     it comes to in-memory data, because it uses batch-based indexing instead of
@@ -273,7 +273,7 @@ def iter_batches(
 
             result = concat(map(fn, iter_batches(dataset_or_tensors_or_whatever, ...)))
 
-        The function can also used for training:
+        The function can also be used for training:
 
         .. code-block::
 

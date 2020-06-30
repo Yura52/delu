@@ -11,6 +11,9 @@ from .types import Device, Recursive
 def ibackward(x: torch.Tensor, *args, **kwargs) -> float:
     """Do :code:`.backward()` and return :code:`.item()`.
 
+    The function is useful when doing backward and extracting value are the only things
+    you want from a loss tensor (see examples).
+
     Args:
         x: Tensor.
         *args: positional arguments for `torch.Tensor.backward`
@@ -19,10 +22,19 @@ def ibackward(x: torch.Tensor, *args, **kwargs) -> float:
         The underlying scalar value.
 
     Examples:
+        Before:
+
+        .. code-block::
+
+            loss = loss_fn(model(X), y)
+            loss.backward()
+            loss = loss.item()
+
+        After:
+
         .. code-block::
 
             loss = ibackward(loss_fn(model(X), y))
-            assert isinstance(loss, float)
     """
     x.backward(*args, **kwargs)
     return x.item()
