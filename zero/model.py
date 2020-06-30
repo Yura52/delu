@@ -1,3 +1,5 @@
+r"""Tools for working with `torch.nn.Module`."""
+
 __all__ = ['Eval']
 
 from typing import ClassVar, List, Optional
@@ -6,7 +8,6 @@ import torch
 
 
 class _ModelsContext:
-    # TODO (docs): takes effect only within `with`, not when constructed!
     _train: ClassVar[bool] = NotImplemented
     _grad: ClassVar[bool] = NotImplemented
 
@@ -31,5 +32,38 @@ class _ModelsContext:
 
 
 class Eval(_ModelsContext):
+    r"""A context-manager for models evaluation.
+
+    Switches one or more models to the evaluation mode and turns off gradients
+    **when enters a context** (not when constructed!) and reverts all the changes to the
+    previous state when exits the context.
+
+    Args:
+        *models (`torch.nn.Module`)
+
+    Examples:
+        .. testcode::
+
+            a = torch.nn.Linear(1, 1)
+            b = torch.nn.Linear(2, 2)
+            with Eval(a):
+                ...
+            with Eval(a, b):
+                ...
+
+    .. rubric:: Tutorial
+
+    .. testcode::
+
+        model = torch.nn.Linear(1, 1)
+        grad_before_context = torch.is_grad_enabled()
+        for training_before_context in False, True:
+            model.train(training_before_context)
+            with Eval(model):
+                assert not model.training
+                assert not torch.is_grad_enabled()
+            assert model.training == training_before_context
+            assert torch.is_grad_enabled() == grad_before_context
+    """
     _train = False
     _grad = False
