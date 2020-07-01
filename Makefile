@@ -1,4 +1,4 @@
-.PHONY: default clean coverage _docs docs dtest ghdocs lint pre-commit format test typecheck
+.PHONY: default clean coverage _docs docs dtest format lint pages pre-commit test typecheck
 
 PYTEST_CMD = pytest zero
 TEST_CMD = PYTHONPATH='.' $(PYTEST_CMD)
@@ -31,7 +31,7 @@ docs: _docs
 dtest:
 	cd $(DOCSRC) && make doctest
 
-ghdocs:
+pages:
 	rm -r docs
 	cp -r $(DOCSRC)/build/html docs
 
