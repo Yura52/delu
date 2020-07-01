@@ -6,12 +6,6 @@ from zero.metrics import MetricsDict, MetricsList
 from .util import ObjectCounter
 
 
-def apply_metric(metric_fn, data):
-    result = metric_fn.reset().update(data).compute()
-    metric_fn.reset()
-    return result
-
-
 def test_metrics_containers():
     data = (torch.tensor([0, 0]), torch.tensor([1, 1]))
     a = ObjectCounter(1)
@@ -27,7 +21,7 @@ def test_metrics_containers():
         ),
     ]
     for metric_fn, first, second, keys in params:
-        assert apply_metric(metric_fn, data) == first
+        assert metric_fn.calculate(data) == first
         metric_fn.update(data)
         metric_fn.update(data)
         assert metric_fn.compute() == second
@@ -36,14 +30,3 @@ def test_metrics_containers():
         metric_fn.reset()
         with raises(AssertionError):
             metric_fn.compute()
-
-
-def test_metric_context():
-    metric_fn = ObjectCounter(1)
-    metric_fn.update([[0]])
-    assert not metric_fn.empty
-    with metric_fn:
-        assert metric_fn.empty
-        metric_fn.update([[0]])
-        assert not metric_fn.empty
-    assert metric_fn.empty

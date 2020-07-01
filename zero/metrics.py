@@ -1,41 +1,44 @@
 """Tiny ecosystem for metrics.
 
-Using this library together with `zero.model.Eval` makes evaluation look like this:
+TL;DR: with this module, evaluation looks like this:
 
 .. code-block::
 
-    with Eval(model), metric_fn:
-        for batch in val_loader:
-            metric_fn.update(predict(batch))
-        metrics = metric_fn.compute()
+    metrics = metric_fn.calculate_iter(map(predict_batch, val_loader))
 
 In order to create your own metric, inherit from `Metric` and implement its interface.
 The API throughout the module intentionally follows that of
 `ignite.metrics <https://pytorch.org/ignite/metrics.html>`_, hence, Ignite metrics are
 supported almost everywhere where `Metric` is supported. For giving Ignite metrics all
 functionality of `Metric`, use `IgniteMetric`.
+
+Warning:
+    Distributed settings are not supported out-of-the-box. In such cases, you have the
+    following options:
+
+    - wrap a metric from Ignite in `IgniteMetric`
+    - use `ignite.metrics.metric.sync_all_reduce` and
+      `ignite.metrics.metric.reinit__is_reduced`
+    - manually take care of everything
 """
 
 __all__ = ['Metric', 'MetricsList', 'MetricsDict', 'IgniteMetric']
 
-# The API intentially follows that of Ignite: https://pytorch.org/ignite/metrics.html
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Sequence
+from typing import Any, Dict, Iterable, List, Sequence
 
 
 class Metric(ABC):
     """Base class for metrics.
 
     In order to create your own metric, inherit from this class and implement all
-    methods marked with `@abstractmethod`. Context-manager functionality is already
-    implemented (see `Metric.__enter__` and `Metric.__exit__`).
+    methods marked with `@abstractmethod`. High-level functionality (`Metric.calculate`,
+    `Metric.calculate_iter`) is already implemented.
 
     .. rubric:: Tutorial
 
     .. testcode ::
 
-        # NOTE: Ending `reset` and `update` with `return self` is not required,
-        # but it enables the pattern `metric_fn.reset().update(...).compute()`.
         class Accuracy(Metric):
             def __init__(self):
                 self.reset()
@@ -43,19 +46,34 @@ class Metric(ABC):
             def reset(self):
                 self.n_objects = 0
                 self.n_correct = 0
-                return self
 
             def update(self, y_pred, y):
                 self.n_objects += len(y)
                 self.n_correct += (y_pred == y).sum().item()
-                return self
 
             def compute(self):
                 assert self.n_objects
                 return self.n_correct / self.n_objects
+
+        metric_fn = Accuracy()
+        y_pred = torch.tensor([0, 0, 0, 0])
+        y = torch.tensor([0, 1, 0, 1])
+        assert metric_fn.calculate(y_pred, y) == 0.5
+
+        from zero.data import iter_batches
+        y = torch.randint(2, size=(10,))
+        X = torch.randn(len(y), 3)
+        batches = iter_batches((X, y), batch_size=2)
+
+        def perfect_prediction(batch):
+            X, y = batch
+            y_pred = y
+            return y_pred, y
+
+        score = metric_fn.calculate_iter(map(perfect_prediction, batches), star=True)
+        assert score == 1.0
     """
 
-    # TODO (docs): pattern metric_fn.reset().update(x).compute()
     @abstractmethod
     def reset(self) -> Any:
         """Reset the metric's state."""
@@ -71,14 +89,61 @@ class Metric(ABC):
         """Compute the metric."""
         ...  # pragma: no cover
 
-    def __enter__(self) -> None:
-        """Reset the metric."""
-        self.reset()
+    def calculate(self, *args, **kwargs) -> Any:
+        """Calculate metric for a single input.
 
-    def __exit__(self, *args) -> bool:  # type: ignore
-        """Reset the metric."""
+        The function does the following:
+
+        #. **resets the metric**
+        #. updates the metric with :code:`(*args, **kwargs)`
+        #. computes the result
+        #. **resets the metric**
+        #. returns the result
+
+        Args:
+            *args: arguments for `Metric.update`
+            **kwargs arguments for `Metric.update`
+        Returns:
+            The result of `Metric.compute`.
+        """
         self.reset()
-        return False
+        self.update(*args, **kwargs)
+        result = self.compute()
+        self.reset()
+        return result
+
+    def calculate_iter(self, iterable: Iterable, star: bool = False) -> Any:
+        """Calculate metric for iterable.
+
+        The function does the following:
+
+        #. **resets the metric**
+        #. sequentially updates the metric with every value from :code:`iterable`
+        #. computes the result
+        #. **resets the metric**
+        #. returns the result
+
+        Args:
+            iterable: data for `Metric.update`
+            star: if `True`, then :code:`update(*x)` is performed instead of
+                :code:`update(x)`
+        Returns:
+            The result of `Metric.compute`.
+
+        Examples:
+            .. code-block::
+
+                metrics = metric_fn.calculate_iter(map(predict_batch, val_loader))
+        """
+        self.reset()
+        for x in iterable:
+            if star:
+                self.update(*x)
+            else:
+                self.update(x)
+        result = self.compute()
+        self.reset()
+        return result
 
 
 class MetricsList(Metric):
@@ -244,6 +309,8 @@ class IgniteMetric(Metric):
 
             from ignite import Precision
             metric_fn = IgniteMetric(Precision())
+            metric_fn.calculate(...)
+            metric_fn.calculate_iter(...)
     """
 
     def __init__(self, ignite_metric) -> None:

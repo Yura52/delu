@@ -103,13 +103,11 @@ def main():
             with optimizer:
                 loss = ibackward(loss_fn(*step(batch)))
             if flow.iteration % 100 == 0:
-                print(f'Iteration: {flow.iteration} Train loss: {loss:.3f}')
+                print(f'Iteration: {flow.iteration} Train loss: {loss:.4f}')
 
         timer.stop()
-        with Eval(model), metric_fn:
-            for batch in val_loader:
-                metric_fn.update(*step(batch))
-            score = metric_fn.compute()
+        with Eval(model):
+            score = metric_fn.calculate_iter(map(step, val_loader), True)
         progress.update(score)
         if progress.success:
             torch.save(model.state_dict(), best_model_path)
@@ -117,7 +115,7 @@ def main():
         msg = (
             f'Epoch {flow.epoch} finished. '
             f'Time elapsed: {format_seconds(timer())}. '
-            f'Validation accuracy: {score:.3f}.'
+            f'Validation accuracy: {score:.4f}.'
         )
         if device.type == 'cuda':
             index = device.index or 0

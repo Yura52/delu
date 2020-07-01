@@ -17,8 +17,8 @@ Metric
     Metric.reset
     Metric.update
     Metric.compute
-    Metric.__enter__
-    Metric.__exit__
+    Metric.calculate
+    Metric.calculate_iter
 
 MetricsList
 ^^^^^^^^^^^
