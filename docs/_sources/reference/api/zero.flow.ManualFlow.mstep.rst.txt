@@ -1,0 +1,6 @@
+zero.flow.ManualFlow.mstep
+==========================
+
+.. currentmodule:: zero.flow
+
+.. autoproperty:: ManualFlow.mstep

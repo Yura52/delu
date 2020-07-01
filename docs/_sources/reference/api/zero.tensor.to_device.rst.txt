@@ -1,0 +1,6 @@
+zero.tensor.to\_device
+======================
+
+.. currentmodule:: zero.tensor
+
+.. autofunction:: to_device

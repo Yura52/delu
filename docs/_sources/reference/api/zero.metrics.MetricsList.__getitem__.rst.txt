@@ -1,0 +1,6 @@
+zero.metrics.MetricsList.\_\_getitem\_\_
+========================================
+
+.. currentmodule:: zero.metrics
+
+.. automethod:: MetricsList.__getitem__

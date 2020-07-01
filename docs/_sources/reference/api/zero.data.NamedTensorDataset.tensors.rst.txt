@@ -1,0 +1,6 @@
+zero.data.NamedTensorDataset.tensors
+====================================
+
+.. currentmodule:: zero.data
+
+.. autoproperty:: NamedTensorDataset.tensors

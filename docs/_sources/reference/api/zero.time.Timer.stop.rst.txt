@@ -1,0 +1,6 @@
+zero.time.Timer.stop
+====================
+
+.. currentmodule:: zero.time
+
+.. automethod:: Timer.stop

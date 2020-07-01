@@ -1,0 +1,6 @@
+zero.io.load\_pickle
+====================
+
+.. currentmodule:: zero.io
+
+.. autofunction:: load_pickle

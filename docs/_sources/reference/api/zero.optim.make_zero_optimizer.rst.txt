@@ -1,0 +1,6 @@
+zero.optim.make\_zero\_optimizer
+================================
+
+.. currentmodule:: zero.optim
+
+.. autofunction:: make_zero_optimizer

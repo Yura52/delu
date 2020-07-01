@@ -1,0 +1,6 @@
+zero.flow.ManualFlow.data
+=========================
+
+.. currentmodule:: zero.flow
+
+.. automethod:: ManualFlow.data

@@ -1,0 +1,6 @@
+zero.flow.Flow.set\_loader
+==========================
+
+.. currentmodule:: zero.flow
+
+.. automethod:: Flow.set_loader

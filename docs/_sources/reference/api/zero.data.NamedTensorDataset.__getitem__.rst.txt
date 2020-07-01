@@ -1,0 +1,6 @@
+zero.data.NamedTensorDataset.\_\_getitem\_\_
+============================================
+
+.. currentmodule:: zero.data
+
+.. automethod:: NamedTensorDataset.__getitem__

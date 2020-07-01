@@ -1,0 +1,6 @@
+zero.metrics.MetricsList.update
+===============================
+
+.. currentmodule:: zero.metrics
+
+.. automethod:: MetricsList.update

@@ -1,0 +1,6 @@
+zero.time.Timer.start
+=====================
+
+.. currentmodule:: zero.time
+
+.. automethod:: Timer.start

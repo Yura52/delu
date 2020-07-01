@@ -1,0 +1,6 @@
+zero.io.dump\_jsonl
+===================
+
+.. currentmodule:: zero.io
+
+.. autofunction:: dump_jsonl

@@ -1,8 +1,9 @@
-.PHONY: default clean coverage _docs docs dtest lint pre-commit format test typecheck
+.PHONY: default clean coverage _docs docs dtest ghdocs lint pre-commit format test typecheck
 
 PYTEST_CMD = pytest zero
 TEST_CMD = PYTHONPATH='.' $(PYTEST_CMD)
 VIEW_HTML_CMD = open
+DOCSRC = docsrc
 
 default:
 	echo "Hello, World!"
@@ -14,21 +15,25 @@ clean:
 	rm -rf .mypy_cache
 	rm -rf .pytest_cache
 	rm -rf dist
-	rm -rf docs/source/reference/api
-	cd docs && make clean
+	rm -rf $(DOCSRC)/source/reference/api
+	cd $(DOCSRC) && make clean
 
 coverage:
 	coverage run -m $(PYTEST_CMD)
 	coverage report -m
 
 _docs:
-	cd docs && make html
+	cd $(DOCSRC) && make html
 
 docs: _docs
-	$(VIEW_HTML_CMD) docs/build/html/index.html
+	$(VIEW_HTML_CMD) $(DOCSRC)/build/html/index.html
 
 dtest:
-	cd docs && make doctest
+	cd $(DOCSRC) && make doctest
+
+ghdocs:
+	rm -r docs
+	cp -r $(DOCSRC)/build/html docs
 
 lint:
 	python -m pre_commit_hooks.debug_statement_hook zero/**/*.py

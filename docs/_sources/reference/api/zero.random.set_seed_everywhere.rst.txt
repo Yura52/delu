@@ -1,0 +1,6 @@
+zero.random.set\_seed\_everywhere
+=================================
+
+.. currentmodule:: zero.random
+
+.. autofunction:: set_seed_everywhere

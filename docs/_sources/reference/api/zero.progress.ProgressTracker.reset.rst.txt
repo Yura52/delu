@@ -1,0 +1,6 @@
+zero.progress.ProgressTracker.reset
+===================================
+
+.. currentmodule:: zero.progress
+
+.. automethod:: ProgressTracker.reset

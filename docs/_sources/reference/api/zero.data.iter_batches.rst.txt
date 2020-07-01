@@ -1,0 +1,6 @@
+zero.data.iter\_batches
+=======================
+
+.. currentmodule:: zero.data
+
+.. autofunction:: iter_batches

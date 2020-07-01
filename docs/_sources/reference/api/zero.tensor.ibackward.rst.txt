@@ -1,0 +1,6 @@
+zero.tensor.ibackward
+=====================
+
+.. currentmodule:: zero.tensor
+
+.. autofunction:: ibackward

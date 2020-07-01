@@ -1,0 +1,6 @@
+zero.io.load\_json
+==================
+
+.. currentmodule:: zero.io
+
+.. autofunction:: load_json

@@ -1,0 +1,6 @@
+zero.metrics.MetricsList.reset
+==============================
+
+.. currentmodule:: zero.metrics
+
+.. automethod:: MetricsList.reset

@@ -1,0 +1,6 @@
+zero.io.extend\_jsonl
+=====================
+
+.. currentmodule:: zero.io
+
+.. autofunction:: extend_jsonl

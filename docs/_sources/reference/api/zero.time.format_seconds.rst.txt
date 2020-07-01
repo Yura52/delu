@@ -1,0 +1,6 @@
+zero.time.format\_seconds
+=========================
+
+.. currentmodule:: zero.time
+
+.. autofunction:: format_seconds
