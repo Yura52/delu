@@ -1,7 +1,7 @@
 Zero
 ====
 
-.. __INCLUDE__
+.. __INCLUDE_0__
 
 Zero is a general-purpose library for PyTorch users. Zero:
 
@@ -21,9 +21,16 @@ Overview
 --------
 
 - (coming soon) Website, `Code <https://github.com/Yura52/zero>`_
-- (coming soon) Release Announcement
 - (coming soon) Learn Zero
 - `Classification task example (MNIST) <https://github.com/Yura52/zero/blob/master/examples/mnist.py>`_
+- Discussions:
+
+  - `Issue on GitHub <https://github.com/Yura52/zero/issues/13>`_
+  - (coming soon) Post on Medium
+  - (coming soon) Discussion on Reddit
+  - (coming soon) Discussion on Hacker News
+
+.. __INCLUDE_1__
 
 Installation
 ------------

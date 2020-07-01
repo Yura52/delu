@@ -4,7 +4,7 @@ Learn
 How to install Zero?
 --------------------
 
-For installation instructions, see :ref:`Installation`.
+For installation instructions, see :ref:`Installation <installation>`.
 
 What is Reference?
 ------------------

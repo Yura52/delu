@@ -2,7 +2,13 @@ Zero
 ====
 
 .. include:: ../../README.rst
-   :start-after: __INCLUDE__
+   :start-after: __INCLUDE_0__
+   :end-before: __INCLUDE_1__
+
+.. _installation:
+
+.. include:: ../../README.rst
+   :start-after: __INCLUDE_1__
 
 .. toctree::
    :caption: NOTES
