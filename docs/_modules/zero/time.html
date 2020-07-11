@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.time &#8212; Zero 0.0.2dev0 documentation</title>
+    <title>zero.time &#8212; Zero 0.0.2.dev1 documentation</title>
     <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -79,7 +79,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.2dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.2.dev1 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -165,7 +165,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2dev0 documentation</a></li>
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2.dev1 documentation</a></li>
           <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Module code</a></li>
       </ul>
     </div>
@@ -178,13 +178,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.2dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.2.dev1 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.2dev0 documentation"> </a>
+       title="Zero 0.0.2.dev1 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -239,13 +239,6 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/concat_dmap.html" class="md-nav__link">zero.concat_dmap</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../../reference/data.html" class="md-nav__link">zero.data</a>
       
     
@@ -281,27 +274,6 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/model.html" class="md-nav__link">zero.model</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/optim.html" class="md-nav__link">zero.optim</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/progress.html" class="md-nav__link">zero.progress</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../../reference/random.html" class="md-nav__link">zero.random</a>
       
     
@@ -309,14 +281,14 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/tensor.html" class="md-nav__link">zero.tensor</a>
+      <a href="../../reference/time.html" class="md-nav__link">zero.time</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="../../reference/time.html" class="md-nav__link">zero.time</a>
+      <a href="../../reference/training.html" class="md-nav__link">zero.training</a>
       
     
     </li>
@@ -354,7 +326,7 @@
           <article class="md-content__inner md-typeset" role="main">
             
   <h1 id="modules-zero-time--page-root">Source code for zero.time</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">"""Time management."""</span>
+<span></span><span class="sd">"""Time management."""</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Timer'</span><span class="p">,</span> <span class="s1">'format_seconds'</span><span class="p">]</span>
 
@@ -365,7 +337,7 @@
 <div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../../reference/time.html#zero.time.Timer">[docs]</a><span class="k">class</span> <span class="nc">Timer</span><span class="p">:</span>
     <span class="sd">"""Measures time.</span>
 
-<span class="sd">    Measures time elapsed since the first call to `~Timer.start` up to "now" plus</span>
+<span class="sd">    Measures time elapsed since the first call to `~Timer.run` up to "now" plus</span>
 <span class="sd">    shift. The shift accumulates all pauses time and can be manually changed with the</span>
 <span class="sd">    methods `~Timer.add` and `~Timer.sub`. If a timer is just created/reset, the shift</span>
 <span class="sd">    is 0.0.</span>
@@ -377,25 +349,25 @@
 
 <span class="sd">    .. rubric:: Tutorial</span>
 
-<span class="sd">    .. testcode ::</span>
+<span class="sd">    .. testcode::</span>
 
 <span class="sd">        import time</span>
 
 <span class="sd">        assert Timer()() == 0.0</span>
 
-<span class="sd">        timer = Timer().start()  # start</span>
+<span class="sd">        timer = Timer().run()  # start</span>
 <span class="sd">        time.sleep(0.01)</span>
 <span class="sd">        assert timer()  # some time has passed</span>
 
-<span class="sd">        timer.stop()  # pause</span>
+<span class="sd">        timer.pause()</span>
 <span class="sd">        elapsed = timer()</span>
 <span class="sd">        time.sleep(0.01)</span>
-<span class="sd">        assert timer() == elapsed  # time didn't change because of the pause</span>
+<span class="sd">        assert timer() == elapsed  # time didn't change because the timer is on pause</span>
 
 <span class="sd">        timer.add(1.0)</span>
 <span class="sd">        assert timer() == elapsed + 1.0</span>
 
-<span class="sd">        timer.start()  # resume</span>
+<span class="sd">        timer.run()  # resume</span>
 <span class="sd">        time.sleep(0.01)</span>
 <span class="sd">        assert timer() &gt; elapsed + 1.0</span>
 
@@ -405,7 +377,7 @@
 
     <span class="c1"># mypy cannot infer types from .reset(), so they must be given here</span>
     <span class="n">_start_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
-    <span class="n">_stop_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">_pause_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
     <span class="n">_shift</span><span class="p">:</span> <span class="nb">float</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -414,27 +386,27 @@
 <div class="viewcode-block" id="Timer.reset"><a class="viewcode-back" href="../../reference/api/zero.time.Timer.reset.html#zero.time.Timer.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Reset the timer.</span>
 
-<span class="sd">        The method resets everything: the start time, the stop time, the shift.</span>
+<span class="sd">        Resets the timer to the initial state.</span>
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stop_time</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span> <span class="o">=</span> <span class="mf">0.0</span></div>
 
-<div class="viewcode-block" id="Timer.start"><a class="viewcode-back" href="../../reference/api/zero.time.Timer.start.html#zero.time.Timer.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'Timer'</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.run"><a class="viewcode-back" href="../../reference/api/zero.time.Timer.run.html#zero.time.Timer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'Timer'</span><span class="p">:</span>
         <span class="sd">"""Start/resume the timer.</span>
 
 <span class="sd">        If the timer is on pause, the method resumes the timer.</span>
 <span class="sd">        If the timer is runnning, the method does nothing (i.e. it does NOT overwrite</span>
-<span class="sd">        the previous stop time).</span>
+<span class="sd">        the previous pause time).</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_time</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_stop_time</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="bp">self</span>  <span class="c1"># enables the pattern `timer = Timer().start()`</span></div>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span>  <span class="c1"># enables the pattern `timer = Timer().run()`</span></div>
 
-<div class="viewcode-block" id="Timer.stop"><a class="viewcode-back" href="../../reference/api/zero.time.Timer.stop.html#zero.time.Timer.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.pause"><a class="viewcode-back" href="../../reference/api/zero.time.Timer.pause.html#zero.time.Timer.pause">[docs]</a>    <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Pause the timer.</span>
 
 <span class="sd">        If the timer is running, the method pauses the timer.</span>
@@ -444,8 +416,8 @@
 <span class="sd">            AssertionError: if the timer is just created or just reset.</span>
 <span class="sd">        """</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_stop_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Timer.add"><a class="viewcode-back" href="../../reference/api/zero.time.Timer.add.html#zero.time.Timer.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Add non-negative delta to the shift.</span>
@@ -503,7 +475,7 @@
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span>
-        <span class="n">now</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_time</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span></div></div>
 
 
@@ -517,7 +489,7 @@
 <span class="sd">        Filled :code:`format_str`.</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        .. testcode ::</span>
+<span class="sd">        .. testcode::</span>
 
 <span class="sd">            assert format_seconds(3661) == '01h 01m 01s'</span>
 <span class="sd">    """</span>
@@ -546,7 +518,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

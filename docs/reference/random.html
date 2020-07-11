@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.random &#8212; Zero 0.0.2dev0 documentation</title>
+    <title>zero.random &#8212; Zero 0.0.2.dev1 documentation</title>
     <link rel="stylesheet" href="../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -56,8 +56,8 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="zero.random.set_seed_everywhere" href="api/zero.random.set_seed_everywhere.html" />
-    <link rel="prev" title="zero.progress.ProgressTracker.reset" href="api/zero.progress.ProgressTracker.reset.html" />
+    <link rel="next" title="zero.random.fix_randomness" href="api/zero.random.fix_randomness.html" />
+    <link rel="prev" title="zero.metrics.IgniteMetric.compute" href="api/zero.metrics.IgniteMetric.compute.html" />
   
    
 
@@ -81,7 +81,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../index.html" title="Zero 0.0.2dev0 documentation"
+        <a href="../index.html" title="Zero 0.0.2.dev1 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -167,7 +167,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Zero 0.0.2dev0 documentation</a></li>
+          <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Zero 0.0.2.dev1 documentation</a></li>
       </ul>
     </div>
   </nav>
@@ -179,13 +179,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../index.html" title="Zero 0.0.2dev0 documentation" class="md-nav__button md-logo">
+    <a href="../index.html" title="Zero 0.0.2.dev1 documentation" class="md-nav__button md-logo">
       
         <img src="../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../index.html"
-       title="Zero 0.0.2dev0 documentation"> </a>
+       title="Zero 0.0.2.dev1 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -240,13 +240,6 @@
     <li class="md-nav__item">
     
     
-      <a href="concat_dmap.html" class="md-nav__link">zero.concat_dmap</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="data.html" class="md-nav__link">zero.data</a>
       
     
@@ -282,27 +275,6 @@
     <li class="md-nav__item">
     
     
-      <a href="model.html" class="md-nav__link">zero.model</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="optim.html" class="md-nav__link">zero.optim</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="progress.html" class="md-nav__link">zero.progress</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     <label class="md-nav__link md-nav__link--active" for="__toc"> zero.random </label>
     
@@ -329,14 +301,14 @@
     <li class="md-nav__item">
     
     
-      <a href="tensor.html" class="md-nav__link">zero.tensor</a>
+      <a href="time.html" class="md-nav__link">zero.time</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="time.html" class="md-nav__link">zero.time</a>
+      <a href="training.html" class="md-nav__link">zero.training</a>
       
     
     </li>
@@ -385,8 +357,8 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.random.set_seed_everywhere.html#zero.random.set_seed_everywhere" title="zero.random.set_seed_everywhere"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_seed_everywhere</span></code></a>([seed, callback])</p></td>
-<td><p>Set random seed for <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/random/index.html#module-numpy.random" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.random</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch vmaster (1.5.0a0+78c9009 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/cuda.html#module-torch.cuda" title="(in PyTorch vmaster (1.5.0a0+78c9009 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda</span></code></a>.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.random.fix_randomness.html#zero.random.fix_randomness" title="zero.random.fix_randomness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_randomness</span></code></a>([seed, cudnn_deterministic, …])</p></td>
+<td><p>Set seeds and settings in <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch vmaster (1.5.0a0+78c9009 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -403,7 +375,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
           
-            <a href="api/zero.progress.ProgressTracker.reset.html" title="zero.progress.ProgressTracker.reset"
+            <a href="api/zero.metrics.IgniteMetric.compute.html" title="zero.metrics.IgniteMetric.compute"
                class="md-flex md-footer-nav__link md-footer-nav__link--prev"
                rel="prev">
               <div class="md-flex__cell md-flex__cell--shrink">
@@ -412,17 +384,17 @@
               <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
                 <span class="md-flex__ellipsis">
                   <span
-                      class="md-footer-nav__direction"> Previous </span> zero.progress.ProgressTracker.reset </span>
+                      class="md-footer-nav__direction"> Previous </span> zero.metrics.IgniteMetric.compute </span>
               </div>
             </a>
           
           
-            <a href="api/zero.random.set_seed_everywhere.html" title="zero.random.set_seed_everywhere"
+            <a href="api/zero.random.fix_randomness.html" title="zero.random.fix_randomness"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> Next </span> zero.random.set_seed_everywhere </span>
+                class="md-footer-nav__direction"> Next </span> zero.random.fix_randomness </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
@@ -440,7 +412,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

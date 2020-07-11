@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.metrics &#8212; Zero 0.0.2dev0 documentation</title>
+    <title>zero.metrics &#8212; Zero 0.0.2.dev1 documentation</title>
     <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -79,7 +79,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.2dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.2.dev1 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -165,7 +165,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2dev0 documentation</a></li>
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2.dev1 documentation</a></li>
           <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Module code</a></li>
       </ul>
     </div>
@@ -178,13 +178,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.2dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.2.dev1 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.2dev0 documentation"> </a>
+       title="Zero 0.0.2.dev1 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -239,13 +239,6 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/concat_dmap.html" class="md-nav__link">zero.concat_dmap</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../../reference/data.html" class="md-nav__link">zero.data</a>
       
     
@@ -281,27 +274,6 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/model.html" class="md-nav__link">zero.model</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/optim.html" class="md-nav__link">zero.optim</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/progress.html" class="md-nav__link">zero.progress</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../../reference/random.html" class="md-nav__link">zero.random</a>
       
     
@@ -309,14 +281,14 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/tensor.html" class="md-nav__link">zero.tensor</a>
+      <a href="../../reference/time.html" class="md-nav__link">zero.time</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="../../reference/time.html" class="md-nav__link">zero.time</a>
+      <a href="../../reference/training.html" class="md-nav__link">zero.training</a>
       
     
     </li>
@@ -362,11 +334,11 @@
 
 <span class="sd">    metrics = metric_fn.calculate_iter(map(predict_batch, val_loader))</span>
 
-<span class="sd">In order to create your own metric, inherit from `Metric` and implement its interface.</span>
-<span class="sd">The API throughout the module intentionally follows that of</span>
-<span class="sd">`ignite.metrics &lt;https://pytorch.org/ignite/metrics.html&gt;`_, hence, Ignite metrics are</span>
-<span class="sd">supported almost everywhere where `Metric` is supported. For giving Ignite metrics all</span>
-<span class="sd">functionality of `Metric`, use `IgniteMetric`.</span>
+<span class="sd">In order to create your own metric, inherit from `Metric` and implement its interface</span>
+<span class="sd">(see `Metric`'s docs for examples). The API throughout the module intentionally follows</span>
+<span class="sd">that of `ignite.metrics &lt;https://pytorch.org/ignite/metrics.html&gt;`_, hence, Ignite</span>
+<span class="sd">metrics are supported almost everywhere where `Metric` is supported. For giving Ignite</span>
+<span class="sd">metrics full functionality of `Metric`, use `IgniteMetric`.</span>
 
 <span class="sd">Warning:</span>
 <span class="sd">    Distributed settings are not supported out-of-the-box. In such cases, you have the</span>
@@ -378,14 +350,14 @@
 <span class="sd">    - manually take care of everything</span>
 <span class="sd">"""</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Metric'</span><span class="p">,</span> <span class="s1">'MetricsList'</span><span class="p">,</span> <span class="s1">'MetricsDict'</span><span class="p">,</span> <span class="s1">'IgniteMetric'</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Metric'</span><span class="p">,</span> <span class="s1">'MetricsDict'</span><span class="p">,</span> <span class="s1">'IgniteMetric'</span><span class="p">]</span>
 
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span>
 
 
 <div class="viewcode-block" id="Metric"><a class="viewcode-back" href="../../reference/metrics.html#zero.metrics.Metric">[docs]</a><span class="k">class</span> <span class="nc">Metric</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-    <span class="sd">"""Base class for metrics.</span>
+    <span class="sd">"""The base class for metrics.</span>
 
 <span class="sd">    In order to create your own metric, inherit from this class and implement all</span>
 <span class="sd">    methods marked with `@abstractmethod`. High-level functionality (`Metric.calculate`,</span>
@@ -393,7 +365,7 @@
 
 <span class="sd">    .. rubric:: Tutorial</span>
 
-<span class="sd">    .. testcode ::</span>
+<span class="sd">    .. testcode::</span>
 
 <span class="sd">        class Accuracy(Metric):</span>
 <span class="sd">            def __init__(self):</span>
@@ -416,7 +388,7 @@
 <span class="sd">        y = torch.tensor([0, 1, 0, 1])</span>
 <span class="sd">        assert metric_fn.calculate(y_pred, y) == 0.5</span>
 
-<span class="sd">        from zero.data import iter_batches</span>
+<span class="sd">        from zero.all import iter_batches</span>
 <span class="sd">        y = torch.randint(2, size=(10,))</span>
 <span class="sd">        X = torch.randn(len(y), 3)</span>
 <span class="sd">        batches = iter_batches((X, y), batch_size=2)</span>
@@ -448,7 +420,7 @@
 <div class="viewcode-block" id="Metric.calculate"><a class="viewcode-back" href="../../reference/api/zero.metrics.Metric.calculate.html#zero.metrics.Metric.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
         <span class="sd">"""Calculate metric for a single input.</span>
 
-<span class="sd">        The function does the following:</span>
+<span class="sd">        The method does the following:</span>
 
 <span class="sd">        #. **resets the metric**</span>
 <span class="sd">        #. updates the metric with :code:`(*args, **kwargs)`</span>
@@ -471,7 +443,7 @@
 <div class="viewcode-block" id="Metric.calculate_iter"><a class="viewcode-back" href="../../reference/api/zero.metrics.Metric.calculate_iter.html#zero.metrics.Metric.calculate_iter">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_iter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">star</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
         <span class="sd">"""Calculate metric for iterable.</span>
 
-<span class="sd">        The function does the following:</span>
+<span class="sd">        The method does the following:</span>
 
 <span class="sd">        #. **resets the metric**</span>
 <span class="sd">        #. sequentially updates the metric with every value from :code:`iterable`</span>
@@ -502,84 +474,10 @@
         <span class="k">return</span> <span class="n">result</span></div></div>
 
 
-<div class="viewcode-block" id="MetricsList"><a class="viewcode-back" href="../../reference/metrics.html#zero.metrics.MetricsList">[docs]</a><span class="k">class</span> <span class="nc">MetricsList</span><span class="p">(</span><span class="n">Metric</span><span class="p">):</span>
-    <span class="sd">"""List for metrics.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        metrics</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        .. code-block::</span>
-
-<span class="sd">            metric_fn = MetricList([FirstMetric(), SecondMetric()])</span>
-
-<span class="sd">    .. rubric:: Tutorial</span>
-
-<span class="sd">    .. code-block::</span>
-
-<span class="sd">        from ignite.metrics import Precision</span>
-
-<span class="sd">        class MyMetric(Metric):</span>
-<span class="sd">            ...</span>
-
-<span class="sd">        a = MyMetric()</span>
-<span class="sd">        b = IgniteMetric(Precision())</span>
-<span class="sd">        metric_fn = MetricList([a, b])</span>
-<span class="sd">        metric_fn.reset()  # reset all metrics</span>
-<span class="sd">        metric_fn.update(...)  # update all metrics</span>
-<span class="sd">        metric_fn.compute()  # [&lt;my metric&gt;, &lt;precision&gt;]</span>
-<span class="sd">        assert metric_fn[0] is a and metric[1] is b</span>
-<span class="sd">    """</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Metric</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_metrics</span> <span class="o">=</span> <span class="n">metrics</span>
-
-<div class="viewcode-block" id="MetricsList.reset"><a class="viewcode-back" href="../../reference/api/zero.metrics.MetricsList.reset.html#zero.metrics.MetricsList.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'MetricsList'</span><span class="p">:</span>
-        <span class="sd">"""Reset all underlying metrics.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            self</span>
-<span class="sd">        """</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metrics</span><span class="p">:</span>
-            <span class="n">x</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span></div>
-
-<div class="viewcode-block" id="MetricsList.update"><a class="viewcode-back" href="../../reference/api/zero.metrics.MetricsList.update.html#zero.metrics.MetricsList.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'MetricsList'</span><span class="p">:</span>
-        <span class="sd">"""Update all underlying metrics.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            *args: positional arguments forwarded to `update()` for all metrics</span>
-<span class="sd">            *kwargs: keyword arguments forwarded to `update()` for all metrics</span>
-<span class="sd">        Returns:</span>
-<span class="sd">            self</span>
-<span class="sd">        """</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metrics</span><span class="p">:</span>
-            <span class="n">x</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span></div>
-
-<div class="viewcode-block" id="MetricsList.compute"><a class="viewcode-back" href="../../reference/api/zero.metrics.MetricsList.compute.html#zero.metrics.MetricsList.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
-        <span class="sd">"""Compute the results.</span>
-
-<span class="sd">        The order is the same as in the constructor.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            List with results of `.compute()` of the underlying metrics.</span>
-<span class="sd">        """</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metrics</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="MetricsList.__getitem__"><a class="viewcode-back" href="../../reference/api/zero.metrics.MetricsList.__getitem__.html#zero.metrics.MetricsList.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Metric</span><span class="p">:</span>
-        <span class="sd">"""Access a metric by index.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            index</span>
-<span class="sd">        Returns:</span>
-<span class="sd">            The metric corresponding to the index.</span>
-<span class="sd">        """</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metrics</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div></div>
-
-
 <div class="viewcode-block" id="MetricsDict"><a class="viewcode-back" href="../../reference/metrics.html#zero.metrics.MetricsDict">[docs]</a><span class="k">class</span> <span class="nc">MetricsDict</span><span class="p">(</span><span class="n">Metric</span><span class="p">):</span>
     <span class="sd">"""Dictionary for metrics.</span>
+
+<span class="sd">    The container is suitable when all metrics take input in the same form.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        metrics</span>
@@ -733,7 +631,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

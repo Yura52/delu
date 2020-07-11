@@ -1,0 +1,6 @@
+zero.random.fix\_randomness
+===========================
+
+.. currentmodule:: zero.random
+
+.. autofunction:: fix_randomness

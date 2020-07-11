@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.hardware &#8212; Zero 0.0.2dev0 documentation</title>
+    <title>zero.hardware &#8212; Zero 0.0.2.dev1 documentation</title>
     <link rel="stylesheet" href="../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -81,7 +81,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../index.html" title="Zero 0.0.2dev0 documentation"
+        <a href="../index.html" title="Zero 0.0.2.dev1 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -167,7 +167,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Zero 0.0.2dev0 documentation</a></li>
+          <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Zero 0.0.2.dev1 documentation</a></li>
       </ul>
     </div>
   </nav>
@@ -179,13 +179,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../index.html" title="Zero 0.0.2dev0 documentation" class="md-nav__button md-logo">
+    <a href="../index.html" title="Zero 0.0.2.dev1 documentation" class="md-nav__button md-logo">
       
         <img src="../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../index.html"
-       title="Zero 0.0.2dev0 documentation"> </a>
+       title="Zero 0.0.2.dev1 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -234,13 +234,6 @@
     
     
       <a href="all.html" class="md-nav__link">zero.all</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="concat_dmap.html" class="md-nav__link">zero.concat_dmap</a>
       
     
     </li>
@@ -301,27 +294,6 @@
     <li class="md-nav__item">
     
     
-      <a href="model.html" class="md-nav__link">zero.model</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="optim.html" class="md-nav__link">zero.optim</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="progress.html" class="md-nav__link">zero.progress</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="random.html" class="md-nav__link">zero.random</a>
       
     
@@ -329,14 +301,14 @@
     <li class="md-nav__item">
     
     
-      <a href="tensor.html" class="md-nav__link">zero.tensor</a>
+      <a href="time.html" class="md-nav__link">zero.time</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="time.html" class="md-nav__link">zero.time</a>
+      <a href="training.html" class="md-nav__link">zero.training</a>
       
     
     </li>
@@ -376,7 +348,7 @@
             
   
 <span id="zero-hardware"></span><h1 id="reference-hardware--page-root">zero.hardware<a class="headerlink" href="#reference-hardware--page-root" title="Permalink to this headline">¶</a></h1>
-<p>Manipulations with hardware (GPU, memory, …).</p>
+<p>Tools related to devices, memory, etc.</p>
 
 <h2 id="functions">functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
 <table class="longtable docutils align-default">
@@ -390,6 +362,9 @@
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/zero.hardware.get_gpu_info.html#zero.hardware.get_gpu_info" title="zero.hardware.get_gpu_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_gpu_info</span></code></a>([precise])</p></td>
 <td><p>Get statistics about GPU devices.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.hardware.to_device.html#zero.hardware.to_device" title="zero.hardware.to_device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_device</span></code></a>(data, device[, non_blocking])</p></td>
+<td><p>Move tensor(s) to device.</p></td>
 </tr>
 </tbody>
 </table>
@@ -443,7 +418,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

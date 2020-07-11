@@ -1,0 +1,6 @@
+zero.training.ProgressTracker.update
+====================================
+
+.. currentmodule:: zero.training
+
+.. automethod:: ProgressTracker.update

@@ -1,6 +1,0 @@
-zero.concat\_dmap.concat
-========================
-
-.. currentmodule:: zero.concat_dmap
-
-.. autofunction:: concat

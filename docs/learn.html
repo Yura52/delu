@@ -46,7 +46,7 @@
   
   
   
-    <title>Learn &#8212; Zero 0.0.2dev0 documentation</title>
+    <title>Learn &#8212; Zero 0.0.2.dev1 documentation</title>
     <link rel="stylesheet" href="_static/material.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -81,7 +81,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="index.html" title="Zero 0.0.2dev0 documentation"
+        <a href="index.html" title="Zero 0.0.2.dev1 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -167,7 +167,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">Zero 0.0.2dev0 documentation</a></li>
+          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">Zero 0.0.2.dev1 documentation</a></li>
       </ul>
     </div>
   </nav>
@@ -179,13 +179,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="index.html" title="Zero 0.0.2dev0 documentation" class="md-nav__button md-logo">
+    <a href="index.html" title="Zero 0.0.2.dev1 documentation" class="md-nav__button md-logo">
       
         <img src="_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="index.html"
-       title="Zero 0.0.2dev0 documentation"> </a>
+       title="Zero 0.0.2.dev1 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -273,13 +273,6 @@
     <li class="md-nav__item">
     
     
-      <a href="reference/concat_dmap.html" class="md-nav__link">zero.concat_dmap</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="reference/data.html" class="md-nav__link">zero.data</a>
       
     
@@ -315,27 +308,6 @@
     <li class="md-nav__item">
     
     
-      <a href="reference/model.html" class="md-nav__link">zero.model</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="reference/optim.html" class="md-nav__link">zero.optim</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="reference/progress.html" class="md-nav__link">zero.progress</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="reference/random.html" class="md-nav__link">zero.random</a>
       
     
@@ -343,14 +315,14 @@
     <li class="md-nav__item">
     
     
-      <a href="reference/tensor.html" class="md-nav__link">zero.tensor</a>
+      <a href="reference/time.html" class="md-nav__link">zero.time</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="reference/time.html" class="md-nav__link">zero.time</a>
+      <a href="reference/training.html" class="md-nav__link">zero.training</a>
       
     
     </li>
@@ -404,9 +376,9 @@ specification, tutorials and usage examples.</p>
 <h2 id="how-to-learn-zero">How to learn Zero?<a class="headerlink" href="#how-to-learn-zero" title="Permalink to this headline">¶</a></h2>
 <p>If you just want to “browse” the library and see what it offers, then
 <a class="reference internal" href="reference/zero.html#zero"><span class="std std-ref">this page</span></a> is a good place to start (Zero, by design, is rather a
-“toolbox” than a “framework”, so you can learn things in almost any order).</p>
-<p>However, if you want to quickly learn the basics and start using Zero in your research
-and training pipelines, understanding of
+“toolbox” than a “framework”, so you can learn things and start using them in almost any
+order).</p>
+<p>However, if you want to quickly learn “the most important” things, then understanding of
 <a class="reference external" href="https://github.com/Yura52/zero/blob/master/examples/mnist.py">this classification task</a>
 is enough. To achieve this, you need to walk through some specific parts of Reference
 paying attention to <em>explanations</em> and <em>examples</em>, without diving into API details. Here
@@ -420,44 +392,28 @@ are the things to learn:</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/flow.html#zero.flow.Flow" title="zero.flow.Flow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.flow.Flow</span></code></a>(loader)</p></td>
 <td><p>Smart wrapper for iterables.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/metrics.html#zero.metrics.Metric" title="zero.metrics.Metric"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.metrics.Metric</span></code></a>()</p></td>
-<td><p>Base class for metrics.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/training.html#module-zero.training" title="zero.training"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.training</span></code></a></p></td>
+<td><p>Easier training process.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/optim.html#module-zero.optim" title="zero.optim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.optim</span></code></a></p></td>
-<td><p>Additional features for <a class="reference external" href="https://pytorch.org/docs/stable/optim.html#torch.optim.Optimizer" title="(in PyTorch vmaster (1.5.0a0+78c9009 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.optim.Optimizer</span></code></a>.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.data.concat.html#zero.data.concat" title="zero.data.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.data.concat</span></code></a>(iterable)</p></td>
+<td><p>Concatenate items of the iterable along the first dimension.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/model.html#zero.model.Eval" title="zero.model.Eval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.model.Eval</span></code></a>(*models)</p></td>
-<td><p>A context-manager for models evaluation.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/api/zero.random.fix_randomness.html#zero.random.fix_randomness" title="zero.random.fix_randomness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.random.fix_randomness</span></code></a>([seed, …])</p></td>
+<td><p>Set seeds and settings in <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch vmaster (1.5.0a0+78c9009 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/concat_dmap.html#module-zero.concat_dmap" title="zero.concat_dmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.concat_dmap</span></code></a></p></td>
-<td><p>Batchwise application of models and functions.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/progress.html#zero.progress.ProgressTracker" title="zero.progress.ProgressTracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.progress.ProgressTracker</span></code></a>(patience[, …])</p></td>
-<td><p>Tracks the best score, facilitates early stopping.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.tensor.to_device.html#zero.tensor.to_device" title="zero.tensor.to_device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.tensor.to_device</span></code></a>(data, device[, …])</p></td>
-<td><p>Move tensor(s) to device.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/api/zero.tensor.ibackward.html#zero.tensor.ibackward" title="zero.tensor.ibackward"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.tensor.ibackward</span></code></a>(x, *args, **kwargs)</p></td>
-<td><p>Do <code class="code docutils literal notranslate"><span class="pre">.backward()</span></code> and return <code class="code docutils literal notranslate"><span class="pre">.item()</span></code>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.random.set_seed_everywhere.html#zero.random.set_seed_everywhere" title="zero.random.set_seed_everywhere"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.random.set_seed_everywhere</span></code></a>([seed, callback])</p></td>
-<td><p>Set random seed for <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/random/index.html#module-numpy.random" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.random</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch vmaster (1.5.0a0+78c9009 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/cuda.html#module-torch.cuda" title="(in PyTorch vmaster (1.5.0a0+78c9009 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda</span></code></a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/time.html#zero.time.Timer" title="zero.time.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.time.Timer</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/time.html#zero.time.Timer" title="zero.time.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.time.Timer</span></code></a>()</p></td>
 <td><p>Measures time.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/hardware.html#module-zero.hardware" title="zero.hardware"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.hardware</span></code></a></p></td>
-<td><p>Manipulations with hardware (GPU, memory, …).</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/hardware.html#module-zero.hardware" title="zero.hardware"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.hardware</span></code></a></p></td>
+<td><p>Tools related to devices, memory, etc.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/io.html#module-zero.io" title="zero.io"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.io</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/io.html#module-zero.io" title="zero.io"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.io</span></code></a></p></td>
 <td><p>Shortcuts for input and output.</p></td>
 </tr>
 </tbody>
 </table>
 <p>Congratulations! You are ready to apply Zero in practice. You can also visit
-<a class="reference internal" href="reference/zero.html#zero"><span class="std std-ref">this page</span></a> and explore things that are not covered in the list above (
-<a class="reference internal" href="reference/data.html#data"><span class="std std-ref">zero.data</span></a> and others).</p>
+<a class="reference internal" href="reference/zero.html#zero"><span class="std std-ref">this page</span></a> and explore things that are not covered in the list above.</p>
 
 
 
@@ -508,7 +464,7 @@ are the things to learn:</p>
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.all &#8212; Zero 0.0.2dev0 documentation</title>
+    <title>zero.all &#8212; Zero 0.0.2.dev1 documentation</title>
     <link rel="stylesheet" href="../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -56,7 +56,7 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="zero.concat_dmap" href="concat_dmap.html" />
+    <link rel="next" title="zero.data" href="data.html" />
     <link rel="prev" title="zero" href="zero.html" />
   
    
@@ -81,7 +81,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../index.html" title="Zero 0.0.2dev0 documentation"
+        <a href="../index.html" title="Zero 0.0.2.dev1 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -167,7 +167,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Zero 0.0.2dev0 documentation</a></li>
+          <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Zero 0.0.2.dev1 documentation</a></li>
       </ul>
     </div>
   </nav>
@@ -179,13 +179,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../index.html" title="Zero 0.0.2dev0 documentation" class="md-nav__button md-logo">
+    <a href="../index.html" title="Zero 0.0.2.dev1 documentation" class="md-nav__button md-logo">
       
         <img src="../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../index.html"
-       title="Zero 0.0.2dev0 documentation"> </a>
+       title="Zero 0.0.2.dev1 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -252,13 +252,6 @@
     <li class="md-nav__item">
     
     
-      <a href="concat_dmap.html" class="md-nav__link">zero.concat_dmap</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="data.html" class="md-nav__link">zero.data</a>
       
     
@@ -294,27 +287,6 @@
     <li class="md-nav__item">
     
     
-      <a href="model.html" class="md-nav__link">zero.model</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="optim.html" class="md-nav__link">zero.optim</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="progress.html" class="md-nav__link">zero.progress</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="random.html" class="md-nav__link">zero.random</a>
       
     
@@ -322,14 +294,14 @@
     <li class="md-nav__item">
     
     
-      <a href="tensor.html" class="md-nav__link">zero.tensor</a>
+      <a href="time.html" class="md-nav__link">zero.time</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="time.html" class="md-nav__link">zero.time</a>
+      <a href="training.html" class="md-nav__link">zero.training</a>
       
     
     </li>
@@ -370,19 +342,18 @@
   
 <span id="zero-all"></span><h1 id="reference-all--page-root">zero.all<a class="headerlink" href="#reference-all--page-root" title="Permalink to this headline">¶</a></h1>
 <p>A single entry point to Zero.</p>
-<p>The module simply imports everything (<code class="code docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">import</span> <span class="pre">*</span></code>) from all submodules.
-It is neither “better” nor “worse” to use this module instead of explicit imports from
-submodules, it is completely up to a user. Just keep in mind that if <em>all</em> submodules
-you need do not import <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch vmaster (1.5.0a0+78c9009 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a> (or any other heavy libraries) under the hood, it will
-be faster to import them individually then via <a class="reference internal" href="#module-zero.all" title="zero.all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.all</span></code></a>.</p>
+<p>The module simply imports everything from all submodules (<code class="code docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">import</span> <span class="pre">*</span></code>).
+Keep in mind that if you don’t use <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch vmaster (1.5.0a0+78c9009 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a> in your project and you need only non-torch
+tools from Zero, then it will be faster to import them directly from submodules than
+from <a class="reference internal" href="#module-zero.all" title="zero.all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.all</span></code></a>.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">zero.all</span> <span class="k">as</span> <span class="nn">zero</span>
-<span class="n">flow</span> <span class="o">=</span> <span class="n">zero</span><span class="o">.</span><span class="n">Flow</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-<span class="n">progress</span> <span class="o">=</span> <span class="n">zero</span><span class="o">.</span><span class="n">ProgressTracker</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-<span class="n">timer</span> <span class="o">=</span> <span class="n">zero</span><span class="o">.</span><span class="n">Timer</span><span class="p">()</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">zero.all</span> <span class="kn">import</span> <span class="n">Flow</span><span class="p">,</span> <span class="n">Timer</span><span class="p">,</span> <span class="n">concat</span>
+<span class="c1"># or</span>
+<span class="kn">import</span> <span class="nn">zero.all</span> <span class="k">as</span> <span class="nn">zero</span>  <span class="c1"># then use zero.Flow, zero.Timer, zero.concat</span>
 </pre></div>
 </div>
-<p>If you just need a <a class="reference internal" href="time.html#zero.time.Timer" title="zero.time.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.time.Timer</span></code></a>, this is a bit faster:</p>
+<p>If you just need a <a class="reference internal" href="time.html#zero.time.Timer" title="zero.time.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.time.Timer</span></code></a> and you don’t use PyTorch in your project, this
+is a bit faster:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">zero.time</span> <span class="kn">import</span> <span class="n">Timer</span>
 </pre></div>
 </div>
@@ -412,12 +383,12 @@ be faster to import them individually then via <a class="reference internal" hre
             </a>
           
           
-            <a href="concat_dmap.html" title="zero.concat_dmap"
+            <a href="data.html" title="zero.data"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> Next </span> zero.concat_dmap </span>
+                class="md-footer-nav__direction"> Next </span> zero.data </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
@@ -435,7 +406,7 @@ be faster to import them individually then via <a class="reference internal" hre
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

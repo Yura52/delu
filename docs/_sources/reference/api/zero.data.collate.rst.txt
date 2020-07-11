@@ -1,0 +1,6 @@
+zero.data.collate
+=================
+
+.. currentmodule:: zero.data
+
+.. autofunction:: collate

@@ -1,6 +1,0 @@
-zero.metrics.MetricsList.compute
-================================
-
-.. currentmodule:: zero.metrics
-
-.. automethod:: MetricsList.compute

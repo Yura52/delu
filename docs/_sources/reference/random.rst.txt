@@ -11,4 +11,4 @@ functions
 .. autosummary::
     :toctree: api
 
-    set_seed_everywhere
+    fix_randomness

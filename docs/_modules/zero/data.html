@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.data &#8212; Zero 0.0.2dev0 documentation</title>
+    <title>zero.data &#8212; Zero 0.0.2.dev1 documentation</title>
     <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -79,7 +79,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.2dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.2.dev1 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -165,7 +165,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2dev0 documentation</a></li>
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2.dev1 documentation</a></li>
           <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Module code</a></li>
       </ul>
     </div>
@@ -178,13 +178,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.2dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.2.dev1 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.2dev0 documentation"> </a>
+       title="Zero 0.0.2.dev1 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -239,13 +239,6 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/concat_dmap.html" class="md-nav__link">zero.concat_dmap</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../../reference/data.html" class="md-nav__link">zero.data</a>
       
     
@@ -281,27 +274,6 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/model.html" class="md-nav__link">zero.model</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/optim.html" class="md-nav__link">zero.optim</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/progress.html" class="md-nav__link">zero.progress</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../../reference/random.html" class="md-nav__link">zero.random</a>
       
     
@@ -309,14 +281,14 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/tensor.html" class="md-nav__link">zero.tensor</a>
+      <a href="../../reference/time.html" class="md-nav__link">zero.time</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="../../reference/time.html" class="md-nav__link">zero.time</a>
+      <a href="../../reference/training.html" class="md-nav__link">zero.training</a>
       
     
     </li>
@@ -354,18 +326,33 @@
           <article class="md-content__inner md-typeset" role="main">
             
   <h1 id="modules-zero-data--page-root">Source code for zero.data</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">"""Missing batteries from `torch.utils.data`."""</span>
+<span></span><span class="sd">"""Missing batteries from `torch.utils.data`."""</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'NamedTensorDataset'</span><span class="p">,</span> <span class="s1">'Enumerate'</span><span class="p">,</span> <span class="s1">'iloader'</span><span class="p">,</span> <span class="s1">'iter_batches'</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'NamedTensorDataset'</span><span class="p">,</span> <span class="s1">'Enumerate'</span><span class="p">,</span> <span class="s1">'concat'</span><span class="p">,</span> <span class="s1">'iloader'</span><span class="p">,</span> <span class="s1">'iter_batches'</span><span class="p">]</span>
 
+<span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">Iterator</span><span class="p">,</span>
+    <span class="n">NamedTuple</span><span class="p">,</span>
+    <span class="n">Sequence</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+    <span class="n">TypeVar</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+<span class="p">)</span>
 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">TensorDataset</span>
 
 <span class="kn">from</span> <span class="nn">._util</span> <span class="kn">import</span> <span class="n">is_namedtuple</span>
 <span class="kn">from</span> <span class="nn">.types</span> <span class="kn">import</span> <span class="n">TensorIndex</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'S'</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="NamedTensorDataset"><a class="viewcode-back" href="../../reference/data.html#zero.data.NamedTensorDataset">[docs]</a><span class="k">class</span> <span class="nc">NamedTensorDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
@@ -546,10 +533,10 @@
 
 <span class="sd">            train_loader = iloader(len(train_dataset), batch_size, shuffle=True)</span>
 <span class="sd">            for epoch in epoches:</span>
-<span class="sd">                for batch_idx in loader:</span>
+<span class="sd">                for batch_idx in train_loader:</span>
 <span class="sd">                    ...</span>
 
-<span class="sd">        More specific examples:</span>
+<span class="sd">        Other examples:</span>
 
 <span class="sd">        .. testcode::</span>
 
@@ -619,11 +606,12 @@
 <span class="sd">        :code:`while True:`.</span>
 
 <span class="sd">    See Also:</span>
-<span class="sd">        `iloader`</span>
+<span class="sd">        - `iloader`</span>
+<span class="sd">        - `concat`</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        The function can be used for applying some function to batches, especially when</span>
-<span class="sd">        used together with `zero.concat_dmap`:</span>
+<span class="sd">        Besides loops over batches, the function can be used in combination with</span>
+<span class="sd">        `concat`:</span>
 
 <span class="sd">        .. code-block::</span>
 
@@ -654,6 +642,233 @@
         <span class="n">f</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="fm">__getitem__</span>
         <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">iloader</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="concat"><a class="viewcode-back" href="../../reference/api/zero.data.concat.html#zero.data.concat">[docs]</a><span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">S</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">S</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">S</span><span class="p">]]:</span>
+    <span class="sd">"""Concatenate items of the iterable along the first dimension.</span>
+
+<span class="sd">    Use intuition, the tutorial and examples (see below) to understand what the function</span>
+<span class="sd">    does. Technical specification is unlikely to help here, so there is none :)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        iterable: items **of the same structure**</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Concatenated items of the iterable.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The concatenation algorithm is fully determined by the first item of the</span>
+<span class="sd">        iterable. If there are items of different structure, then the function is</span>
+<span class="sd">        likely to fail or produce incorrect results, hence the requirement of the</span>
+<span class="sd">        same structure for all items of the iterable.</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        The function starts with conversion of the iterable to a list. Make sure that</span>
+<span class="sd">        you have enough memory for such operation, otherwise, memory limit may be</span>
+<span class="sd">        exceeded. Note that manual implementation would involve the same conversion,</span>
+<span class="sd">        just keep this in mind when using the function.</span>
+
+<span class="sd">    See Also:</span>
+<span class="sd">        `iter_batches`</span>
+
+<span class="sd">    .. rubric:: Tutorial</span>
+
+<span class="sd">    For usage examples, scroll further.</span>
+
+<span class="sd">    If you have an iterable that contains/produces batches of some kind (tensors,</span>
+<span class="sd">    numpy-arrays, tuples/dictionaries thereof and other not-too-specific content), then</span>
+<span class="sd">    use `concat` to concatenate all the items. A prominent case is application of models</span>
+<span class="sd">    and functions to batches (e.g. to :code:`DataLoader`)::</span>
+
+<span class="sd">        whole_result = concat(map(model_or_fn, batches))</span>
+<span class="sd">        # or</span>
+<span class="sd">        whole_result = concat(expression(x) for x in batches)</span>
+
+<span class="sd">    For example::</span>
+
+<span class="sd">        dataset = ...  # PyTorch dataset</span>
+<span class="sd">        loader = DataLoader(dataset, batch_size)</span>
+
+<span class="sd">        def step(batch):</span>
+<span class="sd">            X, y = batch</span>
+<span class="sd">            return model(X), y</span>
+
+<span class="sd">        y_pred, y = concat(map(step, loader))</span>
+<span class="sd">        assert len(y_pred) == len(dataset) and len(y) == len(dataset)</span>
+
+<span class="sd">        # or</span>
+<span class="sd">        def step(batch):</span>
+<span class="sd">            X, y = batch</span>
+<span class="sd">            return {'y_pred': model(X), 'y': y}</span>
+
+<span class="sd">        result = concat(map(step, loader))  # no changes</span>
+<span class="sd">        assert result['y_pred'] == len(dataset) and len(result['y']) == len(dataset)</span>
+
+<span class="sd">    The function can be used in combination with `iter_batches`. For example, this is</span>
+<span class="sd">    how pairwise dot products can be calculated in a batchwise manner if full matrix</span>
+<span class="sd">    multiplication does not fit into memory:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        n_objects = 100</span>
+<span class="sd">        n_features = 16</span>
+<span class="sd">        batch_size = 20</span>
+<span class="sd">        data = torch.randn(n_objects, n_features)</span>
+<span class="sd">        result = concat(</span>
+<span class="sd">            batch.matmul(data.T).to('cpu') for batch in iter_batches(data, batch_size)</span>
+<span class="sd">        )</span>
+<span class="sd">        assert result.shape == (n_objects, n_objects)</span>
+
+<span class="sd">    Or even like this:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        n_objects = 100</span>
+<span class="sd">        n_features = 16</span>
+<span class="sd">        batch_size = 20</span>
+<span class="sd">        data = torch.randn(n_objects, n_features)</span>
+<span class="sd">        result = concat(</span>
+<span class="sd">            concat(b.matmul(a.T).to('cpu') for b in iter_batches(data, batch_size)).T</span>
+<span class="sd">            for a in iter_batches(data, batch_size)</span>
+<span class="sd">        )</span>
+<span class="sd">        assert result.shape == (n_objects, n_objects)</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        How to read the examples:</span>
+
+<span class="sd">        - the mental model for understanding the following examples is "concatenating</span>
+<span class="sd">          data for 3 batches of sizes (2, 2, 3)". Note that sizes of batches are</span>
+<span class="sd">          allowed to vary, but the structure is always the same</span>
+<span class="sd">        - in all examples there is :code:`data` - a list of batches; in fact, it can be</span>
+<span class="sd">          any "iterable of batches", including iterators and generators; the list is</span>
+<span class="sd">          chosen to simplify the demonstration</span>
+
+<span class="sd">        1-D example:</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            result = concat([</span>
+<span class="sd">                torch.tensor([0, 1]), torch.tensor([2, 3]), torch.tensor([4, 5, 6])</span>
+<span class="sd">            ])</span>
+<span class="sd">            assert torch.equal(result, torch.tensor([0, 1, 2, 3, 4, 5, 6]))</span>
+
+<span class="sd">        2-D example:</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            result = concat([</span>
+<span class="sd">                torch.tensor([</span>
+<span class="sd">                    [0, 0],</span>
+<span class="sd">                    [1, 1]</span>
+<span class="sd">                ]),</span>
+<span class="sd">                torch.tensor([</span>
+<span class="sd">                    [2, 2],</span>
+<span class="sd">                    [3, 3]</span>
+<span class="sd">                ]),</span>
+<span class="sd">                torch.tensor([</span>
+<span class="sd">                    [4, 4],</span>
+<span class="sd">                    [5, 5],</span>
+<span class="sd">                    [6, 6],</span>
+<span class="sd">                ]),</span>
+<span class="sd">            ])</span>
+<span class="sd">            assert torch.equal(</span>
+<span class="sd">                result,</span>
+<span class="sd">                torch.tensor([</span>
+<span class="sd">                    [0, 0],</span>
+<span class="sd">                    [1, 1],</span>
+<span class="sd">                    [2, 2],</span>
+<span class="sd">                    [3, 3],</span>
+<span class="sd">                    [4, 4],</span>
+<span class="sd">                    [5, 5],</span>
+<span class="sd">                    [6, 6]</span>
+<span class="sd">                ])</span>
+<span class="sd">            )</span>
+
+<span class="sd">        N-D example: &lt;the same&gt;.</span>
+
+<span class="sd">        The following examples demonstrate support for different kinds of input data;</span>
+<span class="sd">        data is 1-D everywhere just for simplicity (i.e. dimensions can be arbitrary).</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            array = np.array</span>
+<span class="sd">            tensor = torch.tensor</span>
+<span class="sd">            l = [0, 1, 2, 3, 4, 5, 6]</span>
+<span class="sd">            a = array([0, 1, 2, 3, 4, 5, 6])</span>
+<span class="sd">            t = tensor([0, 1, 2, 3, 4, 5, 6])</span>
+
+<span class="sd">            data = [[0, 1], [2, 3], [4, 5, 6]]</span>
+<span class="sd">            assert concat(data) == l</span>
+
+<span class="sd">            data = [array([0, 1]), array([2, 3]), array([4, 5, 6])]</span>
+<span class="sd">            assert np.array_equal(concat(data), a)</span>
+
+<span class="sd">            data = [tensor([0, 1]), tensor([2, 3]), tensor([4, 5, 6])]</span>
+<span class="sd">            assert torch.equal(concat(data), t)</span>
+
+<span class="sd">            # If items are not lists, arrays nor tensors, the data is returned in a form</span>
+<span class="sd">            # of a list. It makes sense since the list of such items is already</span>
+<span class="sd">            # a result for all batches.</span>
+<span class="sd">            data = ['three batches, hence three items', 0, 1.0]</span>
+<span class="sd">            assert concat(data) == data</span>
+
+<span class="sd">            data = [</span>
+<span class="sd">                ([0, 1], array([0, 1]), tensor([0, 1])),</span>
+<span class="sd">                ([2, 3], array([2, 3]), tensor([2, 3])),</span>
+<span class="sd">                ([4, 5, 6], array([4, 5, 6]), tensor([4, 5, 6])),</span>
+<span class="sd">            ]</span>
+<span class="sd">            result = concat(data)</span>
+<span class="sd">            assert isinstance(result, tuple) and len(result) == 3</span>
+<span class="sd">            assert (</span>
+<span class="sd">                result[0] == l</span>
+<span class="sd">                and np.array_equal(result[1], a)</span>
+<span class="sd">                and torch.equal(result[2], t)</span>
+<span class="sd">            )</span>
+
+<span class="sd">            data = [</span>
+<span class="sd">                {'l': [0, 1], 'a': array([0, 1]), 't': tensor([0, 1])},</span>
+<span class="sd">                {'l': [2, 3], 'a': array([2, 3]), 't': tensor([2, 3])},</span>
+<span class="sd">                {'l': [4, 5, 6], 'a': array([4, 5, 6]), 't': tensor([4, 5, 6])},</span>
+<span class="sd">            ]</span>
+<span class="sd">            result = concat(data)</span>
+<span class="sd">            assert isinstance(result, dict) and list(result) == ['l', 'a', 't']</span>
+<span class="sd">            assert (</span>
+<span class="sd">                result['l'] == l</span>
+<span class="sd">                and np.array_equal(result['a'], a)</span>
+<span class="sd">                and torch.equal(result['t'], t)</span>
+<span class="sd">            )</span>
+<span class="sd">    """</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">iterable</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">data</span><span class="p">,</span> <span class="s1">'iterable must be non-empty'</span>
+
+    <span class="k">def</span> <span class="nf">concat_fn</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">sequence</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">sequence</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+            <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+            <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span>
+            <span class="k">else</span> <span class="n">sequence</span>
+        <span class="p">)</span>
+
+    <span class="n">first</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="n">concat_fn</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">first</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">is_namedtuple</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+        <span class="k">else</span> <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)(</span><span class="n">concat_fn</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">first</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>
+        <span class="k">else</span> <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)((</span><span class="n">key</span><span class="p">,</span> <span class="n">concat_fn</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">first</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="k">else</span> <span class="n">concat_fn</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="collate"><a class="viewcode-back" href="../../reference/api/zero.data.collate.html#zero.data.collate">[docs]</a><span class="k">def</span> <span class="nf">collate</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
+    <span class="sd">"""Alias to :code:`torch.utils.data.dataloader.default_collate`."""</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dataloader</span><span class="o">.</span><span class="n">default_collate</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span></div>
 </pre></div>
 
           </article>
@@ -678,7 +893,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

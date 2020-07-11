@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.data.iter_batches &#8212; Zero 0.0.2dev0 documentation</title>
+    <title>zero.data.iter_batches &#8212; Zero 0.0.2.dev1 documentation</title>
     <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -81,7 +81,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.2dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.2.dev1 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -167,7 +167,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2dev0 documentation</a></li>
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2.dev1 documentation</a></li>
           <li class="md-tabs__item"><a href="../data.html" class="md-tabs__link">zero.data</a></li>
       </ul>
     </div>
@@ -180,13 +180,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.2dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.2.dev1 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.2dev0 documentation"> </a>
+       title="Zero 0.0.2.dev1 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -235,13 +235,6 @@
     
     
       <a href="../all.html" class="md-nav__link">zero.all</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../concat_dmap.html" class="md-nav__link">zero.concat_dmap</a>
       
     
     </li>
@@ -304,27 +297,6 @@
     <li class="md-nav__item">
     
     
-      <a href="../model.html" class="md-nav__link">zero.model</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../optim.html" class="md-nav__link">zero.optim</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../progress.html" class="md-nav__link">zero.progress</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../random.html" class="md-nav__link">zero.random</a>
       
     
@@ -332,14 +304,14 @@
     <li class="md-nav__item">
     
     
-      <a href="../tensor.html" class="md-nav__link">zero.tensor</a>
+      <a href="../time.html" class="md-nav__link">zero.time</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="../time.html" class="md-nav__link">zero.time</a>
+      <a href="../training.html" class="md-nav__link">zero.training</a>
       
     
     </li>
@@ -418,11 +390,14 @@ torch tensor of the size 1. For details, see
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="zero.data.iloader.html#zero.data.iloader" title="zero.data.iloader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iloader</span></code></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="zero.data.iloader.html#zero.data.iloader" title="zero.data.iloader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iloader</span></code></a></p></li>
+<li><p><a class="reference internal" href="zero.data.concat.html#zero.data.concat" title="zero.data.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concat</span></code></a></p></li>
+</ul>
 </div>
 <p class="rubric">Examples</p>
-<p>The function can be used for applying some function to batches, especially when
-used together with <a class="reference internal" href="../concat_dmap.html#module-zero.concat_dmap" title="zero.concat_dmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.concat_dmap</span></code></a>:</p>
+<p>Besides loops over batches, the function can be used in combination with
+<a class="reference internal" href="zero.data.concat.html#zero.data.concat" title="zero.data.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concat</span></code></a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">iter_batches</span><span class="p">(</span><span class="n">dataset_or_tensors_or_whatever</span><span class="p">,</span> <span class="o">...</span><span class="p">)))</span>
 </pre></div>
 </div>
@@ -482,7 +457,7 @@ used together with <a class="reference internal" href="../concat_dmap.html#modul
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

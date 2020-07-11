@@ -1,0 +1,6 @@
+zero.training.ProgressTracker.success
+=====================================
+
+.. currentmodule:: zero.training
+
+.. autoproperty:: ProgressTracker.success
