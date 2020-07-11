@@ -35,8 +35,8 @@ Overview
 Installation
 ------------
 
-If you plan to use the GPU-version of PyTorch, install it **before** installing Zero
-(otherwise, the CPU-version will be installed together with Zero).
+If you plan to use the GPU version of PyTorch, install it **before** installing Zero
+(otherwise, the CPU version will be installed together with Zero).
 
 .. code-block:: bash
 
@@ -57,7 +57,7 @@ How to contribute
   `"discussion" <https://github.com/Yura52/zero/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3Adiscussion>`_
   and `"help wanted" <https://github.com/Yura52/zero/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22>`_
 - `Open issues <https://github.com/Yura52/zero/issues/new/choose>`_ with bugs, ideas and
-  *any* other kind of feedback
+  any other kind of feedback
 
 If your contribution includes pull requests, see `CONTRIBUTING.md <https://github.com/Yura52/zero/blob/master/other/CONTRIBUTING.md>`_.
 
