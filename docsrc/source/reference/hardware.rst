@@ -13,3 +13,4 @@ functions
 
     free_memory
     get_gpu_info
+    to_device

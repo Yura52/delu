@@ -6,11 +6,11 @@ TL;DR: with this module, evaluation looks like this:
 
     metrics = metric_fn.calculate_iter(map(predict_batch, val_loader))
 
-In order to create your own metric, inherit from `Metric` and implement its interface.
-The API throughout the module intentionally follows that of
-`ignite.metrics <https://pytorch.org/ignite/metrics.html>`_, hence, Ignite metrics are
-supported almost everywhere where `Metric` is supported. For giving Ignite metrics all
-functionality of `Metric`, use `IgniteMetric`.
+In order to create your own metric, inherit from `Metric` and implement its interface
+(see `Metric`'s docs for examples). The API throughout the module intentionally follows
+that of `ignite.metrics <https://pytorch.org/ignite/metrics.html>`_, hence, Ignite
+metrics are supported almost everywhere where `Metric` is supported. For giving Ignite
+metrics full functionality of `Metric`, use `IgniteMetric`.
 
 Warning:
     Distributed settings are not supported out-of-the-box. In such cases, you have the
@@ -22,14 +22,14 @@ Warning:
     - manually take care of everything
 """
 
-__all__ = ['Metric', 'MetricsList', 'MetricsDict', 'IgniteMetric']
+__all__ = ['Metric', 'MetricsDict', 'IgniteMetric']
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Iterable, List, Sequence
+from typing import Any, Dict, Iterable
 
 
 class Metric(ABC):
-    """Base class for metrics.
+    """The base class for metrics.
 
     In order to create your own metric, inherit from this class and implement all
     methods marked with `@abstractmethod`. High-level functionality (`Metric.calculate`,
@@ -37,7 +37,7 @@ class Metric(ABC):
 
     .. rubric:: Tutorial
 
-    .. testcode ::
+    .. testcode::
 
         class Accuracy(Metric):
             def __init__(self):
@@ -60,7 +60,7 @@ class Metric(ABC):
         y = torch.tensor([0, 1, 0, 1])
         assert metric_fn.calculate(y_pred, y) == 0.5
 
-        from zero.data import iter_batches
+        from zero.all import iter_batches
         y = torch.randint(2, size=(10,))
         X = torch.randn(len(y), 3)
         batches = iter_batches((X, y), batch_size=2)
@@ -92,7 +92,7 @@ class Metric(ABC):
     def calculate(self, *args, **kwargs) -> Any:
         """Calculate metric for a single input.
 
-        The function does the following:
+        The method does the following:
 
         #. **resets the metric**
         #. updates the metric with :code:`(*args, **kwargs)`
@@ -115,7 +115,7 @@ class Metric(ABC):
     def calculate_iter(self, iterable: Iterable, star: bool = False) -> Any:
         """Calculate metric for iterable.
 
-        The function does the following:
+        The method does the following:
 
         #. **resets the metric**
         #. sequentially updates the metric with every value from :code:`iterable`
@@ -146,84 +146,10 @@ class Metric(ABC):
         return result
 
 
-class MetricsList(Metric):
-    """List for metrics.
-
-    Args:
-        metrics
-
-    Examples:
-        .. code-block::
-
-            metric_fn = MetricList([FirstMetric(), SecondMetric()])
-
-    .. rubric:: Tutorial
-
-    .. code-block::
-
-        from ignite.metrics import Precision
-
-        class MyMetric(Metric):
-            ...
-
-        a = MyMetric()
-        b = IgniteMetric(Precision())
-        metric_fn = MetricList([a, b])
-        metric_fn.reset()  # reset all metrics
-        metric_fn.update(...)  # update all metrics
-        metric_fn.compute()  # [<my metric>, <precision>]
-        assert metric_fn[0] is a and metric[1] is b
-    """
-
-    def __init__(self, metrics: Sequence[Metric]) -> None:
-        self._metrics = metrics
-
-    def reset(self) -> 'MetricsList':
-        """Reset all underlying metrics.
-
-        Returns:
-            self
-        """
-        for x in self._metrics:
-            x.reset()
-        return self
-
-    def update(self, *args, **kwargs) -> 'MetricsList':
-        """Update all underlying metrics.
-
-        Args:
-            *args: positional arguments forwarded to `update()` for all metrics
-            *kwargs: keyword arguments forwarded to `update()` for all metrics
-        Returns:
-            self
-        """
-        for x in self._metrics:
-            x.update(*args, **kwargs)
-        return self
-
-    def compute(self) -> List:
-        """Compute the results.
-
-        The order is the same as in the constructor.
-
-        Returns:
-            List with results of `.compute()` of the underlying metrics.
-        """
-        return [x.compute() for x in self._metrics]
-
-    def __getitem__(self, index: int) -> Metric:
-        """Access a metric by index.
-
-        Args:
-            index
-        Returns:
-            The metric corresponding to the index.
-        """
-        return self._metrics[index]
-
-
 class MetricsDict(Metric):
     """Dictionary for metrics.
+
+    The container is suitable when all metrics take input in the same form.
 
     Args:
         metrics

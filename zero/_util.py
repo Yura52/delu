@@ -1,7 +1,10 @@
 from collections.abc import Mapping, Sequence
-from typing import Callable, Generator
+from typing import Callable, Generator, TypeVar
 
-from .types import Recursive, S, T
+from .types import Recursive
+
+T = TypeVar('T')
+S = TypeVar('S')
 
 
 def is_namedtuple(x) -> bool:

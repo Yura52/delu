@@ -11,11 +11,10 @@ pytest
 
 # docs
 # it is important to freeze the version because the option -W is used for sphinx-build
-sphinx=3.1.1
+sphinx==3.1.2
 sphinx-material
 
 # examples
-scikit-learn
 torchvision
 
 # other

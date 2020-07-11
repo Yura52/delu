@@ -14,8 +14,8 @@ Timer
     :toctree: api
 
     Timer.reset
-    Timer.start
-    Timer.stop
+    Timer.run
+    Timer.pause
     Timer.add
     Timer.sub
     Timer.__call__

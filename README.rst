@@ -46,12 +46,9 @@ Dependencies
 ^^^^^^^^^^^^
 
 - Python >= 3.6
-- NumPy >= 1.18
-- PyTorch >= 1.5 (CPU or CUDA >= 10.1)
+- NumPy >= 1.17
+- PyTorch >= 1.3 (CPU or CUDA >= 10.1)
 - pynvml >= 8.0
-
-There is a good chance that Zero works fine with older versions of the mentioned
-software, however, it is tested only with the versions given above.
 
 How to contribute
 -----------------

@@ -2,50 +2,33 @@ from argparse import ArgumentParser
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.utils.data import DataLoader, random_split
+
 try:
-    from sklearn.metrics import classification_report
     from torchvision.datasets import MNIST
     from torchvision.transforms import ToTensor
 except ImportError:
     print(
         'Please, install the following packages to proceed:\n'
-        '- scikit-learn\n'
         '- torchvision (see https://pytorch.org/get-started)'
     )
     raise
 
 from zero.all import (
-    Flow,  # zero.flow
-    free_memory, get_gpu_info,  # zero.hardware
-    dump_json,  # zero.io
-    concat, dmap,  # zero.concat_dmap
-    Metric,  # zero.metrics
-    Eval,  # zero.model
-    SGD,  # zero.optim
-    ProgressTracker,  # zero.progress
-    set_seed_everywhere,  # zero.random
-    ibackward, to_device,  # zero.tensor
-    Timer, format_seconds,  # zero.time
+    Eval,
+    Flow,
+    ProgressTracker,
+    Timer,
+    concat,
+    dump_json,
+    fix_randomness,
+    format_seconds,
+    free_memory,
+    get_gpu_info,
+    learn,
+    to_device,
 )
-
-
-class Accuracy(Metric):
-    def __init__(self):
-        self.reset()
-
-    def reset(self):
-        self.n_objects = 0
-        self.n_correct = 0
-
-    def update(self, logits, y):
-        y_pred = logits.argmax(dim=1)
-        self.n_objects += len(y)
-        self.n_correct += (y_pred == y).sum().item()
-
-    def compute(self):
-        assert self.n_objects
-        return self.n_correct / self.n_objects
 
 
 def get_dataset(train):
@@ -73,12 +56,20 @@ def parse_args():
 def main():
     args = parse_args()
 
-    set_seed_everywhere(args.seed)
+    fix_randomness(args.seed)
     device = torch.device(args.device)
     model = nn.Linear(784, 10).to(device)
-    optimizer = SGD(model.parameters(), 0.005, 0.9)
-    loss_fn = nn.CrossEntropyLoss()
-    metric_fn = Accuracy()
+    optimizer = torch.optim.SGD(model.parameters(), 0.005, 0.9)
+
+    def step(batch):
+        X, y = to_device(batch, device)
+        return model(X), y
+
+    def calculate_accuracy(loader):
+        with Eval(model):
+            logits, y = concat(map(step, loader))
+        y_pred = torch.argmax(logits, dim=1).to(y)
+        return (y_pred == y).int().sum().item() / len(y)
 
     train_dataset, val_dataset = split_dataset(get_dataset(True), 0.8)
     test_dataset = get_dataset(False)
@@ -90,50 +81,39 @@ def main():
     progress = ProgressTracker(args.early_stopping_patience, 0.005)
     best_model_path = 'model.pt'
 
-    def step(batch):
-        X, y = to_device(batch, device)
-        return model(X), y  # noqa
-
     while not progress.fail and flow.increment_epoch(args.n_epoches):
         print(f'\nEpoch {flow.epoch} started')
-        timer.start()
+        timer.run()
 
         for batch in flow.data(args.epoch_size):
-            model.train()
-            with optimizer:
-                loss = ibackward(loss_fn(*step(batch)))
+            loss = learn(model, optimizer, F.cross_entropy, step, batch, True)[0]
             if flow.iteration % 100 == 0:
                 print(f'Iteration: {flow.iteration} Train loss: {loss:.4f}')
 
-        timer.stop()
-        with Eval(model):
-            score = metric_fn.calculate_iter(map(step, val_loader), True)
-        progress.update(score)
+        timer.pause()
+        accuracy = calculate_accuracy(val_loader)
+        progress.update(accuracy)
         if progress.success:
             torch.save(model.state_dict(), best_model_path)
 
         msg = (
             f'Epoch {flow.epoch} finished. '
             f'Time elapsed: {format_seconds(timer())}. '
-            f'Validation accuracy: {score:.4f}.'
+            f'Validation accuracy: {accuracy:.4f}.'
         )
         if device.type == 'cuda':
             index = device.index or 0
             msg += f'\nGPU info: {get_gpu_info()[index]}'
         print(msg)
 
-    timer.stop()
+    timer.pause()
     print(
         f'\nTraining stopped after the epoch {flow.epoch}. '
         f'Total training time: {format_seconds(timer())}'
     )
 
     model.load_state_dict(torch.load(best_model_path))
-    with Eval(model):
-        logits, y_pred = concat(dmap(step, test_loader, None, 'cpu'))
-    report = classification_report(
-        logits.argmax(dim=1).numpy(), y_pred.numpy(), output_dict=True
-    )
+    report = {'accuracy': calculate_accuracy(test_loader)}
     report['training_time'] = timer()
     report_path = 'report.json'
     dump_json(report, report_path, indent=4)

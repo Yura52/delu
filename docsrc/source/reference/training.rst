@@ -1,9 +1,14 @@
-zero.progress
+zero.training
 =============
 
-.. currentmodule:: zero.progress
+.. currentmodule:: zero.training
 
-.. automodule:: zero.progress
+.. automodule:: zero.training
+
+Eval
+^^^^^
+
+.. autoclass:: Eval
 
 ProgressTracker
 ^^^^^^^^^^^^^^^
@@ -19,3 +24,11 @@ ProgressTracker
     ProgressTracker.update
     ProgressTracker.forget_bad_updates
     ProgressTracker.reset
+
+functions
+^^^^^^^^^
+
+.. autosummary::
+    :toctree: api
+
+    learn

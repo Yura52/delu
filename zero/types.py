@@ -1,4 +1,4 @@
-r"""Types used throughout Zero."""
+"""Types used throughout Zero."""
 
 __all__ = ['PathLike', 'ArrayIndex', 'TensorIndex', 'Recursive', 'JSON', 'Device']
 
@@ -9,7 +9,7 @@ import numpy as np
 import torch
 
 T = TypeVar('T')
-S = TypeVar('S')
+
 
 PathLike = Union[Path, bytes, str]
 """"""
@@ -24,7 +24,7 @@ Recursive = Union[T, Tuple['Recursive', ...], List['Recursive'], Dict[Any, 'Recu
 .. note::
     The following values are all "instances" of `Recursive[int]`:
 
-    .. testcode ::
+    .. testcode::
 
         0
         (0, 1)
@@ -42,7 +42,7 @@ JSON = Union[None, bool, int, float, str, List['JSON'], Mapping[str, 'JSON']]  #
 .. note::
     The following values are all "instances" of `JSON`:
 
-    .. testcode ::
+    .. testcode::
 
         True
         0

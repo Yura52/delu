@@ -1,4 +1,4 @@
-r"""Time management."""
+"""Time management."""
 
 __all__ = ['Timer', 'format_seconds']
 
@@ -9,7 +9,7 @@ from typing import Optional, Union
 class Timer:
     """Measures time.
 
-    Measures time elapsed since the first call to `~Timer.start` up to "now" plus
+    Measures time elapsed since the first call to `~Timer.run` up to "now" plus
     shift. The shift accumulates all pauses time and can be manually changed with the
     methods `~Timer.add` and `~Timer.sub`. If a timer is just created/reset, the shift
     is 0.0.
@@ -21,25 +21,25 @@ class Timer:
 
     .. rubric:: Tutorial
 
-    .. testcode ::
+    .. testcode::
 
         import time
 
         assert Timer()() == 0.0
 
-        timer = Timer().start()  # start
+        timer = Timer().run()  # start
         time.sleep(0.01)
         assert timer()  # some time has passed
 
-        timer.stop()  # pause
+        timer.pause()
         elapsed = timer()
         time.sleep(0.01)
-        assert timer() == elapsed  # time didn't change because of the pause
+        assert timer() == elapsed  # time didn't change because the timer is on pause
 
         timer.add(1.0)
         assert timer() == elapsed + 1.0
 
-        timer.start()  # resume
+        timer.run()  # resume
         time.sleep(0.01)
         assert timer() > elapsed + 1.0
 
@@ -49,7 +49,7 @@ class Timer:
 
     # mypy cannot infer types from .reset(), so they must be given here
     _start_time: Optional[float]
-    _stop_time: Optional[float]
+    _pause_time: Optional[float]
     _shift: float
 
     def __init__(self) -> None:
@@ -58,27 +58,27 @@ class Timer:
     def reset(self) -> None:
         """Reset the timer.
 
-        The method resets everything: the start time, the stop time, the shift.
+        Resets the timer to the initial state.
         """
         self._start_time = None
-        self._stop_time = None
+        self._pause_time = None
         self._shift = 0.0
 
-    def start(self) -> 'Timer':
+    def run(self) -> 'Timer':
         """Start/resume the timer.
 
         If the timer is on pause, the method resumes the timer.
         If the timer is runnning, the method does nothing (i.e. it does NOT overwrite
-        the previous stop time).
+        the previous pause time).
         """
         if self._start_time is None:
             self._start_time = time.perf_counter()
-        elif self._stop_time is not None:
-            self.sub(time.perf_counter() - self._stop_time)
-            self._stop_time = None
-        return self  # enables the pattern `timer = Timer().start()`
+        elif self._pause_time is not None:
+            self.sub(time.perf_counter() - self._pause_time)
+            self._pause_time = None
+        return self  # enables the pattern `timer = Timer().run()`
 
-    def stop(self) -> None:
+    def pause(self) -> None:
         """Pause the timer.
 
         If the timer is running, the method pauses the timer.
@@ -88,8 +88,8 @@ class Timer:
             AssertionError: if the timer is just created or just reset.
         """
         assert self._start_time is not None
-        if self._stop_time is None:
-            self._stop_time = time.perf_counter()
+        if self._pause_time is None:
+            self._pause_time = time.perf_counter()
 
     def add(self, delta: float) -> None:
         """Add non-negative delta to the shift.
@@ -147,7 +147,7 @@ class Timer:
         """
         if self._start_time is None:
             return self._shift
-        now = self._stop_time or time.perf_counter()
+        now = self._pause_time or time.perf_counter()
         return now - self._start_time + self._shift
 
 
@@ -161,7 +161,7 @@ def format_seconds(seconds: Union[int, float], format_str: str = '%Hh %Mm %Ss') 
         Filled :code:`format_str`.
 
     Examples:
-        .. testcode ::
+        .. testcode::
 
             assert format_seconds(3661) == '01h 01m 01s'
     """

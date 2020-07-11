@@ -1,3 +1,5 @@
+.. _zero.metrics:
+
 zero.metrics
 ============
 
@@ -19,19 +21,6 @@ Metric
     Metric.compute
     Metric.calculate
     Metric.calculate_iter
-
-MetricsList
-^^^^^^^^^^^
-
-.. autoclass:: MetricsList
-
-.. autosummary::
-    :toctree: api
-
-    MetricsList.reset
-    MetricsList.update
-    MetricsList.compute
-    MetricsList.__getitem__
 
 
 MetricsDict

@@ -1,4 +1,4 @@
-"""Native Python loops. But smarter."""
+"""Smart Python loops."""
 
 __all__ = ['Flow', 'ManualFlow']
 

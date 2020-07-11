@@ -1,4 +1,4 @@
-r"""Shortcuts for input and output."""
+"""Shortcuts for input and output."""
 
 __all__ = [
     'load_pickle',

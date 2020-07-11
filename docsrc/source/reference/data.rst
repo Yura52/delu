@@ -38,5 +38,7 @@ functions
 .. autosummary::
     :toctree: api
 
+    collate
+    concat
     iloader
     iter_batches

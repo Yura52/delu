@@ -7,24 +7,24 @@ from zero.time import Timer, format_seconds
 
 def test_timer():
     with raises(AssertionError):
-        Timer().stop()
+        Timer().pause()
 
-    # initial state, start
+    # initial state, run
     timer = Timer()
     sleep(0.001)
     assert not timer()
-    timer.start()
+    timer.run()
     assert timer()
 
-    # stop
-    timer.stop()
-    timer.stop()  # two stops in a row
+    # pause
+    timer.pause()
+    timer.pause()  # two pauses in a row
     x = timer()
     sleep(0.001)
     assert timer() == x
 
     # add, sub
-    timer.stop()
+    timer.pause()
     with raises(AssertionError):
         timer.add(-1.0)
     timer.add(1.0)
@@ -34,17 +34,17 @@ def test_timer():
     timer.sub(1.0)
     assert timer() == x
 
-    # start
-    timer.stop()
+    # run
+    timer.pause()
     x = timer()
-    timer.start()
-    timer.start()  # two starts in a row
+    timer.run()
+    timer.run()  # two runs in a row
     assert timer() != x
-    timer.stop()
+    timer.pause()
     x = timer()
     sleep(0.001)
     assert timer() == x
-    timer.start()
+    timer.run()
 
     # reset
     timer.reset()
@@ -55,7 +55,7 @@ def test_timer_measurements():
     x = perf_counter()
     sleep(0.1)
     correct = perf_counter() - x
-    timer = Timer().start()
+    timer = Timer().run()
     sleep(0.1)
     actual = timer()
     # the allowed deviation was obtained from manual runs on my laptop so the test may
