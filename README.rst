@@ -25,7 +25,7 @@ Overview
 - `Classification task example (MNIST) <https://github.com/Yura52/zero/blob/master/examples/mnist.py>`_
 - Discussions:
 
-  - `Issue on GitHub <https://github.com/Yura52/zero/issues/13>`_
+  - `Issue on GitHub <https://github.com/Yura52/zero/issues/21>`_
   - (coming soon) Post on Medium
   - (coming soon) Discussion on Reddit
   - (coming soon) Discussion on Hacker News
