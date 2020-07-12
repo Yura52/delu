@@ -62,9 +62,8 @@ How to contribute
 If your contribution includes pull requests, see `CONTRIBUTING.md <https://github.com/Yura52/zero/blob/master/other/CONTRIBUTING.md>`_.
 
 Why "Zero"?
------------------
+-----------
 
-Zero aims to be `zero-overhead <https://isocpp.org/wiki/faq/big-picture#zero-overhead-principle>`_ in terms of *mental* overhead:
-
-- with Zero, you learn *tools* (functions, classes, etc.), but you don't learn *patterns*
-- solutions, provided by Zero, try to be as minimal, intuitive and easy to learn, as possible
+Zero aims to be `zero-overhead <https://isocpp.org/wiki/faq/big-picture#zero-overhead-principle>`_
+in terms of *mental* overhead: solutions, provided by Zero, try to be as minimal,
+intuitive and easy to learn, as possible.

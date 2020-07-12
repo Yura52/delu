@@ -151,5 +151,5 @@ archive
 data
 
 # Other files
-draft.*
+draft*.*
 notes.md
