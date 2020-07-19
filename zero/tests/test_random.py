@@ -4,15 +4,15 @@ from unittest.mock import Mock
 import numpy as np
 import torch
 
-from zero.random import fix_randomness
+from zero.random import set_randomness
 
 from .util import requires_gpu
 
 
 def test_fix_randomness_common():
-    assert isinstance(fix_randomness(), np.random.Generator)
+    assert isinstance(set_randomness(), np.random.Generator)
     mock = Mock()
-    fix_randomness(1, callback=mock)
+    set_randomness(1, callback=mock)
     mock.assert_called_once_with(1)
 
 
@@ -21,7 +21,7 @@ def _test_fix_randomness(functions):
     for seed_sequence in range(10):
         x = [None, None]
         for i in range(2):
-            rng = fix_randomness(seed_sequence, callback=None)
+            rng = set_randomness(seed_sequence, callback=None)
             x[i] = [f(rng, high) for f in functions]
         assert x[0] == x[1]
 

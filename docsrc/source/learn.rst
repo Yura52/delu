@@ -32,7 +32,7 @@ are the things to learn:
    zero.flow.Flow
    zero.training
    zero.data.concat
-   zero.random.fix_randomness
+   zero.random.set_randomness
    zero.time.Timer
    zero.hardware
    zero.io

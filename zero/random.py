@@ -1,6 +1,6 @@
 """Random sampling utilities."""
 
-__all__ = ['fix_randomness']
+__all__ = ['set_randomness']
 
 import random
 import secrets
@@ -12,10 +12,10 @@ from numpy.random import Generator, default_rng
 
 
 def _default_callback(seed):
-    print(f'Seed: {seed} (see zero.random.fix_randomness)')
+    print(f'Seed: {seed} (see zero.random.set_randomness)')
 
 
-def fix_randomness(
+def set_randomness(
     seed: Optional[int] = None,
     cudnn_deterministic: bool = True,
     cudnn_benchmark: bool = False,
@@ -45,13 +45,13 @@ def fix_randomness(
     Examples:
         .. testcode::
 
-            rng = fix_randomness()  # seed will be generated
-            rng = fix_randomness(0)
+            rng = set_randomness()  # seed will be generated
+            rng = set_randomness(0)
 
         .. testoutput ::
 
-            Seed: ... (see zero.random.fix_randomness)
-            Seed: 0 (see zero.random.fix_randomness)
+            Seed: ... (see zero.random.set_randomness)
+            Seed: 0 (see zero.random.set_randomness)
     """
     torch.backends.cudnn.deterministic = cudnn_deterministic  # type: ignore
     torch.backends.cudnn.benchmark = cudnn_benchmark  # type: ignore

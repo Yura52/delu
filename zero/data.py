@@ -1,127 +1,18 @@
 """Missing batteries from `torch.utils.data`."""
 
-__all__ = ['NamedTensorDataset', 'Enumerate', 'concat', 'iloader', 'iter_batches']
+__all__ = ['Enumerate', 'collate', 'concat', 'iloader', 'iter_batches']
 
 import itertools
-from collections import namedtuple
-from typing import (
-    Any,
-    Dict,
-    Iterable,
-    Iterator,
-    NamedTuple,
-    Sequence,
-    Tuple,
-    TypeVar,
-    Union,
-)
+from typing import Any, Dict, Iterable, Iterator, Tuple, TypeVar, Union
 
 import numpy as np
 import torch
 from torch.utils.data import DataLoader, Dataset, TensorDataset
 
 from ._util import is_namedtuple
-from .types import TensorIndex
 
 T = TypeVar('T')
 S = TypeVar('S')
-
-
-class NamedTensorDataset(Dataset):
-    """Named version of `~torch.utils.data.TensorDataset`.
-
-    Args:
-        *tensors: tensors **of the same length**
-        names: names for tensors
-
-    Examples:
-        .. testcode::
-
-            X, y = torch.randn(10, 3), torch.randn(10)
-            dataset = NamedTensorDataset(X, y, names=['X', 'y'])
-            # or
-            dataset = NamedTensorDataset.from_dict({'X': X, 'y': y})
-            assert dataset.X is X
-            assert dataset.y is y
-            # dataset.tensors is a named tuple with the fields 'X' and 'y'
-
-            def step_fn(X, y):
-                ...
-
-            for batch in torch.utils.data.DataLoader(dataset, batch_size=2):
-                # batch is a named tuple
-                step_fn(batch.X, batch.y)
-    """
-
-    def __init__(self, *tensors: torch.Tensor, names: Sequence[str]) -> None:
-        assert tensors
-        assert len(tensors) == len(names)
-        assert tensors[0].dim()
-        assert all(len(x) == len(tensors[0]) for x in tensors)
-        self._names = tuple(names)
-        # "NamedTuple type as an attribute is not supported"
-        self._tuple_cls = namedtuple(f'Batch_{id(self)}', self.names)  # type: ignore
-        self._tensors = self._tuple_cls(*tensors)
-        for k, v in zip(self.names, self.tensors):
-            setattr(self, k, v)
-
-    @classmethod
-    def from_dict(cls, data: Dict[str, torch.Tensor]) -> 'NamedTensorDataset':
-        """Construct `NamedTensorDataset` from a dictionary.
-
-        Args:
-            data:
-        Returns:
-            Dataset.
-        """
-        # Key and value orderings are consistent:
-        # https://docs.python.org/3/library/stdtypes.html#dictionary-view-objects
-        return cls(*data.values(), names=tuple(data.keys()))
-
-    @property
-    def tensors(self) -> NamedTuple:
-        """Access the underlying tensors.
-
-        Returns:
-            The tensors.
-        """
-        return self._tensors
-
-    @property
-    def names(self) -> Tuple[str, ...]:
-        """Get the field names.
-
-        Returns:
-            The names.
-        """
-        return self._names
-
-    def __len__(self) -> int:
-        """Return the length of all tensors.
-
-        Returns:
-            The length.
-        """
-        return len(self.tensors[0])
-
-    def __getitem__(self, idx: TensorIndex) -> NamedTuple:
-        """Get item(s) by index/indices.
-
-        Args:
-            idx: the index
-        Returns:
-            The item(s).
-
-        Note:
-            Efficient indexing with slices, arrays and tensors is also supported.
-        """
-        return self._tuple_cls._make(x[idx] for x in self.tensors)
-
-    def __setattr__(self, attr, value):
-        # The method surves as a protection against wrong usage that can lead to
-        # inconsistency betweem attributes of self and self.tensors
-        assert not hasattr(self, attr) or attr not in self.names
-        return super().__setattr__(attr, value)
 
 
 class Enumerate(Dataset):
@@ -182,11 +73,10 @@ class _IndicesDataset(Dataset):
 
 
 def iloader(size: int, *args, **kwargs) -> DataLoader:
-    """Make `~torch.utils.data.DataLoader` over indices.
+    """Make `~torch.utils.data.DataLoader` over batches of indices.
 
-    This thing has many names (such as "iter_batch_indices") and allows to iterate over
-    batch indices, not over batches. **The shuffling logic is fully delegated to native
-    PyTorch DataLoader**, i.e. no custom logic is performed under the hood.
+    **The shuffling logic is fully delegated to native PyTorch DataLoader**, i.e. no
+    custom logic is performed under the hood.
 
     Args:
         size: the size of dataset (for example, :code:`len(dataset)`)
@@ -241,11 +131,7 @@ def iloader(size: int, *args, **kwargs) -> DataLoader:
 
 def iter_batches(
     data: Union[
-        torch.Tensor,
-        Tuple[torch.Tensor, ...],
-        Dict[Any, torch.Tensor],
-        TensorDataset,
-        NamedTensorDataset,
+        torch.Tensor, Tuple[torch.Tensor, ...], Dict[Any, torch.Tensor], TensorDataset,
     ],
     *args,
     **kwargs,
@@ -538,6 +424,13 @@ def concat(iterable: Iterable[T]) -> Union[S, Tuple[S, ...], Dict[Any, S]]:
     )
 
 
-def collate(batch):
-    """Alias to :code:`torch.utils.data.dataloader.default_collate`."""
+def collate(batch: Iterable[T]) -> Any:
+    """Almost an alias for :code:`torch.utils.data.dataloader.default_collate`.
+
+    Namely, the input is allowed to be any kind of iterable, not only a list. Firstly,
+    if it is not a list, it is transformed to a list. Then, the list is passed to the
+    original function and the result is returned as is.
+    """
+    if not isinstance(batch, list):
+        batch = list(batch)
     return torch.utils.data.dataloader.default_collate(batch)

@@ -30,11 +30,11 @@ def load_pickle(path: PathLike, **kwargs) -> Any:
         return pickle.load(f, **kwargs)
 
 
-def dump_pickle(x, path: PathLike, **kwargs) -> None:
+def dump_pickle(x: Any, path: PathLike, **kwargs) -> None:
     """Dump an object to a file in Pickle format.
 
     Args:
-        x: The object to dump.
+        x: the object
         path (`~zero.types.PathLike`): path to the file. If the file doesn't exist,
             it will be created, otherwise, overwritten.
         kwargs: arguments for `pickle.dump`
@@ -60,7 +60,7 @@ def dump_json(x: JSON, path: PathLike, **kwargs) -> None:
     """Dump an object to a file in JSON format.
 
     Args:
-        x (`~zero.types.JSON`): the object to dump
+        x (`~zero.types.JSON`): the JSON-compatible object
         path (`~zero.types.PathLike`): path to the file. If the file doesn't exist,
             it will be created, otherwise, overwritten.
         kwargs: arguments for `json.dump`
@@ -93,7 +93,7 @@ def dump_jsonl(records: Iterable[JSON], path: PathLike, **kwargs) -> None:
     """Dump an object to a file in JSONL format.
 
     Args:
-        records (Iterable[`~zero.types.JSON`]): the object to dump
+        records (Iterable[`~zero.types.JSON`]): the JSON-compatible records
         path (`~zero.types.PathLike`): path to the file. If the file doesn't exist,
             it will be created, otherwise, overwritten.
         kwargs: arguments for `json.dump`

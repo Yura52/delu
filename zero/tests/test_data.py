@@ -3,45 +3,9 @@ import torch
 from pytest import mark, raises
 from torch.utils.data import DataLoader, TensorDataset
 
-from zero.data import (
-    Enumerate,
-    NamedTensorDataset,
-    collate,
-    concat,
-    iloader,
-    iter_batches,
-)
+from zero.data import Enumerate, collate, concat, iloader, iter_batches
 
 from .util import Point
-
-
-def test_named_tensor_dataset():
-    a = torch.arange(3)
-    b = torch.arange(3)
-    c = torch.arange(4)
-    with raises(AssertionError):
-        NamedTensorDataset(names=[])
-    with raises(AssertionError):
-        NamedTensorDataset(a, b, names=('a',))
-    with raises(AssertionError):
-        NamedTensorDataset(torch.tensor(0), names=('a',))
-    with raises(AssertionError):
-        NamedTensorDataset(a, c, names=('a', 'c'))
-
-    for x in [
-        NamedTensorDataset(a, b, names=('a', 'b')),
-        NamedTensorDataset.from_dict({'a': a, 'b': b}),
-    ]:
-        assert x.names == ('a', 'b')
-        assert x.a is a and x.b is b
-        assert len(x) == 3
-        assert x[1] == x._tuple_cls(torch.tensor(1), torch.tensor(1))
-        for correct, actual in zip(
-            zip(['a', 'b'], [a, b]), x.tensors._asdict().items()
-        ):
-            assert actual[0] == correct[0] and torch.equal(actual[1], correct[1])
-        with raises(AssertionError):
-            x.a = 0
 
 
 def test_enumerate():
@@ -112,12 +76,6 @@ def test_iter_batches(batch_size):
     for i in range(2):
         batches_i = list(x[i] for x in batches)
         check(batches_i, data[i])
-
-    data = {'a': torch.arange(n), 'b': torch.arange(n)}
-    batches = list(iter_batches(NamedTensorDataset.from_dict(data), batch_size))
-    for key in data:
-        batches_i = list(getattr(x, key) for x in batches)
-        check(batches_i, data[key])
 
     # test DataLoader kwargs
     data = torch.arange(n)

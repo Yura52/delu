@@ -215,7 +215,7 @@ def learn(
     The function does the following:
 
     #. Switches the model to the training mode, sets its gradients to zero.
-    #. Performs the call :code:`step(batch)`
+    #. Performs the call :code:`step(batch)` or :code:`step(*batch)`
     #. The output from the previous step is passed to :code:`loss_fn`
     #. `torch.Tensor.backward` is applied to the obtained loss tensor.
     #. The optimization step is performed.

@@ -45,7 +45,7 @@ def split_dataset(dataset, ratio):
 
 def parse_args():
     parser = ArgumentParser()
-    parser.add_argument('-d', '--device', default='cpu')
+    parser.add_argument('-d', '--device', default='cpu', type=torch.device)
     parser.add_argument('-e', '--epoch-size')
     parser.add_argument('-n', '--n-epoches', type=int)
     parser.add_argument('-p', '--early-stopping-patience', type=int, default=2)
@@ -57,12 +57,11 @@ def main():
     args = parse_args()
 
     fix_randomness(args.seed)
-    device = torch.device(args.device)
-    model = nn.Linear(784, 10).to(device)
+    model = nn.Linear(784, 10).to(args.device)
     optimizer = torch.optim.SGD(model.parameters(), 0.005, 0.9)
 
     def step(batch):
-        X, y = to_device(batch, device)
+        X, y = to_device(batch, args.device)
         return model(X), y
 
     def calculate_accuracy(loader):
@@ -101,8 +100,8 @@ def main():
             f'Time elapsed: {format_seconds(timer())}. '
             f'Validation accuracy: {accuracy:.4f}.'
         )
-        if device.type == 'cuda':
-            index = device.index or 0
+        if args.device.type == 'cuda':
+            index = args.device.index or 0
             msg += f'\nGPU info: {get_gpu_info()[index]}'
         print(msg)
 
