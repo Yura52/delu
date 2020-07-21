@@ -22,11 +22,11 @@ from zero.all import (
     Timer,
     concat,
     dump_json,
-    fix_randomness,
     format_seconds,
     free_memory,
     get_gpu_info,
     learn,
+    set_randomness,
     to_device,
 )
 
@@ -56,7 +56,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    fix_randomness(args.seed)
+    set_randomness(args.seed)
     model = nn.Linear(784, 10).to(args.device)
     optimizer = torch.optim.SGD(model.parameters(), 0.005, 0.9)
 
