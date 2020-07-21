@@ -17,7 +17,7 @@ except ImportError:
 
 from zero.all import (
     Eval,
-    Flow,
+    Stream,
     ProgressTracker,
     Timer,
     concat,
@@ -75,19 +75,19 @@ def main():
     val_loader = DataLoader(val_dataset, batch_size=8096)
     test_loader = DataLoader(test_dataset, batch_size=8096)
 
-    flow = Flow(DataLoader(train_dataset, batch_size=64, shuffle=True))
+    stream = Stream(DataLoader(train_dataset, batch_size=64, shuffle=True))
     timer = Timer()
     progress = ProgressTracker(args.early_stopping_patience, 0.005)
     best_model_path = 'model.pt'
 
-    while not progress.fail and flow.increment_epoch(args.n_epoches):
-        print(f'\nEpoch {flow.epoch} started')
+    while not progress.fail and stream.increment_epoch(args.n_epoches):
+        print(f'\nEpoch {stream.epoch} started')
         timer.run()
 
-        for batch in flow.data(args.epoch_size):
+        for batch in stream.data(args.epoch_size):
             loss = learn(model, optimizer, F.cross_entropy, step, batch, True)[0]
-            if flow.iteration % 100 == 0:
-                print(f'Iteration: {flow.iteration} Train loss: {loss:.4f}')
+            if stream.iteration % 100 == 0:
+                print(f'Iteration: {stream.iteration} Train loss: {loss:.4f}')
 
         timer.pause()
         accuracy = calculate_accuracy(val_loader)
@@ -96,7 +96,7 @@ def main():
             torch.save(model.state_dict(), best_model_path)
 
         msg = (
-            f'Epoch {flow.epoch} finished. '
+            f'Epoch {stream.epoch} finished. '
             f'Time elapsed: {format_seconds(timer())}. '
             f'Validation accuracy: {accuracy:.4f}.'
         )
@@ -107,7 +107,7 @@ def main():
 
     timer.pause()
     print(
-        f'\nTraining stopped after the epoch {flow.epoch}. '
+        f'\nTraining stopped after the epoch {stream.epoch}. '
         f'Total training time: {format_seconds(timer())}'
     )
 

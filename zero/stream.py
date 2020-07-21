@@ -1,6 +1,6 @@
 """Smart Python loops."""
 
-__all__ = ['Flow', 'ManualFlow']
+__all__ = ['Stream', 'ManualStream']
 
 import math
 from typing import Any, Iterable, Iterator, Optional, Sized, Union
@@ -10,13 +10,13 @@ def _try_len(x):
     return len(x) if isinstance(x, Sized) else None
 
 
-class Flow:
+class Stream:
     """Smart wrapper for iterables.
 
-    `Flow` simplifies managing loops, especially for typical deep learning scenarios (it
-    is usually used to wrap :code:`train_dataloader` or any other data source).
+    `Stream` simplifies managing loops, especially in typical deep learning scenarios
+    (it is usually used to wrap :code:`train_dataloader` or any other data source).
 
-    `Flow`:
+    `Stream`:
 
     - simplifies management of the "epoch" and "iteration" variables
     - allows to customize the size of epoch
@@ -33,24 +33,24 @@ class Flow:
     Examples:
         .. testcode::
 
-            flow = Flow([0, 1, 2, 3])
-            flow = Flow(range(10))
+            stream = Stream([0, 1, 2, 3])
+            stream = Stream(range(10))
             import itertools
-            flow = Flow(itertools.repeat(0))
+            stream = Stream(itertools.repeat(0))
 
-        .. code-block::
-
-            flow = Flow(torch.utils.data.DataLoader(...))
+            from torch.utils.data import DataLoader, TensorDataset
+            dataset = TensorDataset(torch.randn(10, 2))
+            stream = Stream(DataLoader(dataset, batch_size=3, shuffle=True))
 
     .. rubric:: Tutorial
 
-    Let's revise the conventional approach without `Flow`:
+    Let's revise the conventional approach without `Stream`:
 
     .. code-block::
 
         loader = DataLoader(...)
         iteration = 0
-        for epoch in range(max_epoch):
+        for epoch in range(n_epoches):
             if need_custom_epoch_size():
                 assert False, 'It is possible, but not convenient'
 
@@ -62,97 +62,102 @@ class Flow:
             if need_new_loader():
                 assert False, 'It is possible, but not convenient'
 
-    There are several ways how you can use `Flow` to enhance this loop. Let's start with
-    creating a flow:
+    There are several ways how you can use `Stream` to enhance this loop. Let's start
+    with creating a stream:
 
     .. code-block::
 
-        flow = Flow(DataLoader(...))
+        stream = Stream(DataLoader(...))
 
-    The dataloader is accessible via `Flow.loader`. Firstly, let's reproduce the loop
+    The dataloader is accessible via `Stream.loader`. Now, let's reproduce the loop
     above:
 
     .. code-block::
 
-        flow = Flow(DataLoader(...))
-        while flow.increment_epoch(max_epoch):
-            for x in flow.data():
-                print('Epoch:', flow.epoch, 'Iteration:', flow.iteration)
+        for epoch in range(n_epoches):
+            for x in stream.data():
+                print('Epoch:', epoch, 'Iteration:', stream.iteration)
 
-    We see that there are `Flow.epoch` and `Flow.iteration` and the latter one is
-    created and incremented automatically.
+        # or
 
-    As for the loop's *type*, :code:`while` is chosen instead of :code:`for`, because it
+        while stream.increment_epoch(n_epoches):
+            for x in stream.data():
+                print('Epoch:', stream.epoch, 'Iteration:', stream.iteration)
 
-    - needs no changes when starting from non-zero epoch (for example, when resuming
-      after loading a checkpoint)
-    - enables flexible termination patterns by adding additional conditions
+    Firstly, we see that `Stream.iteration` is created and incremented automatically.
+    We also see that :code:`while` loop can be used instead of more "conventional"
+    :code:`for`. It brings the following differences:
 
-    For example, with `zero.progress.ProgressTracker` early stopping can look like this:
+    - restoring stream's state via the :code:`state_dict` mechanism becomes possible
+    - terminating the loop by adding more conditions to the :code:`while` statement
+      becomes possible; for example, with `zero.training.ProgressTracker` early stopping
+      can look like this:
+
+      .. code-block::
+
+          while not progress.fail and stream.increment_epoch(n_epoches):
+
+    - epoches numeration effectively starts from 1; it is consistent with iterations
+      numeration (also starts from 1)
+
+    In order to customize the epoch size, pass the size to `Stream.data`:
 
     .. code-block::
 
-        while not progress.fail and flow.increment_epoch():
-            ...
-
-    In order to customize the epoch size, pass the size to `Flow.data`:
-
-    .. code-block::
-
-        while flow.increment_epoch(max_epoch):
-            for x in flow.data(custom_epoch_size):
+        while stream.increment_epoch(n_epoches):
+            for x in stream.data(custom_epoch_size):
                 ...
 
-    Changing the underlying loader on the fly is possible at *any* moment via
-    `Flow.set_loader`. For example::
+    Changing the underlying loader on the fly is possible at *any* moment (even in the
+    middle of epoch) via `Stream.set_loader`. For example::
 
-        while flow.increment_epoch(max_epoch):
-            for x in flow.data(custom_epoch_size):
+        while stream.increment_epoch(n_epoches):
+            for x in stream.data(custom_epoch_size):
                 ...
                 if need_new_loader():
-                    flow.set_loader(new_loader)
+                    stream.set_loader(new_loader)
 
     Additionally, two new forms of infinite loop become possible:
 
     .. code-block::
 
-        for x in flow.data(math.inf):
+        for x in stream.data(math.inf):
             ...
-            if flow.iteration % frequency:
+            if stream.iteration % frequency:
                 ...
 
         while True:
-            x = flow.next()
+            x = stream.next()
             ...
-            if flow.iteration % frequency:
+            if stream.iteration % frequency:
                 ...
 
     Note:
-        For better technical understanding, keep in mind that `Flow` simply incapsulates
-        an "infinite iterator" that is constantly moving forward. The behavior is
-        absolutely the same for both finite and infinite iterables and can be expressed
-        with the following loop::
+        For better technical understanding, keep in mind that `Stream` simply
+        incapsulates an "infinite iterator" that is constantly moving forward. The
+        behavior is absolutely the same for both finite and infinite iterables and can
+        be expressed with the following loop::
 
             while True:
                 for item in loader:  # loader which is passed in the constructor
                     ...
 
-        Documentation of `Flow.next` and `Flow.data` provide helpful examples.
+        Documentation of `Stream.next` and `Stream.data` provide helpful examples.
 
     See Also:
-        `ManualFlow`: like `Flow`, but for cases when one logical step (e.g. training
-        step) does not correspond to one iteration.
+        `ManualStream`: like `Stream`, but for cases when one logical step (e.g.
+        training step) does not correspond to one iteration.
     """
 
     class _EpochData:
-        def __init__(self, flow, n, attr):
-            self._flow = flow
+        def __init__(self, stream, n, attr):
+            self._stream = stream
             self._n = n
             self._attr = attr
             self._start = self._get_current()
 
         def _get_current(self):
-            return getattr(self._flow, self._attr)
+            return getattr(self._stream, self._attr)
 
         def __iter__(self):
             return self
@@ -160,7 +165,7 @@ class Flow:
         def __next__(self):
             if self._n is not None and self._get_current() - self._start >= self._n:
                 raise StopIteration()
-            return self._flow.next()
+            return self._stream.next()
 
     def __init__(self, loader: Iterable) -> None:
         assert _try_len(loader) != 0
@@ -173,7 +178,7 @@ class Flow:
     def iteration(self) -> int:
         """Current iteration.
 
-        Technically, the number of `Flow.next` calls.
+        Technically, the number of `Stream.next` calls.
         """
         return self._iteration
 
@@ -181,7 +186,7 @@ class Flow:
     def epoch(self) -> int:
         """Current epoch.
 
-        Technically, the number of "succeeded" `Flow.increment_epoch` calls.
+        Technically, the number of "succeeded" `Stream.increment_epoch` calls.
         """
         return self._epoch
 
@@ -207,14 +212,14 @@ class Flow:
         Examples:
             .. testcode::
 
-                flow = Flow(range(5))
-                assert flow.epoch == 0
-                assert flow.increment_epoch()
-                assert flow.epoch == 1
-                assert flow.increment_epoch(2)
-                assert flow.epoch == 2
-                assert not flow.increment_epoch(2)
-                assert flow.epoch == 2
+                stream = Stream(range(5))
+                assert stream.epoch == 0
+                assert stream.increment_epoch()
+                assert stream.epoch == 1
+                assert stream.increment_epoch(2)
+                assert stream.epoch == 2
+                assert not stream.increment_epoch(2)
+                assert stream.epoch == 2
         """
         if isinstance(max, float):
             assert math.isinf(max)
@@ -226,7 +231,7 @@ class Flow:
     def data(self, n_items: Optional[Union[int, float]] = None) -> Iterator:
         """Iterate over the loader.
 
-        Under the hood, `Flow.next` is called, hence, `Flow.iteration` changes during
+        Under the hood, `Stream.next` is called, hence, `Stream.iteration` changes during
         iterations.
 
         Args:
@@ -240,13 +245,13 @@ class Flow:
         Examples:
             .. testcode::
 
-                flow = Flow(range(5))
-                assert list(flow.data()) == [0, 1, 2, 3, 4]
-                assert list(flow.data(3)) == [0, 1, 2]
-                # flow doesn't "start over"!
-                assert list(flow.data(3)) == [3, 4, 0]
-                assert list(flow.data(1)) == [1]
-                assert list(flow.data(2)) == [2, 3]
+                stream = Stream(range(5))
+                assert list(stream.data()) == [0, 1, 2, 3, 4]
+                assert list(stream.data(3)) == [0, 1, 2]
+                # stream doesn't "start over"!
+                assert list(stream.data(3)) == [3, 4, 0]
+                assert list(stream.data(1)) == [1]
+                assert list(stream.data(2)) == [2, 3]
         """
         if isinstance(n_items, float):
             assert math.isinf(n_items)
@@ -254,7 +259,7 @@ class Flow:
             if not isinstance(self.loader, Sized):
                 raise ValueError()
             n_items = len(self.loader)
-        return Flow._EpochData(self, n_items, 'iteration')
+        return Stream._EpochData(self, n_items, 'iteration')
 
     def next(self) -> Any:
         """Get the next item and increment iteration.
@@ -267,14 +272,14 @@ class Flow:
         Examples:
             .. testcode::
 
-                flow = Flow(range(3))
-                assert flow.iteration == 0
-                assert flow.next() == 0
-                assert flow.iteration == 1
-                assert flow.next() == 1
-                assert flow.next() == 2
-                assert flow.next() == 0
-                assert flow.iteration == 4
+                stream = Stream(range(3))
+                assert stream.iteration == 0
+                assert stream.next() == 0
+                assert stream.iteration == 1
+                assert stream.next() == 1
+                assert stream.next() == 2
+                assert stream.next() == 0
+                assert stream.iteration == 4
         """
         if self._iter is None:
             self._iter = iter(self._loader)
@@ -298,17 +303,17 @@ class Flow:
         Examples:
             .. testcode::
 
-                flow = Flow(range(5))
-                assert flow.next() == 0
-                assert flow.next() == 1
-                flow.reload_iterator()
-                assert flow.next() == 0
+                stream = Stream(range(5))
+                assert stream.next() == 0
+                assert stream.next() == 1
+                stream.reload_iterator()
+                assert stream.next() == 0
 
-                flow = Flow(iter(range(5)))
-                assert flow.next() == 0
-                assert flow.next() == 1
-                flow.reload_iterator()
-                assert flow.next() == 2
+                stream = Stream(iter(range(5)))
+                assert stream.next() == 0
+                assert stream.next() == 1
+                stream.reload_iterator()
+                assert stream.next() == 2
         """
         self._iter = iter(self.loader)
 
@@ -324,11 +329,11 @@ class Flow:
             .. testcode::
 
                 from itertools import repeat
-                flow = Flow(repeat(0))
-                for x in flow.data(5):
-                    print(flow.iteration, x)
-                    if flow.iteration == 2:
-                        flow.set_loader(repeat(1))
+                stream = Stream(repeat(0))
+                for x in stream.data(5):
+                    print(stream.iteration, x)
+                    if stream.iteration == 2:
+                        stream.set_loader(repeat(1))
 
             .. testoutput::
 
@@ -344,12 +349,12 @@ class Flow:
             self._iter = iter(loader)
 
 
-class ManualFlow(Flow):
-    """Like `Flow`, but with additional fine-graded control.
+class ManualStream(Stream):
+    """Like `Stream`, but with additional fine-graded control.
 
-    `ManualFlow` can be useful when one logical step does not correspond to one
+    `ManualStream` can be useful when one logical step does not correspond to one
     iteration (for example, you collect data from several iterations to build one
-    training batch). The class inherits from `Flow` and adds some features (see
+    training batch). The class inherits from `Stream` and adds some features (see
     documentation for details).
     """
 
@@ -361,7 +366,7 @@ class ManualFlow(Flow):
     def mstep(self) -> int:
         """Current manual step.
 
-        Technically, the number of `ManualFlow.increment_mstep` calls.
+        Technically, the number of `ManualStream.increment_mstep` calls.
         """
         return self._mstep
 
@@ -372,7 +377,7 @@ class ManualFlow(Flow):
     # mypy doesn't approve the signature change
     def data(  # type: ignore
         self,
-        # The star is a protection against flow.data(n_msteps). Don't remove it,
+        # The star is a protection against stream.data(n_msteps). Don't remove it,
         # especially if you don't understand why the given example is problematic.
         *,
         n_iterations: Optional[Union[int, float]] = None,
@@ -383,8 +388,8 @@ class ManualFlow(Flow):
         Exactly one of the arguments must be given.
 
         Args:
-            n_iterations: if not None, the method behaves like `Flow.data`.
-            n_msteps: if not None, items are produced until `ManualFlow.mstep` increases
+            n_iterations: if not None, the method behaves like `Stream.data`.
+            n_msteps: if not None, items are produced until `ManualStream.mstep` increases
                 by this value
         Raises:
             AssertionError: if both :code:`n_iterations` and :code:`n_msteps` are given
@@ -395,13 +400,13 @@ class ManualFlow(Flow):
         Examples:
             .. testcode::
 
-                flow = ManualFlow(range(5))
-                data = flow.data(n_msteps=1)
+                stream = ManualStream(range(5))
+                data = stream.data(n_msteps=1)
                 assert next(data) == 0
                 assert next(data) == 1
                 assert next(data) == 2
-                assert flow.iteration == 3
-                flow.increment_mstep()
+                assert stream.iteration == 3
+                stream.increment_mstep()
                 try:
                     next(data)
                 except StopIteration:
@@ -422,4 +427,4 @@ class ManualFlow(Flow):
         else:
             n = n_iterations
             attr = 'iteration'
-        return Flow._EpochData(self, n, attr)
+        return Stream._EpochData(self, n, attr)

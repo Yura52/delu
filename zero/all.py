@@ -8,9 +8,9 @@ from `zero.all`.
 Examples:
     .. testcode::
 
-        from zero.all import Flow, Timer, concat
+        from zero.all import Stream, Timer, concat
         # or
-        import zero.all as zero  # then use zero.Flow, zero.Timer, zero.concat
+        import zero.all as zero  # then use zero.Stream, zero.Timer, zero.concat
 
     If you just need a `zero.time.Timer` and you don't use PyTorch in your project, this
     is a bit faster:
@@ -21,11 +21,11 @@ Examples:
 """
 
 from .data import *  # noqa
-from .flow import *  # noqa
 from .hardware import *  # noqa
 from .io import *  # noqa
 from .metrics import *  # noqa
 from .random import *  # noqa
+from .stream import *  # noqa
 from .time import *  # noqa
 from .training import *  # noqa
 from .types import *  # noqa

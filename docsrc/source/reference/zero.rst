@@ -11,7 +11,7 @@ zero
 
    all
    data
-   flow
+   stream
    hardware
    io
    metrics

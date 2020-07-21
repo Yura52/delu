@@ -29,7 +29,7 @@ are the things to learn:
 
 .. autosummary::
 
-   zero.flow.Flow
+   zero.stream.Stream
    zero.training
    zero.data.concat
    zero.random.set_randomness
