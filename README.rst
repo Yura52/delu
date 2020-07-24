@@ -65,5 +65,6 @@ Why "Zero"?
 -----------
 
 Zero aims to be `zero-overhead <https://isocpp.org/wiki/faq/big-picture#zero-overhead-principle>`_
-in terms of *mental* overhead: solutions, provided by Zero, try to be as minimal,
-intuitive and easy to learn, as possible.
+in terms of *mental* and *architectural* overhead: solutions, provided by Zero, try to
+be as minimal, intuitive and easy to learn, as possible. Well, all these things can be
+pretty subjective, so don't take it too seriously :wink:
