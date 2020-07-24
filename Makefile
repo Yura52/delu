@@ -34,6 +34,7 @@ dtest:
 pages:
 	rm -r docs
 	cp -r $(DOCSRC)/build/html docs
+	touch docs/.nojekyll
 
 lint:
 	python -m pre_commit_hooks.debug_statement_hook zero/**/*.py

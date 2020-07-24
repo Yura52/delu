@@ -20,8 +20,9 @@ it a try in non-mission-critical research.
 Overview
 --------
 
-- (coming soon) Website, `Code <https://github.com/Yura52/zero>`_
-- (coming soon) Learn Zero
+- `Website <https://yura52.github.io/zero>`_
+- `Code <https://github.com/Yura52/zero>`_
+- `Learn Zero <https://yura52.github.io/zero/learn.html>`_
 - `Classification task example (MNIST) <https://github.com/Yura52/zero/blob/master/examples/mnist.py>`_
 - Discussions:
 
