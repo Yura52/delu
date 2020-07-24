@@ -1,0 +1,6 @@
+zero.stream.ManualStream.mstep
+==============================
+
+.. currentmodule:: zero.stream
+
+.. autoproperty:: ManualStream.mstep

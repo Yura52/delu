@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.io &#8212; Zero 0.0.2.dev2 documentation</title>
+    <title>zero.io &#8212; Zero 0.0.2.dev3 documentation</title>
     <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -79,7 +79,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.2.dev2 documentation"
+        <a href="../../index.html" title="Zero 0.0.2.dev3 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -165,7 +165,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2.dev2 documentation</a></li>
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2.dev3 documentation</a></li>
           <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Module code</a></li>
       </ul>
     </div>
@@ -178,13 +178,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.2.dev2 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.2.dev3 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.2.dev2 documentation"> </a>
+       title="Zero 0.0.2.dev3 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -246,13 +246,6 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/flow.html" class="md-nav__link">zero.flow</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../../reference/hardware.html" class="md-nav__link">zero.hardware</a>
       
     
@@ -275,6 +268,13 @@
     
     
       <a href="../../reference/random.html" class="md-nav__link">zero.random</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../../reference/stream.html" class="md-nav__link">zero.stream</a>
       
     
     </li>
@@ -358,11 +358,11 @@
         <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="dump_pickle"><a class="viewcode-back" href="../../reference/api/zero.io.dump_pickle.html#zero.io.dump_pickle">[docs]</a><span class="k">def</span> <span class="nf">dump_pickle</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="dump_pickle"><a class="viewcode-back" href="../../reference/api/zero.io.dump_pickle.html#zero.io.dump_pickle">[docs]</a><span class="k">def</span> <span class="nf">dump_pickle</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">"""Dump an object to a file in Pickle format.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        x: The object to dump.</span>
+<span class="sd">        x: the object</span>
 <span class="sd">        path (`~zero.types.PathLike`): path to the file. If the file doesn't exist,</span>
 <span class="sd">            it will be created, otherwise, overwritten.</span>
 <span class="sd">        kwargs: arguments for `pickle.dump`</span>
@@ -388,7 +388,7 @@
     <span class="sd">"""Dump an object to a file in JSON format.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        x (`~zero.types.JSON`): the object to dump</span>
+<span class="sd">        x (`~zero.types.JSON`): the JSON-compatible object</span>
 <span class="sd">        path (`~zero.types.PathLike`): path to the file. If the file doesn't exist,</span>
 <span class="sd">            it will be created, otherwise, overwritten.</span>
 <span class="sd">        kwargs: arguments for `json.dump`</span>
@@ -421,7 +421,7 @@
     <span class="sd">"""Dump an object to a file in JSONL format.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        records (Iterable[`~zero.types.JSON`]): the object to dump</span>
+<span class="sd">        records (Iterable[`~zero.types.JSON`]): the JSON-compatible records</span>
 <span class="sd">        path (`~zero.types.PathLike`): path to the file. If the file doesn't exist,</span>
 <span class="sd">            it will be created, otherwise, overwritten.</span>
 <span class="sd">        kwargs: arguments for `json.dump`</span>

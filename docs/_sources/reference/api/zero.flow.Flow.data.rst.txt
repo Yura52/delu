@@ -1,6 +1,0 @@
-zero.flow.Flow.data
-===================
-
-.. currentmodule:: zero.flow
-
-.. automethod:: Flow.data

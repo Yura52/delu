@@ -11,4 +11,4 @@ functions
 .. autosummary::
     :toctree: api
 
-    fix_randomness
+    set_randomness

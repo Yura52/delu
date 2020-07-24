@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.random &#8212; Zero 0.0.2.dev2 documentation</title>
+    <title>zero.random &#8212; Zero 0.0.2.dev3 documentation</title>
     <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -79,7 +79,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.2.dev2 documentation"
+        <a href="../../index.html" title="Zero 0.0.2.dev3 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -165,7 +165,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2.dev2 documentation</a></li>
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2.dev3 documentation</a></li>
           <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Module code</a></li>
       </ul>
     </div>
@@ -178,13 +178,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.2.dev2 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.2.dev3 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.2.dev2 documentation"> </a>
+       title="Zero 0.0.2.dev3 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -246,13 +246,6 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/flow.html" class="md-nav__link">zero.flow</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../../reference/hardware.html" class="md-nav__link">zero.hardware</a>
       
     
@@ -275,6 +268,13 @@
     
     
       <a href="../../reference/random.html" class="md-nav__link">zero.random</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../../reference/stream.html" class="md-nav__link">zero.stream</a>
       
     
     </li>
@@ -328,7 +328,7 @@
   <h1 id="modules-zero-random--page-root">Source code for zero.random</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""Random sampling utilities."""</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'fix_randomness'</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'set_randomness'</span><span class="p">]</span>
 
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">secrets</span>
@@ -340,10 +340,10 @@
 
 
 <span class="k">def</span> <span class="nf">_default_callback</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Seed: </span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s1"> (see zero.random.fix_randomness)'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Seed: </span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s1"> (see zero.random.set_randomness)'</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="fix_randomness"><a class="viewcode-back" href="../../reference/api/zero.random.fix_randomness.html#zero.random.fix_randomness">[docs]</a><span class="k">def</span> <span class="nf">fix_randomness</span><span class="p">(</span>
+<div class="viewcode-block" id="set_randomness"><a class="viewcode-back" href="../../reference/api/zero.random.set_randomness.html#zero.random.set_randomness">[docs]</a><span class="k">def</span> <span class="nf">set_randomness</span><span class="p">(</span>
     <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">cudnn_deterministic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">cudnn_benchmark</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -373,13 +373,13 @@
 <span class="sd">    Examples:</span>
 <span class="sd">        .. testcode::</span>
 
-<span class="sd">            rng = fix_randomness()  # seed will be generated</span>
-<span class="sd">            rng = fix_randomness(0)</span>
+<span class="sd">            rng = set_randomness()  # seed will be generated</span>
+<span class="sd">            rng = set_randomness(0)</span>
 
 <span class="sd">        .. testoutput ::</span>
 
-<span class="sd">            Seed: ... (see zero.random.fix_randomness)</span>
-<span class="sd">            Seed: 0 (see zero.random.fix_randomness)</span>
+<span class="sd">            Seed: ... (see zero.random.set_randomness)</span>
+<span class="sd">            Seed: 0 (see zero.random.set_randomness)</span>
 <span class="sd">    """</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="n">cudnn_deterministic</span>  <span class="c1"># type: ignore</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">cudnn_benchmark</span>  <span class="c1"># type: ignore</span>

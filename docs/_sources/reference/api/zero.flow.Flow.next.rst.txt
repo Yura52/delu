@@ -1,6 +1,0 @@
-zero.flow.Flow.next
-===================
-
-.. currentmodule:: zero.flow
-
-.. automethod:: Flow.next

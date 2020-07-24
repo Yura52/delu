@@ -1,6 +1,0 @@
-zero.flow.Flow.loader
-=====================
-
-.. currentmodule:: zero.flow
-
-.. autoproperty:: Flow.loader

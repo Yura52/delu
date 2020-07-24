@@ -1,6 +1,0 @@
-zero.flow.Flow.iteration
-========================
-
-.. currentmodule:: zero.flow
-
-.. autoproperty:: Flow.iteration

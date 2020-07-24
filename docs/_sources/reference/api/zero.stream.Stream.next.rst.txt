@@ -1,0 +1,6 @@
+zero.stream.Stream.next
+=======================
+
+.. currentmodule:: zero.stream
+
+.. automethod:: Stream.next

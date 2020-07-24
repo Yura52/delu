@@ -1,0 +1,6 @@
+zero.stream.Stream.set\_loader
+==============================
+
+.. currentmodule:: zero.stream
+
+.. automethod:: Stream.set_loader

@@ -1,6 +1,0 @@
-zero.flow.Flow.epoch
-====================
-
-.. currentmodule:: zero.flow
-
-.. autoproperty:: Flow.epoch

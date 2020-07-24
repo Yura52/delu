@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.data &#8212; Zero 0.0.2.dev2 documentation</title>
+    <title>zero.data &#8212; Zero 0.0.2.dev3 documentation</title>
     <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -79,7 +79,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.2.dev2 documentation"
+        <a href="../../index.html" title="Zero 0.0.2.dev3 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -165,7 +165,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2.dev2 documentation</a></li>
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2.dev3 documentation</a></li>
           <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Module code</a></li>
       </ul>
     </div>
@@ -178,13 +178,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.2.dev2 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.2.dev3 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.2.dev2 documentation"> </a>
+       title="Zero 0.0.2.dev3 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -246,13 +246,6 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/flow.html" class="md-nav__link">zero.flow</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../../reference/hardware.html" class="md-nav__link">zero.hardware</a>
       
     
@@ -275,6 +268,13 @@
     
     
       <a href="../../reference/random.html" class="md-nav__link">zero.random</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../../reference/stream.html" class="md-nav__link">zero.stream</a>
       
     
     </li>
@@ -328,128 +328,19 @@
   <h1 id="modules-zero-data--page-root">Source code for zero.data</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""Missing batteries from `torch.utils.data`."""</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'NamedTensorDataset'</span><span class="p">,</span> <span class="s1">'Enumerate'</span><span class="p">,</span> <span class="s1">'concat'</span><span class="p">,</span> <span class="s1">'iloader'</span><span class="p">,</span> <span class="s1">'iter_batches'</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Enumerate'</span><span class="p">,</span> <span class="s1">'collate'</span><span class="p">,</span> <span class="s1">'concat'</span><span class="p">,</span> <span class="s1">'iloader'</span><span class="p">,</span> <span class="s1">'iter_batches'</span><span class="p">]</span>
 
 <span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">Any</span><span class="p">,</span>
-    <span class="n">Dict</span><span class="p">,</span>
-    <span class="n">Iterable</span><span class="p">,</span>
-    <span class="n">Iterator</span><span class="p">,</span>
-    <span class="n">NamedTuple</span><span class="p">,</span>
-    <span class="n">Sequence</span><span class="p">,</span>
-    <span class="n">Tuple</span><span class="p">,</span>
-    <span class="n">TypeVar</span><span class="p">,</span>
-    <span class="n">Union</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">TensorDataset</span>
 
 <span class="kn">from</span> <span class="nn">._util</span> <span class="kn">import</span> <span class="n">is_namedtuple</span>
-<span class="kn">from</span> <span class="nn">.types</span> <span class="kn">import</span> <span class="n">TensorIndex</span>
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)</span>
 <span class="n">S</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'S'</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="NamedTensorDataset"><a class="viewcode-back" href="../../reference/data.html#zero.data.NamedTensorDataset">[docs]</a><span class="k">class</span> <span class="nc">NamedTensorDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="sd">"""Named version of `~torch.utils.data.TensorDataset`.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        *tensors: tensors **of the same length**</span>
-<span class="sd">        names: names for tensors</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        .. testcode::</span>
-
-<span class="sd">            X, y = torch.randn(10, 3), torch.randn(10)</span>
-<span class="sd">            dataset = NamedTensorDataset(X, y, names=['X', 'y'])</span>
-<span class="sd">            # or</span>
-<span class="sd">            dataset = NamedTensorDataset.from_dict({'X': X, 'y': y})</span>
-<span class="sd">            assert dataset.X is X</span>
-<span class="sd">            assert dataset.y is y</span>
-<span class="sd">            # dataset.tensors is a named tuple with the fields 'X' and 'y'</span>
-
-<span class="sd">            def step_fn(X, y):</span>
-<span class="sd">                ...</span>
-
-<span class="sd">            for batch in torch.utils.data.DataLoader(dataset, batch_size=2):</span>
-<span class="sd">                # batch is a named tuple</span>
-<span class="sd">                step_fn(batch.X, batch.y)</span>
-<span class="sd">    """</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">tensors</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">names</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">tensors</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">tensors</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tensors</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_names</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
-        <span class="c1"># "NamedTuple type as an attribute is not supported"</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tuple_cls</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Batch_</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tensors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuple_cls</span><span class="p">(</span><span class="o">*</span><span class="n">tensors</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensors</span><span class="p">):</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
-
-<div class="viewcode-block" id="NamedTensorDataset.from_dict"><a class="viewcode-back" href="../../reference/api/zero.data.NamedTensorDataset.from_dict.html#zero.data.NamedTensorDataset.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">'NamedTensorDataset'</span><span class="p">:</span>
-        <span class="sd">"""Construct `NamedTensorDataset` from a dictionary.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            data:</span>
-<span class="sd">        Returns:</span>
-<span class="sd">            Dataset.</span>
-<span class="sd">        """</span>
-        <span class="c1"># Key and value orderings are consistent:</span>
-        <span class="c1"># https://docs.python.org/3/library/stdtypes.html#dictionary-view-objects</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">names</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span></div>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">tensors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NamedTuple</span><span class="p">:</span>
-        <span class="sd">"""Access the underlying tensors.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            The tensors.</span>
-<span class="sd">        """</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tensors</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-        <span class="sd">"""Get the field names.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            The names.</span>
-<span class="sd">        """</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span>
-
-<div class="viewcode-block" id="NamedTensorDataset.__len__"><a class="viewcode-back" href="../../reference/api/zero.data.NamedTensorDataset.__len__.html#zero.data.NamedTensorDataset.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">"""Return the length of all tensors.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            The length.</span>
-<span class="sd">        """</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
-
-<div class="viewcode-block" id="NamedTensorDataset.__getitem__"><a class="viewcode-back" href="../../reference/api/zero.data.NamedTensorDataset.__getitem__.html#zero.data.NamedTensorDataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="n">TensorIndex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NamedTuple</span><span class="p">:</span>
-        <span class="sd">"""Get item(s) by index/indices.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            idx: the index</span>
-<span class="sd">        Returns:</span>
-<span class="sd">            The item(s).</span>
-
-<span class="sd">        Note:</span>
-<span class="sd">            Efficient indexing with slices, arrays and tensors is also supported.</span>
-<span class="sd">        """</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuple_cls</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensors</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="c1"># The method surves as a protection against wrong usage that can lead to</span>
-        <span class="c1"># inconsistency betweem attributes of self and self.tensors</span>
-        <span class="k">assert</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span> <span class="ow">or</span> <span class="n">attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Enumerate"><a class="viewcode-back" href="../../reference/data.html#zero.data.Enumerate">[docs]</a><span class="k">class</span> <span class="nc">Enumerate</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
@@ -510,11 +401,10 @@
 
 
 <div class="viewcode-block" id="iloader"><a class="viewcode-back" href="../../reference/api/zero.data.iloader.html#zero.data.iloader">[docs]</a><span class="k">def</span> <span class="nf">iloader</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span>
-    <span class="sd">"""Make `~torch.utils.data.DataLoader` over indices.</span>
+    <span class="sd">"""Make `~torch.utils.data.DataLoader` over batches of indices.</span>
 
-<span class="sd">    This thing has many names (such as "iter_batch_indices") and allows to iterate over</span>
-<span class="sd">    batch indices, not over batches. **The shuffling logic is fully delegated to native</span>
-<span class="sd">    PyTorch DataLoader**, i.e. no custom logic is performed under the hood.</span>
+<span class="sd">    **The shuffling logic is fully delegated to native PyTorch DataLoader**, i.e. no</span>
+<span class="sd">    custom logic is performed under the hood.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        size: the size of dataset (for example, :code:`len(dataset)`)</span>
@@ -569,11 +459,7 @@
 
 <div class="viewcode-block" id="iter_batches"><a class="viewcode-back" href="../../reference/api/zero.data.iter_batches.html#zero.data.iter_batches">[docs]</a><span class="k">def</span> <span class="nf">iter_batches</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
-        <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
-        <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
-        <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
-        <span class="n">TensorDataset</span><span class="p">,</span>
-        <span class="n">NamedTensorDataset</span><span class="p">,</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">TensorDataset</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
@@ -866,8 +752,15 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="collate"><a class="viewcode-back" href="../../reference/api/zero.data.collate.html#zero.data.collate">[docs]</a><span class="k">def</span> <span class="nf">collate</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
-    <span class="sd">"""Alias to :code:`torch.utils.data.dataloader.default_collate`."""</span>
+<div class="viewcode-block" id="collate"><a class="viewcode-back" href="../../reference/api/zero.data.collate.html#zero.data.collate">[docs]</a><span class="k">def</span> <span class="nf">collate</span><span class="p">(</span><span class="n">batch</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">"""Almost an alias for :code:`torch.utils.data.dataloader.default_collate`.</span>
+
+<span class="sd">    Namely, the input is allowed to be any kind of iterable, not only a list. Firstly,</span>
+<span class="sd">    if it is not a list, it is transformed to a list. Then, the list is passed to the</span>
+<span class="sd">    original function and the result is returned as is.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dataloader</span><span class="o">.</span><span class="n">default_collate</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span></div>
 </pre></div>
 

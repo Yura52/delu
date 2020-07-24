@@ -29,10 +29,10 @@ are the things to learn:
 
 .. autosummary::
 
-   zero.flow.Flow
+   zero.stream.Stream
    zero.training
    zero.data.concat
-   zero.random.fix_randomness
+   zero.random.set_randomness
    zero.time.Timer
    zero.hardware
    zero.io

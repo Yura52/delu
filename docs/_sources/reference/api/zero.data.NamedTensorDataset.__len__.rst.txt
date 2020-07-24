@@ -1,6 +1,0 @@
-zero.data.NamedTensorDataset.\_\_len\_\_
-========================================
-
-.. currentmodule:: zero.data
-
-.. automethod:: NamedTensorDataset.__len__

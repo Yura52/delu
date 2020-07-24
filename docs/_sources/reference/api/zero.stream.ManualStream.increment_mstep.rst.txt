@@ -1,0 +1,6 @@
+zero.stream.ManualStream.increment\_mstep
+=========================================
+
+.. currentmodule:: zero.stream
+
+.. automethod:: ManualStream.increment_mstep

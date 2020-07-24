@@ -1,6 +1,0 @@
-zero.data.NamedTensorDataset.from\_dict
-=======================================
-
-.. currentmodule:: zero.data
-
-.. automethod:: NamedTensorDataset.from_dict

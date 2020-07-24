@@ -1,0 +1,6 @@
+zero.stream.ManualStream.data
+=============================
+
+.. currentmodule:: zero.stream
+
+.. automethod:: ManualStream.data
