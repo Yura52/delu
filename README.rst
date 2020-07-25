@@ -3,6 +3,10 @@ Zero
 
 .. __INCLUDE_0__
 
+.. image:: https://raw.githubusercontent.com/Yura52/zero/master/other/logo.png
+   :width: 400
+   :align: center
+
 Zero is a general-purpose library for PyTorch users. Zero:
 
 - simplifies training loop, models evaluation, models application and other typical Deep
@@ -27,9 +31,9 @@ Overview
 - Discussions:
 
   - `Issue on GitHub <https://github.com/Yura52/zero/issues/21>`_
-  - (coming soon) Post on Medium
-  - (coming soon) Discussion on Reddit
-  - (coming soon) Discussion on Hacker News
+  - `Post on Medium <https://medium.com/@Yura52/zero-a-new-library-for-pytorch-users-aa14528dc970>`_
+  - `Discussion on Reddit <https://www.reddit.com/r/pytorch/comments/hxqc7u/zero_a_new_generalpurpose_library_for_pytorch>`_
+  - `Discussion on Hacker News <https://news.ycombinator.com/item?id=23950731>`_
 
 .. __INCLUDE_1__
 
