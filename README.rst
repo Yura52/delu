@@ -3,10 +3,6 @@ Zero
 
 .. __INCLUDE_0__
 
-.. raw:: html
-
-    <img src="https://raw.githubusercontent.com/Yura52/zero/master/other/logo.png" width="400px" style="text-align:center;display:block;">
-
 Zero is a general-purpose library for PyTorch users. Zero:
 
 - simplifies training loop, models evaluation, models application and other typical Deep
