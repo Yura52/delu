@@ -424,13 +424,13 @@ def concat(iterable: Iterable[T]) -> Union[S, Tuple[S, ...], Dict[Any, S]]:
     )
 
 
-def collate(batch: Iterable[T]) -> Any:
+def collate(iterable: Iterable[T]) -> Any:
     """Almost an alias for :code:`torch.utils.data.dataloader.default_collate`.
 
     Namely, the input is allowed to be any kind of iterable, not only a list. Firstly,
     if it is not a list, it is transformed to a list. Then, the list is passed to the
     original function and the result is returned as is.
     """
-    if not isinstance(batch, list):
-        batch = list(batch)
-    return torch.utils.data.dataloader.default_collate(batch)
+    if not isinstance(iterable, list):
+        iterable = list(iterable)
+    return torch.utils.data.dataloader.default_collate(iterable)
