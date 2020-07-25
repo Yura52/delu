@@ -72,10 +72,10 @@ def main():
 
     train_dataset, val_dataset = split_dataset(get_dataset(True), 0.8)
     test_dataset = get_dataset(False)
+    stream = Stream(DataLoader(train_dataset, batch_size=64, shuffle=True))
     val_loader = DataLoader(val_dataset, batch_size=8096)
     test_loader = DataLoader(test_dataset, batch_size=8096)
 
-    stream = Stream(DataLoader(train_dataset, batch_size=64, shuffle=True))
     timer = Timer()
     progress = ProgressTracker(args.early_stopping_patience, 0.005)
     best_model_path = 'model.pt'
