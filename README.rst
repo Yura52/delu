@@ -5,7 +5,7 @@ Zero
 
 .. raw:: html
 
-    <img src="https://raw.githubusercontent.com/Yura52/zero/master/other/logo.png" width="400px" style="vertical-align:middle">
+    <img src="https://raw.githubusercontent.com/Yura52/zero/master/other/logo.png" width="400px" style="text-align:center;display:block;">
 
 Zero is a general-purpose library for PyTorch users. Zero:
 
