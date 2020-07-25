@@ -142,7 +142,7 @@ class Stream:
                 for item in loader:  # loader which is passed in the constructor
                     ...
 
-        Documentation of `Stream.next` and `Stream.data` provide helpful examples.
+        Documentation for `Stream.next` and `Stream.data` provide helpful examples.
 
     See Also:
         `ManualStream`: like `Stream`, but for cases when one logical step (e.g.
