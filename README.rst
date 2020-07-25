@@ -3,9 +3,9 @@ Zero
 
 .. __INCLUDE_0__
 
-.. image:: https://raw.githubusercontent.com/Yura52/zero/master/other/logo.png
-   :width: 400
-   :align: center
+.. raw:: html
+
+    <img src="https://raw.githubusercontent.com/Yura52/zero/master/other/logo.png" width="400px" style="vertical-align:middle">
 
 Zero is a general-purpose library for PyTorch users. Zero:
 
