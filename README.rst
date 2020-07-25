@@ -60,7 +60,7 @@ How to contribute
 - `Open issues <https://github.com/Yura52/zero/issues/new/choose>`_ with bugs, ideas and
   any other kind of feedback
 
-If your contribution includes pull requests, see `CONTRIBUTING.md <https://github.com/Yura52/zero/blob/master/other/CONTRIBUTING.md>`_.
+If your contribution includes pull requests, see `CONTRIBUTING.md <https://github.com/Yura52/zero/blob/master/other/CONTRIBUTING.md>`_
 
 Why "Zero"?
 -----------
