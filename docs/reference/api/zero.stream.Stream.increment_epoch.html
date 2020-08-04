@@ -56,8 +56,8 @@
     <script src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="zero.stream.Stream.data" href="zero.stream.Stream.data.html" />
-    <link rel="prev" title="zero.stream.Stream.loader" href="zero.stream.Stream.loader.html" />
+    <link rel="next" title="zero.stream.Stream.reload_iterator" href="zero.stream.Stream.reload_iterator.html" />
+    <link rel="prev" title="zero.stream.Stream.set_loader" href="zero.stream.Stream.set_loader.html" />
   
    
 
@@ -284,13 +284,6 @@
       <a href="../stream.html#stream" class="md-nav__link">Stream</a>
       
     
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../stream.html#manualstream" class="md-nav__link">ManualStream</a>
-      
-    
     </li></ul>
     
     </li>
@@ -346,34 +339,22 @@
 <h1 id="reference-api-zero-stream-stream-increment-epoch--page-root">zero.stream.Stream.increment_epoch<a class="headerlink" href="#reference-api-zero-stream-stream-increment-epoch--page-root" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt id="zero.stream.Stream.increment_epoch">
-<code class="sig-prename descclassname">Stream.</code><code class="sig-name descname">increment_epoch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/stream.html#Stream.increment_epoch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.stream.Stream.increment_epoch" title="Permalink to this definition">¶</a></dt>
-<dd><p>(Try to) increment epoch.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>max</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>]</em><em>]</em>) – if <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/math.html#math.inf" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.inf</span></code></a> then epoch is incremented; otherwise, epoch is
-incremented only if <code class="code docutils literal notranslate"><span class="pre">self.epoch</span> <span class="pre">&lt;</span> <span class="pre">max</span></code></p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>True, if epoch was incremented, otherwise, False.</p>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.8)"><strong>AssertionError</strong></a> – if max is float, but not <a class="reference external" href="https://docs.python.org/3/library/math.html#math.inf" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.inf</span></code></a></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
-</dd>
-</dl>
+<code class="sig-prename descclassname">Stream.</code><code class="sig-name descname">increment_epoch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/stream.html#Stream.increment_epoch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.stream.Stream.increment_epoch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increment <a class="reference internal" href="zero.stream.Stream.epoch.html#zero.stream.Stream.epoch" title="zero.stream.Stream.epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoch</span></code></a>.</p>
 <p class="rubric">Examples</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 <span class="k">assert</span> <span class="n">stream</span><span class="o">.</span><span class="n">epoch</span> <span class="o">==</span> <span class="mi">0</span>
-<span class="k">assert</span> <span class="n">stream</span><span class="o">.</span><span class="n">increment_epoch</span><span class="p">()</span>
+<span class="n">stream</span><span class="o">.</span><span class="n">increment_epoch</span><span class="p">()</span>
 <span class="k">assert</span> <span class="n">stream</span><span class="o">.</span><span class="n">epoch</span> <span class="o">==</span> <span class="mi">1</span>
-<span class="k">assert</span> <span class="n">stream</span><span class="o">.</span><span class="n">increment_epoch</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">stream</span><span class="o">.</span><span class="n">epoch</span> <span class="o">==</span> <span class="mi">2</span>
-<span class="k">assert</span> <span class="ow">not</span> <span class="n">stream</span><span class="o">.</span><span class="n">increment_epoch</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">stream</span><span class="o">.</span><span class="n">increment_epoch</span><span class="p">()</span>
 <span class="k">assert</span> <span class="n">stream</span><span class="o">.</span><span class="n">epoch</span> <span class="o">==</span> <span class="mi">2</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)">None</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 
@@ -387,7 +368,7 @@ incremented only if <code class="code docutils literal notranslate"><span class=
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
           
-            <a href="zero.stream.Stream.loader.html" title="zero.stream.Stream.loader"
+            <a href="zero.stream.Stream.set_loader.html" title="zero.stream.Stream.set_loader"
                class="md-flex md-footer-nav__link md-footer-nav__link--prev"
                rel="prev">
               <div class="md-flex__cell md-flex__cell--shrink">
@@ -396,17 +377,17 @@ incremented only if <code class="code docutils literal notranslate"><span class=
               <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
                 <span class="md-flex__ellipsis">
                   <span
-                      class="md-footer-nav__direction"> Previous </span> zero.stream.Stream.loader </span>
+                      class="md-footer-nav__direction"> Previous </span> zero.stream.Stream.set_loader </span>
               </div>
             </a>
           
           
-            <a href="zero.stream.Stream.data.html" title="zero.stream.Stream.data"
+            <a href="zero.stream.Stream.reload_iterator.html" title="zero.stream.Stream.reload_iterator"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> Next </span> zero.stream.Stream.data </span>
+                class="md-footer-nav__direction"> Next </span> zero.stream.Stream.reload_iterator </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>

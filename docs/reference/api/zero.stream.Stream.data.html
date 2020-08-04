@@ -56,8 +56,8 @@
     <script src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="zero.stream.Stream.next" href="zero.stream.Stream.next.html" />
-    <link rel="prev" title="zero.stream.Stream.increment_epoch" href="zero.stream.Stream.increment_epoch.html" />
+    <link rel="next" title="zero.stream.Stream.epoches" href="zero.stream.Stream.epoches.html" />
+    <link rel="prev" title="zero.stream.Stream.next" href="zero.stream.Stream.next.html" />
   
    
 
@@ -284,13 +284,6 @@
       <a href="../stream.html#stream" class="md-nav__link">Stream</a>
       
     
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../stream.html#manualstream" class="md-nav__link">ManualStream</a>
-      
-    
     </li></ul>
     
     </li>
@@ -348,12 +341,12 @@
 <dt id="zero.stream.Stream.data">
 <code class="sig-prename descclassname">Stream.</code><code class="sig-name descname">data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_items</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/stream.html#Stream.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.stream.Stream.data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterate over the loader.</p>
-<p>Under the hood, <a class="reference internal" href="zero.stream.Stream.next.html#zero.stream.Stream.next" title="zero.stream.Stream.next"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.next</span></code></a> is called, hence, <a class="reference internal" href="zero.stream.Stream.iteration.html#zero.stream.Stream.iteration" title="zero.stream.Stream.iteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.iteration</span></code></a> changes during
-iterations.</p>
+<p>Under the hood, <a class="reference internal" href="zero.stream.Stream.next.html#zero.stream.Stream.next" title="zero.stream.Stream.next"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.next</span></code></a> is called, hence, <a class="reference internal" href="zero.stream.Stream.iteration.html#zero.stream.Stream.iteration" title="zero.stream.Stream.iteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.iteration</span></code></a> changes
+during iterations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>n_items</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>]</em><em>]</em>) – how many items to produce. If <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, interpreted as
-<code class="code docutils literal notranslate"><span class="pre">len(self.loader)</span></code>.</p>
+<code class="code docutils literal notranslate"><span class="pre">len(self.loader)</span></code>. If <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, must be <a class="reference external" href="https://docs.python.org/3/library/math.html#math.inf" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.inf</span></code></a>.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
@@ -376,6 +369,12 @@ iterations.</p>
 <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="o">==</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">if</span> <span class="n">stream</span><span class="o">.</span><span class="n">iteration</span> <span class="o">%</span> <span class="n">frequency</span><span class="p">:</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
 </dd></dl>
 
 
@@ -389,7 +388,7 @@ iterations.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
           
-            <a href="zero.stream.Stream.increment_epoch.html" title="zero.stream.Stream.increment_epoch"
+            <a href="zero.stream.Stream.next.html" title="zero.stream.Stream.next"
                class="md-flex md-footer-nav__link md-footer-nav__link--prev"
                rel="prev">
               <div class="md-flex__cell md-flex__cell--shrink">
@@ -398,17 +397,17 @@ iterations.</p>
               <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
                 <span class="md-flex__ellipsis">
                   <span
-                      class="md-footer-nav__direction"> Previous </span> zero.stream.Stream.increment_epoch </span>
+                      class="md-footer-nav__direction"> Previous </span> zero.stream.Stream.next </span>
               </div>
             </a>
           
           
-            <a href="zero.stream.Stream.next.html" title="zero.stream.Stream.next"
+            <a href="zero.stream.Stream.epoches.html" title="zero.stream.Stream.epoches"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> Next </span> zero.stream.Stream.next </span>
+                class="md-footer-nav__direction"> Next </span> zero.stream.Stream.epoches </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>

@@ -47,7 +47,7 @@ def parse_args():
     parser = ArgumentParser()
     parser.add_argument('-d', '--device', default='cpu', type=torch.device)
     parser.add_argument('-e', '--epoch-size')
-    parser.add_argument('-n', '--n-epoches', type=int)
+    parser.add_argument('-n', '--n-epoches', type=int, default=999)
     parser.add_argument('-p', '--early-stopping-patience', type=int, default=2)
     parser.add_argument('-s', '--seed', type=int)
     return parser.parse_args()
@@ -80,14 +80,12 @@ def main():
     progress = ProgressTracker(args.early_stopping_patience, 0.005)
     best_model_path = 'model.pt'
 
-    while not progress.fail and stream.increment_epoch(args.n_epoches):
-        print(f'\nEpoch {stream.epoch} started')
+    for epoch in stream.epoches(args.n_epoches, args.epoch_size):
+        print(f'\nEpoch {stream.epoch} started (iterations passed: {stream.iteration})')
         timer.run()
 
-        for batch in stream.data(args.epoch_size):
-            loss = learn(model, optimizer, F.cross_entropy, step, batch, True)[0]
-            if stream.iteration % 100 == 0:
-                print(f'Iteration: {stream.iteration} Train loss: {loss:.4f}')
+        for batch in epoch:
+            learn(model, optimizer, F.cross_entropy, step, batch, True)
 
         timer.pause()
         accuracy = calculate_accuracy(val_loader)
@@ -104,6 +102,8 @@ def main():
             index = args.device.index or 0
             msg += f'\nGPU info: {get_gpu_info()[index]}'
         print(msg)
+        if progress.fail:
+            break
 
     timer.pause()
     print(

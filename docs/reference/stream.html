@@ -295,13 +295,6 @@
       <a href="#stream" class="md-nav__link">Stream</a>
       
     
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="#manualstream" class="md-nav__link">ManualStream</a>
-      
-    
     </li></ul>
     
     </li>
@@ -416,60 +409,36 @@ with creating a stream:</p>
 </div>
 <p>The dataloader is accessible via <a class="reference internal" href="api/zero.stream.Stream.loader.html#zero.stream.Stream.loader" title="zero.stream.Stream.loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.loader</span></code></a>. Now, let’s reproduce the loop
 above:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epoches</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">data</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">'Epoch:'</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="s1">'Iteration:'</span><span class="p">,</span> <span class="n">stream</span><span class="o">.</span><span class="n">iteration</span><span class="p">)</span>
-
-<span class="c1"># or</span>
-
-<span class="k">while</span> <span class="n">stream</span><span class="o">.</span><span class="n">increment_epoch</span><span class="p">(</span><span class="n">n_epoches</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">data</span><span class="p">():</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">epoches</span><span class="p">(</span><span class="n">n_epoches</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">epoch</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">'Epoch:'</span><span class="p">,</span> <span class="n">stream</span><span class="o">.</span><span class="n">epoch</span><span class="p">,</span> <span class="s1">'Iteration:'</span><span class="p">,</span> <span class="n">stream</span><span class="o">.</span><span class="n">iteration</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Firstly, we see that <a class="reference internal" href="api/zero.stream.Stream.iteration.html#zero.stream.Stream.iteration" title="zero.stream.Stream.iteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.iteration</span></code></a> is created and incremented automatically.
-We also see that <code class="code docutils literal notranslate"><span class="pre">while</span></code> loop can be used instead of more “conventional”
-<code class="code docutils literal notranslate"><span class="pre">for</span></code>. It brings the following differences:</p>
-<ul>
-<li><p>restoring stream’s state via the <code class="code docutils literal notranslate"><span class="pre">state_dict</span></code> mechanism becomes possible</p></li>
-<li><p>terminating the loop by adding more conditions to the <code class="code docutils literal notranslate"><span class="pre">while</span></code> statement
-becomes possible; for example, with <a class="reference internal" href="training.html#zero.training.ProgressTracker" title="zero.training.ProgressTracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.training.ProgressTracker</span></code></a> early stopping
-can look like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="ow">not</span> <span class="n">progress</span><span class="o">.</span><span class="n">fail</span> <span class="ow">and</span> <span class="n">stream</span><span class="o">.</span><span class="n">increment_epoch</span><span class="p">(</span><span class="n">n_epoches</span><span class="p">):</span>
-</pre></div>
-</div>
-</li>
-<li><p>epoches numeration effectively starts from 1; it is consistent with iterations
-numeration (also starts from 1)</p></li>
-</ul>
-<p>In order to customize the epoch size, pass the size to <a class="reference internal" href="api/zero.stream.Stream.data.html#zero.stream.Stream.data" title="zero.stream.Stream.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.data</span></code></a>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">stream</span><span class="o">.</span><span class="n">increment_epoch</span><span class="p">(</span><span class="n">n_epoches</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">custom_epoch_size</span><span class="p">):</span>
+<p>We see that <a class="reference internal" href="api/zero.stream.Stream.epoch.html#zero.stream.Stream.epoch" title="zero.stream.Stream.epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoch</span></code></a> and <a class="reference internal" href="api/zero.stream.Stream.iteration.html#zero.stream.Stream.iteration" title="zero.stream.Stream.iteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.iteration</span></code></a> are managed automatically.
+Additionally, a progress bar is displayed while the new loop is running.</p>
+<p>In order to customize the epoch size, pass the size as the second argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">epoches</span><span class="p">(</span><span class="n">n_epoches</span><span class="p">,</span> <span class="n">custom_epoch_size</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">epoch</span><span class="p">:</span>
         <span class="o">...</span>
 </pre></div>
 </div>
 <p>Changing the underlying loader on the fly is possible at <em>any</em> moment (even in the
 middle of epoch) via <a class="reference internal" href="api/zero.stream.Stream.set_loader.html#zero.stream.Stream.set_loader" title="zero.stream.Stream.set_loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.set_loader</span></code></a>. For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">stream</span><span class="o">.</span><span class="n">increment_epoch</span><span class="p">(</span><span class="n">n_epoches</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">custom_epoch_size</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">epoches</span><span class="p">(</span><span class="n">n_epoches</span><span class="p">,</span> <span class="n">custom_epoch_size</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">epoch</span><span class="p">:</span>
         <span class="o">...</span>
         <span class="k">if</span> <span class="n">need_new_loader</span><span class="p">():</span>
             <span class="n">stream</span><span class="o">.</span><span class="n">set_loader</span><span class="p">(</span><span class="n">new_loader</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Additionally, two new forms of infinite loop become possible:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">):</span>
-    <span class="o">...</span>
-    <span class="k">if</span> <span class="n">stream</span><span class="o">.</span><span class="n">iteration</span> <span class="o">%</span> <span class="n">frequency</span><span class="p">:</span>
-        <span class="o">...</span>
-
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-    <span class="o">...</span>
-    <span class="k">if</span> <span class="n">stream</span><span class="o">.</span><span class="n">iteration</span> <span class="o">%</span> <span class="n">frequency</span><span class="p">:</span>
-        <span class="o">...</span>
-</pre></div>
-</div>
+<p>If the method <a class="reference internal" href="api/zero.stream.Stream.epoches.html#zero.stream.Stream.epoches" title="zero.stream.Stream.epoches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoches</span></code></a> does not fit your workflow and you want more control
+over the loop, there are more “low-level” methods (in fact, the call
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">stream.epoches(...)</span></code> is just a thin wrapper around them):</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="api/zero.stream.Stream.increment_epoch.html#zero.stream.Stream.increment_epoch" title="zero.stream.Stream.increment_epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.increment_epoch</span></code></a></p></li>
+<li><p><a class="reference internal" href="api/zero.stream.Stream.data.html#zero.stream.Stream.data" title="zero.stream.Stream.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.data</span></code></a></p></li>
+<li><p><a class="reference internal" href="api/zero.stream.Stream.next.html#zero.stream.Stream.next" title="zero.stream.Stream.next"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.next</span></code></a></p></li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For better technical understanding, keep in mind that <a class="reference internal" href="#zero.stream.Stream" title="zero.stream.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a> simply
@@ -482,11 +451,6 @@ be expressed with the following loop:</p>
 </pre></div>
 </div>
 <p>Documentation for <a class="reference internal" href="api/zero.stream.Stream.next.html#zero.stream.Stream.next" title="zero.stream.Stream.next"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.next</span></code></a> and <a class="reference internal" href="api/zero.stream.Stream.data.html#zero.stream.Stream.data" title="zero.stream.Stream.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.data</span></code></a> provide helpful examples.</p>
-</div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#zero.stream.ManualStream" title="zero.stream.ManualStream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ManualStream</span></code></a>: like <a class="reference internal" href="#zero.stream.Stream" title="zero.stream.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a>, but for cases when one logical step (e.g.
-training step) does not correspond to one iteration.</p>
 </div>
 </dd></dl>
 <table class="longtable docutils align-default">
@@ -504,49 +468,23 @@ training step) does not correspond to one iteration.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.loader.html#zero.stream.Stream.loader" title="zero.stream.Stream.loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.loader</span></code></a></p></td>
 <td><p>The underlying loader.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.increment_epoch.html#zero.stream.Stream.increment_epoch" title="zero.stream.Stream.increment_epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.increment_epoch</span></code></a>([max])</p></td>
-<td><p>(Try to) increment epoch.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.data.html#zero.stream.Stream.data" title="zero.stream.Stream.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.data</span></code></a>([n_items])</p></td>
-<td><p>Iterate over the loader.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.next.html#zero.stream.Stream.next" title="zero.stream.Stream.next"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.next</span></code></a>()</p></td>
-<td><p>Get the next item and increment iteration.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.reload_iterator.html#zero.stream.Stream.reload_iterator" title="zero.stream.Stream.reload_iterator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.reload_iterator</span></code></a>()</p></td>
-<td><p>Set the underlying iterator to <code class="xref py py-obj docutils literal notranslate"><span class="pre">iter(self.loader)</span></code>.</p></td>
-</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.set_loader.html#zero.stream.Stream.set_loader" title="zero.stream.Stream.set_loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.set_loader</span></code></a>(loader)</p></td>
 <td><p>Set new loader.</p></td>
 </tr>
-</tbody>
-</table>
-
-
-<h2 id="manualstream">ManualStream<a class="headerlink" href="#manualstream" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt id="zero.stream.ManualStream">
-<em class="property">class </em><code class="sig-prename descclassname">zero.stream.</code><code class="sig-name descname">ManualStream</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/zero/stream.html#ManualStream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.stream.ManualStream" title="Permalink to this definition">¶</a></dt>
-<dd><p>Like <a class="reference internal" href="#zero.stream.Stream" title="zero.stream.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a>, but with additional fine-graded control.</p>
-<p><a class="reference internal" href="#zero.stream.ManualStream" title="zero.stream.ManualStream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ManualStream</span></code></a> can be useful when one logical step does not correspond to one
-iteration (for example, you collect data from several iterations to build one
-training batch). The class inherits from <a class="reference internal" href="#zero.stream.Stream" title="zero.stream.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a> and adds some features (see
-documentation for details).</p>
-</dd></dl>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%"/>
-<col style="width: 90%"/>
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.ManualStream.mstep.html#zero.stream.ManualStream.mstep" title="zero.stream.ManualStream.mstep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ManualStream.mstep</span></code></a></p></td>
-<td><p>Current manual step.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.increment_epoch.html#zero.stream.Stream.increment_epoch" title="zero.stream.Stream.increment_epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.increment_epoch</span></code></a>()</p></td>
+<td><p>Increment <a class="reference internal" href="api/zero.stream.Stream.epoch.html#zero.stream.Stream.epoch" title="zero.stream.Stream.epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoch</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.ManualStream.increment_mstep.html#zero.stream.ManualStream.increment_mstep" title="zero.stream.ManualStream.increment_mstep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ManualStream.increment_mstep</span></code></a>()</p></td>
-<td><p>Increment manual step.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.reload_iterator.html#zero.stream.Stream.reload_iterator" title="zero.stream.Stream.reload_iterator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.reload_iterator</span></code></a>()</p></td>
+<td><p>Set the underlying iterator to <code class="xref py py-obj docutils literal notranslate"><span class="pre">iter(self.loader)</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.ManualStream.data.html#zero.stream.ManualStream.data" title="zero.stream.ManualStream.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ManualStream.data</span></code></a>(*[, n_iterations, n_msteps])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.next.html#zero.stream.Stream.next" title="zero.stream.Stream.next"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.next</span></code></a>()</p></td>
+<td><p>Get the next item and increment iteration.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.data.html#zero.stream.Stream.data" title="zero.stream.Stream.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.data</span></code></a>([n_items])</p></td>
 <td><p>Iterate over the loader.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.epoches.html#zero.stream.Stream.epoches" title="zero.stream.Stream.epoches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoches</span></code></a>(n_epoches[, epoch_size, …])</p></td>
+<td><p>Iterate over data epoches.</p></td>
 </tr>
 </tbody>
 </table>

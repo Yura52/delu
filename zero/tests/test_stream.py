@@ -12,11 +12,9 @@ def test_properties():
     assert stream.iteration == 0
     assert stream.epoch == 0
     assert stream.loader is loader
-    for attr in 'iteration', 'epoch':
+    for attr in 'iteration', 'epoch', 'loader':
         with raises(AttributeError):
-            setattr(stream, attr, 1)
-    with raises(AttributeError):
-        stream.loader = stream.loader
+            setattr(stream, attr, None)
 
 
 def test_bad_loader():
@@ -26,17 +24,34 @@ def test_bad_loader():
 
 def test_increment_epoch():
     stream = Stream(range(3))
-    n = 4
-    for i in range(1, n + 1):
-        stream.increment_epoch()
+    for i in range(10):
         assert stream.epoch == i
-    assert not stream.increment_epoch(n)
-    assert stream.epoch == n
+        stream.increment_epoch()
 
-    with raises(AssertionError):
-        stream.increment_epoch(10.0)
-    for _ in range(1000):
-        assert stream.increment_epoch(math.inf)
+
+def test_set_loader():
+    a = itertools.repeat(0)
+    b = itertools.repeat(1)
+    stream = Stream([2])
+    stream.set_loader(a)
+    for x in range(10):
+        assert stream.next() == next(b if x % 2 else a)
+        stream.set_loader(a if x % 2 else b)
+
+
+def test_reload_iterator():
+    n = 10
+    stream = Stream(range(n))
+    for x in range(n):
+        assert stream.next() == 0
+        stream.reload_iterator()
+
+    stream = Stream(iter(range(n)))
+    for x in range(n):
+        assert stream.next() == x
+        stream.reload_iterator()
+    with raises(StopIteration):
+        stream.next()
 
 
 @mark.parametrize('n', range(1, 5))
@@ -123,26 +138,22 @@ def test_data(n):
         stream.data(10.0)
 
 
-def test_reload_iterator():
-    n = 10
-    stream = Stream(range(n))
-    for x in range(n):
-        assert stream.next() == 0
-        stream.reload_iterator()
-
-    stream = Stream(iter(range(n)))
-    for x in range(n):
-        assert stream.next() == x
-        stream.reload_iterator()
-    with raises(StopIteration):
-        stream.next()
-
-
-def test_set_loader():
-    a = itertools.repeat(0)
-    b = itertools.repeat(1)
-    stream = Stream([2])
-    stream.set_loader(a)
-    for x in range(10):
-        assert stream.next() == next(b if x % 2 else a)
-        stream.set_loader(a if x % 2 else b)
+def test_epoches():
+    stream = Stream(range(3))
+    with raises(AssertionError):
+        next(stream.epoches(1.0, progress_bar=False))
+    correct = [0, 1, 2]
+    for epoch in stream.epoches(2, progress_bar=False):
+        assert list(epoch) == correct
+    correct = [[0, 1], [2, 0], [1, 2]]
+    for i, epoch in enumerate(stream.epoches(2, progress_bar=False)):
+        assert list(epoch) == correct[i]
+    for i, epoch in zip(
+        enumerate(stream.epoches(math.inf, progress_bar=False)), range(1000)
+    ):
+        pass
+    for (i, epoch), _ in zip(enumerate(stream.epoches(math.inf, math.inf)), range(10)):
+        for (j, _), _ in zip(enumerate(epoch), range(10)):
+            pass
+        assert j == 9
+    assert i == 9
