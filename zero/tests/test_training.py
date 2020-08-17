@@ -1,5 +1,7 @@
+import math
+
 import torch
-from pytest import mark, raises
+from pytest import mark, raises, warns
 
 from zero.training import Eval, ProgressTracker, learn
 
@@ -70,6 +72,12 @@ def test_progress_tracker():
     tracker.update(score)
     assert tracker.success
 
+    # patience=None
+    tracker = ProgressTracker(None)
+    for i in range(100):
+        tracker.update(-i)
+        assert not tracker.fail
+
 
 @mark.parametrize('train', [False, True])
 @mark.parametrize('star', [False, True])
@@ -105,3 +113,13 @@ def test_learn(train, star):
     for _ in range(100):
         learn(model, optimizer, loss_fn, step, batch, star)
     assert torch.nn.functional.mse_loss(model(batch), f(batch)).item() < 0.01
+
+
+@mark.parametrize('value', [math.nan, math.inf])
+@mark.parametrize('sign', [1, -1])
+def test_learn_inf_nan(value, sign):
+    model = torch.nn.Linear(3, 1)
+    batch = torch.randn(10, 3) * sign * value
+    optimizer = torch.optim.SGD(model.parameters(), 0.1)
+    with warns(RuntimeWarning):
+        learn(model, optimizer, torch.sum, model, batch)

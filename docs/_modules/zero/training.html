@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.training &#8212; Zero 0.0.2 documentation</title>
+    <title>zero.training &#8212; Zero 0.0.3.dev0 documentation</title>
     <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -79,7 +79,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.2 documentation"
+        <a href="../../index.html" title="Zero 0.0.3.dev0 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -165,7 +165,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2 documentation</a></li>
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.3.dev0 documentation</a></li>
           <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Module code</a></li>
       </ul>
     </div>
@@ -178,13 +178,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.2 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.3.dev0 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.2 documentation"> </a>
+       title="Zero 0.0.3.dev0 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -331,6 +331,8 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Eval'</span><span class="p">,</span> <span class="s1">'ProgressTracker'</span><span class="p">,</span> <span class="s1">'learn'</span><span class="p">]</span>
 
 <span class="kn">import</span> <span class="nn">enum</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
@@ -429,7 +431,8 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        patience: Allowed number of bad updates. For example, if patience is 2, then</span>
-<span class="sd">            2 bad updates is not a fail, but 3 bad updates is a fail.</span>
+<span class="sd">            2 bad updates is not a fail, but 3 bad updates is a fail. If `None`, then</span>
+<span class="sd">            the progress tracker never fails.</span>
 <span class="sd">        min_delta: minimal improvement over current best score to count it as success.</span>
 
 <span class="sd">    Examples:</span>
@@ -473,7 +476,7 @@
 <span class="sd">        assert progress.best_score is None</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patience</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">min_delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patience</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">min_delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_patience</span> <span class="o">=</span> <span class="n">patience</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_min_delta</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">min_delta</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_best_score</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -516,7 +519,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bad_counter</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">_Status</span><span class="o">.</span><span class="n">FAIL</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bad_counter</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_patience</span> <span class="k">else</span> <span class="n">_Status</span><span class="o">.</span><span class="n">NEUTRAL</span>
+                <span class="n">_Status</span><span class="o">.</span><span class="n">FAIL</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_patience</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bad_counter</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_patience</span>
+                <span class="k">else</span> <span class="n">_Status</span><span class="o">.</span><span class="n">NEUTRAL</span>
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ProgressTracker.forget_bad_updates"><a class="viewcode-back" href="../../reference/api/zero.training.ProgressTracker.forget_bad_updates.html#zero.training.ProgressTracker.forget_bad_updates">[docs]</a>    <span class="k">def</span> <span class="nf">forget_bad_updates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -569,6 +574,12 @@
 <span class="sd">        - :code:`model`'s gradients (caused by backward) are **preserved**</span>
 <span class="sd">        - :code:`model`'s state (training or not) is **undefined**</span>
 
+<span class="sd">    Warning:</span>
+<span class="sd">        If loss value is not finite (i.e. it is one of: `math.nan`, `math.inf`,</span>
+<span class="sd">        -`math.inf`), then backward and optimization step **are not performed** (you can</span>
+<span class="sd">        still do it after the function returns, if needed). Additionally,</span>
+<span class="sd">        `RuntimeWarning` is issued.</span>
+
 <span class="sd">    Examples:</span>
 
 <span class="sd">        .. code-block::</span>
@@ -604,9 +615,13 @@
     <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">step</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
     <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="o">*</span><span class="n">out</span><span class="p">)</span> <span class="k">if</span> <span class="n">star</span> <span class="k">else</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">out</span></div>
+    <span class="n">loss_value</span> <span class="o">=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">loss_value</span><span class="p">):</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s1">'loss value is not finite: </span><span class="si">{</span><span class="n">loss_value</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loss_value</span><span class="p">,</span> <span class="n">out</span></div>
 </pre></div>
 
           </article>

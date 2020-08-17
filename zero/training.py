@@ -3,6 +3,8 @@
 __all__ = ['Eval', 'ProgressTracker', 'learn']
 
 import enum
+import math
+import warnings
 from typing import Any, Callable, ClassVar, List, Optional, Tuple, TypeVar
 
 import torch
@@ -101,7 +103,8 @@ class ProgressTracker:
 
     Args:
         patience: Allowed number of bad updates. For example, if patience is 2, then
-            2 bad updates is not a fail, but 3 bad updates is a fail.
+            2 bad updates is not a fail, but 3 bad updates is a fail. If `None`, then
+            the progress tracker never fails.
         min_delta: minimal improvement over current best score to count it as success.
 
     Examples:
@@ -145,7 +148,7 @@ class ProgressTracker:
         assert progress.best_score is None
     """
 
-    def __init__(self, patience: int, min_delta: float = 0.0) -> None:
+    def __init__(self, patience: Optional[int], min_delta: float = 0.0) -> None:
         self._patience = patience
         self._min_delta = float(min_delta)
         self._best_score: Optional[float] = None
@@ -188,7 +191,9 @@ class ProgressTracker:
         else:
             self._bad_counter += 1
             self._status = (
-                _Status.FAIL if self._bad_counter > self._patience else _Status.NEUTRAL
+                _Status.FAIL
+                if self._patience is not None and self._bad_counter > self._patience
+                else _Status.NEUTRAL
             )
 
     def forget_bad_updates(self) -> None:
@@ -241,6 +246,12 @@ def learn(
         - :code:`model`'s gradients (caused by backward) are **preserved**
         - :code:`model`'s state (training or not) is **undefined**
 
+    Warning:
+        If loss value is not finite (i.e. it is one of: `math.nan`, `math.inf`,
+        -`math.inf`), then backward and optimization step **are not performed** (you can
+        still do it after the function returns, if needed). Additionally,
+        `RuntimeWarning` is issued.
+
     Examples:
 
         .. code-block::
@@ -276,6 +287,10 @@ def learn(
     optimizer.zero_grad()
     out = step(batch)
     loss = loss_fn(*out) if star else loss_fn(out)
-    loss.backward()
-    optimizer.step()
-    return loss.item(), out
+    loss_value = loss.item()
+    if math.isfinite(loss_value):
+        loss.backward()
+        optimizer.step()
+    else:
+        warnings.warn(f'loss value is not finite: {loss_value}', RuntimeWarning)
+    return loss_value, out

@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.training.learn &#8212; Zero 0.0.2 documentation</title>
+    <title>zero.training.learn &#8212; Zero 0.0.3.dev0 documentation</title>
     <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -81,7 +81,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.2 documentation"
+        <a href="../../index.html" title="Zero 0.0.3.dev0 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -167,7 +167,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.2 documentation</a></li>
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.3.dev0 documentation</a></li>
           <li class="md-tabs__item"><a href="../training.html" class="md-tabs__link">zero.training</a></li>
       </ul>
     </div>
@@ -180,13 +180,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.2 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.3.dev0 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.2 documentation"> </a>
+       title="Zero 0.0.3.dev0 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -393,6 +393,13 @@ loss tensor</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">model</span></code>’s gradients (caused by backward) are <strong>preserved</strong></p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">model</span></code>’s state (training or not) is <strong>undefined</strong></p></li>
 </ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If loss value is not finite (i.e. it is one of: <a class="reference external" href="https://docs.python.org/3/library/math.html#math.nan" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.nan</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/math.html#math.inf" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.inf</span></code></a>,
+-<a class="reference external" href="https://docs.python.org/3/library/math.html#math.inf" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.inf</span></code></a>), then backward and optimization step <strong>are not performed</strong> (you can
+still do it after the function returns, if needed). Additionally,
+<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeWarning" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeWarning</span></code></a> is issued.</p>
 </div>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="o">...</span>
