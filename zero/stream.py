@@ -9,7 +9,10 @@ from tqdm import tqdm
 
 
 def _try_len(x):
-    return len(x) if isinstance(x, Sized) else None
+    try:
+        return len(x)
+    except (TypeError, NotImplementedError):
+        return None
 
 
 class Stream:
