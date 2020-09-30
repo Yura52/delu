@@ -9,8 +9,6 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader, Dataset, TensorDataset
 
-from ._util import is_namedtuple
-
 T = TypeVar('T')
 S = TypeVar('S')
 
@@ -129,6 +127,12 @@ def iloader(size: int, *args, **kwargs) -> DataLoader:
     return DataLoader(_IndicesDataset(size), *args, **kwargs)
 
 
+def _is_namedtuple(x) -> bool:
+    return isinstance(x, tuple) and all(
+        hasattr(x, attr) for attr in ['_make', '_asdict', '_replace', '_fields']
+    )
+
+
 def iter_batches(
     data: Union[
         torch.Tensor, Tuple[torch.Tensor, ...], Dict[Any, torch.Tensor], TensorDataset,
@@ -184,7 +188,7 @@ def iter_batches(
                     ...
     """
     # mypy understands very little about this function
-    if is_namedtuple(data):
+    if _is_namedtuple(data):
         assert data
         f = lambda idx: type(data)._make(x[idx] for x in data)  # type: ignore # noqa
         size = len(data[0])  # type: ignore # noqa
@@ -415,7 +419,7 @@ def concat(iterable: Iterable[T]) -> Union[S, Tuple[S, ...], Dict[Any, S]]:
     first = data[0]
     return (
         type(first)._make(concat_fn(x[i] for x in data) for i, _ in enumerate(first))
-        if is_namedtuple(first)
+        if _is_namedtuple(first)
         else type(first)(concat_fn(x[i] for x in data) for i, _ in enumerate(first))
         if isinstance(first, tuple)
         else type(first)((key, concat_fn(x[key] for x in data)) for key in first)
