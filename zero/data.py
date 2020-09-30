@@ -433,4 +433,5 @@ def collate(iterable: Iterable[T]) -> Any:
     """
     if not isinstance(iterable, list):
         iterable = list(iterable)
-    return torch.utils.data.dataloader.default_collate(iterable)
+    # > Module has no attribute "default_collate"
+    return torch.utils.data.dataloader.default_collate(iterable)  # type: ignore

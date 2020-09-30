@@ -7,9 +7,6 @@ from pytest import mark, raises
 
 # don't use "from zero.hardware import ...", because it breaks mocking
 import zero.hardware as hardware
-from zero._util import flatten
-
-from .util import Point, requires_gpu
 
 
 @mark.parametrize('gpu', [False, True])
@@ -116,42 +113,3 @@ def test_get_gpu_info_without_gpu():
     ):
         with raises(RuntimeError):
             hardware.get_gpu_info()
-
-
-@requires_gpu
-def test_to_device():
-    t = lambda x: torch.tensor(0, device=x)  # noqa
-    cpu = torch.device('cpu')
-    cuda = torch.device('cuda', 0)
-
-    for x in cpu, cuda:
-        data = t(x)
-        assert hardware.to_device(data, x) is data
-    assert hardware.to_device(t(cpu), cuda).device == cuda
-
-    for Container in tuple, Point, list:
-        constructor = Container._make if Container is Point else Container
-        for device in [cpu, cuda]:
-            data = constructor([t(cpu), t(cpu)])
-            out = hardware.to_device(data, device)
-            assert isinstance(out, Container)
-            assert all(x.device == device for x in out)
-            if device == cpu:
-                for x, y in zip(out, data):
-                    assert x is y
-
-    data = [t(cpu), t(cpu)]
-    for x, y in zip(hardware.to_device(data, cpu), data):
-        assert x is y
-    assert all(x.device == cuda for x in hardware.to_device(data, cuda))
-
-    data = {
-        'a': [t(cpu), (t(cpu), t(cpu))],
-        'b': {'c': {'d': [[[t(cpu)]]]}},
-        'c': Point(t(cpu), {'d': t(cpu)}),
-    }
-    for x, y in zip(flatten(hardware.to_device(data, cpu)), flatten(data)):
-        assert x is y
-    for x, y in zip(flatten(hardware.to_device(data, cuda)), flatten(data)):
-        assert x.device == cuda
-        assert type(x) == type(y)

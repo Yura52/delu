@@ -25,7 +25,9 @@ class _ModelsContext:
     def __enter__(self) -> None:
         self._training = []
         for x in self._models:
-            self._training.append(x.training)
+            # > Argument 1 to "append" of "list" has incompatible type
+            # > "Union[Tensor, Module[Any]]"; expected "bool"
+            self._training.append(x.training)  # type: ignore
             x.train(self._train)
         self._grad_context.__enter__()  # type: ignore
 
