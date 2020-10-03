@@ -1,6 +1,0 @@
-zero.io.dump\_pickle
-====================
-
-.. currentmodule:: zero.io
-
-.. autofunction:: dump_pickle

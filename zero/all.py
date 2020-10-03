@@ -22,10 +22,8 @@ Examples:
 
 from .data import *  # noqa
 from .hardware import *  # noqa
-from .io import *  # noqa
 from .metrics import *  # noqa
 from .random import *  # noqa
 from .stream import *  # noqa
 from .time import *  # noqa
 from .training import *  # noqa
-from .types import *  # noqa

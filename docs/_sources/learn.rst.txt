@@ -35,7 +35,6 @@ are the things to learn:
    zero.random.set_randomness
    zero.time.Timer
    zero.hardware
-   zero.io
 
 Congratulations! You are ready to apply Zero in practice. You can also visit
 :ref:`this page <zero>` and explore things that are not covered in the list above.
