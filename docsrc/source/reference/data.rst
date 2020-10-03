@@ -19,6 +19,17 @@ Enumerate
     Enumerate.__len__
     Enumerate.__getitem__
 
+FnDataset
+^^^^^^^^^
+
+.. autoclass:: FnDataset
+
+.. autosummary::
+    :toctree: api
+
+    FnDataset.__len__
+    FnDataset.__getitem__
+
 functions
 ^^^^^^^^^
 

@@ -3,7 +3,7 @@ import torch
 from pytest import mark, raises
 from torch.utils.data import DataLoader, TensorDataset
 
-from zero.data import Enumerate, collate, concat, iloader, iter_batches
+from zero.data import Enumerate, FnDataset, collate, concat, iloader, iter_batches
 
 from .util import Point
 
@@ -14,6 +14,32 @@ def test_enumerate():
     assert x.dataset is dataset
     assert len(x) == 10
     assert x[3] == (3, (torch.tensor(3), torch.tensor(3)))
+
+
+def test_fndataset():
+    dataset = FnDataset(lambda x: x * 2, 3)
+    assert len(dataset) == 3
+    assert dataset[0] == 0
+    assert dataset[1] == 2
+    assert dataset[2] == 4
+
+    dataset = FnDataset(lambda x: x * 2, 3, lambda x: x * 3)
+    assert len(dataset) == 3
+    assert dataset[0] == 0
+    assert dataset[1] == 6
+    assert dataset[2] == 12
+
+    dataset = FnDataset(lambda x: x * 2, [1, 10, 100])
+    assert len(dataset) == 3
+    assert dataset[0] == 2
+    assert dataset[1] == 20
+    assert dataset[2] == 200
+
+    dataset = FnDataset(lambda x: x * 2, (x for x in range(0, 10, 4)))
+    assert len(dataset) == 3
+    assert dataset[0] == 0
+    assert dataset[1] == 8
+    assert dataset[2] == 16
 
 
 def test_iloader():

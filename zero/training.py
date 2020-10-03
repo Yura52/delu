@@ -247,10 +247,9 @@ def learn(
         - :code:`model`'s state (training or not) is **undefined**
 
     Warning:
-        If loss value is not finite (i.e. it is one of: `math.nan`, `math.inf`,
-        -`math.inf`), then backward and optimization step **are not performed** (you can
-        still do it after the function returns, if needed). Additionally,
-        `RuntimeWarning` is issued.
+        If loss value is not finite (i.e. `math.isfinite` returns `False`), then
+        backward and optimization step **are not performed** (you can still do it after
+        the function returns, if needed). Additionally, `RuntimeWarning` is issued.
 
     Examples:
 

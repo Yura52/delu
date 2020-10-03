@@ -1,9 +1,19 @@
 """Missing batteries from `torch.utils.data`."""
 
-__all__ = ['Enumerate', 'collate', 'concat', 'iloader', 'iter_batches']
+__all__ = ['Enumerate', 'FnDataset', 'collate', 'concat', 'iloader', 'iter_batches']
 
 import itertools
-from typing import Any, Dict, Iterable, Iterator, Tuple, TypeVar, Union
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Iterable,
+    Iterator,
+    Optional,
+    Tuple,
+    TypeVar,
+    Union,
+)
 
 import numpy as np
 import torch
@@ -15,6 +25,9 @@ S = TypeVar('S')
 
 class Enumerate(Dataset):
     """Make dataset return both indices and items.
+
+    Args:
+        dataset
 
     .. rubric:: Tutorial
 
@@ -57,6 +70,164 @@ class Enumerate(Dataset):
             (index, item)
         """
         return index, self._dataset[index]
+
+
+class FnDataset(Dataset):
+    """A thin wrapper around a loader function and its arguments.
+
+    `FnDataset` allows to avoid implementing Dataset-classes (well, at least in simple
+    cases). Below you can find the full tutorial and typical use cases, but here is a
+    quick example:
+
+    Without `FnDataset`::
+
+        class ImagesList(Dataset):
+            def __init__(self, filenames, transform):
+                self.filenames = filenames
+                self.transform = transform
+
+            def __len__(self):
+                return len(self.filenames)
+
+            def __getitem__(self, index):
+                return self.transform(Image.open(self.filenames[index]))
+
+        dataset = ImagesList(filenames, transform)
+
+    With `FnDataset`::
+
+        dataset = FnDataset(Image.open, filenames, transform)
+
+    Args:
+        fn: the function that produces values based on arguments from :code:`args`
+        args: arguments for :code:`fn`. If an iterable, but not a list, then is casted
+            to a list. If an integer, then the behavior is the same as for
+            :code:`list(range(args))`. The size of :code:`args` defines the return value
+            for `FnDataset.__len__`.
+        transform: if presented, is applied to the return value of `fn` in
+            `FnDataset.__getitem__`
+
+    Examples:
+        .. code-block::
+
+            import PIL.Image as Image
+            import torchvision.transforms as T
+
+            dataset = FnDataset(Image.open, filenames, T.ToTensor())
+
+    .. rubric:: Tutorial
+
+    With vanilla PyTorch, in order to create a dataset you have to inherit from
+    `torch.utils.data.Dataset` and implement three methods:
+
+    - :code:`__init__`
+    - :code:`__len__`
+    - :code:`__getitem__`
+
+    With `FnDataset` the only thing you *may need* to implement is the :code:`fn`
+    argument that will power :code:`__getitem__`. The easiest way to learn
+    `FnDataset` is to go through examples below.
+
+    A list of images::
+
+        dataset = FnDataset(Image.open, filenames)
+        # dataset[i] returns Image.open(filenames[i])
+
+    A list of images that are cached after the first load::
+
+        from functools import lru_cache
+        dataset = FnDataset(lru_cache(None)(Image.open), filenames)
+
+    `pathlib.Path` is very useful when you want to create a dataset that reads from
+    files. For example::
+
+        images_dir = Path(...)
+        dataset = FnDataset(Image.open, images_dir.iterdir())
+
+    If there are many files, but you need only those with specific extensions, use
+    `pathlib.Path.glob`::
+
+        dataset = FnDataset(Image.open, images_dir.glob(*.png))
+
+    If there are many files in many subfolders, but you need only those with specific
+    extensions and that satisfy some condition, use `pathlib.Path.rglob`::
+
+        dataset = FnDataset(
+            Image.open, (x for x in images_dir.rglob(*.png) if condition(x))
+        )
+
+    A segmentation dataset::
+
+        image_filenames = ...
+        gt_filenames = ...
+
+        def get(i):
+            return Image.open(image_filenames[i]), Image.open(gt_filenames[i])
+
+        dataset = FnDataset(get, len(image_filenames))
+
+    A dummy dataset that demonstrates that `FnDataset` is a very general thing:
+
+    .. testcode::
+
+        def f(x):
+            return x * 10
+
+        def g(x):
+            return x * 2
+
+        dataset = FnDataset(f, 3, g)
+        # dataset[i] returns g(f(i))
+        print(len(dataset), dataset[0], dataset[1], dataset[2])
+
+    .. testoutput::
+
+        3 0 20 40
+    """
+
+    def __init__(
+        self,
+        fn: Callable[..., T],
+        args: Union[int, Iterable],
+        transform: Optional[Callable[[T], Any]] = None,
+    ) -> None:
+        self._fn = fn
+        if isinstance(args, Iterable):
+            if not isinstance(args, list):
+                args = list(args)
+        self._args = args
+        self._transform = transform
+
+    def __len__(self) -> int:
+        """Get the dataset size.
+
+        See `FnDataset` for details.
+
+        Returns:
+            size
+        """
+        return len(self._args) if isinstance(self._args, list) else self._args
+
+    def __getitem__(self, index: int) -> Any:
+        """Get value by index.
+
+        See `FnDataset` for details.
+
+        Args:
+            index
+        Returns:
+            value
+        Raises:
+            IndexError: if :code:`index >= len(self)`
+        """
+        if isinstance(self._args, list):
+            x = self._args[index]
+        elif index < self._args:
+            x = index
+        else:
+            raise IndexError(f'Index {index} is out of range')
+        x = self._fn(x)
+        return x if self._transform is None else self._transform(x)
 
 
 class _IndicesDataset(Dataset):
