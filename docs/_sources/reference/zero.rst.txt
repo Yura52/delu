@@ -9,13 +9,10 @@ zero
 
 .. autosummary::
 
-   all
    data
    stream
    hardware
-   io
    metrics
    random
    time
    training
-   types

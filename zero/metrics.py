@@ -60,10 +60,10 @@ class Metric(ABC):
         y = torch.tensor([0, 1, 0, 1])
         assert metric_fn.calculate(y_pred, y) == 0.5
 
-        from zero.all import iter_batches
+        import zero
         y = torch.randint(2, size=(10,))
         X = torch.randn(len(y), 3)
-        batches = iter_batches((X, y), batch_size=2)
+        batches = zero.iter_batches((X, y), batch_size=2)
 
         def perfect_prediction(batch):
             X, y = batch

@@ -232,13 +232,6 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/all.html" class="md-nav__link">zero.all</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../../reference/data.html" class="md-nav__link">zero.data</a>
       
     
@@ -374,10 +367,10 @@
 <span class="sd">        y = torch.tensor([0, 1, 0, 1])</span>
 <span class="sd">        assert metric_fn.calculate(y_pred, y) == 0.5</span>
 
-<span class="sd">        from zero.all import iter_batches</span>
+<span class="sd">        import zero</span>
 <span class="sd">        y = torch.randint(2, size=(10,))</span>
 <span class="sd">        X = torch.randn(len(y), 3)</span>
-<span class="sd">        batches = iter_batches((X, y), batch_size=2)</span>
+<span class="sd">        batches = zero.iter_batches((X, y), batch_size=2)</span>
 
 <span class="sd">        def perfect_prediction(batch):</span>
 <span class="sd">            X, y = batch</span>

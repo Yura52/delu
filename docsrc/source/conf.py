@@ -37,7 +37,7 @@ autosummary_generate = True
 doctest_global_setup = '''
 import numpy as np
 import torch
-from zero.all import *
+from zero import *
 '''
 
 intersphinx_mapping = {
