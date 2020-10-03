@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.training.learn &#8212; Zero 0.0.3.dev0 documentation</title>
+    <title>zero.training.learn &#8212; Zero 0.0.3.dev1 documentation</title>
     <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -81,7 +81,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.3.dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.3.dev1 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -167,7 +167,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.3.dev0 documentation</a></li>
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.3.dev1 documentation</a></li>
           <li class="md-tabs__item"><a href="../training.html" class="md-tabs__link">zero.training</a></li>
       </ul>
     </div>
@@ -180,13 +180,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.3.dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.3.dev1 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.3.dev0 documentation"> </a>
+       title="Zero 0.0.3.dev1 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -360,7 +360,7 @@
 <li><p>Switches the model to the training mode, sets its gradients to zero.</p></li>
 <li><p>Performs the call <code class="code docutils literal notranslate"><span class="pre">step(batch)</span></code> or <code class="code docutils literal notranslate"><span class="pre">step(*batch)</span></code></p></li>
 <li><p>The output from the previous step is passed to <code class="code docutils literal notranslate"><span class="pre">loss_fn</span></code></p></li>
-<li><p><a class="reference external" href="https://pytorch.org/docs/stable/autograd.html#torch.Tensor.backward" title="(in PyTorch v&lt;a href='http://pytorch.org/docs/versions.html'&gt;1.6.0 &amp;#x25BC&lt;/a&gt;)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.backward</span></code></a> is applied to the obtained loss tensor.</p></li>
+<li><p><a class="reference external" href="https://pytorch.org/docs/stable/autograd.html#torch.Tensor.backward" title="(in PyTorch vmaster (1.6.0a0+4392e52 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.backward</span></code></a> is applied to the obtained loss tensor.</p></li>
 <li><p>The optimization step is performed.</p></li>
 <li><p>Returns the loss’s value (float) and <code class="code docutils literal notranslate"><span class="pre">step</span></code>’s output</p></li>
 </ol>
@@ -369,7 +369,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> (<em>torch.nn.modules.module.Module</em>) – the model to train</p></li>
 <li><p><strong>optimizer</strong> (<em>torch.optim.optimizer.Optimizer</em>) – the optimizer for <code class="code docutils literal notranslate"><span class="pre">model</span></code></p></li>
-<li><p><strong>loss_fn</strong> (<em>Callable</em><em>[</em><em>..</em><em>, </em><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v&lt;a href='http://pytorch.org/docs/versions.html'&gt;1.6.0 &amp;#x25BC&lt;/a&gt;)"><em>torch.Tensor</em></a><em>]</em>) – the function that takes <code class="code docutils literal notranslate"><span class="pre">step</span></code>’s output as input and returns a
+<li><p><strong>loss_fn</strong> (<em>Callable</em><em>[</em><em>..</em><em>, </em><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+4392e52 ))"><em>torch.Tensor</em></a><em>]</em>) – the function that takes <code class="code docutils literal notranslate"><span class="pre">step</span></code>’s output as input and returns a
 loss tensor</p></li>
 <li><p><strong>step</strong> (<em>Callable</em><em>[</em><em>T</em><em>, </em><em>Any</em><em>]</em>) – the function that takes <code class="code docutils literal notranslate"><span class="pre">batch</span></code> as input and produces input for
 <code class="code docutils literal notranslate"><span class="pre">loss_fn</span></code></p></li>
@@ -396,10 +396,9 @@ loss tensor</p></li>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If loss value is not finite (i.e. it is one of: <a class="reference external" href="https://docs.python.org/3/library/math.html#math.nan" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.nan</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/math.html#math.inf" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.inf</span></code></a>,
--<a class="reference external" href="https://docs.python.org/3/library/math.html#math.inf" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.inf</span></code></a>), then backward and optimization step <strong>are not performed</strong> (you can
-still do it after the function returns, if needed). Additionally,
-<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeWarning" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeWarning</span></code></a> is issued.</p>
+<p>If loss value is not finite (i.e. <a class="reference external" href="https://docs.python.org/3/library/math.html#math.isfinite" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.isfinite</span></code></a> returns <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>), then
+backward and optimization step <strong>are not performed</strong> (you can still do it after
+the function returns, if needed). Additionally, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeWarning" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeWarning</span></code></a> is issued.</p>
 </div>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="o">...</span>

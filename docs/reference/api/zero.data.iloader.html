@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.data.iloader &#8212; Zero 0.0.3.dev0 documentation</title>
+    <title>zero.data.iloader &#8212; Zero 0.0.3.dev1 documentation</title>
     <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -81,7 +81,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.3.dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.3.dev1 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -167,7 +167,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.3.dev0 documentation</a></li>
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">Zero 0.0.3.dev1 documentation</a></li>
           <li class="md-tabs__item"><a href="../data.html" class="md-tabs__link">zero.data</a></li>
       </ul>
     </div>
@@ -180,13 +180,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.3.dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.3.dev1 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.3.dev0 documentation"> </a>
+       title="Zero 0.0.3.dev1 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -247,6 +247,13 @@
     
     
       <a href="../data.html#enumerate" class="md-nav__link">Enumerate</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../data.html#fndataset" class="md-nav__link">FnDataset</a>
       
     
     </li>
@@ -347,15 +354,15 @@
 <dl class="py function">
 <dt id="zero.data.iloader">
 <code class="sig-prename descclassname">zero.data.</code><code class="sig-name descname">iloader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">size</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/data.html#iloader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.data.iloader" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v&lt;a href='http://pytorch.org/docs/versions.html'&gt;1.6.0 &amp;#x25BC&lt;/a&gt;)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataLoader</span></code></a> over batches of indices.</p>
+<dd><p>Make <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch vmaster (1.6.0a0+4392e52 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataLoader</span></code></a> over batches of indices.</p>
 <p><strong>The shuffling logic is fully delegated to native PyTorch DataLoader</strong>, i.e. no
 custom logic is performed under the hood.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the size of dataset (for example, <code class="code docutils literal notranslate"><span class="pre">len(dataset)</span></code>)</p></li>
-<li><p><strong>*args</strong> – positional arguments for <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v&lt;a href='http://pytorch.org/docs/versions.html'&gt;1.6.0 &amp;#x25BC&lt;/a&gt;)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a></p></li>
-<li><p><strong>**kwargs</strong> – keyword arguments for <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v&lt;a href='http://pytorch.org/docs/versions.html'&gt;1.6.0 &amp;#x25BC&lt;/a&gt;)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a></p></li>
+<li><p><strong>*args</strong> – positional arguments for <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch vmaster (1.6.0a0+4392e52 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a></p></li>
+<li><p><strong>**kwargs</strong> – keyword arguments for <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch vmaster (1.6.0a0+4392e52 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a></p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>

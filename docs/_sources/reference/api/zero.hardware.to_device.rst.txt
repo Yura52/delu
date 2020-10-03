@@ -1,6 +1,0 @@
-zero.hardware.to\_device
-========================
-
-.. currentmodule:: zero.hardware
-
-.. autofunction:: to_device
