@@ -341,7 +341,8 @@
 <span class="sd">    .. testcode::</span>
 
 <span class="sd">        from torch.utils.data import DataLoader, TensorDataset</span>
-<span class="sd">        dataset = TensorDataset(torch.randn(9, 2), torch.randn(9))  # X, y</span>
+<span class="sd">        X, y = torch.randn(9, 2), torch.randn(9)</span>
+<span class="sd">        dataset = TensorDataset(X, y)</span>
 <span class="sd">        for batch_idx, batch in DataLoader(Enumerate(dataset), batch_size=3):</span>
 <span class="sd">            print(batch_idx)</span>
 
@@ -485,11 +486,11 @@
 
 <span class="sd">        dataset = FnDataset(f, 3, g)</span>
 <span class="sd">        # dataset[i] returns g(f(i))</span>
-<span class="sd">        print(len(dataset), dataset[0], dataset[1], dataset[2])</span>
+<span class="sd">        assert len(dataset) == 3</span>
+<span class="sd">        assert dataset[0] == 0</span>
+<span class="sd">        assert dataset[1] == 20</span>
+<span class="sd">        assert dataset[2] == 40</span>
 
-<span class="sd">    .. testoutput::</span>
-
-<span class="sd">        3 0 20 40</span>
 <span class="sd">    """</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -704,8 +705,8 @@
 <span class="sd">    Warning:</span>
 <span class="sd">        The function starts with conversion of the iterable to a list. Make sure that</span>
 <span class="sd">        you have enough memory for such operation, otherwise, memory limit may be</span>
-<span class="sd">        exceeded. Note that manual implementation would involve the same conversion,</span>
-<span class="sd">        just keep this in mind when using the function.</span>
+<span class="sd">        exceeded. Note that in most cases manual implementation would involve the same</span>
+<span class="sd">        conversion, just keep this in mind when using the function.</span>
 
 <span class="sd">    See Also:</span>
 <span class="sd">        `iter_batches`</span>

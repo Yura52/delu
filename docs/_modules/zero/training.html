@@ -404,7 +404,8 @@
 
 <span class="sd">    For `~ProgressTracker`, **the greater score is the better score**.</span>
 <span class="sd">    At any moment the tracker is in one of the following states:</span>
-<span class="sd">    - success: the last score updated the best score</span>
+
+<span class="sd">    - success: the last score is the best score</span>
 <span class="sd">    - fail: last :code:`n &gt; patience` updates are not better than the best score</span>
 <span class="sd">    - neutral: if neither success nor fail</span>
 
@@ -570,9 +571,8 @@
 <span class="sd">                X, y = batch</span>
 <span class="sd">                return model(X), y</span>
 
-<span class="sd">            for epoch in epoches:</span>
-<span class="sd">                for batch in batches:</span>
-<span class="sd">                    learn(model, optimizer, loss_fn, step, batch, True)</span>
+<span class="sd">            for batch in batches:</span>
+<span class="sd">                learn(model, optimizer, loss_fn, step, batch, True)</span>
 
 <span class="sd">        .. code-block::</span>
 
@@ -585,9 +585,8 @@
 
 <span class="sd">            loss_fn = lambda out: torch.nn.functional.mse_loss(out['y_pred'], out['y'])</span>
 
-<span class="sd">            for epoch in epoches:</span>
-<span class="sd">                for batch in batches:</span>
-<span class="sd">                    learn(model, optimizer, loss_fn, step, batch)</span>
+<span class="sd">            for batch in batches:</span>
+<span class="sd">                learn(model, optimizer, loss_fn, step, batch)</span>
 <span class="sd">    """</span>
     <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
     <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>

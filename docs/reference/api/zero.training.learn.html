@@ -352,7 +352,7 @@ loss tensor</p></li>
 <li><p><strong>step</strong> (<em>Callable</em><em>[</em><em>T</em><em>, </em><em>Any</em><em>]</em>) – the function that takes <code class="code docutils literal notranslate"><span class="pre">batch</span></code> as input and produces input for
 <code class="code docutils literal notranslate"><span class="pre">loss_fn</span></code></p></li>
 <li><p><strong>batch</strong> (<em>T</em>) – input for <code class="code docutils literal notranslate"><span class="pre">step</span></code></p></li>
-<li><p><strong>star</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – if True, then the output of <code class="code docutils literal notranslate"><span class="pre">step</span></code> is unpacked when passed to
+<li><p><strong>star</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – if True, then the output of <code class="code docutils literal notranslate"><span class="pre">step</span></code> is unpacked when passed to
 <code class="code docutils literal notranslate"><span class="pre">loss_fn</span></code>, i.e. <code class="code docutils literal notranslate"><span class="pre">loss_fn(*step_output)</span></code> is performed instead of
 <code class="code docutils literal notranslate"><span class="pre">loss_fn(step_output)</span></code></p></li>
 </ul>
@@ -361,7 +361,7 @@ loss tensor</p></li>
 <dd class="field-even"><p>(loss_value, step_output)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)">float</a>, Any]</p>
+<dd class="field-odd"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)">float</a>, Any]</p>
 </dd>
 </dl>
 <div class="admonition note">
@@ -374,9 +374,9 @@ loss tensor</p></li>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If loss value is not finite (i.e. <a class="reference external" href="https://docs.python.org/3/library/math.html#math.isfinite" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.isfinite</span></code></a> returns <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>), then
+<p>If loss value is not finite (i.e. <a class="reference external" href="https://docs.python.org/3/library/math.html#math.isfinite" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.isfinite</span></code></a> returns <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a>), then
 backward and optimization step <strong>are not performed</strong> (you can still do it after
-the function returns, if needed). Additionally, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeWarning" title="(in Python v3.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeWarning</span></code></a> is issued.</p>
+the function returns, if needed). Additionally, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeWarning" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeWarning</span></code></a> is issued.</p>
 </div>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="o">...</span>
@@ -387,9 +387,8 @@ the function returns, if needed). Additionally, <a class="reference external" hr
     <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span>
     <span class="k">return</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span>
 
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">epoches</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">batches</span><span class="p">:</span>
-        <span class="n">learn</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_fn</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">batches</span><span class="p">:</span>
+    <span class="n">learn</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_fn</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="o">...</span>
@@ -401,9 +400,8 @@ the function returns, if needed). Additionally, <a class="reference external" hr
 
 <span class="n">loss_fn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">out</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">'y_pred'</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">'y'</span><span class="p">])</span>
 
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">epoches</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">batches</span><span class="p">:</span>
-        <span class="n">learn</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_fn</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">batches</span><span class="p">:</span>
+    <span class="n">learn</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_fn</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>

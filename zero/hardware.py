@@ -71,7 +71,7 @@ def get_gpu_info(precise: bool = False) -> List[Dict[str, Any]]:
                 },
             ]
 
-    Note:
+    Warning:
         The function directly collects information using the :code:`pynvml` library,
         hence, settings like :code:`CUDA_VISIBLE_DEVICES` don't affect the result.
     """

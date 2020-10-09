@@ -97,7 +97,8 @@ class ProgressTracker:
 
     For `~ProgressTracker`, **the greater score is the better score**.
     At any moment the tracker is in one of the following states:
-    - success: the last score updated the best score
+
+    - success: the last score is the best score
     - fail: last :code:`n > patience` updates are not better than the best score
     - neutral: if neither success nor fail
 
@@ -263,9 +264,8 @@ def learn(
                 X, y = batch
                 return model(X), y
 
-            for epoch in epoches:
-                for batch in batches:
-                    learn(model, optimizer, loss_fn, step, batch, True)
+            for batch in batches:
+                learn(model, optimizer, loss_fn, step, batch, True)
 
         .. code-block::
 
@@ -278,9 +278,8 @@ def learn(
 
             loss_fn = lambda out: torch.nn.functional.mse_loss(out['y_pred'], out['y'])
 
-            for epoch in epoches:
-                for batch in batches:
-                    learn(model, optimizer, loss_fn, step, batch)
+            for batch in batches:
+                learn(model, optimizer, loss_fn, step, batch)
     """
     model.train()
     optimizer.zero_grad()

@@ -34,7 +34,8 @@ class Enumerate(Dataset):
     .. testcode::
 
         from torch.utils.data import DataLoader, TensorDataset
-        dataset = TensorDataset(torch.randn(9, 2), torch.randn(9))  # X, y
+        X, y = torch.randn(9, 2), torch.randn(9)
+        dataset = TensorDataset(X, y)
         for batch_idx, batch in DataLoader(Enumerate(dataset), batch_size=3):
             print(batch_idx)
 
@@ -178,11 +179,11 @@ class FnDataset(Dataset):
 
         dataset = FnDataset(f, 3, g)
         # dataset[i] returns g(f(i))
-        print(len(dataset), dataset[0], dataset[1], dataset[2])
+        assert len(dataset) == 3
+        assert dataset[0] == 0
+        assert dataset[1] == 20
+        assert dataset[2] == 40
 
-    .. testoutput::
-
-        3 0 20 40
     """
 
     def __init__(
@@ -397,8 +398,8 @@ def concat(iterable: Iterable[T]) -> Union[S, Tuple[S, ...], Dict[Any, S]]:
     Warning:
         The function starts with conversion of the iterable to a list. Make sure that
         you have enough memory for such operation, otherwise, memory limit may be
-        exceeded. Note that manual implementation would involve the same conversion,
-        just keep this in mind when using the function.
+        exceeded. Note that in most cases manual implementation would involve the same
+        conversion, just keep this in mind when using the function.
 
     See Also:
         `iter_batches`
