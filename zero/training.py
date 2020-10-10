@@ -98,7 +98,7 @@ class ProgressTracker:
     For `~ProgressTracker`, **the greater score is the better score**.
     At any moment the tracker is in one of the following states:
 
-    - success: the last score is the best score
+    - success: the last update changed the best score
     - fail: last :code:`n > patience` updates are not better than the best score
     - neutral: if neither success nor fail
 

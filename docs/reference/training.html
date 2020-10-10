@@ -399,7 +399,7 @@ previous state when exits the context.</p>
 <p>For <a class="reference internal" href="#zero.training.ProgressTracker" title="zero.training.ProgressTracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProgressTracker</span></code></a>, <strong>the greater score is the better score</strong>.
 At any moment the tracker is in one of the following states:</p>
 <ul class="simple">
-<li><p>success: the last score is the best score</p></li>
+<li><p>success: the last update changed the best score</p></li>
 <li><p>fail: last <code class="code docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">patience</span></code> updates are not better than the best score</p></li>
 <li><p>neutral: if neither success nor fail</p></li>
 </ul>
