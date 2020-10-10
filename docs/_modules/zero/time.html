@@ -310,7 +310,7 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Timer'</span><span class="p">,</span> <span class="s1">'format_seconds'</span><span class="p">]</span>
 
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 
 <div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../../reference/time.html#zero.time.Timer">[docs]</a><span class="k">class</span> <span class="nc">Timer</span><span class="p">:</span>
@@ -334,7 +334,8 @@
 
 <span class="sd">        assert Timer()() == 0.0</span>
 
-<span class="sd">        timer = Timer().run()  # start</span>
+<span class="sd">        timer = Timer()</span>
+<span class="sd">        timer.run()  # start</span>
 <span class="sd">        time.sleep(0.01)</span>
 <span class="sd">        assert timer()  # some time has passed</span>
 
@@ -352,6 +353,11 @@
 
 <span class="sd">        timer.reset()</span>
 <span class="sd">        assert timer() == 0.0</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        When a Timer instance is pickled, the result of `Timer.__call__` is saved as</span>
+<span class="sd">        shift (hence, the "time elapsed" is preserved) and all other attributes are</span>
+<span class="sd">        omitted.</span>
 <span class="sd">    """</span>
 
     <span class="c1"># mypy cannot infer types from .reset(), so they must be given here</span>
@@ -371,7 +377,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span> <span class="o">=</span> <span class="mf">0.0</span></div>
 
-<div class="viewcode-block" id="Timer.run"><a class="viewcode-back" href="../../reference/api/zero.time.Timer.run.html#zero.time.Timer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'Timer'</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.run"><a class="viewcode-back" href="../../reference/api/zero.time.Timer.run.html#zero.time.Timer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">"""Start/resume the timer.</span>
 
 <span class="sd">        If the timer is on pause, the method resumes the timer.</span>
@@ -382,8 +388,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="bp">self</span>  <span class="c1"># enables the pattern `timer = Timer().run()`</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="Timer.pause"><a class="viewcode-back" href="../../reference/api/zero.time.Timer.pause.html#zero.time.Timer.pause">[docs]</a>    <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Pause the timer.</span>
@@ -443,8 +448,7 @@
 <div class="viewcode-block" id="Timer.__call__"><a class="viewcode-back" href="../../reference/api/zero.time.Timer.__call__.html#zero.time.Timer.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="sd">"""Get time elapsed since the start.</span>
 
-<span class="sd">        If the timer is just created/reset, the shift is returned (can be negative!</span>
-<span class="sd">        ).</span>
+<span class="sd">        If the timer is just created/reset, the shift is returned (can be negative!).</span>
 <span class="sd">        Otherwise, :code:`now - start_time + shift` is returned. The shift includes</span>
 <span class="sd">        total pause time (including the current pause, if the timer is on pause) and</span>
 <span class="sd">        all manipulations by `~Timer.add` and `~Timer.sub`.</span>
@@ -455,7 +459,13 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span>
         <span class="n">now</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span></div></div>
+        <span class="k">return</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span></div>
+
+    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">'_shift'</span><span class="p">:</span> <span class="bp">self</span><span class="p">(),</span> <span class="s1">'_start_time'</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">'_pause_time'</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="format_seconds"><a class="viewcode-back" href="../../reference/api/zero.time.format_seconds.html#zero.time.format_seconds">[docs]</a><span class="k">def</span> <span class="nf">format_seconds</span><span class="p">(</span><span class="n">seconds</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">format_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'%Hh %Mm %Ss'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>

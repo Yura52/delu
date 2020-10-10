@@ -327,8 +327,7 @@
 <dt id="zero.time.Timer.__call__">
 <code class="sig-prename descclassname">Timer.</code><code class="sig-name descname">__call__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/time.html#Timer.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.time.Timer.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get time elapsed since the start.</p>
-<p>If the timer is just created/reset, the shift is returned (can be negative!
-).
+<p>If the timer is just created/reset, the shift is returned (can be negative!).
 Otherwise, <code class="code docutils literal notranslate"><span class="pre">now</span> <span class="pre">-</span> <span class="pre">start_time</span> <span class="pre">+</span> <span class="pre">shift</span></code> is returned. The shift includes
 total pause time (including the current pause, if the timer is on pause) and
 all manipulations by <a class="reference internal" href="zero.time.Timer.add.html#zero.time.Timer.add" title="zero.time.Timer.add"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add</span></code></a> and <a class="reference internal" href="zero.time.Timer.sub.html#zero.time.Timer.sub" title="zero.time.Timer.sub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub</span></code></a>.</p>

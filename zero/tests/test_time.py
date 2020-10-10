@@ -1,3 +1,4 @@
+import pickle
 from time import perf_counter, sleep
 
 from pytest import approx, raises
@@ -55,12 +56,23 @@ def test_timer_measurements():
     x = perf_counter()
     sleep(0.1)
     correct = perf_counter() - x
-    timer = Timer().run()
+    timer = Timer()
+    timer.run()
     sleep(0.1)
     actual = timer()
     # the allowed deviation was obtained from manual runs on my laptop so the test may
     # behave differently on other hardware
     assert actual == approx(correct, abs=0.01)
+
+
+def test_timer_pickle():
+    timer = Timer()
+    timer.run()
+    sleep(0.01)
+    timer.pause()
+    value = timer()
+    sleep(0.01)
+    assert pickle.loads(pickle.dumps(timer))() == timer() == value
 
 
 def test_format_seconds():

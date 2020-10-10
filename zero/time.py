@@ -3,7 +3,7 @@
 __all__ = ['Timer', 'format_seconds']
 
 import time
-from typing import Optional, Union
+from typing import Any, Dict, Optional, Union
 
 
 class Timer:
@@ -27,7 +27,8 @@ class Timer:
 
         assert Timer()() == 0.0
 
-        timer = Timer().run()  # start
+        timer = Timer()
+        timer.run()  # start
         time.sleep(0.01)
         assert timer()  # some time has passed
 
@@ -45,6 +46,11 @@ class Timer:
 
         timer.reset()
         assert timer() == 0.0
+
+    Note:
+        When a Timer instance is pickled, the result of `Timer.__call__` is saved as
+        shift (hence, the "time elapsed" is preserved) and all other attributes are
+        omitted.
     """
 
     # mypy cannot infer types from .reset(), so they must be given here
@@ -64,7 +70,7 @@ class Timer:
         self._pause_time = None
         self._shift = 0.0
 
-    def run(self) -> 'Timer':
+    def run(self):
         """Start/resume the timer.
 
         If the timer is on pause, the method resumes the timer.
@@ -76,7 +82,6 @@ class Timer:
         elif self._pause_time is not None:
             self.sub(time.perf_counter() - self._pause_time)
             self._pause_time = None
-        return self  # enables the pattern `timer = Timer().run()`
 
     def pause(self) -> None:
         """Pause the timer.
@@ -136,8 +141,7 @@ class Timer:
     def __call__(self) -> float:
         """Get time elapsed since the start.
 
-        If the timer is just created/reset, the shift is returned (can be negative!
-        ).
+        If the timer is just created/reset, the shift is returned (can be negative!).
         Otherwise, :code:`now - start_time + shift` is returned. The shift includes
         total pause time (including the current pause, if the timer is on pause) and
         all manipulations by `~Timer.add` and `~Timer.sub`.
@@ -149,6 +153,12 @@ class Timer:
             return self._shift
         now = self._pause_time or time.perf_counter()
         return now - self._start_time + self._shift
+
+    def __getstate__(self) -> Dict[str, Any]:
+        return {'_shift': self(), '_start_time': None, '_pause_time': None}
+
+    def __setstate__(self, state: Dict[str, Any]) -> None:
+        self.__dict__.update(state)
 
 
 def format_seconds(seconds: Union[int, float], format_str: str = '%Hh %Mm %Ss') -> str:
