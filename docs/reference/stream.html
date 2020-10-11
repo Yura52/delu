@@ -46,7 +46,7 @@
   
   
   
-    <title>zero.stream &#8212; Zero 0.0.3.dev4 documentation</title>
+    <title>zero.stream &#8212; Zero 0.0.3.dev5 documentation</title>
     <link rel="stylesheet" href="../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -81,7 +81,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../index.html" title="Zero 0.0.3.dev4 documentation"
+        <a href="../index.html" title="Zero 0.0.3.dev5 documentation"
            class="md-header-nav__button md-logo">
           
             &nbsp;
@@ -167,7 +167,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Zero 0.0.3.dev4 documentation</a></li>
+          <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Zero 0.0.3.dev5 documentation</a></li>
       </ul>
     </div>
   </nav>
@@ -179,13 +179,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../index.html" title="Zero 0.0.3.dev4 documentation" class="md-nav__button md-logo">
+    <a href="../index.html" title="Zero 0.0.3.dev5 documentation" class="md-nav__button md-logo">
       
         <img src="../_static/" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../index.html"
-       title="Zero 0.0.3.dev4 documentation"> </a>
+       title="Zero 0.0.3.dev5 documentation"> </a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -339,11 +339,10 @@
 <p><a class="reference internal" href="#zero.stream.Stream" title="zero.stream.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a>:</p>
 <ul class="simple">
 <li><p>simplifies management of the “epoch” and “iteration” variables</p></li>
+<li><p>allows to dump and restore loop’s state: epoch, iteration, etc.</p></li>
 <li><p>allows to customize the size of epoch</p></li>
 <li><p>allows to change the underlying data loader on the fly</p></li>
 <li><p>enables useful patterns</p></li>
-<li><p>(not implemented: <a class="reference external" href="https://github.com/Yura52/zero/issues/6">issue</a>) allows to
-dump and restore loop’s state: epoch, iteration, etc.</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -369,16 +368,10 @@ dump and restore loop’s state: epoch, iteration, etc.</p></li>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="n">iteration</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epoches</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">need_custom_epoch_size</span><span class="p">():</span>
-        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">'It is possible, but not convenient'</span>
-
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">loader</span><span class="p">:</span>
         <span class="n">iteration</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">'Epoch:'</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="s1">'Iteration:'</span><span class="p">,</span> <span class="n">iteration</span><span class="p">)</span>
         <span class="o">...</span>
-
-    <span class="k">if</span> <span class="n">need_new_loader</span><span class="p">():</span>
-        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">'It is possible, but not convenient'</span>
 </pre></div>
 </div>
 <p>There are several ways how you can use <a class="reference internal" href="#zero.stream.Stream" title="zero.stream.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a> to enhance this loop. Let’s start
@@ -394,7 +387,31 @@ above:</p>
 </pre></div>
 </div>
 <p>We see that <a class="reference internal" href="api/zero.stream.Stream.epoch.html#zero.stream.Stream.epoch" title="zero.stream.Stream.epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoch</span></code></a> and <a class="reference internal" href="api/zero.stream.Stream.iteration.html#zero.stream.Stream.iteration" title="zero.stream.Stream.iteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.iteration</span></code></a> are managed automatically.
-Additionally, a progress bar is displayed while the new loop is running.</p>
+Additionally, a progress bar is displayed while the loop is running.</p>
+<p>Saving the loop’s state and resuming the loop is possible with the methods
+<a class="reference internal" href="api/zero.stream.Stream.state_dict.html#zero.stream.Stream.state_dict" title="zero.stream.Stream.state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.state_dict</span></code></a>, <a class="reference internal" href="api/zero.stream.Stream.load_state_dict.html#zero.stream.Stream.load_state_dict" title="zero.stream.Stream.load_state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.load_state_dict</span></code></a>. In practice, it may look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">load_from_checkpoint</span><span class="p">:</span>
+    <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s1">'model'</span><span class="p">])</span>
+    <span class="o">...</span>
+    <span class="n">stream</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s1">'stream'</span><span class="p">])</span>
+<span class="o">...</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">epoches</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">epoch</span><span class="p">:</span>
+        <span class="o">...</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s1">'model'</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+            <span class="s1">'optimizer'</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+            <span class="s1">'stream'</span><span class="p">:</span> <span class="n">stream</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+        <span class="p">},</span>
+        <span class="sa">f</span><span class="s1">'checkpoint_</span><span class="si">{</span><span class="n">stream</span><span class="o">.</span><span class="n">epoch</span><span class="si">}</span><span class="s1">.pt'</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
 <p>In order to customize the epoch size, pass the size as the second argument:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">epoches</span><span class="p">(</span><span class="n">n_epoches</span><span class="p">,</span> <span class="n">custom_epoch_size</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">epoch</span><span class="p">:</span>
@@ -406,13 +423,13 @@ middle of epoch) via <a class="reference internal" href="api/zero.stream.Stream.
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">epoches</span><span class="p">(</span><span class="n">n_epoches</span><span class="p">,</span> <span class="n">custom_epoch_size</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">epoch</span><span class="p">:</span>
         <span class="o">...</span>
-        <span class="k">if</span> <span class="n">need_new_loader</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">need_new_data</span><span class="p">():</span>
             <span class="n">stream</span><span class="o">.</span><span class="n">set_loader</span><span class="p">(</span><span class="n">new_loader</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>If the method <a class="reference internal" href="api/zero.stream.Stream.epoches.html#zero.stream.Stream.epoches" title="zero.stream.Stream.epoches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoches</span></code></a> does not fit your workflow and you want more control
-over the loop, there are more “low-level” methods (in fact, the call
-<code class="xref py py-obj docutils literal notranslate"><span class="pre">stream.epoches(...)</span></code> is just a thin wrapper around them):</p>
+over the loop, there are more “low-level” methods (in fact, <a class="reference internal" href="api/zero.stream.Stream.epoches.html#zero.stream.Stream.epoches" title="zero.stream.Stream.epoches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoches</span></code></a> is just
+a thin wrapper around them):</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="api/zero.stream.Stream.increment_epoch.html#zero.stream.Stream.increment_epoch" title="zero.stream.Stream.increment_epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.increment_epoch</span></code></a></p></li>
 <li><p><a class="reference internal" href="api/zero.stream.Stream.data.html#zero.stream.Stream.data" title="zero.stream.Stream.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.data</span></code></a></p></li>
@@ -444,14 +461,14 @@ be expressed with the following loop:</p>
 <tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.epoch.html#zero.stream.Stream.epoch" title="zero.stream.Stream.epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoch</span></code></a></p></td>
 <td><p>Current epoch.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.loader.html#zero.stream.Stream.loader" title="zero.stream.Stream.loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.loader</span></code></a></p></td>
-<td><p>The underlying loader.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.set_loader.html#zero.stream.Stream.set_loader" title="zero.stream.Stream.set_loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.set_loader</span></code></a>(loader)</p></td>
-<td><p>Set new loader.</p></td>
-</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.increment_epoch.html#zero.stream.Stream.increment_epoch" title="zero.stream.Stream.increment_epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.increment_epoch</span></code></a>()</p></td>
 <td><p>Increment <a class="reference internal" href="api/zero.stream.Stream.epoch.html#zero.stream.Stream.epoch" title="zero.stream.Stream.epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoch</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.loader.html#zero.stream.Stream.loader" title="zero.stream.Stream.loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.loader</span></code></a></p></td>
+<td><p>The underlying loader.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.set_loader.html#zero.stream.Stream.set_loader" title="zero.stream.Stream.set_loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.set_loader</span></code></a>(loader)</p></td>
+<td><p>Set new loader.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.reload_iterator.html#zero.stream.Stream.reload_iterator" title="zero.stream.Stream.reload_iterator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.reload_iterator</span></code></a>()</p></td>
 <td><p>Set the underlying iterator to <code class="xref py py-obj docutils literal notranslate"><span class="pre">iter(self.loader)</span></code>.</p></td>
@@ -464,6 +481,12 @@ be expressed with the following loop:</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.epoches.html#zero.stream.Stream.epoches" title="zero.stream.Stream.epoches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoches</span></code></a>(n_epoches[, epoch_size, …])</p></td>
 <td><p>Iterate over data epoches.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.state_dict.html#zero.stream.Stream.state_dict" title="zero.stream.Stream.state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.state_dict</span></code></a>()</p></td>
+<td><p>Get the stream’s state.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.load_state_dict.html#zero.stream.Stream.load_state_dict" title="zero.stream.Stream.load_state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.load_state_dict</span></code></a>(state_dict)</p></td>
+<td><p>Load state dictionary.</p></td>
 </tr>
 </tbody>
 </table>

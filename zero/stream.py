@@ -3,7 +3,7 @@
 __all__ = ['Stream']
 
 import math
-from typing import Any, Iterable, Iterator, Optional, Sized, Union
+from typing import Any, Dict, Iterable, Iterator, Optional, Sized, Union
 
 from tqdm import tqdm
 
@@ -24,11 +24,10 @@ class Stream:
     `Stream`:
 
     - simplifies management of the "epoch" and "iteration" variables
+    - allows to dump and restore loop's state: epoch, iteration, etc.
     - allows to customize the size of epoch
     - allows to change the underlying data loader on the fly
     - enables useful patterns
-    - (not implemented: `issue <https://github.com/Yura52/zero/issues/6>`_) allows to
-      dump and restore loop's state: epoch, iteration, etc.
 
     Args:
         loader: any kind of iterable (DataLoader, list, iterator, generator, ...)
@@ -56,39 +55,51 @@ class Stream:
         loader = DataLoader(...)
         iteration = 0
         for epoch in range(n_epoches):
-            if need_custom_epoch_size():
-                assert False, 'It is possible, but not convenient'
-
             for x in loader:
                 iteration += 1
                 print('Epoch:', epoch, 'Iteration:', iteration)
                 ...
 
-            if need_new_loader():
-                assert False, 'It is possible, but not convenient'
-
     There are several ways how you can use `Stream` to enhance this loop. Let's start
-    with creating a stream:
-
-    .. code-block::
+    with creating a stream::
 
         stream = Stream(DataLoader(...))
 
     The dataloader is accessible via `Stream.loader`. Now, let's reproduce the loop
-    above:
-
-    .. code-block::
+    above::
 
         for epoch in stream.epoches(n_epoches):
             for x in epoch:
                 print('Epoch:', stream.epoch, 'Iteration:', stream.iteration)
 
     We see that `Stream.epoch` and `Stream.iteration` are managed automatically.
-    Additionally, a progress bar is displayed while the new loop is running.
+    Additionally, a progress bar is displayed while the loop is running.
 
-    In order to customize the epoch size, pass the size as the second argument:
+    Saving the loop's state and resuming the loop is possible with the methods
+    `Stream.state_dict`, `Stream.load_state_dict`. In practice, it may look like this::
 
-    .. code-block::
+        model = ...
+        optimizer = ...
+        stream = Stream(DataLoader(...))
+        if load_from_checkpoint:
+            checkpoint = torch.load(checkpoint_path)
+            model.load_state_dict(checkpoint['model'])
+            ...
+            stream.load_state_dict(checkpoint['stream'])
+        ...
+        for epoch in stream.epoches(...):
+            for batch in epoch:
+                ...
+            torch.save(
+                {
+                    'model': model.state_dict(),
+                    'optimizer': model.state_dict(),
+                    'stream': stream.state_dict(),
+                },
+                f'checkpoint_{stream.epoch}.pt'
+            )
+
+    In order to customize the epoch size, pass the size as the second argument::
 
         for epoch in stream.epoches(n_epoches, custom_epoch_size):
             for x in epoch:
@@ -100,12 +111,12 @@ class Stream:
         for epoch in stream.epoches(n_epoches, custom_epoch_size):
             for x in epoch:
                 ...
-                if need_new_loader():
+                if need_new_data():
                     stream.set_loader(new_loader)
 
     If the method `Stream.epoches` does not fit your workflow and you want more control
-    over the loop, there are more "low-level" methods (in fact, the call
-    `stream.epoches(...)` is just a thin wrapper around them):
+    over the loop, there are more "low-level" methods (in fact, `Stream.epoches` is just
+    a thin wrapper around them):
 
     - `Stream.increment_epoch`
     - `Stream.data`
@@ -420,3 +431,57 @@ class Stream:
         while self.epoch < n_epoches:
             self.increment_epoch()
             yield self.data(epoch_size)
+
+    def state_dict(self) -> Dict[str, Any]:
+        """Get the stream's state.
+
+        The result can be passed to `Stream.load_state_dict`. Note that fields related
+        to data (loader, iterator etc.) are **NOT** included in the state. The result
+        includes:
+
+        - epoch
+        - iteration
+
+        Returns:
+            state
+
+        Examples:
+            .. testcode::
+
+                stream = Stream(range(10))
+                assert stream.state_dict() == {'epoch': 0, 'iteration': 0}
+                stream.next()
+                stream.next()
+                stream.increment_epoch()
+                assert stream.state_dict() == {'epoch': 1, 'iteration': 2}
+        """
+        return {'iteration': self.iteration, 'epoch': self.epoch}
+
+    def load_state_dict(self, state_dict: Dict[str, Any]) -> None:
+        """Load state dictionary.
+
+        Args:
+            state_dict: state. Must be produced by `Stream.state_dict`.
+
+        Note:
+            The method does not affect data that is produced by `Stream.epoches`,
+            `Stream.data`, `Stream.next` (see the examples below), i.e. the method
+            only sets some "metadata" such as epoch, iteration etc.
+
+        Examples:
+
+            .. testcode::
+
+                stream = Stream(range(10))
+                stream.next()
+                stream.increment_epoch()
+                assert stream.state_dict() == {'epoch': 1, 'iteration': 1}
+
+                new_stream = Stream(range(10))
+                new_stream.load_state_dict(stream.state_dict())
+                assert new_stream.state_dict() == {'epoch': 1, 'iteration': 1}
+                assert new_stream.next() == 0
+                assert new_stream.state_dict() == {'epoch': 1, 'iteration': 2}
+        """
+        self._iteration = state_dict['iteration']
+        self._epoch = state_dict['epoch']

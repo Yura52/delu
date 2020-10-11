@@ -157,3 +157,19 @@ def test_epoches():
             pass
         assert j == 9
     assert i == 9
+
+
+def test_state_dict():
+    stream = Stream(range(10))
+    stream.next()
+    stream.increment_epoch()
+    assert stream.state_dict() == {'epoch': 1, 'iteration': 1}
+
+    new_stream = Stream(range(10))
+    new_stream.load_state_dict(stream.state_dict())
+    assert new_stream.state_dict() == {'epoch': 1, 'iteration': 1}
+    assert new_stream.next() == 0
+    assert new_stream.state_dict() == {'epoch': 1, 'iteration': 2}
+    assert new_stream.next() == 1
+
+    assert stream.next() == 1
