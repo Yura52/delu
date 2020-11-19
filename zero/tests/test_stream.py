@@ -76,13 +76,13 @@ def test_next_iteration(n):
 @mark.parametrize('n', range(1, 6))
 def test_data(n):
     # iterables that are not iterators
-    n_epoches = 10
+    n_epochs = 10
     stream = Stream(range(n))
-    assert [list(stream.data(0)) for _ in range(n_epoches)] == [[]] * n_epoches
+    assert [list(stream.data(0)) for _ in range(n_epochs)] == [[]] * n_epochs
 
     for epoch_size in [None] + list(range(1, 2 * n)):
         effective_epoch_size = n if epoch_size is None else epoch_size
-        max_iteration = n_epoches * effective_epoch_size
+        max_iteration = n_epochs * effective_epoch_size
         stream = Stream(range(n))
         actual = []
         while stream.iteration < max_iteration:
@@ -91,7 +91,7 @@ def test_data(n):
         flat_correct = [x % n for x in range(max_iteration)]
         correct = [
             flat_correct[i * effective_epoch_size : (i + 1) * effective_epoch_size]
-            for i in range(n_epoches)
+            for i in range(n_epochs)
         ]
         assert actual == correct
 
@@ -105,14 +105,13 @@ def test_data(n):
     stream = Stream(itertools.count())
     with raises(ValueError):
         stream.data()
-    n_epoches = 10
+    n_epochs = 10
     for epoch_size in range(1, n):
         stream = Stream(itertools.count())
-        actual = [list(stream.data(epoch_size)) for _ in range(n_epoches)]
-        flat_correct = list(range(n_epoches * epoch_size))
+        actual = [list(stream.data(epoch_size)) for _ in range(n_epochs)]
+        flat_correct = list(range(n_epochs * epoch_size))
         correct = [
-            flat_correct[i * epoch_size : (i + 1) * epoch_size]
-            for i in range(n_epoches)
+            flat_correct[i * epoch_size : (i + 1) * epoch_size] for i in range(n_epochs)
         ]
         assert actual == correct
 
@@ -120,16 +119,15 @@ def test_data(n):
     stream = Stream(iter(range(n)))
     with raises(ValueError):
         stream.data()
-    n_epoches = 10
+    n_epochs = 10
     for epoch_size in range(1, 2 * n):
         stream = Stream(iter(range(n)))
         actual = []
-        for _ in range(n_epoches):
+        for _ in range(n_epochs):
             actual.append(list(stream.data(epoch_size)))
         flat_correct = list(range(n))
         correct = [
-            flat_correct[i * epoch_size : (i + 1) * epoch_size]
-            for i in range(n_epoches)
+            flat_correct[i * epoch_size : (i + 1) * epoch_size] for i in range(n_epochs)
         ]
         assert actual == correct
 
@@ -138,21 +136,21 @@ def test_data(n):
         stream.data(10.0)
 
 
-def test_epoches():
+def test_epochs():
     stream = Stream(range(3))
     with raises(AssertionError):
-        next(stream.epoches(1.0, progress_bar=False))
+        next(stream.epochs(1.0, progress_bar=False))
     correct = [0, 1, 2]
-    for epoch in stream.epoches(2, progress_bar=False):
+    for epoch in stream.epochs(2, progress_bar=False):
         assert list(epoch) == correct
     correct = [[0, 1], [2, 0], [1, 2]]
-    for i, epoch in enumerate(stream.epoches(2, progress_bar=False)):
+    for i, epoch in enumerate(stream.epochs(2, progress_bar=False)):
         assert list(epoch) == correct[i]
     for i, epoch in zip(
-        enumerate(stream.epoches(math.inf, progress_bar=False)), range(1000)
+        enumerate(stream.epochs(math.inf, progress_bar=False)), range(1000)
     ):
         pass
-    for (i, epoch), _ in zip(enumerate(stream.epoches(math.inf, math.inf)), range(10)):
+    for (i, epoch), _ in zip(enumerate(stream.epochs(math.inf, math.inf)), range(10)):
         for (j, _), _ in zip(enumerate(epoch), range(10)):
             pass
         assert j == 9

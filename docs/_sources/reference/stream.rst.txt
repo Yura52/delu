@@ -21,6 +21,6 @@ Stream
     Stream.reload_iterator
     Stream.next
     Stream.data
-    Stream.epoches
+    Stream.epochs
     Stream.state_dict
     Stream.load_state_dict

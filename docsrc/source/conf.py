@@ -27,6 +27,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
+    'sphinxcontrib.spelling',
 ]
 
 autodoc_member_order = 'bysource'
@@ -49,6 +50,8 @@ intersphinx_mapping = {
 
 napoleon_numpy_docstring = False
 napoleon_use_admonition_for_examples = False
+
+spelling_show_suggestions = True
 
 # Options for HTML output
 pygments_style = 'default'

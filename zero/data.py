@@ -264,7 +264,7 @@ def iloader(size: int, *args, **kwargs) -> DataLoader:
         .. code-block::
 
             train_loader = iloader(len(train_dataset), batch_size, shuffle=True)
-            for epoch in epoches:
+            for epoch in epochs:
                 for batch_idx in train_loader:
                     ...
 
@@ -355,7 +355,7 @@ def iter_batches(
 
         .. code-block::
 
-            for epoch in epoches:
+            for epoch in epochs:
                 for batch in iter_batches(data, batch_size, shuffle=True)):
                     ...
     """

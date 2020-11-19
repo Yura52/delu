@@ -34,7 +34,7 @@ def parse_args():
     parser = ArgumentParser()
     parser.add_argument('-d', '--device', default='cpu', type=torch.device)
     parser.add_argument('-e', '--epoch-size')
-    parser.add_argument('-n', '--n-epoches', type=int, default=20)
+    parser.add_argument('-n', '--n-epochs', type=int, default=20)
     parser.add_argument('-p', '--early-stopping-patience', type=int, default=2)
     parser.add_argument('-s', '--seed', type=int)
     return parser.parse_args()
@@ -67,7 +67,7 @@ def main():
     progress = zero.ProgressTracker(args.early_stopping_patience, 0.005)
     best_model_path = 'model.pt'
 
-    for epoch in stream.epoches(args.n_epoches, args.epoch_size):
+    for epoch in stream.epochs(args.n_epochs, args.epoch_size):
         print(f'\nEpoch {stream.epoch} started (iterations passed: {stream.iteration})')
         timer.run()
 

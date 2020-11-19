@@ -1,6 +1,0 @@
-zero.stream.Stream.epoches
-==========================
-
-.. currentmodule:: zero.stream
-
-.. automethod:: Stream.epoches

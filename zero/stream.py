@@ -54,7 +54,7 @@ class Stream:
 
         loader = DataLoader(...)
         iteration = 0
-        for epoch in range(n_epoches):
+        for epoch in range(n_epochs):
             for x in loader:
                 iteration += 1
                 print('Epoch:', epoch, 'Iteration:', iteration)
@@ -68,7 +68,7 @@ class Stream:
     The dataloader is accessible via `Stream.loader`. Now, let's reproduce the loop
     above::
 
-        for epoch in stream.epoches(n_epoches):
+        for epoch in stream.epochs(n_epochs):
             for x in epoch:
                 print('Epoch:', stream.epoch, 'Iteration:', stream.iteration)
 
@@ -87,7 +87,7 @@ class Stream:
             ...
             stream.load_state_dict(checkpoint['stream'])
         ...
-        for epoch in stream.epoches(...):
+        for epoch in stream.epochs(...):
             for batch in epoch:
                 ...
             torch.save(
@@ -101,21 +101,21 @@ class Stream:
 
     In order to customize the epoch size, pass the size as the second argument::
 
-        for epoch in stream.epoches(n_epoches, custom_epoch_size):
+        for epoch in stream.epochs(n_epochs, custom_epoch_size):
             for x in epoch:
                 ...
 
     Changing the underlying loader on the fly is possible at *any* moment (even in the
     middle of epoch) via `Stream.set_loader`. For example::
 
-        for epoch in stream.epoches(n_epoches, custom_epoch_size):
+        for epoch in stream.epochs(n_epochs, custom_epoch_size):
             for x in epoch:
                 ...
                 if need_new_data():
                     stream.set_loader(new_loader)
 
-    If the method `Stream.epoches` does not fit your workflow and you want more control
-    over the loop, there are more "low-level" methods (in fact, `Stream.epoches` is just
+    If the method `Stream.epochs` does not fit your workflow and you want more control
+    over the loop, there are more "low-level" methods (in fact, `Stream.epochs` is just
     a thin wrapper around them):
 
     - `Stream.increment_epoch`
@@ -124,7 +124,7 @@ class Stream:
 
     Note:
         For better technical understanding, keep in mind that `Stream` simply
-        incapsulates an "infinite iterator" that is constantly moving forward. The
+        encapsulates an "infinite iterator" that is constantly moving forward. The
         behavior is absolutely the same for both finite and infinite iterables and can
         be expressed with the following loop::
 
@@ -336,30 +336,30 @@ class Stream:
             n_items = len(self.loader)
         return Stream._EpochData(self, n_items)
 
-    def epoches(
+    def epochs(
         self,
-        n_epoches: Union[int, float],
+        n_epochs: Union[int, float],
         epoch_size: Optional[Union[int, float]] = None,
         progress_bar: bool = True,
     ) -> Iterator[Iterator[Any]]:
-        """Iterate over data epoches.
+        """Iterate over data epochs.
 
         A shortcut for what is probably the most popular form of a training loop in Deep
         Learning (plus a progress bar)::
 
-            for epoch in stream.epoches(n_epoches, epoch_size):
+            for epoch in stream.epochs(n_epochs, epoch_size):
                 for x in epoch:
                     ...
 
             # is equivalent to:
 
-            while stream.epoch < n_epoches:
+            while stream.epoch < n_epochs:
                 stream.increment_epoch()
                 for x in stream.data(epoch_size):
                     ...
 
         Args:
-            n_epoches: the number of epoches.  If `float`, must be `math.inf`.
+            n_epochs: the number of epochs.  If `float`, must be `math.inf`.
             epoch_size: the number of data items in one epoch (is forwarded to
                 `Stream.data`)
             progress_bar: show the progress bar for iterations. The initial value is set
@@ -367,7 +367,7 @@ class Stream:
         Returns:
             Iterator over iterators over data from `Stream.loader`.
         Raises:
-            AssertionError: if :code:`n_epoches` if `float`, but not `math.inf`.
+            AssertionError: if :code:`n_epochs` if `float`, but not `math.inf`.
 
         Note:
             If :code:`progress_bar` is True, *the progress bar is updated on yielding
@@ -380,7 +380,7 @@ class Stream:
             .. testcode::
 
                 stream = Stream(range(3))
-                for epoch in stream.epoches(2):
+                for epoch in stream.epochs(2):
                     for x in epoch:
                         print(x)
                     print('-')
@@ -399,7 +399,7 @@ class Stream:
             .. testcode::
 
                 stream = Stream(range(3))
-                for epoch in stream.epoches(3, 2):
+                for epoch in stream.epochs(3, 2):
                     for x in epoch:
                         print(x)
                     print('-')
@@ -416,8 +416,8 @@ class Stream:
                 2
                 -
         """
-        if isinstance(n_epoches, float):
-            assert math.isinf(n_epoches)
+        if isinstance(n_epochs, float):
+            assert math.isinf(n_epochs)
         if progress_bar:
             pbar_epoch_size = (
                 _try_len(self.loader) if epoch_size is None else epoch_size
@@ -425,10 +425,10 @@ class Stream:
             self._pbar = tqdm(
                 initial=self.iteration,
                 total=None
-                if (pbar_epoch_size is None or math.isinf(n_epoches))
-                else n_epoches * pbar_epoch_size,
+                if (pbar_epoch_size is None or math.isinf(n_epochs))
+                else n_epochs * pbar_epoch_size,
             )
-        while self.epoch < n_epoches:
+        while self.epoch < n_epochs:
             self.increment_epoch()
             yield self.data(epoch_size)
 
@@ -464,7 +464,7 @@ class Stream:
             state_dict: state. Must be produced by `Stream.state_dict`.
 
         Note:
-            The method does not affect data that is produced by `Stream.epoches`,
+            The method does not affect data that is produced by `Stream.epochs`,
             `Stream.data`, `Stream.next` (see the examples below), i.e. the method
             only sets some "metadata" such as epoch, iteration etc.
 
