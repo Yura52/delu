@@ -65,6 +65,22 @@ def test_timer_measurements():
     assert actual == approx(correct, abs=0.01)
 
 
+def test_context():
+    with Timer() as timer:
+        sleep(0.01)
+    assert timer() > 0.01
+    assert timer() == timer()
+
+    timer = Timer()
+    timer.run()
+    sleep(0.01)
+    timer.pause()
+    with timer:
+        sleep(0.01)
+    assert timer() > 0.02
+    assert timer() == timer()
+
+
 def test_timer_pickle():
     timer = Timer()
     timer.run()

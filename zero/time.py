@@ -14,6 +14,9 @@ class Timer:
     methods `~Timer.add` and `~Timer.sub`. If a timer is just created/reset, the shift
     is 0.0.
 
+    Note:
+        Measurements are performed via `time.perf_counter`.
+
     Examples:
         .. testcode::
 
@@ -47,6 +50,10 @@ class Timer:
         timer.reset()
         assert timer() == 0.0
 
+        with Timer() as timer:
+            time.sleep(0.01)
+        # timer is on pause and timer() returns the time elapsed within the context
+
     Note:
         When a Timer instance is pickled, the result of `Timer.__call__` is saved as
         shift (hence, the "time elapsed" is preserved) and all other attributes are
@@ -70,7 +77,7 @@ class Timer:
         self._pause_time = None
         self._shift = 0.0
 
-    def run(self):
+    def run(self) -> None:
         """Start/resume the timer.
 
         If the timer is on pause, the method resumes the timer.
@@ -153,6 +160,35 @@ class Timer:
             return self._shift
         now = self._pause_time or time.perf_counter()
         return now - self._start_time + self._shift
+
+    def __enter__(self) -> 'Timer':
+        """Measure time within a context.
+
+        The method `Timer.run` is called regardless of the current state. On exit,
+        `Timer.pause` is called.
+
+        Example:
+            ..testcode::
+
+                import time
+                with Timer() as timer:
+                    time.sleep(0.01)
+                elapsed = timer()
+                assert elapsed > 0.01
+                time.sleep(0.01)
+                assert timer() == elapsed  # the timer is paused in __exit__
+
+        """
+        self.run()
+        return self
+
+    def __exit__(self, *args) -> bool:  # type: ignore
+        """Leave the context and pause the timer.
+
+        See `Timer.__enter__` for details and examples.
+        """
+        self.pause()
+        return False
 
     def __getstate__(self) -> Dict[str, Any]:
         return {'_shift': self(), '_start_time': None, '_pause_time': None}

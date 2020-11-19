@@ -339,6 +339,10 @@
 shift. The shift accumulates all pauses time and can be manually changed with the
 methods <a class="reference internal" href="api/zero.time.Timer.add.html#zero.time.Timer.add" title="zero.time.Timer.add"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add</span></code></a> and <a class="reference internal" href="api/zero.time.Timer.sub.html#zero.time.Timer.sub" title="zero.time.Timer.sub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub</span></code></a>. If a timer is just created/reset, the shift
 is 0.0.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Measurements are performed via <a class="reference external" href="https://docs.python.org/3/library/time.html#time.perf_counter" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time.perf_counter</span></code></a>.</p>
+</div>
 <p class="rubric">Examples</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
 </pre></div>
@@ -367,6 +371,10 @@ is 0.0.</p>
 
 <span class="n">timer</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 <span class="k">assert</span> <span class="n">timer</span><span class="p">()</span> <span class="o">==</span> <span class="mf">0.0</span>
+
+<span class="k">with</span> <span class="n">Timer</span><span class="p">()</span> <span class="k">as</span> <span class="n">timer</span><span class="p">:</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="c1"># timer is on pause and timer() returns the time elapsed within the context</span>
 </pre></div>
 </div>
 <div class="admonition note">
