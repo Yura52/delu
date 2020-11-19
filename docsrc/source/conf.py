@@ -76,9 +76,8 @@ html_theme_options = {
     # search here for logo icons: https://www.compart.com/en/unicode
     'logo_icon': '&#127968;',
     'nav_links': [],
-    'nav_title': 'Zero',
-    # 'repo_name': project,
-    'repo_name': 'ABC',
+    'nav_title': project,
+    'repo_name': project,
     'repo_url': repo_url,
     'repo_type': 'github',
     'master_doc': False,
