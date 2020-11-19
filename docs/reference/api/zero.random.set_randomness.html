@@ -318,41 +318,41 @@
 <h1 id="reference-api-zero-random-set-randomness--page-root">zero.random.set_randomness<a class="headerlink" href="#reference-api-zero-random-set-randomness--page-root" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="zero.random.set_randomness">
-<code class="sig-prename descclassname">zero.random.</code><code class="sig-name descname">set_randomness</code><span class="sig-paren">(</span><em class="sig-param">seed=None</em>, <em class="sig-param">cudnn_deterministic=True</em>, <em class="sig-param">cudnn_benchmark=False</em>, <em class="sig-param">callback=&lt;function _default_callback&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/random.html#set_randomness"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.random.set_randomness" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">zero.random.</code><code class="sig-name descname">set_randomness</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seed</span></em>, <em class="sig-param"><span class="n">cudnn_deterministic</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">cudnn_benchmark</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/random.html#set_randomness"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.random.set_randomness" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set seeds and settings in <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>.</p>
-<p>Sets random seed for <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/random/index.html#module-numpy.random" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.random</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>, <a class="reference external" href="https://pytorch.org/docs/stable/cuda.html#module-torch.cuda" title="(in PyTorch vmaster (1.7.0a0+0bc39c0 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda</span></code></a>, sets settings
-for <code class="code docutils literal notranslate"><span class="pre">torch.backends.cudnn</span></code> and builds a NumPy random number generator.</p>
+<p>Sets random seed in <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/random/index.html#module-numpy.random" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.random</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>, <a class="reference external" href="https://pytorch.org/docs/stable/cuda.html#module-torch.cuda" title="(in PyTorch vmaster (1.7.0a0+0bc39c0 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda</span></code></a> and sets
+settings in <code class="code docutils literal notranslate"><span class="pre">torch.backends.cudnn</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>seed</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>]</em>) – the seed for all mentioned libraries. If omitted, a high-quality seed is
-generated (an integer that <strong>does not fit in int64</strong>). In any case,
-<code class="code docutils literal notranslate"><span class="pre">seed</span> <span class="pre">%</span> <span class="pre">(2</span> <span class="pre">**</span> <span class="pre">32</span> <span class="pre">-</span> <span class="pre">1)</span></code> will be used for everything except for building
-<a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code></a>.</p></li>
+<li><p><strong>seed</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>]</em>) – the seed for all mentioned libraries. If <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, a <strong>high-quality</strong> seed
+is generated and used instead.</p></li>
 <li><p><strong>cudnn_deterministic</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – value for <code class="code docutils literal notranslate"><span class="pre">torch.backends.cudnn.deterministic</span></code></p></li>
 <li><p><strong>cudnn_benchmark</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – value for <code class="code docutils literal notranslate"><span class="pre">torch.backends.cudnn.benchmark</span></code></p></li>
-<li><p><strong>callback</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>Any</em><em>]</em><em>]</em>) – a function that takes the seed as the only argument. The default
-callback simply prints the seed via <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print</span></code></a> which is convenient when <code class="xref py py-obj docutils literal notranslate"><span class="pre">seed</span></code>
-is set to <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A new style numpy random number generator constructed
-via <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.default_rng" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.random.default_rng</span></code></a> (it should be used instead of functions from
-<code class="xref py py-obj docutils literal notranslate"><span class="pre">np.random</span></code>, see
-<a class="reference external" href="https://numpy.org/doc/stable/reference/random/index.html">the document</a>).</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code></a></p>
+<dd class="field-even"><p><dl class="simple">
+<dt>if <code class="code docutils literal notranslate"><span class="pre">seed</span></code> is set to <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, the generated seed is returned;</dt><dd><p>otherwise the <code class="code docutils literal notranslate"><span class="pre">seed</span></code> argument is returned as is</p>
 </dd>
 </dl>
-<p class="rubric">Examples</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">set_randomness</span><span class="p">()</span>  <span class="c1"># seed will be generated</span>
-<span class="n">rng</span> <span class="o">=</span> <span class="n">set_randomness</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>seed</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you don’t want to set the seed by hand, but still want to have a chance to
+reproduce things, you can use the following pattern:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">'Seed:'</span><span class="p">,</span> <span class="n">set_randomness</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Seed: ... (see zero.random.set_randomness)
-Seed: 0 (see zero.random.set_randomness)
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">set_randomness</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="k">assert</span> <span class="n">set_randomness</span><span class="p">(),</span> <span class="s1">'0 was generated as the seed, which is almost impossible!'</span>
 </pre></div>
 </div>
 </dd></dl>

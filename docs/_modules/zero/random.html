@@ -311,61 +311,50 @@
 
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">secrets</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">default_rng</span>
-
-
-<span class="k">def</span> <span class="nf">_default_callback</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Seed: </span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s1"> (see zero.random.set_randomness)'</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="set_randomness"><a class="viewcode-back" href="../../reference/api/zero.random.set_randomness.html#zero.random.set_randomness">[docs]</a><span class="k">def</span> <span class="nf">set_randomness</span><span class="p">(</span>
-    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
     <span class="n">cudnn_deterministic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">cudnn_benchmark</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">callback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="n">_default_callback</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="sd">"""Set seeds and settings in `random`, `numpy` and `torch`.</span>
 
-<span class="sd">    Sets random seed for `random`, `numpy.random`, `torch`, `torch.cuda`, sets settings</span>
-<span class="sd">    for :code:`torch.backends.cudnn` and builds a NumPy random number generator.</span>
+<span class="sd">    Sets random seed in `random`, `numpy.random`, `torch`, `torch.cuda` and sets</span>
+<span class="sd">    settings in :code:`torch.backends.cudnn`.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        seed: the seed for all mentioned libraries. If omitted, a high-quality seed is</span>
-<span class="sd">            generated (an integer that **does not fit in int64**). In any case,</span>
-<span class="sd">            :code:`seed % (2 ** 32 - 1)` will be used for everything except for building</span>
-<span class="sd">            `numpy.random.Generator`.</span>
+<span class="sd">        seed: the seed for all mentioned libraries. If `None`, a **high-quality** seed</span>
+<span class="sd">            is generated and used instead.</span>
 <span class="sd">        cudnn_deterministic: value for :code:`torch.backends.cudnn.deterministic`</span>
 <span class="sd">        cudnn_benchmark: value for :code:`torch.backends.cudnn.benchmark`</span>
-<span class="sd">        callback: a function that takes the seed as the only argument. The default</span>
-<span class="sd">            callback simply prints the seed via `print` which is convenient when `seed`</span>
-<span class="sd">            is set to `None`.</span>
+
 <span class="sd">    Returns:</span>
-<span class="sd">        `numpy.random.Generator`: A new style numpy random number generator constructed</span>
-<span class="sd">        via `numpy.random.default_rng` (it should be used instead of functions from</span>
-<span class="sd">        `np.random`, see</span>
-<span class="sd">        `the document &lt;https://numpy.org/doc/stable/reference/random/index.html&gt;`_).</span>
+<span class="sd">        seed: if :code:`seed` is set to `None`, the generated seed is returned;</span>
+<span class="sd">            otherwise the :code:`seed` argument is returned as is</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        If you don't want to set the seed by hand, but still want to have a chance to</span>
+<span class="sd">        reproduce things, you can use the following pattern::</span>
+
+<span class="sd">            print('Seed:', set_randomness(None))</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        .. testcode::</span>
 
-<span class="sd">            rng = set_randomness()  # seed will be generated</span>
-<span class="sd">            rng = set_randomness(0)</span>
-
-<span class="sd">        .. testoutput ::</span>
-
-<span class="sd">            Seed: ... (see zero.random.set_randomness)</span>
-<span class="sd">            Seed: 0 (see zero.random.set_randomness)</span>
+<span class="sd">            assert set_randomness(0) == 0</span>
+<span class="sd">            assert set_randomness(), '0 was generated as the seed, which is almost impossible!'</span>
 <span class="sd">    """</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="n">cudnn_deterministic</span>  <span class="c1"># type: ignore</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">cudnn_benchmark</span>  <span class="c1"># type: ignore</span>
-    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># See https://numpy.org/doc/1.18/reference/random/bit_generators/index.html#seeding-and-entropy  # noqa</span>
-        <span class="n">seed</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">randbits</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
     <span class="n">raw_seed</span> <span class="o">=</span> <span class="n">seed</span>
+    <span class="k">if</span> <span class="n">raw_seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># See https://numpy.org/doc/1.18/reference/random/bit_generators/index.html#seeding-and-entropy  # noqa</span>
+        <span class="n">raw_seed</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">randbits</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
     <span class="n">seed</span> <span class="o">=</span> <span class="n">raw_seed</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="c1"># mypy doesn't know about the following functions</span>
@@ -373,9 +362,7 @@
     <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed_all</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">callback</span><span class="p">(</span><span class="n">raw_seed</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">default_rng</span><span class="p">(</span><span class="n">raw_seed</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">seed</span></div>
 </pre></div>
 
           </article>

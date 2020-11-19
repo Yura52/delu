@@ -4,61 +4,50 @@ __all__ = ['set_randomness']
 
 import random
 import secrets
-from typing import Any, Callable, Optional
+from typing import Optional
 
 import numpy as np
 import torch
-from numpy.random import Generator, default_rng
-
-
-def _default_callback(seed):
-    print(f'Seed: {seed} (see zero.random.set_randomness)')
 
 
 def set_randomness(
-    seed: Optional[int] = None,
+    seed: Optional[int],
     cudnn_deterministic: bool = True,
     cudnn_benchmark: bool = False,
-    callback: Optional[Callable[[int], Any]] = _default_callback,
-) -> Generator:
+) -> int:
     """Set seeds and settings in `random`, `numpy` and `torch`.
 
-    Sets random seed for `random`, `numpy.random`, `torch`, `torch.cuda`, sets settings
-    for :code:`torch.backends.cudnn` and builds a NumPy random number generator.
+    Sets random seed in `random`, `numpy.random`, `torch`, `torch.cuda` and sets
+    settings in :code:`torch.backends.cudnn`.
 
     Args:
-        seed: the seed for all mentioned libraries. If omitted, a high-quality seed is
-            generated (an integer that **does not fit in int64**). In any case,
-            :code:`seed % (2 ** 32 - 1)` will be used for everything except for building
-            `numpy.random.Generator`.
+        seed: the seed for all mentioned libraries. If `None`, a **high-quality** seed
+            is generated and used instead.
         cudnn_deterministic: value for :code:`torch.backends.cudnn.deterministic`
         cudnn_benchmark: value for :code:`torch.backends.cudnn.benchmark`
-        callback: a function that takes the seed as the only argument. The default
-            callback simply prints the seed via `print` which is convenient when `seed`
-            is set to `None`.
+
     Returns:
-        `numpy.random.Generator`: A new style numpy random number generator constructed
-        via `numpy.random.default_rng` (it should be used instead of functions from
-        `np.random`, see
-        `the document <https://numpy.org/doc/stable/reference/random/index.html>`_).
+        seed: if :code:`seed` is set to `None`, the generated seed is returned;
+            otherwise the :code:`seed` argument is returned as is
+
+    Note:
+        If you don't want to set the seed by hand, but still want to have a chance to
+        reproduce things, you can use the following pattern::
+
+            print('Seed:', set_randomness(None))
 
     Examples:
         .. testcode::
 
-            rng = set_randomness()  # seed will be generated
-            rng = set_randomness(0)
-
-        .. testoutput ::
-
-            Seed: ... (see zero.random.set_randomness)
-            Seed: 0 (see zero.random.set_randomness)
+            assert set_randomness(0) == 0
+            assert set_randomness(), '0 was generated as the seed, which is almost impossible!'
     """
     torch.backends.cudnn.deterministic = cudnn_deterministic  # type: ignore
     torch.backends.cudnn.benchmark = cudnn_benchmark  # type: ignore
-    if seed is None:
-        # See https://numpy.org/doc/1.18/reference/random/bit_generators/index.html#seeding-and-entropy  # noqa
-        seed = secrets.randbits(128)
     raw_seed = seed
+    if raw_seed is None:
+        # See https://numpy.org/doc/1.18/reference/random/bit_generators/index.html#seeding-and-entropy  # noqa
+        raw_seed = secrets.randbits(128)
     seed = raw_seed % (2 ** 32 - 1)
     torch.manual_seed(seed)
     # mypy doesn't know about the following functions
@@ -66,6 +55,4 @@ def set_randomness(
     torch.cuda.manual_seed_all(seed)  # type: ignore
     np.random.seed(seed)
     random.seed(seed)
-    if callback is not None:
-        callback(raw_seed)
-    return default_rng(raw_seed)
+    return seed
