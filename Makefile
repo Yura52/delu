@@ -16,6 +16,7 @@ clean:
 	rm -rf .pytest_cache
 	rm -rf dist
 	rm -rf $(DOCSRC)/source/reference/api
+	# the following make clean is implemented in the makefile in $(DOCSRC)
 	cd $(DOCSRC) && make clean
 
 coverage:

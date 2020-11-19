@@ -67,15 +67,23 @@ repo_url = 'https://github.com/Yura52/zero'
 import sphinx_material  # noqa
 html_theme = 'sphinx_material'
 html_theme_options = {
+    # Full list of options: https://github.com/bashtage/sphinx-material/blob/master/sphinx_material/sphinx_material/theme.conf
     'base_url': repo_url,
-    # available colors: https://squidfunk.github.io/mkdocs-material/getting-started/#primary-color
+    # Full list of colors (not all of them are available in sphinx-material, see theme.conf above):
+    # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#primary-color
     'color_primary': 'white',
     'globaltoc_depth': 2,
-    'nav_title': ' ',  # don't change this to an empty string
-    'repo_name': project,
+    # search here for logo icons: https://www.compart.com/en/unicode
+    'logo_icon': '&#127968;',
+    'nav_links': [],
+    'nav_title': 'Zero',
+    # 'repo_name': project,
+    'repo_name': 'ABC',
     'repo_url': repo_url,
     'repo_type': 'github',
-    'nav_links': []
+    'master_doc': False,
+    'version_dropdown': True,
+    'version_info': {f'{zero.__version__}': ''}
 }
 html_sidebars = {
     '**': ['logo-text.html', 'globaltoc.html', 'searchbox.html'],
