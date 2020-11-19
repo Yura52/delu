@@ -286,13 +286,6 @@
     <li class="md-nav__item">
     
     
-      <a href="#eval" class="md-nav__link">Eval</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="#progresstracker" class="md-nav__link">ProgressTracker</a>
       
     
@@ -336,54 +329,6 @@
   
 <span id="zero-training"></span><h1 id="reference-training--page-root">zero.training<a class="headerlink" href="#reference-training--page-root" title="Permalink to this headline">¶</a></h1>
 <p>Easier training process.</p>
-
-<h2 id="eval">Eval<a class="headerlink" href="#eval" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt id="zero.training.Eval">
-<em class="property">class </em><code class="sig-prename descclassname">zero.training.</code><code class="sig-name descname">Eval</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">models</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/zero/training.html#Eval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.training.Eval" title="Permalink to this definition">¶</a></dt>
-<dd><p>Context-manager for models evaluation.</p>
-<p>Switches one or more models to the evaluation mode and turns off gradients
-<strong>when enters a context</strong> (not when constructed!) and reverts all the changes to the
-previous state when exits the context.</p>
-<p>Before:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
-    <span class="o">...</span>
-</pre></div>
-</div>
-<p>After:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Eval</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
-    <span class="o">...</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>*models</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch vmaster (1.7.0a0+0bc39c0 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></a>) – </p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="k">with</span> <span class="n">Eval</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-    <span class="o">...</span>
-<span class="k">with</span> <span class="n">Eval</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="o">...</span>
-</pre></div>
-</div>
-<p class="rubric">Tutorial</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">grad_before_context</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_grad_enabled</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">training_before_context</span> <span class="ow">in</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">training_before_context</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">Eval</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">training</span>
-        <span class="k">assert</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_grad_enabled</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">training</span> <span class="o">==</span> <span class="n">training_before_context</span>
-    <span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_grad_enabled</span><span class="p">()</span> <span class="o">==</span> <span class="n">grad_before_context</span>
-</pre></div>
-</div>
-</dd></dl>
-
 
 <h2 id="progresstracker">ProgressTracker<a class="headerlink" href="#progresstracker" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
@@ -480,7 +425,10 @@ the progress tracker never fails.</p></li>
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.training.learn.html#zero.training.learn" title="zero.training.learn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">learn</span></code></a>(model, optimizer, loss_fn, step, batch)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.training.evaluate.html#zero.training.evaluate" title="zero.training.evaluate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code></a>(*models)</p></td>
+<td><p>Context-manager for models evaluation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.training.learn.html#zero.training.learn" title="zero.training.learn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">learn</span></code></a>(model, optimizer, loss_fn, step, batch)</p></td>
 <td><p>The “default” training step.</p></td>
 </tr>
 </tbody>

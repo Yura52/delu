@@ -307,48 +307,25 @@
   <h1 id="modules-zero-training--page-root">Source code for zero.training</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""Easier training process."""</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Eval'</span><span class="p">,</span> <span class="s1">'ProgressTracker'</span><span class="p">,</span> <span class="s1">'learn'</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'ProgressTracker'</span><span class="p">,</span> <span class="s1">'evaluate'</span><span class="p">,</span> <span class="s1">'learn'</span><span class="p">]</span>
 
+<span class="kn">import</span> <span class="nn">contextlib</span>
 <span class="kn">import</span> <span class="nn">enum</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TypeVar</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">_ModelsContext</span><span class="p">:</span>
-    <span class="n">_train</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="bp">NotImplemented</span>
-    <span class="n">_grad</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="bp">NotImplemented</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">models</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">models</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_models</span> <span class="o">=</span> <span class="n">models</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_training</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_grad_context</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">enable_grad</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad</span> <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_training</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_models</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_training</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">training</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-            <span class="n">x</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_train</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_grad_context</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
-
-    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
-        <span class="k">for</span> <span class="n">model</span><span class="p">,</span> <span class="n">train</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_models</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_training</span><span class="p">):</span>  <span class="c1"># type: ignore</span>
-            <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_grad_context</span><span class="o">.</span><span class="fm">__exit__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-        <span class="k">return</span> <span class="kc">False</span>
-
-
-<div class="viewcode-block" id="Eval"><a class="viewcode-back" href="../../reference/training.html#zero.training.Eval">[docs]</a><span class="k">class</span> <span class="nc">Eval</span><span class="p">(</span><span class="n">_ModelsContext</span><span class="p">):</span>
+<div class="viewcode-block" id="evaluate"><a class="viewcode-back" href="../../reference/api/zero.training.evaluate.html#zero.training.evaluate">[docs]</a><span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="o">*</span><span class="n">models</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">"""Context-manager for models evaluation.</span>
 
-<span class="sd">    Switches one or more models to the evaluation mode and turns off gradients</span>
-<span class="sd">    **when enters a context** (not when constructed!) and reverts all the changes to the</span>
-<span class="sd">    previous state when exits the context.</span>
+<span class="sd">    Switches one or more models to the evaluation mode and turns off gradients and</span>
+<span class="sd">    reverts all the changes to the previous state when exits the context.</span>
 
 <span class="sd">    Before::</span>
 
@@ -358,39 +335,50 @@
 
 <span class="sd">    After::</span>
 
-<span class="sd">        with Eval(model):</span>
+<span class="sd">        with evaluate(model):</span>
 <span class="sd">            ...</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        *models (`torch.nn.Module`)</span>
+<span class="sd">        models</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        The function must be used only as a context manager as shown above and in the</span>
+<span class="sd">        examples. The behaviour for call without the `with` keyword is unspecified.</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        .. testcode::</span>
 
 <span class="sd">            a = torch.nn.Linear(1, 1)</span>
 <span class="sd">            b = torch.nn.Linear(2, 2)</span>
-<span class="sd">            with Eval(a):</span>
+<span class="sd">            with evaluate(a):</span>
 <span class="sd">                ...</span>
-<span class="sd">            with Eval(a, b):</span>
+<span class="sd">            with evaluate(a, b):</span>
 <span class="sd">                ...</span>
 
-<span class="sd">    .. rubric:: Tutorial</span>
+<span class="sd">        .. testcode::</span>
 
-<span class="sd">    .. testcode::</span>
-
-<span class="sd">        model = torch.nn.Linear(1, 1)</span>
-<span class="sd">        grad_before_context = torch.is_grad_enabled()</span>
-<span class="sd">        for training_before_context in False, True:</span>
-<span class="sd">            model.train(training_before_context)</span>
-<span class="sd">            with Eval(model):</span>
-<span class="sd">                assert not model.training</span>
-<span class="sd">                assert not torch.is_grad_enabled()</span>
-<span class="sd">            assert model.training == training_before_context</span>
-<span class="sd">            assert torch.is_grad_enabled() == grad_before_context</span>
+<span class="sd">            model = torch.nn.Linear(1, 1)</span>
+<span class="sd">            grad_before_context = torch.is_grad_enabled()</span>
+<span class="sd">            for training_before_context in False, True:</span>
+<span class="sd">                model.train(training_before_context)</span>
+<span class="sd">                with evaluate(model):</span>
+<span class="sd">                    assert not model.training</span>
+<span class="sd">                    assert not torch.is_grad_enabled()</span>
+<span class="sd">                assert model.training == training_before_context</span>
+<span class="sd">                assert torch.is_grad_enabled() == grad_before_context</span>
 <span class="sd">    """</span>
-
-    <span class="n">_train</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">_grad</span> <span class="o">=</span> <span class="kc">False</span></div>
+    <span class="k">assert</span> <span class="n">models</span>
+    <span class="n">training</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">training</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">models</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="n">no_grad_context</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+    <span class="n">no_grad_context</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">model</span><span class="p">,</span> <span class="n">train</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">training</span><span class="p">):</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="n">no_grad_context</span><span class="o">.</span><span class="fm">__exit__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
 
 
 <span class="k">class</span> <span class="nc">_Status</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>

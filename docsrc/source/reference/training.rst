@@ -5,11 +5,6 @@ zero.training
 
 .. automodule:: zero.training
 
-Eval
-^^^^^
-
-.. autoclass:: Eval
-
 ProgressTracker
 ^^^^^^^^^^^^^^^
 
@@ -31,4 +26,5 @@ functions
 .. autosummary::
     :toctree: api
 
+    evaluate
     learn

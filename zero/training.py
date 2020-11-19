@@ -1,47 +1,24 @@
 """Easier training process."""
 
-__all__ = ['Eval', 'ProgressTracker', 'learn']
+__all__ = ['ProgressTracker', 'evaluate', 'learn']
 
+import contextlib
 import enum
 import math
 import warnings
-from typing import Any, Callable, ClassVar, List, Optional, Tuple, TypeVar
+from typing import Any, Callable, Optional, Tuple, TypeVar
 
 import torch
 
 T = TypeVar('T')
 
 
-class _ModelsContext:
-    _train: ClassVar[bool] = NotImplemented
-    _grad: ClassVar[bool] = NotImplemented
-
-    def __init__(self, *models: torch.nn.Module) -> None:
-        assert models
-        self._models = models
-        self._training: Optional[List[bool]] = None
-        self._grad_context = torch.enable_grad() if self._grad else torch.no_grad()
-
-    def __enter__(self) -> None:
-        self._training = []
-        for x in self._models:
-            self._training.append(x.training)  # type: ignore
-            x.train(self._train)
-        self._grad_context.__enter__()  # type: ignore
-
-    def __exit__(self, *args) -> bool:  # type: ignore
-        for model, train in zip(self._models, self._training):  # type: ignore
-            model.train(train)
-        self._grad_context.__exit__(*args)  # type: ignore
-        return False
-
-
-class Eval(_ModelsContext):
+@contextlib.contextmanager
+def evaluate(*models: torch.nn.Module):
     """Context-manager for models evaluation.
 
-    Switches one or more models to the evaluation mode and turns off gradients
-    **when enters a context** (not when constructed!) and reverts all the changes to the
-    previous state when exits the context.
+    Switches one or more models to the evaluation mode and turns off gradients and
+    reverts all the changes to the previous state when exits the context.
 
     Before::
 
@@ -51,39 +28,50 @@ class Eval(_ModelsContext):
 
     After::
 
-        with Eval(model):
+        with evaluate(model):
             ...
 
     Args:
-        *models (`torch.nn.Module`)
+        models
+
+    Warning:
+        The function must be used only as a context manager as shown above and in the
+        examples. The behaviour for call without the `with` keyword is unspecified.
 
     Examples:
         .. testcode::
 
             a = torch.nn.Linear(1, 1)
             b = torch.nn.Linear(2, 2)
-            with Eval(a):
+            with evaluate(a):
                 ...
-            with Eval(a, b):
+            with evaluate(a, b):
                 ...
 
-    .. rubric:: Tutorial
+        .. testcode::
 
-    .. testcode::
-
-        model = torch.nn.Linear(1, 1)
-        grad_before_context = torch.is_grad_enabled()
-        for training_before_context in False, True:
-            model.train(training_before_context)
-            with Eval(model):
-                assert not model.training
-                assert not torch.is_grad_enabled()
-            assert model.training == training_before_context
-            assert torch.is_grad_enabled() == grad_before_context
+            model = torch.nn.Linear(1, 1)
+            grad_before_context = torch.is_grad_enabled()
+            for training_before_context in False, True:
+                model.train(training_before_context)
+                with evaluate(model):
+                    assert not model.training
+                    assert not torch.is_grad_enabled()
+                assert model.training == training_before_context
+                assert torch.is_grad_enabled() == grad_before_context
     """
-
-    _train = False
-    _grad = False
+    assert models
+    training = tuple(x.training for x in models)
+    for x in models:
+        x.eval()
+    no_grad_context = torch.no_grad()
+    no_grad_context.__enter__()
+    try:
+        yield
+    finally:
+        for model, train in zip(models, training):
+            model.train(train)  # type: ignore
+        no_grad_context.__exit__(None, None, None)
 
 
 class _Status(enum.Enum):

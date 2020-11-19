@@ -52,7 +52,7 @@ def main():
         return model(X.to(args.device)), y.to(args.device)
 
     def evaluate(loader):
-        with zero.Eval(model):
+        with zero.evaluate(model):
             logits, y = zero.concat(map(step, loader))
         y_pred = torch.argmax(logits, dim=1).to(y)
         return (y_pred == y).int().sum().item() / len(y)
