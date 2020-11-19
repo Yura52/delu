@@ -19,6 +19,8 @@ Timer
     Timer.add
     Timer.sub
     Timer.__call__
+    Timer.__enter__
+    Timer.__exit__
 
 functions
 ^^^^^^^^^

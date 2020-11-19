@@ -468,7 +468,7 @@
         <span class="n">now</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span></div>
 
-    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'Timer'</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.__enter__"><a class="viewcode-back" href="../../reference/api/zero.time.Timer.__enter__.html#zero.time.Timer.__enter__">[docs]</a>    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'Timer'</span><span class="p">:</span>
         <span class="sd">"""Measure time within a context.</span>
 
 <span class="sd">        The method `Timer.run` is called regardless of the current state. On exit,</span>
@@ -487,15 +487,15 @@
 
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
 
-    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
+<div class="viewcode-block" id="Timer.__exit__"><a class="viewcode-back" href="../../reference/api/zero.time.Timer.__exit__.html#zero.time.Timer.__exit__">[docs]</a>    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
         <span class="sd">"""Leave the context and pause the timer.</span>
 
 <span class="sd">        See `Timer.__enter__` for details and examples.</span>
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pause</span><span class="p">()</span>
-        <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
     <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">{</span><span class="s1">'_shift'</span><span class="p">:</span> <span class="bp">self</span><span class="p">(),</span> <span class="s1">'_start_time'</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">'_pause_time'</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
