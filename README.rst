@@ -52,7 +52,7 @@ Dependencies
 
 - Python >= 3.6
 - NumPy >= 1.17
-- PyTorch >= 1.3 (CPU or CUDA >= 10.1)
+- PyTorch >= 1.4 (CPU or CUDA >= 10.1)
 - pynvml >= 8.0
 - tqdm >= 4.0
 
