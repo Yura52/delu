@@ -221,7 +221,9 @@ def learn(
         loss_fn: the function that takes :code:`step`'s output as input and returns a
             loss tensor
         step: the function that takes :code:`batch` as input and produces input for
-            :code:`loss_fn`
+            :code:`loss_fn`. Usually it is a function that applies the model to a batch
+            and returns the result alogn with ground truth (if available). See
+            examples below.
         batch: input for :code:`step`
         star: if True, then the output of :code:`step` is unpacked when passed to
             :code:`loss_fn`, i.e. :code:`loss_fn(*step_output)` is performed instead of
@@ -232,7 +234,7 @@ def learn(
     Note:
         After the function returns:
 
-        - :code:`model`'s gradients (caused by backward) are **preserved**
+        - :code:`model`'s gradients (produced by backward) are **preserved**
         - :code:`model`'s state (training or not) is **undefined**
 
     Warning:

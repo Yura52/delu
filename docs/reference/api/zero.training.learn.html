@@ -343,7 +343,9 @@
 <li><p><strong>loss_fn</strong> (<em>Callable</em><em>[</em><em>..</em><em>, </em><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.7.0a0+0bc39c0 ))"><em>torch.Tensor</em></a><em>]</em>) – the function that takes <code class="code docutils literal notranslate"><span class="pre">step</span></code>’s output as input and returns a
 loss tensor</p></li>
 <li><p><strong>step</strong> (<em>Callable</em><em>[</em><em>T</em><em>, </em><em>Any</em><em>]</em>) – the function that takes <code class="code docutils literal notranslate"><span class="pre">batch</span></code> as input and produces input for
-<code class="code docutils literal notranslate"><span class="pre">loss_fn</span></code></p></li>
+<code class="code docutils literal notranslate"><span class="pre">loss_fn</span></code>. Usually it is a function that applies the model to a batch
+and returns the result alogn with ground truth (if available). See
+examples below.</p></li>
 <li><p><strong>batch</strong> (<em>T</em>) – input for <code class="code docutils literal notranslate"><span class="pre">step</span></code></p></li>
 <li><p><strong>star</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – if True, then the output of <code class="code docutils literal notranslate"><span class="pre">step</span></code> is unpacked when passed to
 <code class="code docutils literal notranslate"><span class="pre">loss_fn</span></code>, i.e. <code class="code docutils literal notranslate"><span class="pre">loss_fn(*step_output)</span></code> is performed instead of
@@ -361,7 +363,7 @@ loss tensor</p></li>
 <p class="admonition-title">Note</p>
 <p>After the function returns:</p>
 <ul class="simple">
-<li><p><code class="code docutils literal notranslate"><span class="pre">model</span></code>’s gradients (caused by backward) are <strong>preserved</strong></p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">model</span></code>’s gradients (produced by backward) are <strong>preserved</strong></p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">model</span></code>’s state (training or not) is <strong>undefined</strong></p></li>
 </ul>
 </div>

@@ -178,6 +178,8 @@ class Timer:
                 time.sleep(0.01)
                 assert timer() == elapsed  # the timer is paused in __exit__
 
+        See also:
+            `Timer.__exit__`
         """
         self.run()
         return self
@@ -186,6 +188,9 @@ class Timer:
         """Leave the context and pause the timer.
 
         See `Timer.__enter__` for details and examples.
+
+        See also:
+            `Timer.__enter__`
         """
         self.pause()
         return False

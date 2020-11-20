@@ -15,6 +15,7 @@ Please, provide information about your software:
 - numpy==
 - torch==
 - pynvml==
+- tqdm==
 
 #### Describe the bug
 A clear and concise description of what the bug is, what the expected behavior is and a **minimal** example that reproduces the bug.

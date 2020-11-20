@@ -233,7 +233,7 @@ class IgniteMetric(Metric):
     Examples:
         .. code-block::
 
-            from ignite import Precision
+            from ignite.metrics import Precision
             metric_fn = IgniteMetric(Precision())
             metric_fn.calculate(...)
             metric_fn.calculate_iter(...)

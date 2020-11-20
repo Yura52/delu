@@ -485,6 +485,8 @@
 <span class="sd">                time.sleep(0.01)</span>
 <span class="sd">                assert timer() == elapsed  # the timer is paused in __exit__</span>
 
+<span class="sd">        See also:</span>
+<span class="sd">            `Timer.__exit__`</span>
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span></div>
@@ -493,6 +495,9 @@
         <span class="sd">"""Leave the context and pause the timer.</span>
 
 <span class="sd">        See `Timer.__enter__` for details and examples.</span>
+
+<span class="sd">        See also:</span>
+<span class="sd">            `Timer.__enter__`</span>
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pause</span><span class="p">()</span>
         <span class="k">return</span> <span class="kc">False</span></div>

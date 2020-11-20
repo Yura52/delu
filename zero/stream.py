@@ -99,6 +99,10 @@ class Stream:
                 f'checkpoint_{stream.epoch}.pt'
             )
 
+    Note:
+        Stream's state does not include the loader's state. See `Stream.state_dict` and
+        `Stream.load_state_dict` for details.
+
     In order to customize the epoch size, pass the size as the second argument::
 
         for epoch in stream.epochs(n_epochs, custom_epoch_size):
@@ -435,12 +439,15 @@ class Stream:
     def state_dict(self) -> Dict[str, Any]:
         """Get the stream's state.
 
-        The result can be passed to `Stream.load_state_dict`. Note that fields related
-        to data (loader, iterator etc.) are **NOT** included in the state. The result
-        includes:
+        The result can be passed to `Stream.load_state_dict`. The result includes:
 
         - epoch
         - iteration
+
+        Note:
+            Fields related to data (loader, iterator etc.) are **NOT** included in the
+            state. If you want to save the "state of data stream" then you have to save
+            the state of corresponding random number generators separately.
 
         Returns:
             state
@@ -454,6 +461,9 @@ class Stream:
                 stream.next()
                 stream.increment_epoch()
                 assert stream.state_dict() == {'epoch': 1, 'iteration': 2}
+
+        See also:
+            `Stream.load_state_dict`
         """
         return {'iteration': self.iteration, 'epoch': self.epoch}
 
@@ -466,7 +476,9 @@ class Stream:
         Note:
             The method does not affect data that is produced by `Stream.epochs`,
             `Stream.data`, `Stream.next` (see the examples below), i.e. the method
-            only sets some "metadata" such as epoch, iteration etc.
+            only sets some "metadata" such as epoch, iteration etc. If you want to
+            load the "state of data stream", you have to load the state of corresponding
+            random number generators separately.
 
         Examples:
 
@@ -482,6 +494,9 @@ class Stream:
                 assert new_stream.state_dict() == {'epoch': 1, 'iteration': 1}
                 assert new_stream.next() == 0
                 assert new_stream.state_dict() == {'epoch': 1, 'iteration': 2}
+
+        See also:
+            `Stream.state_dict`
         """
         self._iteration = state_dict['iteration']
         self._epoch = state_dict['epoch']

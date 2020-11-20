@@ -320,13 +320,17 @@
 <dt id="zero.stream.Stream.state_dict">
 <code class="sig-prename descclassname">Stream.</code><code class="sig-name descname">state_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/stream.html#Stream.state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.stream.Stream.state_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the stream’s state.</p>
-<p>The result can be passed to <a class="reference internal" href="zero.stream.Stream.load_state_dict.html#zero.stream.Stream.load_state_dict" title="zero.stream.Stream.load_state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.load_state_dict</span></code></a>. Note that fields related
-to data (loader, iterator etc.) are <strong>NOT</strong> included in the state. The result
-includes:</p>
+<p>The result can be passed to <a class="reference internal" href="zero.stream.Stream.load_state_dict.html#zero.stream.Stream.load_state_dict" title="zero.stream.Stream.load_state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.load_state_dict</span></code></a>. The result includes:</p>
 <ul class="simple">
 <li><p>epoch</p></li>
 <li><p>iteration</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Fields related to data (loader, iterator etc.) are <strong>NOT</strong> included in the
+state. If you want to save the “state of data stream” then you have to save
+the state of corresponding random number generators separately.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>state</p>
@@ -343,6 +347,10 @@ includes:</p>
 <span class="n">stream</span><span class="o">.</span><span class="n">increment_epoch</span><span class="p">()</span>
 <span class="k">assert</span> <span class="n">stream</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="s1">'epoch'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'iteration'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="zero.stream.Stream.load_state_dict.html#zero.stream.Stream.load_state_dict" title="zero.stream.Stream.load_state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.load_state_dict</span></code></a></p>
 </div>
 </dd></dl>
 

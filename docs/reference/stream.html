@@ -406,6 +406,11 @@ Additionally, a progress bar is displayed while the loop is running.</p>
     <span class="p">)</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Stream’s state does not include the loader’s state. See <a class="reference internal" href="api/zero.stream.Stream.state_dict.html#zero.stream.Stream.state_dict" title="zero.stream.Stream.state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.state_dict</span></code></a> and
+<a class="reference internal" href="api/zero.stream.Stream.load_state_dict.html#zero.stream.Stream.load_state_dict" title="zero.stream.Stream.load_state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.load_state_dict</span></code></a> for details.</p>
+</div>
 <p>In order to customize the epoch size, pass the size as the second argument:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">epochs</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">,</span> <span class="n">custom_epoch_size</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">epoch</span><span class="p">:</span>
