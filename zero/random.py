@@ -71,15 +71,16 @@ def get_random_state() -> Dict[str, Any]:
     Note:
         The most reliable way to guarantee reproducibility and to make your data streams
         resumable is to create separate random number generators and manage them
-        manually (for example, DataLoader accepts the argument :code:`generator` for
-        that purposes). However, if you rely on the global random state, this function
-        along with `set_random_state` does everything just right.
+        manually (for example, `torch.utils.data.DataLoader` accepts the
+        argument :code:`generator` for that purposes). However, if you rely on the
+        global random state, this function along with `set_random_state` does everything
+        just right.
 
     See also:
         `set_random_state`
 
     Examples:
-        ..test-code::
+        .. testcode::
 
             model = torch.nn.Linear(1, 1)
             optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
@@ -103,15 +104,15 @@ def get_random_state() -> Dict[str, Any]:
 
 
 def set_random_state(state: Dict[str, Any]) -> None:
-    """Set global random number generators in `random`, `numpy` and `torch`.
+    """Set global random states from `random`, `numpy` and `torch`.
 
     The argument must be produced by `get_random_state`.
 
     Note:
-        The size of list `state['torch.cuda']` must be equal to the number of available
-        cuda devices. If random state of cuda devices is not important, remove the entry
-        'torch.cuda' from the state beforehand, or, **at your own risk** adjust its
-        value.
+        The size of list :code:`state['torch.cuda']` must be equal to the number of
+        available cuda devices. If random state of cuda devices is not important, remove
+        the entry 'torch.cuda' from the state beforehand, or, **at your own risk**
+        adjust its value.
 
     Raises:
         AssertionError: if :code:`torch.cuda.device_count() != len(state['torch.cuda'])`

@@ -12,3 +12,5 @@ functions
     :toctree: api
 
     set_randomness
+    get_random_state
+    set_random_state
