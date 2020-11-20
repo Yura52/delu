@@ -1,10 +1,10 @@
 """Random sampling utilities."""
 
-__all__ = ['set_randomness']
+__all__ = ['get_random_state', 'set_random_state', 'set_randomness']
 
 import random
 import secrets
-from typing import Optional
+from typing import Any, Dict, Optional
 
 import numpy as np
 import torch
@@ -56,3 +56,68 @@ def set_randomness(
     np.random.seed(seed)
     random.seed(seed)
     return seed
+
+
+def get_random_state() -> Dict[str, Any]:
+    """Aggregate global random states from `random`, `numpy` and `torch`.
+
+    The function is useful for creating checkpoints that allow to resume data streams or
+    other activities dependent on **global** random number generator (see the note below
+    ). The result of this function can be passed to `set_random_state`.
+
+    Returns:
+        state
+
+    Note:
+        The most reliable way to guarantee reproducibility and to make your data streams
+        resumable is to create separate random number generators and manage them
+        manually (for example, DataLoader accepts the argument :code:`generator` for
+        that purposes). However, if you rely on the global random state, this function
+        along with `set_random_state` does everything just right.
+
+    See also:
+        `set_random_state`
+
+    Examples:
+        ..test-code::
+
+            model = torch.nn.Linear(1, 1)
+            optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
+            ...
+            checkpoint = {
+                'model': model.state_dict(),
+                'optimizer': optimizer.state_dict(),
+                'random_state': get_random_state(),
+            }
+            # later
+            # torch.save(checkpoint, 'checkpoint.pt')
+            # ...
+            # set_random_state(torch.load('checkpoint.pt')['random_state'])
+    """
+    return {
+        'random': random.getstate(),
+        'numpy.random': np.random.get_state(),
+        'torch.random': torch.random.get_rng_state(),
+        'torch.cuda': torch.cuda.get_rng_state_all(),  # type: ignore
+    }
+
+
+def set_random_state(state: Dict[str, Any]) -> None:
+    """Set global random number generators in `random`, `numpy` and `torch`.
+
+    The argument must be produced by `get_random_state`.
+
+    Note:
+        The size of list `state['torch.cuda']` must be equal to the number of available
+        cuda devices. If random state of cuda devices is not important, remove the entry
+        'torch.cuda' from the state beforehand, or, **at your own risk** adjust its
+        value.
+
+    Raises:
+        AssertionError: if :code:`torch.cuda.device_count() != len(state['torch.cuda'])`
+    """
+    random.setstate(state['random'])
+    np.random.set_state(state['numpy.random'])
+    torch.random.set_rng_state(state['torch.random'])
+    assert torch.cuda.device_count() == len(state['torch.cuda'])
+    torch.cuda.set_rng_state_all(state['torch.cuda'])  # type: ignore

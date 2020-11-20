@@ -759,6 +759,9 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            state</span>
 
+<span class="sd">        See also:</span>
+<span class="sd">            `Stream.load_state_dict`</span>
+
 <span class="sd">        Examples:</span>
 <span class="sd">            .. testcode::</span>
 
@@ -768,9 +771,6 @@
 <span class="sd">                stream.next()</span>
 <span class="sd">                stream.increment_epoch()</span>
 <span class="sd">                assert stream.state_dict() == {'epoch': 1, 'iteration': 2}</span>
-
-<span class="sd">        See also:</span>
-<span class="sd">            `Stream.load_state_dict`</span>
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="p">{</span><span class="s1">'iteration'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">iteration</span><span class="p">,</span> <span class="s1">'epoch'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">epoch</span><span class="p">}</span></div>
 
@@ -787,6 +787,9 @@
 <span class="sd">            load the "state of data stream", you have to load the state of corresponding</span>
 <span class="sd">            random number generators separately.</span>
 
+<span class="sd">        See also:</span>
+<span class="sd">            `Stream.state_dict`</span>
+
 <span class="sd">        Examples:</span>
 
 <span class="sd">            .. testcode::</span>
@@ -801,9 +804,6 @@
 <span class="sd">                assert new_stream.state_dict() == {'epoch': 1, 'iteration': 1}</span>
 <span class="sd">                assert new_stream.next() == 0</span>
 <span class="sd">                assert new_stream.state_dict() == {'epoch': 1, 'iteration': 2}</span>
-
-<span class="sd">        See also:</span>
-<span class="sd">            `Stream.state_dict`</span>
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_iteration</span> <span class="o">=</span> <span class="n">state_dict</span><span class="p">[</span><span class="s1">'iteration'</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_epoch</span> <span class="o">=</span> <span class="n">state_dict</span><span class="p">[</span><span class="s1">'epoch'</span><span class="p">]</span></div></div>

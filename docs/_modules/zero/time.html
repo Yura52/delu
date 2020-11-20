@@ -474,6 +474,9 @@
 <span class="sd">        The method `Timer.run` is called regardless of the current state. On exit,</span>
 <span class="sd">        `Timer.pause` is called.</span>
 
+<span class="sd">        See also:</span>
+<span class="sd">            `Timer.__exit__`</span>
+
 <span class="sd">        Example:</span>
 <span class="sd">            ..testcode::</span>
 
@@ -484,9 +487,6 @@
 <span class="sd">                assert elapsed &gt; 0.01</span>
 <span class="sd">                time.sleep(0.01)</span>
 <span class="sd">                assert timer() == elapsed  # the timer is paused in __exit__</span>
-
-<span class="sd">        See also:</span>
-<span class="sd">            `Timer.__exit__`</span>
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span></div>

@@ -2,19 +2,20 @@ import random
 
 import numpy as np
 import torch
+from pytest import raises
 
-from zero.random import set_randomness
+import zero
 
 from .util import requires_gpu
 
 
 def _test_set_randomness(functions):
-    assert isinstance(set_randomness(None), int)
+    assert isinstance(zero.set_randomness(None), int)
     high = 1000000
     for seed in range(10):
         x = [None, None]
         for i in range(2):
-            set_randomness(seed)
+            zero.set_randomness(seed)
             x[i] = [f(high) for f in functions]
         assert x[0] == x[1]
 
@@ -39,3 +40,36 @@ def test_set_randomness_gpu():
 
         functions.append(f)
     _test_set_randomness(functions)
+
+
+def test_get_set_random_state():
+    high = 1000000
+
+    def f():
+        size = (1,)
+        x = (
+            random.randint(0, high),
+            np.random.randint(0, high, size),
+            torch.randint(0, high, size),
+        )
+        if torch.cuda.is_available():
+            x += tuple(
+                torch.randint(0, high, size, device=f'cuda:{d}')
+                for d in range(torch.cuda.device_count())
+            )
+        return x
+
+    state = zero.get_random_state()
+    value = f()
+    for _ in range(10):
+        zero.set_random_state(state)
+        assert value == f()
+
+    if torch.cuda.is_available():
+        state['torch.cuda'] = []
+        with raises(AssertionError):
+            zero.set_random_state(state)
+    else:
+        state['torch.cuda'] = [None]
+        with raises(AssertionError):
+            zero.set_random_state(state)

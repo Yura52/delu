@@ -307,11 +307,11 @@
   <h1 id="modules-zero-random--page-root">Source code for zero.random</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""Random sampling utilities."""</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'set_randomness'</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'get_random_state'</span><span class="p">,</span> <span class="s1">'set_random_state'</span><span class="p">,</span> <span class="s1">'set_randomness'</span><span class="p">]</span>
 
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">secrets</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
@@ -363,6 +363,71 @@
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">seed</span></div>
+
+
+<span class="k">def</span> <span class="nf">get_random_state</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="sd">"""Aggregate global random states from `random`, `numpy` and `torch`.</span>
+
+<span class="sd">    The function is useful for creating checkpoints that allow to resume data streams or</span>
+<span class="sd">    other activities dependent on **global** random number generator (see the note below</span>
+<span class="sd">    ). The result of this function can be passed to `set_random_state`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        state</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The most reliable way to guarantee reproducibility and to make your data streams</span>
+<span class="sd">        resumable is to create separate random number generators and manage them</span>
+<span class="sd">        manually (for example, DataLoader accepts the argument :code:`generator` for</span>
+<span class="sd">        that purposes). However, if you rely on the global random state, this function</span>
+<span class="sd">        along with `set_random_state` does everything just right.</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        `set_random_state`</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        ..test-code::</span>
+
+<span class="sd">            model = torch.nn.Linear(1, 1)</span>
+<span class="sd">            optimizer = torch.optim.SGD(model.parameters(), lr=0.01)</span>
+<span class="sd">            ...</span>
+<span class="sd">            checkpoint = {</span>
+<span class="sd">                'model': model.state_dict(),</span>
+<span class="sd">                'optimizer': optimizer.state_dict(),</span>
+<span class="sd">                'random_state': get_random_state(),</span>
+<span class="sd">            }</span>
+<span class="sd">            # later</span>
+<span class="sd">            # torch.save(checkpoint, 'checkpoint.pt')</span>
+<span class="sd">            # ...</span>
+<span class="sd">            # set_random_state(torch.load('checkpoint.pt')['random_state'])</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">'random'</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">getstate</span><span class="p">(),</span>
+        <span class="s1">'numpy.random'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">get_state</span><span class="p">(),</span>
+        <span class="s1">'torch.random'</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">get_rng_state</span><span class="p">(),</span>
+        <span class="s1">'torch.cuda'</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_rng_state_all</span><span class="p">(),</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">set_random_state</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">"""Set global random number generators in `random`, `numpy` and `torch`.</span>
+
+<span class="sd">    The argument must be produced by `get_random_state`.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The size of list `state['torch.cuda']` must be equal to the number of available</span>
+<span class="sd">        cuda devices. If random state of cuda devices is not important, remove the entry</span>
+<span class="sd">        'torch.cuda' from the state beforehand, or, **at your own risk** adjust its</span>
+<span class="sd">        value.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        AssertionError: if :code:`torch.cuda.device_count() != len(state['torch.cuda'])`</span>
+<span class="sd">    """</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">setstate</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">'random'</span><span class="p">])</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">'numpy.random'</span><span class="p">])</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_rng_state</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">'torch.random'</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">device_count</span><span class="p">()</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">'torch.cuda'</span><span class="p">])</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">set_rng_state_all</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">'torch.cuda'</span><span class="p">])</span>
 </pre></div>
 
           </article>

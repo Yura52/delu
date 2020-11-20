@@ -329,6 +329,10 @@
 <dd><p>Measure time within a context.</p>
 <p>The method <a class="reference internal" href="zero.time.Timer.run.html#zero.time.Timer.run" title="zero.time.Timer.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.run</span></code></a> is called regardless of the current state. On exit,
 <a class="reference internal" href="zero.time.Timer.pause.html#zero.time.Timer.pause" title="zero.time.Timer.pause"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.pause</span></code></a> is called.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="zero.time.Timer.__exit__.html#zero.time.Timer.__exit__" title="zero.time.Timer.__exit__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.__exit__</span></code></a></p>
+</div>
 <p class="rubric">Example</p>
 <p>..testcode:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
@@ -339,10 +343,6 @@
 <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">timer</span><span class="p">()</span> <span class="o">==</span> <span class="n">elapsed</span>  <span class="c1"># the timer is paused in __exit__</span>
 </pre></div>
-</div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="zero.time.Timer.__exit__.html#zero.time.Timer.__exit__" title="zero.time.Timer.__exit__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.__exit__</span></code></a></p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>

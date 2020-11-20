@@ -167,6 +167,9 @@ class Timer:
         The method `Timer.run` is called regardless of the current state. On exit,
         `Timer.pause` is called.
 
+        See also:
+            `Timer.__exit__`
+
         Example:
             ..testcode::
 
@@ -177,9 +180,6 @@ class Timer:
                 assert elapsed > 0.01
                 time.sleep(0.01)
                 assert timer() == elapsed  # the timer is paused in __exit__
-
-        See also:
-            `Timer.__exit__`
         """
         self.run()
         return self

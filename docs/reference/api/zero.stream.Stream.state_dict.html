@@ -339,6 +339,10 @@ the state of corresponding random number generators separately.</p>
 <dd class="field-even"><p>Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a>, Any]</p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="zero.stream.Stream.load_state_dict.html#zero.stream.Stream.load_state_dict" title="zero.stream.Stream.load_state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.load_state_dict</span></code></a></p>
+</div>
 <p class="rubric">Examples</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
 <span class="k">assert</span> <span class="n">stream</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="s1">'epoch'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'iteration'</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
@@ -347,10 +351,6 @@ the state of corresponding random number generators separately.</p>
 <span class="n">stream</span><span class="o">.</span><span class="n">increment_epoch</span><span class="p">()</span>
 <span class="k">assert</span> <span class="n">stream</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="s1">'epoch'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'iteration'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
 </pre></div>
-</div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="zero.stream.Stream.load_state_dict.html#zero.stream.Stream.load_state_dict" title="zero.stream.Stream.load_state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.load_state_dict</span></code></a></p>
 </div>
 </dd></dl>
 

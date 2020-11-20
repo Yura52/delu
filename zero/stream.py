@@ -452,6 +452,9 @@ class Stream:
         Returns:
             state
 
+        See also:
+            `Stream.load_state_dict`
+
         Examples:
             .. testcode::
 
@@ -461,9 +464,6 @@ class Stream:
                 stream.next()
                 stream.increment_epoch()
                 assert stream.state_dict() == {'epoch': 1, 'iteration': 2}
-
-        See also:
-            `Stream.load_state_dict`
         """
         return {'iteration': self.iteration, 'epoch': self.epoch}
 
@@ -480,6 +480,9 @@ class Stream:
             load the "state of data stream", you have to load the state of corresponding
             random number generators separately.
 
+        See also:
+            `Stream.state_dict`
+
         Examples:
 
             .. testcode::
@@ -494,9 +497,6 @@ class Stream:
                 assert new_stream.state_dict() == {'epoch': 1, 'iteration': 1}
                 assert new_stream.next() == 0
                 assert new_stream.state_dict() == {'epoch': 1, 'iteration': 2}
-
-        See also:
-            `Stream.state_dict`
         """
         self._iteration = state_dict['iteration']
         self._epoch = state_dict['epoch']

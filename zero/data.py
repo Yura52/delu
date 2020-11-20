@@ -255,7 +255,7 @@ def iloader(size: int, *args, **kwargs) -> DataLoader:
     Raises:
         AssertionError: if size is not positive
 
-    See Also:
+    See also:
         `iter_batches`
 
     Examples:
@@ -339,7 +339,7 @@ def iter_batches(
         If you want to infititely iterate over batches, wrap the function in
         :code:`while True:`.
 
-    See Also:
+    See also:
         - `iloader`
         - `concat`
 
@@ -401,7 +401,7 @@ def concat(iterable: Iterable[T]) -> Union[S, Tuple[S, ...], Dict[Any, S]]:
         exceeded. Note that in most cases manual implementation would involve the same
         conversion, just keep this in mind when using the function.
 
-    See Also:
+    See also:
         `iter_batches`
 
     .. rubric:: Tutorial
