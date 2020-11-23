@@ -23,14 +23,14 @@ def test_evaluate(train, grad, n_models):
     with evaluate(*models):
         assert all(not x.training for x in models[:-1])
         assert not torch.is_grad_enabled()
-    assert all(x.training == train for x in models)
     assert torch.is_grad_enabled() == grad
 
 
 def test_progress_tracker():
+    score = -999999999
+
     # test initial state
     tracker = ProgressTracker(0)
-    score = -999999999
     assert not tracker.success
     assert not tracker.fail
 

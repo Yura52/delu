@@ -327,15 +327,18 @@
 <dt id="zero.training.evaluate">
 <code class="sig-prename descclassname">zero.training.</code><code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">models</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/training.html#evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.training.evaluate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Context-manager for models evaluation.</p>
-<p>Switches one or more models to the evaluation mode and turns off gradients and
-reverts all the changes to the previous state when exits the context.</p>
-<p>Before:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The function must be used only as a context manager as shown below in the
+examples. The behaviour for call without the <code class="xref py py-obj docutils literal notranslate"><span class="pre">with</span></code> keyword is unspecified.</p>
+</div>
+<p>This code…:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
     <span class="o">...</span>
 </pre></div>
 </div>
-<p>After:</p>
+<p>…is equivalent to</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
     <span class="o">...</span>
 </pre></div>
@@ -345,11 +348,6 @@ reverts all the changes to the previous state when exits the context.</p>
 <dd class="field-odd"><p><strong>models</strong> (<em>torch.nn.modules.module.Module</em>) – </p>
 </dd>
 </dl>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The function must be used only as a context manager as shown above and in the
-examples. The behaviour for call without the <code class="xref py py-obj docutils literal notranslate"><span class="pre">with</span></code> keyword is unspecified.</p>
-</div>
 <p class="rubric">Examples</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -360,14 +358,16 @@ examples. The behaviour for call without the <code class="xref py py-obj docutil
 </pre></div>
 </div>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">grad_before_context</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_grad_enabled</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">training_before_context</span> <span class="ow">in</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">training_before_context</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">training</span>
-        <span class="k">assert</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_grad_enabled</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">training</span> <span class="o">==</span> <span class="n">training_before_context</span>
-    <span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_grad_enabled</span><span class="p">()</span> <span class="o">==</span> <span class="n">grad_before_context</span>
+<span class="k">for</span> <span class="n">grad</span> <span class="ow">in</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">train</span> <span class="ow">in</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">set_grad_enabled</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">training</span>
+            <span class="k">assert</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_grad_enabled</span><span class="p">()</span>
+            <span class="o">...</span>
+        <span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_grad_enabled</span><span class="p">()</span> <span class="o">==</span> <span class="n">grad_before_context</span>
+        <span class="c1"># model.training is unspecified here</span>
 </pre></div>
 </div>
 </dd></dl>

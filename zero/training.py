@@ -17,26 +17,23 @@ T = TypeVar('T')
 def evaluate(*models: torch.nn.Module):
     """Context-manager for models evaluation.
 
-    Switches one or more models to the evaluation mode and turns off gradients and
-    reverts all the changes to the previous state when exits the context.
+    Warning:
+        The function must be used only as a context manager as shown below in the
+        examples. The behaviour for call without the `with` keyword is unspecified.
 
-    Before::
+    This code...::
 
         model.eval()
         with torch.no_grad():
             ...
 
-    After::
+    ...is equivalent to ::
 
         with evaluate(model):
             ...
 
     Args:
         models
-
-    Warning:
-        The function must be used only as a context manager as shown above and in the
-        examples. The behaviour for call without the `with` keyword is unspecified.
 
     Examples:
         .. testcode::
@@ -51,17 +48,18 @@ def evaluate(*models: torch.nn.Module):
         .. testcode::
 
             model = torch.nn.Linear(1, 1)
-            grad_before_context = torch.is_grad_enabled()
-            for training_before_context in False, True:
-                model.train(training_before_context)
-                with evaluate(model):
-                    assert not model.training
-                    assert not torch.is_grad_enabled()
-                assert model.training == training_before_context
-                assert torch.is_grad_enabled() == grad_before_context
+            for grad in False, True:
+                for train in False, True:
+                    torch.set_grad_enabled(grad)
+                    model.train(train)
+                    with evaluate(model):
+                        assert not model.training
+                        assert not torch.is_grad_enabled()
+                        ...
+                    assert torch.is_grad_enabled() == grad_before_context
+                    # model.training is unspecified here
     """
     assert models
-    training = tuple(x.training for x in models)
     for x in models:
         x.eval()
     no_grad_context = torch.no_grad()
@@ -69,8 +67,6 @@ def evaluate(*models: torch.nn.Module):
     try:
         yield
     finally:
-        for model, train in zip(models, training):
-            model.train(train)  # type: ignore
         no_grad_context.__exit__(None, None, None)
 
 
