@@ -10,9 +10,10 @@ zero
 .. autosummary::
 
    data
-   stream
    hardware
    metrics
+   module
    random
+   stream
    time
    training
