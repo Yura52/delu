@@ -1,6 +1,0 @@
-zero.training.evaluate
-======================
-
-.. currentmodule:: zero.training
-
-.. autofunction:: evaluate

@@ -1,29 +1,9 @@
 import math
 
 import torch
-from pytest import mark, raises, warns
+from pytest import mark, warns
 
-from zero.training import ProgressTracker, evaluate, learn
-
-
-@mark.parametrize('train', [False, True])
-@mark.parametrize('grad', [False, True])
-@mark.parametrize('n_models', range(3))
-def test_evaluate(train, grad, n_models):
-    if not n_models:
-        with raises(AssertionError):
-            with evaluate():
-                pass
-        return
-
-    torch.set_grad_enabled(grad)
-    models = [torch.nn.Linear(1, 1) for _ in range(n_models)]
-    for x in models:
-        x.train(train)
-    with evaluate(*models):
-        assert all(not x.training for x in models[:-1])
-        assert not torch.is_grad_enabled()
-    assert torch.is_grad_enabled() == grad
+from zero.training import ProgressTracker, learn
 
 
 def test_progress_tracker():
@@ -113,7 +93,7 @@ def test_learn(train, star):
 
     for _ in range(100):
         learn(model, optimizer, loss_fn, step, batch, star)
-    assert torch.nn.functional.mse_loss(model(batch), f(batch)).item() < 0.01
+    assert torch.nn.functional.mse_loss(model(batch), f(batch)).item() < 0.01  # type: ignore[code]
 
 
 @mark.parametrize('value', [math.nan, math.inf])

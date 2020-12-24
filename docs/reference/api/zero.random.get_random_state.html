@@ -255,6 +255,13 @@
     <li class="md-nav__item">
     
     
+      <a href="../module.html" class="md-nav__link">zero.module</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
       <a href="../random.html" class="md-nav__link">zero.random</a>
       <ul class="md-nav__list"> 
     <li class="md-nav__item">
@@ -335,7 +342,7 @@ other activities dependent on <strong>global</strong> random number generator (s
 <p class="admonition-title">Note</p>
 <p>The most reliable way to guarantee reproducibility and to make your data streams
 resumable is to create separate random number generators and manage them
-manually (for example, <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch vmaster (1.7.0a0+0bc39c0 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a> accepts the
+manually (for example, <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch vmaster (1.7.0a0+57bffc3 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a> accepts the
 argument <code class="code docutils literal notranslate"><span class="pre">generator</span></code> for that purposes). However, if you rely on the
 global random state, this function along with <a class="reference internal" href="zero.random.set_random_state.html#zero.random.set_random_state" title="zero.random.set_random_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_random_state</span></code></a> does everything
 just right.</p>

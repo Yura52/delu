@@ -253,6 +253,13 @@
     <li class="md-nav__item">
     
     
+      <a href="../../reference/module.html" class="md-nav__link">zero.module</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
       <a href="../../reference/random.html" class="md-nav__link">zero.random</a>
       
     
@@ -307,74 +314,16 @@
   <h1 id="modules-zero-training--page-root">Source code for zero.training</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""Easier training process."""</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'ProgressTracker'</span><span class="p">,</span> <span class="s1">'evaluate'</span><span class="p">,</span> <span class="s1">'learn'</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'ProgressTracker'</span><span class="p">,</span> <span class="s1">'learn'</span><span class="p">]</span>
 
-<span class="kn">import</span> <span class="nn">contextlib</span>
 <span class="kn">import</span> <span class="nn">enum</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TypeVar</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">cast</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="evaluate"><a class="viewcode-back" href="../../reference/api/zero.training.evaluate.html#zero.training.evaluate">[docs]</a><span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
-<span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="o">*</span><span class="n">models</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">"""Context-manager for models evaluation.</span>
-
-<span class="sd">    Warning:</span>
-<span class="sd">        The function must be used only as a context manager as shown below in the</span>
-<span class="sd">        examples. The behaviour for call without the `with` keyword is unspecified.</span>
-
-<span class="sd">    This code...::</span>
-
-<span class="sd">        model.eval()</span>
-<span class="sd">        with torch.no_grad():</span>
-<span class="sd">            ...</span>
-
-<span class="sd">    ...is equivalent to ::</span>
-
-<span class="sd">        with evaluate(model):</span>
-<span class="sd">            ...</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        models</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        .. testcode::</span>
-
-<span class="sd">            a = torch.nn.Linear(1, 1)</span>
-<span class="sd">            b = torch.nn.Linear(2, 2)</span>
-<span class="sd">            with evaluate(a):</span>
-<span class="sd">                ...</span>
-<span class="sd">            with evaluate(a, b):</span>
-<span class="sd">                ...</span>
-
-<span class="sd">        .. testcode::</span>
-
-<span class="sd">            model = torch.nn.Linear(1, 1)</span>
-<span class="sd">            for grad in False, True:</span>
-<span class="sd">                for train in False, True:</span>
-<span class="sd">                    torch.set_grad_enabled(grad)</span>
-<span class="sd">                    model.train(train)</span>
-<span class="sd">                    with evaluate(model):</span>
-<span class="sd">                        assert not model.training</span>
-<span class="sd">                        assert not torch.is_grad_enabled()</span>
-<span class="sd">                        ...</span>
-<span class="sd">                    assert torch.is_grad_enabled() == grad_before_context</span>
-<span class="sd">                    # model.training is unspecified here</span>
-<span class="sd">    """</span>
-    <span class="k">assert</span> <span class="n">models</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
-        <span class="n">x</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-    <span class="n">no_grad_context</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
-    <span class="n">no_grad_context</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">yield</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="n">no_grad_context</span><span class="o">.</span><span class="fm">__exit__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
 
 
 <span class="k">class</span> <span class="nc">_Status</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
@@ -584,7 +533,7 @@
         <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s1">'loss value is not finite: </span><span class="si">{</span><span class="n">loss_value</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">loss_value</span><span class="p">,</span> <span class="n">out</span></div>
+    <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">loss_value</span><span class="p">),</span> <span class="n">out</span></div>
 </pre></div>
 
           </article>

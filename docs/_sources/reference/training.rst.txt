@@ -26,5 +26,4 @@ functions
 .. autosummary::
     :toctree: api
 
-    evaluate
     learn

@@ -57,7 +57,7 @@
     <script src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="zero.training.evaluate" href="zero.training.evaluate.html" />
+    <link rel="prev" title="zero.training.ProgressTracker.reset" href="zero.training.ProgressTracker.reset.html" />
   
    
 
@@ -254,6 +254,13 @@
     <li class="md-nav__item">
     
     
+      <a href="../module.html" class="md-nav__link">zero.module</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
       <a href="../random.html" class="md-nav__link">zero.random</a>
       
     
@@ -331,7 +338,7 @@
 <li><p>Switches the model to the training mode, sets its gradients to zero.</p></li>
 <li><p>Performs the call <code class="code docutils literal notranslate"><span class="pre">step(batch)</span></code> or <code class="code docutils literal notranslate"><span class="pre">step(*batch)</span></code></p></li>
 <li><p>The output from the previous step is passed to <code class="code docutils literal notranslate"><span class="pre">loss_fn</span></code></p></li>
-<li><p><a class="reference external" href="https://pytorch.org/docs/stable/autograd.html#torch.Tensor.backward" title="(in PyTorch vmaster (1.7.0a0+0bc39c0 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.backward</span></code></a> is applied to the obtained loss tensor.</p></li>
+<li><p><a class="reference external" href="https://pytorch.org/docs/stable/autograd.html#torch.Tensor.backward" title="(in PyTorch vmaster (1.7.0a0+57bffc3 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.backward</span></code></a> is applied to the obtained loss tensor.</p></li>
 <li><p>The optimization step is performed.</p></li>
 <li><p>Returns the loss’s value (float) and <code class="code docutils literal notranslate"><span class="pre">step</span></code>’s output</p></li>
 </ol>
@@ -340,7 +347,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> (<em>torch.nn.modules.module.Module</em>) – the model to train</p></li>
 <li><p><strong>optimizer</strong> (<em>torch.optim.optimizer.Optimizer</em>) – the optimizer for <code class="code docutils literal notranslate"><span class="pre">model</span></code></p></li>
-<li><p><strong>loss_fn</strong> (<em>Callable</em><em>[</em><em>..</em><em>, </em><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.7.0a0+0bc39c0 ))"><em>torch.Tensor</em></a><em>]</em>) – the function that takes <code class="code docutils literal notranslate"><span class="pre">step</span></code>’s output as input and returns a
+<li><p><strong>loss_fn</strong> (<em>Callable</em><em>[</em><em>..</em><em>, </em><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.7.0a0+57bffc3 ))"><em>torch.Tensor</em></a><em>]</em>) – the function that takes <code class="code docutils literal notranslate"><span class="pre">step</span></code>’s output as input and returns a
 loss tensor</p></li>
 <li><p><strong>step</strong> (<em>Callable</em><em>[</em><em>T</em><em>, </em><em>Any</em><em>]</em>) – the function that takes <code class="code docutils literal notranslate"><span class="pre">batch</span></code> as input and produces input for
 <code class="code docutils literal notranslate"><span class="pre">loss_fn</span></code>. Usually it is a function that applies the model to a batch

@@ -1,73 +1,15 @@
 """Easier training process."""
 
-__all__ = ['ProgressTracker', 'evaluate', 'learn']
+__all__ = ['ProgressTracker', 'learn']
 
-import contextlib
 import enum
 import math
 import warnings
-from typing import Any, Callable, Optional, Tuple, TypeVar
+from typing import Any, Callable, Optional, Tuple, TypeVar, cast
 
 import torch
 
 T = TypeVar('T')
-
-
-@contextlib.contextmanager
-def evaluate(*models: torch.nn.Module):
-    """Context-manager for models evaluation.
-
-    Warning:
-        The function must be used only as a context manager as shown below in the
-        examples. The behaviour for call without the `with` keyword is unspecified.
-
-    This code...::
-
-        model.eval()
-        with torch.no_grad():
-            ...
-
-    ...is equivalent to ::
-
-        with evaluate(model):
-            ...
-
-    Args:
-        models
-
-    Examples:
-        .. testcode::
-
-            a = torch.nn.Linear(1, 1)
-            b = torch.nn.Linear(2, 2)
-            with evaluate(a):
-                ...
-            with evaluate(a, b):
-                ...
-
-        .. testcode::
-
-            model = torch.nn.Linear(1, 1)
-            for grad in False, True:
-                for train in False, True:
-                    torch.set_grad_enabled(grad)
-                    model.train(train)
-                    with evaluate(model):
-                        assert not model.training
-                        assert not torch.is_grad_enabled()
-                        ...
-                    assert torch.is_grad_enabled() == grad_before_context
-                    # model.training is unspecified here
-    """
-    assert models
-    for x in models:
-        x.eval()
-    no_grad_context = torch.no_grad()
-    no_grad_context.__enter__()
-    try:
-        yield
-    finally:
-        no_grad_context.__exit__(None, None, None)
 
 
 class _Status(enum.Enum):
@@ -277,4 +219,4 @@ def learn(
         optimizer.step()
     else:
         warnings.warn(f'loss value is not finite: {loss_value}', RuntimeWarning)
-    return loss_value, out
+    return cast(float, loss_value), out
