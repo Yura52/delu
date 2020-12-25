@@ -21,7 +21,7 @@ def _to_device(value: T, device: torch.device) -> T:
         )
         return cls(*data) if is_namedtuple else cls(data)  # type: ignore
     elif isinstance(value, dict):
-        return cls(value)((k, _to_device(v, device)) for k, v in value.items())  # type: ignore
+        return type(value)((k, _to_device(v, device)) for k, v in value.items())  # type: ignore
     else:
         return value
 
