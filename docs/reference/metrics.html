@@ -5,7 +5,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="lang:clipboard.copy" content="Copy to clipboard">
@@ -340,7 +341,7 @@
         <div class="md-content">
           <article class="md-content__inner md-typeset" role="main">
             
-  
+  <section id="zero-metrics">
 <span id="id1"></span><h1 id="reference-metrics--page-root">zero.metrics<a class="headerlink" href="#reference-metrics--page-root" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-zero.metrics"></span><p>Tiny ecosystem for metrics.</p>
 <p>TL;DR: with this module, evaluation looks like this:</p>
@@ -358,12 +359,12 @@ metrics full functionality of <a class="reference internal" href="#zero.metrics.
 following options:</p>
 <ul class="simple">
 <li><p>wrap a metric from Ignite in <a class="reference internal" href="#zero.metrics.IgniteMetric" title="zero.metrics.IgniteMetric"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IgniteMetric</span></code></a></p></li>
-<li><p>use <a class="reference external" href="https://pytorch.org/ignite/metrics.html#ignite.metrics.metric.sync_all_reduce" title="(in ignite v0.4.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ignite.metrics.metric.sync_all_reduce</span></code></a> and
-<a class="reference external" href="https://pytorch.org/ignite/metrics.html#ignite.metrics.metric.reinit__is_reduced" title="(in ignite v0.4.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ignite.metrics.metric.reinit__is_reduced</span></code></a></p></li>
+<li><p>use <a class="reference external" href="https://pytorch.org/ignite/metrics.html#ignite.metrics.metric.sync_all_reduce" title="(in ignite vv0.4.4.post1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ignite.metrics.metric.sync_all_reduce</span></code></a> and
+<a class="reference external" href="https://pytorch.org/ignite/metrics.html#ignite.metrics.metric.reinit__is_reduced" title="(in ignite vv0.4.4.post1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ignite.metrics.metric.reinit__is_reduced</span></code></a></p></li>
 <li><p>manually take care of everything</p></li>
 </ul>
 </div>
-
+<section id="metric">
 <h2 id="metric">Metric<a class="headerlink" href="#metric" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="zero.metrics.Metric">
@@ -432,8 +433,8 @@ methods marked with <code class="xref py py-obj docutils literal notranslate"><s
 </tr>
 </tbody>
 </table>
-
-
+</section>
+<section id="metricsdict">
 <h2 id="metricsdict">MetricsDict<a class="headerlink" href="#metricsdict" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="zero.metrics.MetricsDict">
@@ -485,8 +486,8 @@ methods marked with <code class="xref py py-obj docutils literal notranslate"><s
 </tr>
 </tbody>
 </table>
-
-
+</section>
+<section id="ignitemetric">
 <h2 id="ignitemetric">IgniteMetric<a class="headerlink" href="#ignitemetric" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="zero.metrics.IgniteMetric">
@@ -494,7 +495,7 @@ methods marked with <code class="xref py py-obj docutils literal notranslate"><s
 <dd><p>Wrapper for metrics from <code class="xref py py-obj docutils literal notranslate"><span class="pre">ignite.metrics</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>metric</strong> (<a class="reference external" href="https://pytorch.org/ignite/metrics.html#ignite.metrics.Metric" title="(in ignite v0.4.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ignite.metrics.Metric</span></code></a>) – </p>
+<dd class="field-odd"><p><strong>metric</strong> (<a class="reference external" href="https://pytorch.org/ignite/metrics.html#ignite.metrics.Metric" title="(in ignite vv0.4.4.post1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ignite.metrics.Metric</span></code></a>) – </p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -525,8 +526,8 @@ methods marked with <code class="xref py py-obj docutils literal notranslate"><s
 </tr>
 </tbody>
 </table>
-
-
+</section>
+</section>
 
 
           </article>

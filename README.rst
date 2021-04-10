@@ -50,9 +50,9 @@ If you plan to use the GPU version of PyTorch, install it **before** installing 
 Dependencies
 ^^^^^^^^^^^^
 
-- Python >= 3.6
+- Python >= 3.7
 - NumPy >= 1.17
-- PyTorch >= 1.4 (CPU or CUDA >= 10.1)
+- PyTorch >= 1.6 (CPU or CUDA >= 10.1)
 - pynvml >= 8.0
 - tqdm >= 4.0
 

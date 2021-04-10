@@ -39,16 +39,12 @@ pages:
 
 lint:
 	python -m pre_commit_hooks.debug_statement_hook zero/**/*.py
-	isort zero --recursive --check-only
+	isort zero --check-only
 	black zero --check
 	flake8 zero
 
 # the order is important
 pre-commit: clean lint test dtest typecheck _docs
-
-format:
-	isort zero --recursive -y
-	black zero
 
 test:
 	$(TEST_CMD) $(ARGV)

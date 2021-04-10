@@ -307,7 +307,10 @@ def _is_namedtuple(x) -> bool:
 
 def iter_batches(
     data: Union[
-        torch.Tensor, Tuple[torch.Tensor, ...], Dict[Any, torch.Tensor], TensorDataset,
+        torch.Tensor,
+        Tuple[torch.Tensor, ...],
+        Dict[Any, torch.Tensor],
+        TensorDataset,
     ],
     *args,
     **kwargs,

@@ -5,7 +5,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="lang:clipboard.copy" content="Copy to clipboard">
@@ -327,7 +328,7 @@
         <div class="md-content">
           <article class="md-content__inner md-typeset" role="main">
             
-  
+  <section id="zero-training-learn">
 <h1 id="reference-api-zero-training-learn--page-root">zero.training.learn<a class="headerlink" href="#reference-api-zero-training-learn--page-root" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="zero.training.learn">
@@ -338,7 +339,7 @@
 <li><p>Switches the model to the training mode, sets its gradients to zero.</p></li>
 <li><p>Performs the call <code class="code docutils literal notranslate"><span class="pre">step(batch)</span></code> or <code class="code docutils literal notranslate"><span class="pre">step(*batch)</span></code></p></li>
 <li><p>The output from the previous step is passed to <code class="code docutils literal notranslate"><span class="pre">loss_fn</span></code></p></li>
-<li><p><a class="reference external" href="https://pytorch.org/docs/stable/autograd.html#torch.Tensor.backward" title="(in PyTorch vmaster (1.7.0a0+57bffc3 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.backward</span></code></a> is applied to the obtained loss tensor.</p></li>
+<li><p><a class="reference external" href="https://pytorch.org/docs/stable/autograd.html#torch.Tensor.backward" title="(in PyTorch v1.8.0a0+56b43f4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.backward</span></code></a> is applied to the obtained loss tensor.</p></li>
 <li><p>The optimization step is performed.</p></li>
 <li><p>Returns the loss’s value (float) and <code class="code docutils literal notranslate"><span class="pre">step</span></code>’s output</p></li>
 </ol>
@@ -347,9 +348,9 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> (<em>torch.nn.modules.module.Module</em>) – the model to train</p></li>
 <li><p><strong>optimizer</strong> (<em>torch.optim.optimizer.Optimizer</em>) – the optimizer for <code class="code docutils literal notranslate"><span class="pre">model</span></code></p></li>
-<li><p><strong>loss_fn</strong> (<em>Callable</em><em>[</em><em>..</em><em>, </em><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.7.0a0+57bffc3 ))"><em>torch.Tensor</em></a><em>]</em>) – the function that takes <code class="code docutils literal notranslate"><span class="pre">step</span></code>’s output as input and returns a
+<li><p><strong>loss_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>..</em><em>]</em><em>, </em><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v1.8.0a0+56b43f4)"><em>torch.Tensor</em></a><em>]</em>) – the function that takes <code class="code docutils literal notranslate"><span class="pre">step</span></code>’s output as input and returns a
 loss tensor</p></li>
-<li><p><strong>step</strong> (<em>Callable</em><em>[</em><em>T</em><em>, </em><em>Any</em><em>]</em>) – the function that takes <code class="code docutils literal notranslate"><span class="pre">batch</span></code> as input and produces input for
+<li><p><strong>step</strong> (<em>Callable</em><em>[</em><em>[</em><em>T</em><em>]</em><em>, </em><em>Any</em><em>]</em>) – the function that takes <code class="code docutils literal notranslate"><span class="pre">batch</span></code> as input and produces input for
 <code class="code docutils literal notranslate"><span class="pre">loss_fn</span></code>. Usually it is a function that applies the model to a batch
 and returns the result alogn with ground truth (if available). See
 examples below.</p></li>
@@ -407,7 +408,7 @@ the function returns, if needed). Additionally, <a class="reference external" hr
 </pre></div>
 </div>
 </dd></dl>
-
+</section>
 
 
           </article>

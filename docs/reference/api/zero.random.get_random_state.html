@@ -5,7 +5,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="lang:clipboard.copy" content="Copy to clipboard">
@@ -321,12 +322,12 @@
         <div class="md-content">
           <article class="md-content__inner md-typeset" role="main">
             
-  
+  <section id="zero-random-get-random-state">
 <h1 id="reference-api-zero-random-get-random-state--page-root">zero.random.get_random_state<a class="headerlink" href="#reference-api-zero-random-get-random-state--page-root" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="zero.random.get_random_state">
 <code class="sig-prename descclassname">zero.random.</code><code class="sig-name descname">get_random_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/random.html#get_random_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.random.get_random_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>Aggregate global random states from <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>.</p>
+<dd><p>Aggregate global random states from <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.20)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>.</p>
 <p>The function is useful for creating checkpoints that allow to resume data streams or
 other activities dependent on <strong>global</strong> random number generator (see the note below
 ). The result of this function can be passed to <a class="reference internal" href="zero.random.set_random_state.html#zero.random.set_random_state" title="zero.random.set_random_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_random_state</span></code></a>.</p>
@@ -342,7 +343,7 @@ other activities dependent on <strong>global</strong> random number generator (s
 <p class="admonition-title">Note</p>
 <p>The most reliable way to guarantee reproducibility and to make your data streams
 resumable is to create separate random number generators and manage them
-manually (for example, <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch vmaster (1.7.0a0+57bffc3 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a> accepts the
+manually (for example, <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.8.0a0+56b43f4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a> accepts the
 argument <code class="code docutils literal notranslate"><span class="pre">generator</span></code> for that purposes). However, if you rely on the
 global random state, this function along with <a class="reference internal" href="zero.random.set_random_state.html#zero.random.set_random_state" title="zero.random.set_random_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_random_state</span></code></a> does everything
 just right.</p>
@@ -367,7 +368,7 @@ just right.</p>
 </pre></div>
 </div>
 </dd></dl>
-
+</section>
 
 
           </article>

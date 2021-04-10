@@ -5,7 +5,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="lang:clipboard.copy" content="Copy to clipboard">
@@ -321,7 +322,7 @@
         <div class="md-content">
           <article class="md-content__inner md-typeset" role="main">
             
-  
+  <section id="zero-module-call">
 <h1 id="reference-api-zero-module-call--page-root">zero.module.call<a class="headerlink" href="#reference-api-zero-module-call--page-root" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="zero.module.call">
@@ -334,7 +335,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>module</strong> (<em>torch.nn.modules.module.Module</em>) – the module. If an instance of <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.DataParallel.html#torch.nn.DataParallel" title="(in PyTorch vmaster (1.7.0a0+57bffc3 ))"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.DataParallel</span></code></a>, then
+<li><p><strong>module</strong> (<em>Union</em><em>[</em><em>torch.nn.modules.module.Module</em><em>, </em><em>torch.nn.parallel.data_parallel.DataParallel</em><em>]</em>) – the module. If an instance of <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.DataParallel.html#torch.nn.DataParallel" title="(in PyTorch v1.8.0a0+56b43f4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.DataParallel</span></code></a>, then
 arguments are passed to the module as is.</p></li>
 <li><p><strong>*args</strong> – </p></li>
 <li><p><strong>**kwargs</strong> – </p></li>
@@ -392,7 +393,7 @@ fields are tensors that need to be moved than this is not the case for
 </pre></div>
 </div>
 </dd></dl>
-
+</section>
 
 
           </article>
