@@ -11,6 +11,4 @@ functions
 .. autosummary::
     :toctree: api
 
-    call
-    ecall
     evaluation

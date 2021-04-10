@@ -1,4 +1,5 @@
 import torch
+import torch.nn as nn
 from pytest import mark, raises
 
 from zero.module import evaluation
@@ -15,7 +16,7 @@ def test_evaluation(train, grad, n_models):
         return
 
     torch.set_grad_enabled(grad)
-    models = [torch.nn.Linear(1, 1) for _ in range(n_models)]
+    models = [nn.Linear(1, 1) for _ in range(n_models)]
     for x in models:
         x.train(train)
     with evaluation(*models):
