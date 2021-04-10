@@ -586,7 +586,7 @@ def concat(iterable: Iterable[T]) -> Union[S, Tuple[S, ...], Dict[Any, S]]:
             if isinstance(x, list)
             else np.concatenate(sequence)
             if isinstance(x, np.ndarray)
-            else torch.cat(sequence)
+            else torch.cat(sequence)  # type: ignore[code]
             if isinstance(x, torch.Tensor)
             else sequence
         )

@@ -1,9 +1,4 @@
-import math
-
-import torch
-from pytest import mark, warns
-
-from zero.training import ProgressTracker, learn
+from zero.training import ProgressTracker
 
 
 def test_progress_tracker():
@@ -58,49 +53,3 @@ def test_progress_tracker():
     for i in range(100):
         tracker.update(-i)
         assert not tracker.fail
-
-
-@mark.parametrize('train', [False, True])
-@mark.parametrize('star', [False, True])
-def test_learn(train, star):
-    model = torch.nn.Linear(3, 1)
-    model.train(train)
-    optimizer = torch.optim.SGD(model.parameters(), 0.1)
-    loss_fn = (
-        torch.nn.functional.mse_loss
-        if star
-        else lambda x: torch.nn.functional.mse_loss(*x)
-    )
-    f = lambda batch: batch.sum(1, keepdim=True)  # noqa
-
-    def step(batch):
-        assert model.training
-        for x in model.parameters():
-            assert not x.grad.bool().any()
-        return model(batch), f(batch)
-
-    batch = torch.randn(10, 3)
-    model(batch).sum().backward()
-    result = learn(model, optimizer, loss_fn, step, batch, star)
-    assert (
-        isinstance(result[0], float)
-        and isinstance(result[1], tuple)
-        and len(result[1]) == 2
-    )
-    # check optimizer.step()
-    assert not torch.equal(result[1][0], model(batch))
-    assert torch.equal(result[1][1], f(batch))
-
-    for _ in range(100):
-        learn(model, optimizer, loss_fn, step, batch, star)
-    assert torch.nn.functional.mse_loss(model(batch), f(batch)).item() < 0.01  # type: ignore[code]
-
-
-@mark.parametrize('value', [math.nan, math.inf])
-@mark.parametrize('sign', [1, -1])
-def test_learn_inf_nan(value, sign):
-    model = torch.nn.Linear(3, 1)
-    batch = torch.randn(10, 3) * sign * value
-    optimizer = torch.optim.SGD(model.parameters(), 0.1)
-    with warns(RuntimeWarning):
-        learn(model, optimizer, torch.sum, model, batch)

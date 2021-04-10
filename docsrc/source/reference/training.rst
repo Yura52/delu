@@ -19,11 +19,3 @@ ProgressTracker
     ProgressTracker.update
     ProgressTracker.forget_bad_updates
     ProgressTracker.reset
-
-functions
-^^^^^^^^^
-
-.. autosummary::
-    :toctree: api
-
-    learn
