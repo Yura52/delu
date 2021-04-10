@@ -11,7 +11,6 @@ zero
 
    data
    hardware
-   metrics
    module
    random
    stream
