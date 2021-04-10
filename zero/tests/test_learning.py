@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from pytest import mark, raises
 
-from zero.module import evaluation
+from zero.learning import evaluation
 
 
 @mark.parametrize('train', [False, True])

@@ -27,7 +27,7 @@ def get_dataset(train):
 def split_dataset(dataset, ratio):
     size = len(dataset)
     first_size = int(ratio * size)
-    return random_split(dataset, [first_size, size - first_size])
+    return random_split(dataset, [first_size, size - first_size])  # type: ignore[code]
 
 
 def parse_args():
@@ -52,7 +52,7 @@ def main():
         return model(X.to(args.device)), y.to(args.device)
 
     def evaluate(loader):
-        with zero.evaluate(model):
+        with zero.evaluation(model):
             logits, y = zero.concat(map(step, loader))
         y_pred = torch.argmax(logits, dim=1).to(y)
         return (y_pred == y).int().sum().item() / len(y)
@@ -65,24 +65,30 @@ def main():
 
     timer = zero.Timer()
     progress = zero.ProgressTracker(args.early_stopping_patience, 0.005)
-    best_model_path = 'model.pt'
+    best_checkpoint_path = 'checkpoint.pt'
 
     for epoch in stream.epochs(args.n_epochs, args.epoch_size):
         print(f'\nEpoch {stream.epoch} started (iterations passed: {stream.iteration})')
         timer.run()
 
         for batch in epoch:
-            zero.learn(model, optimizer, F.cross_entropy, step, batch, True)
+            model.train()
+            optimizer.zero_grad()
+            F.cross_entropy(*step(batch)).backward()
+            optimizer.step()
 
         timer.pause()
         accuracy = evaluate(val_loader)
         progress.update(accuracy)
         if progress.success:
-            torch.save(model.state_dict(), best_model_path)
+            torch.save(
+                {'model': model.state_dict(), 'random_state': zero.get_random_state()},
+                best_checkpoint_path,
+            )
 
         msg = (
             f'Epoch {stream.epoch} finished. '
-            f'Time elapsed: {zero.format_seconds(timer())}. '
+            f'Time elapsed: {timer.format()}. '
             f'Validation accuracy: {accuracy:.4f}.'
         )
         if args.device.type == 'cuda':
@@ -93,10 +99,10 @@ def main():
             break
 
     timer.pause()
-    model.load_state_dict(torch.load(best_model_path))
+    model.load_state_dict(torch.load(best_checkpoint_path)['model'])
     print(
         f'\nTraining stopped after the epoch {stream.epoch}.\n'
-        f'Total training time: {zero.format_seconds(timer())}\n'
+        f'Total training time: {timer.format()}\n'
         f'Test accuracy: {evaluate(test_loader)}'
     )
 

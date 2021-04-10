@@ -1,3 +1,5 @@
+"""Easier training process."""
+
 __all__ = ['evaluation']
 
 import contextlib

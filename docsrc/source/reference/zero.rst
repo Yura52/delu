@@ -11,8 +11,7 @@ zero
 
    data
    hardware
-   module
+   learning
    random
    stream
-   time
-   training
+   tools
