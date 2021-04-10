@@ -3,7 +3,7 @@ from time import perf_counter, sleep
 
 from pytest import approx, raises
 
-from zero.time import Timer, format_seconds
+from zero.time import Timer
 
 
 def test_timer():
@@ -81,7 +81,7 @@ def test_context():
     assert timer() == timer()
 
 
-def test_timer_pickle():
+def test_pickle():
     timer = Timer()
     timer.run()
     sleep(0.01)
@@ -91,7 +91,12 @@ def test_timer_pickle():
     assert pickle.loads(pickle.dumps(timer))() == timer() == value
 
 
-def test_format_seconds():
+def test_format():
+    def format_seconds(x, *args):
+        timer = Timer()
+        timer.add(x)
+        return timer.format(*args)
+
     assert format_seconds(1) == '00h 00m 01s'
     assert format_seconds(1.1) == '00h 00m 01s'
     assert format_seconds(1, '%S%S%S') == '010101'

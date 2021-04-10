@@ -19,13 +19,6 @@ Timer
     Timer.add
     Timer.sub
     Timer.__call__
+    Timer.format
     Timer.__enter__
     Timer.__exit__
-
-functions
-^^^^^^^^^
-
-.. autosummary::
-    :toctree: api
-
-    format_seconds

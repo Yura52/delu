@@ -1,9 +1,9 @@
 """Time management."""
 
-__all__ = ['Timer', 'format_seconds']
+__all__ = ['Timer']
 
 import time
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 
 class Timer:
@@ -161,6 +161,23 @@ class Timer:
         now = self._pause_time or time.perf_counter()
         return now - self._start_time + self._shift
 
+    def format(self, format_str: str = '%Hh %Mm %Ss') -> str:
+        """Format the time elapsed since the start in a human-readable string.
+
+        Args:
+            format_str: the format string passed to `time.strftime`
+        Returns:
+            Filled :code:`format_str`.
+
+        Examples:
+            .. testcode::
+
+                timer = Timer()
+                timer.add(3661)
+                assert timer.format() == '01h 01m 01s'
+        """
+        return time.strftime(format_str, time.gmtime(self()))
+
     def __enter__(self) -> 'Timer':
         """Measure time within a context.
 
@@ -200,20 +217,3 @@ class Timer:
 
     def __setstate__(self, state: Dict[str, Any]) -> None:
         self.__dict__.update(state)
-
-
-def format_seconds(seconds: Union[int, float], format_str: str = '%Hh %Mm %Ss') -> str:
-    """Format numeric seconds in a human-readable string.
-
-    Args:
-        seconds: seconds to format
-        format_str: the format string passed to `time.strftime`
-    Returns:
-        Filled :code:`format_str`.
-
-    Examples:
-        .. testcode::
-
-            assert format_seconds(3661) == '01h 01m 01s'
-    """
-    return time.strftime(format_str, time.gmtime(seconds))
