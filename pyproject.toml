@@ -25,7 +25,7 @@ module = "zero"
 requires = [
     "numpy >=1.17,<2",
     "pynvml >= 8.0,<9",
-    "torch >= 1.4,<2",
+    "torch >= 1.6,<2",
     "tqdm >= 4.0,<5"
 ]
-requires-python = ">=3.6"
+requires-python = ">=3.7"
