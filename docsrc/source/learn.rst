@@ -16,10 +16,9 @@ specification, tutorials and usage examples.
 How to learn Zero?
 ------------------
 
-If you just want to "browse" the library and see what it offers, then
-:ref:`this page <zero>` is a good place to start (Zero, by design, is rather a
-"toolbox" than a "framework", so you can learn things and start using them in almost any
-order).
+Zero, by design, is rather a "toolbox" than a "framework", so you can learn things and
+start using them in almost any order. If you want to explore the library by yourself,
+:ref:`this page <zero>` is a good place to start.
 
 However, if you want to quickly learn "the most important" things, then understanding of
 `this classification task <https://github.com/Yura52/zero/blob/master/examples/mnist.py>`_
@@ -34,6 +33,7 @@ are the things to learn:
    zero.random.get_random_state
    zero.tools.ProgressTracker
    zero.tools.Timer
+   zero.hardware.get_gpus_info
    zero.data.concat
 
 Congratulations! You are ready to apply Zero in practice. You can also visit

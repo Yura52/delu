@@ -1,4 +1,4 @@
-"""Tools for early stopping, time measurements, etc."""
+"""Tools for early stopping, time measurement, etc."""
 
 __all__ = ['ProgressTracker', 'Timer']
 
@@ -19,9 +19,9 @@ class ProgressTracker:
     For `~ProgressTracker`, **the greater score is the better score**.
     At any moment the tracker is in one of the following states:
 
-    - success: the last update changed the best score
-    - fail: last :code:`n > patience` updates are not better than the best score
-    - neutral: if neither success nor fail
+    - *success*: the last update changed the best score
+    - *fail*: last :code:`n > patience` updates are not better than the best score
+    - *neutral*: if neither success nor fail
 
     Args:
         patience: Allowed number of bad updates. For example, if patience is 2, then

@@ -322,7 +322,7 @@
             
   <section id="module-zero.tools">
 <span id="zero-tools"></span><h1 id="reference-tools--page-root">zero.tools<a class="headerlink" href="#reference-tools--page-root" title="Permalink to this headline">¶</a></h1>
-<p>Tools for early stopping, time measurements, etc.</p>
+<p>Tools for early stopping, time measurement, etc.</p>
 <section id="progresstracker">
 <h2 id="progresstracker">ProgressTracker<a class="headerlink" href="#progresstracker" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
@@ -332,9 +332,9 @@
 <p>For <a class="reference internal" href="#zero.tools.ProgressTracker" title="zero.tools.ProgressTracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProgressTracker</span></code></a>, <strong>the greater score is the better score</strong>.
 At any moment the tracker is in one of the following states:</p>
 <ul class="simple">
-<li><p>success: the last update changed the best score</p></li>
-<li><p>fail: last <code class="code docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">patience</span></code> updates are not better than the best score</p></li>
-<li><p>neutral: if neither success nor fail</p></li>
+<li><p><em>success</em>: the last update changed the best score</p></li>
+<li><p><em>fail</em>: last <code class="code docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">patience</span></code> updates are not better than the best score</p></li>
+<li><p><em>neutral</em>: if neither success nor fail</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

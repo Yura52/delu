@@ -298,7 +298,7 @@
           <article class="md-content__inner md-typeset" role="main">
             
   <h1 id="modules-zero-tools--page-root">Source code for zero.tools</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Tools for early stopping, time measurements, etc."""</span>
+<span></span><span class="sd">"""Tools for early stopping, time measurement, etc."""</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'ProgressTracker'</span><span class="p">,</span> <span class="s1">'Timer'</span><span class="p">]</span>
 
@@ -319,9 +319,9 @@
 <span class="sd">    For `~ProgressTracker`, **the greater score is the better score**.</span>
 <span class="sd">    At any moment the tracker is in one of the following states:</span>
 
-<span class="sd">    - success: the last update changed the best score</span>
-<span class="sd">    - fail: last :code:`n &gt; patience` updates are not better than the best score</span>
-<span class="sd">    - neutral: if neither success nor fail</span>
+<span class="sd">    - *success*: the last update changed the best score</span>
+<span class="sd">    - *fail*: last :code:`n &gt; patience` updates are not better than the best score</span>
+<span class="sd">    - *neutral*: if neither success nor fail</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        patience: Allowed number of bad updates. For example, if patience is 2, then</span>

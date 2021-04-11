@@ -332,9 +332,8 @@
 tensor-based data in a batchwise manner. See examples below for typical use cases.</p>
 <p>The function is a more efficient alternative to <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.8.0a0+56b43f4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a> when
 it comes to in-memory data, because it uses batch-based indexing instead of
-item-based indexing (DataLoader’s behavior). <strong>The shuffling logic is fully
-delegated to native PyTorch DataLoader</strong>, i.e. no custom logic is performed under
-the hood.</p>
+item-based indexing (DataLoader’s behavior). <strong>The shuffling logic is delegated to
+the native PyTorch DataLoader</strong>, i.e. no custom logic is performed under the hood.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

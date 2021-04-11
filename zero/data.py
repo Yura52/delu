@@ -245,7 +245,7 @@ class _IndicesDataset(Dataset):
 def iloader(size: int, *args, **kwargs) -> DataLoader:
     """Make `~torch.utils.data.DataLoader` over batches of indices.
 
-    **The shuffling logic is fully delegated to native PyTorch DataLoader**, i.e. no
+    **The shuffling logic is delegated to the native PyTorch DataLoader**, i.e. no
     custom logic is performed under the hood.
 
     Args:
@@ -322,9 +322,8 @@ def iter_batches(
 
     The function is a more efficient alternative to `torch.utils.data.DataLoader` when
     it comes to in-memory data, because it uses batch-based indexing instead of
-    item-based indexing (DataLoader's behavior). **The shuffling logic is fully
-    delegated to native PyTorch DataLoader**, i.e. no custom logic is performed under
-    the hood.
+    item-based indexing (DataLoader's behavior). **The shuffling logic is delegated to
+    the native PyTorch DataLoader**, i.e. no custom logic is performed under the hood.
 
     Args:
         data:

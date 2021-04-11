@@ -545,7 +545,7 @@
 <div class="viewcode-block" id="iloader"><a class="viewcode-back" href="../../reference/api/zero.data.iloader.html#zero.data.iloader">[docs]</a><span class="k">def</span> <span class="nf">iloader</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span>
     <span class="sd">"""Make `~torch.utils.data.DataLoader` over batches of indices.</span>
 
-<span class="sd">    **The shuffling logic is fully delegated to native PyTorch DataLoader**, i.e. no</span>
+<span class="sd">    **The shuffling logic is delegated to the native PyTorch DataLoader**, i.e. no</span>
 <span class="sd">    custom logic is performed under the hood.</span>
 
 <span class="sd">    Args:</span>
@@ -622,9 +622,8 @@
 
 <span class="sd">    The function is a more efficient alternative to `torch.utils.data.DataLoader` when</span>
 <span class="sd">    it comes to in-memory data, because it uses batch-based indexing instead of</span>
-<span class="sd">    item-based indexing (DataLoader's behavior). **The shuffling logic is fully</span>
-<span class="sd">    delegated to native PyTorch DataLoader**, i.e. no custom logic is performed under</span>
-<span class="sd">    the hood.</span>
+<span class="sd">    item-based indexing (DataLoader's behavior). **The shuffling logic is delegated to</span>
+<span class="sd">    the native PyTorch DataLoader**, i.e. no custom logic is performed under the hood.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        data:</span>
