@@ -379,7 +379,7 @@ def iter_batches(
     return map(f, iloader(size, *args, **kwargs))
 
 
-def concat(iterable: Iterable[T]) -> Union[T, Tuple[T, ...], Dict[Any, T]]:
+def concat(iterable: Iterable[T]) -> T:
     """Concatenate items of the iterable along the first dimension.
 
     Use intuition, the tutorial and examples (see below) to understand what the function
