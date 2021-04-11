@@ -13,6 +13,14 @@ Reference (see the sidebar) is the main source of knowledge about the library. I
 contains everything you may need to understand how to use specific tools: API
 specification, tutorials and usage examples.
 
+How to import Zero?
+-------------------
+
+Simply do :code:`import zero` and use what you need without accessing the submodules.
+For example, :code:`zero.evaluation` is the correct way to use the function, while
+:code:`zero.learning.evaluation` is not, because the structure of submodules is not
+stable yet.
+
 How to learn Zero?
 ------------------
 
