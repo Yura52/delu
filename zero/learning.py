@@ -9,6 +9,18 @@ import torch.nn as nn
 
 
 @contextlib.contextmanager
+def _evaluation(*modules: nn.Module):
+    assert modules
+    for x in modules:
+        x.eval()
+    no_grad_context = torch.no_grad()
+    no_grad_context.__enter__()
+    try:
+        yield
+    finally:
+        no_grad_context.__exit__(None, None, None)
+
+
 def evaluation(*modules: nn.Module):
     """Context-manager for models evaluation.
 
@@ -29,10 +41,6 @@ def evaluation(*modules: nn.Module):
 
     Args:
         modules
-
-    See also:
-
-        - `ecall`
 
     Examples:
         .. testcode::
@@ -58,12 +66,4 @@ def evaluation(*modules: nn.Module):
                     assert torch.is_grad_enabled() == grad_before_context
                     # model.training is unspecified here
     """
-    assert modules
-    for x in modules:
-        x.eval()
-    no_grad_context = torch.no_grad()
-    no_grad_context.__enter__()
-    try:
-        yield
-    finally:
-        no_grad_context.__exit__(None, None, None)
+    return _evaluation(*modules)
