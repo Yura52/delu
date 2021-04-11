@@ -1,4 +1,4 @@
-"""Easier training process."""
+"""Easier training and evaluation."""
 
 __all__ = ['evaluation']
 
