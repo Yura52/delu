@@ -20,7 +20,6 @@ import torch
 from torch.utils.data import DataLoader, Dataset, TensorDataset
 
 T = TypeVar('T')
-S = TypeVar('S')
 
 
 class Enumerate(Dataset):
@@ -380,7 +379,7 @@ def iter_batches(
     return map(f, iloader(size, *args, **kwargs))
 
 
-def concat(iterable: Iterable[T]) -> Union[S, Tuple[S, ...], Dict[Any, S]]:
+def concat(iterable: Iterable[T]) -> Union[T, Tuple[T, ...], Dict[Any, T]]:
     """Concatenate items of the iterable along the first dimension.
 
     Use intuition, the tutorial and examples (see below) to understand what the function
