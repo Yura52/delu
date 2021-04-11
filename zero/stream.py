@@ -3,9 +3,12 @@
 __all__ = ['Stream']
 
 import math
+from copy import deepcopy
 from typing import Any, Dict, Iterable, Iterator, Optional, Sized, Union
 
 from tqdm import tqdm
+
+_DEFAULT_PROGRESS_BAR_OPTIONS: Dict[str, Any] = {}
 
 
 def _try_len(x):
@@ -54,7 +57,7 @@ class Stream:
 
         loader = DataLoader(...)
         iteration = 0
-        for epoch in range(n_epochs):
+        for epoch in range(max_epoch):
             for x in loader:
                 iteration += 1
                 print('Epoch:', epoch, 'Iteration:', iteration)
@@ -68,7 +71,7 @@ class Stream:
     The dataloader is accessible via `Stream.loader`. Now, let's reproduce the loop
     above::
 
-        for epoch in stream.epochs(n_epochs):
+        for epoch in stream.epochs(max_epoch):
             for x in epoch:
                 print('Epoch:', stream.epoch, 'Iteration:', stream.iteration)
 
@@ -105,14 +108,14 @@ class Stream:
 
     In order to customize the epoch size, pass the size as the second argument::
 
-        for epoch in stream.epochs(n_epochs, custom_epoch_size):
+        for epoch in stream.epochs(max_epoch, custom_epoch_size):
             for x in epoch:
                 ...
 
     Changing the underlying loader on the fly is possible at *any* moment (even in the
     middle of epoch) via `Stream.set_loader`. For example::
 
-        for epoch in stream.epochs(n_epochs, custom_epoch_size):
+        for epoch in stream.epochs(max_epoch, custom_epoch_size):
             for x in epoch:
                 ...
                 if need_new_data():
@@ -162,7 +165,8 @@ class Stream:
         self._epoch = 0
         self._loader = loader
         self._iter: Optional[Iterator] = None
-        self._pbar: Optional[tqdm] = None
+        self._progress_bar: Optional[tqdm] = None
+        self._should_update_progress_bar = False
 
     @property
     def iteration(self) -> int:
@@ -288,6 +292,10 @@ class Stream:
         """
         if self._iter is None:
             self._iter = iter(self._loader)
+        if self._progress_bar is not None:
+            if self._should_update_progress_bar:
+                self._progress_bar.update()
+            self._should_update_progress_bar = True
         try:
             value = next(self._iter)
         except StopIteration:
@@ -296,8 +304,6 @@ class Stream:
             # and the exception should be just propagated.
             value = next(self._iter)
         self._increment_iteration()
-        if self._pbar is not None:
-            self._pbar.update()
         return value
 
     def data(self, n_items: Optional[Union[int, float]] = None) -> Iterator:
@@ -342,43 +348,42 @@ class Stream:
 
     def epochs(
         self,
-        n_epochs: Union[int, float],
+        max_epoch: Union[int, float],
         epoch_size: Optional[Union[int, float]] = None,
-        progress_bar: bool = True,
+        progress_bar_options: Optional[Dict[str, Any]] = _DEFAULT_PROGRESS_BAR_OPTIONS,
     ) -> Iterator[Iterator[Any]]:
         """Iterate over data epochs.
 
         A shortcut for what is probably the most popular form of a training loop in Deep
         Learning (plus a progress bar)::
 
-            for epoch in stream.epochs(n_epochs, epoch_size):
+            for epoch in stream.epochs(max_epoch, epoch_size):
                 for x in epoch:
                     ...
 
             # is equivalent to:
 
-            while stream.epoch < n_epochs:
+            while stream.epoch < max_epoch:
                 stream.increment_epoch()
                 for x in stream.data(epoch_size):
                     ...
 
         Args:
-            n_epochs: the number of epochs.  If `float`, must be `math.inf`.
-            epoch_size: the number of data items in one epoch (is forwarded to
-                `Stream.data`)
-            progress_bar: show the progress bar for iterations. The initial value is set
-                to `Stream.iteration`. See also the note below.
+            max_epoch: defines the number of epochs. The loop goes on while
+                :code:`self.epoch < max_epoch`. If `float`, must be `math.inf`.
+            epoch_size: the number of data items in one epoch
+                (is forwarded to `Stream.data`).
+            progress_bar_options: if not None, a progress bar for iterations will
+                be displayed and the argument will be interpreted as key-word arguments
+                for `tqdm <https://tqdm.github.io/docs/tqdm/#__init__>`_. The following
+                key-word arguments will be automatically added if not presented in
+                :code:`progress_bar_options`: :code:`initial`, :code:`total` (if can be
+                inferred from the arguments and/or from `Stream.loader`).
+
         Returns:
             Iterator over iterators over data from `Stream.loader`.
         Raises:
-            AssertionError: if :code:`n_epochs` if `float`, but not `math.inf`.
-
-        Note:
-            If :code:`progress_bar` is True, *the progress bar is updated on yielding
-            every item* which means that the progress bar should be interpreted as "what
-            iteration is in progress" instead of "how many iterations are done". The
-            percentage will be displayed only if the total number of planned iterations
-            can be inferred from the arguments and/or from `Stream.loader`.
+            AssertionError: if :code:`max_epoch` if `float`, but not `math.inf`.
 
         Examples:
             .. testcode::
@@ -420,21 +425,33 @@ class Stream:
                 2
                 -
         """
-        if isinstance(n_epochs, float):
-            assert math.isinf(n_epochs)
-        if progress_bar:
+        if isinstance(max_epoch, float):
+            assert math.isinf(max_epoch)
+        if progress_bar_options is not None:
+            if progress_bar_options is _DEFAULT_PROGRESS_BAR_OPTIONS:
+                # the default value is MUTABLE, so let's deepcopy it
+                # just in case it is modified later
+                progress_bar_options = deepcopy(progress_bar_options)
             pbar_epoch_size = (
                 _try_len(self.loader) if epoch_size is None else epoch_size
             )
-            self._pbar = tqdm(
-                initial=self.iteration,
-                total=None
-                if (pbar_epoch_size is None or math.isinf(n_epochs))
-                else n_epochs * pbar_epoch_size,
-            )
-        while self.epoch < n_epochs:
+            all_progress_bar_options = {
+                'initial': self.iteration,
+                'total': (
+                    None
+                    if (pbar_epoch_size is None or math.isinf(max_epoch))
+                    else max_epoch * pbar_epoch_size
+                ),
+            }
+            all_progress_bar_options.update(progress_bar_options)
+            self._progress_bar = tqdm(**all_progress_bar_options)
+            self._should_update_progress_bar = False
+        while self.epoch < max_epoch:
             self.increment_epoch()
             yield self.data(epoch_size)
+        if self._should_update_progress_bar:
+            assert self._progress_bar is not None
+            self._progress_bar.update()
 
     def state_dict(self) -> Dict[str, Any]:
         """Get the stream's state.
