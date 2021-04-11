@@ -17,7 +17,7 @@ How to import Zero?
 -------------------
 
 Simply do :code:`import zero` and use what you need without accessing the submodules.
-For example, :code:`zero.evaluation` is the correct way to use the function, while
+For example, :code:`zero.evaluation` is the correct way to access the function, while
 :code:`zero.learning.evaluation` is not, because the structure of submodules is not
 stable yet.
 
