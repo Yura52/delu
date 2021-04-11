@@ -1,6 +1,0 @@
-zero.metrics.IgniteMetric.metric
-================================
-
-.. currentmodule:: zero.metrics
-
-.. autoproperty:: IgniteMetric.metric

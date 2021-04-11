@@ -1,6 +1,0 @@
-zero.training.ProgressTracker.reset
-===================================
-
-.. currentmodule:: zero.training
-
-.. automethod:: ProgressTracker.reset

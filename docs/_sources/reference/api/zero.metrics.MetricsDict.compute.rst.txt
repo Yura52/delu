@@ -1,6 +1,0 @@
-zero.metrics.MetricsDict.compute
-================================
-
-.. currentmodule:: zero.metrics
-
-.. automethod:: MetricsDict.compute

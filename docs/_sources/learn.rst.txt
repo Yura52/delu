@@ -29,12 +29,12 @@ are the things to learn:
 
 .. autosummary::
 
-   zero.stream.Stream
-   zero.training
-   zero.data.concat
+   zero.learning.evaluation
    zero.random.set_randomness
-   zero.time.Timer
-   zero.hardware
+   zero.random.get_random_state
+   zero.tools.ProgressTracker
+   zero.tools.Timer
+   zero.data.concat
 
 Congratulations! You are ready to apply Zero in practice. You can also visit
 :ref:`this page <zero>` and explore things that are not covered in the list above.

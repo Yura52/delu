@@ -1,0 +1,6 @@
+zero.learning.evaluation
+========================
+
+.. currentmodule:: zero.learning
+
+.. autofunction:: evaluation

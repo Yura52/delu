@@ -1,6 +1,0 @@
-zero.metrics.IgniteMetric.update
-================================
-
-.. currentmodule:: zero.metrics
-
-.. automethod:: IgniteMetric.update

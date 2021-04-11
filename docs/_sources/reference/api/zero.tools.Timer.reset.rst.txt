@@ -1,0 +1,6 @@
+zero.tools.Timer.reset
+======================
+
+.. currentmodule:: zero.tools
+
+.. automethod:: Timer.reset

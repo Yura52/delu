@@ -1,6 +1,0 @@
-zero.metrics.Metric.calculate
-=============================
-
-.. currentmodule:: zero.metrics
-
-.. automethod:: Metric.calculate

@@ -1,6 +1,0 @@
-zero.training.learn
-===================
-
-.. currentmodule:: zero.training
-
-.. autofunction:: learn

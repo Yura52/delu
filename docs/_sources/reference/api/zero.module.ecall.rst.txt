@@ -1,6 +1,0 @@
-zero.module.ecall
-=================
-
-.. currentmodule:: zero.module
-
-.. autofunction:: ecall

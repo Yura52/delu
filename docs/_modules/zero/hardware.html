@@ -246,14 +246,7 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/metrics.html" class="md-nav__link">zero.metrics</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/module.html" class="md-nav__link">zero.module</a>
+      <a href="../../reference/learning.html" class="md-nav__link">zero.learning</a>
       
     
     </li>
@@ -274,14 +267,7 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/time.html" class="md-nav__link">zero.time</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/training.html" class="md-nav__link">zero.training</a>
+      <a href="../../reference/tools.html" class="md-nav__link">zero.tools</a>
       
     
     </li>
@@ -314,17 +300,14 @@
   <h1 id="modules-zero-hardware--page-root">Source code for zero.hardware</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""Tools related to devices, memory, etc."""</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'free_memory'</span><span class="p">,</span> <span class="s1">'get_gpu_info'</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'free_memory'</span><span class="p">,</span> <span class="s1">'get_gpus_info'</span><span class="p">]</span>
 
 <span class="kn">import</span> <span class="nn">gc</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
 
+<span class="kn">import</span> <span class="nn">pynvml</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">pynvml</span> <span class="kn">import</span> <span class="n">NVMLError_LibraryNotFound</span>
-<span class="kn">from</span> <span class="nn">pynvml.smi</span> <span class="kn">import</span> <span class="n">nvidia_smi</span>
-
-<span class="n">_GPU_INFO_QUERY</span> <span class="o">=</span> <span class="s1">'memory.total, memory.used, memory.free, utilization.gpu'</span>
 
 
 <div class="viewcode-block" id="free_memory"><a class="viewcode-back" href="../../reference/api/zero.hardware.free_memory.html#zero.hardware.free_memory">[docs]</a><span class="k">def</span> <span class="nf">free_memory</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -333,6 +316,8 @@
 <span class="sd">    Warning:</span>
 <span class="sd">        There is a small chunk of GPU-memory (occupied by drivers) that is impossible to</span>
 <span class="sd">        free. It is a `torch` "limitation", so the function inherits this property.</span>
+
+<span class="sd">    Inspired by: https://github.com/xtinkt/editable/blob/1c80efb80c196cdb925fc994fc9ed576a246c7a1/lib/utils/basic.py#L124</span>
 <span class="sd">    """</span>
     <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
@@ -343,14 +328,12 @@
         <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="get_gpu_info"><a class="viewcode-back" href="../../reference/api/zero.hardware.get_gpu_info.html#zero.hardware.get_gpu_info">[docs]</a><span class="k">def</span> <span class="nf">get_gpu_info</span><span class="p">(</span><span class="n">precise</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
-    <span class="sd">"""Get statistics about GPU devices.</span>
+<div class="viewcode-block" id="get_gpus_info"><a class="viewcode-back" href="../../reference/api/zero.hardware.get_gpus_info.html#zero.hardware.get_gpus_info">[docs]</a><span class="k">def</span> <span class="nf">get_gpus_info</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="sd">"""Get information about GPU devices: driver version, memory, utilization etc.</span>
 
-<span class="sd">    Includes information about memory (total, free and used) and utilization. Some</span>
-<span class="sd">    figures are represented in two ways: with raw units and with percentage.</span>
+<span class="sd">    The example below shows what kind of information is returned as the result. All</span>
+<span class="sd">    figures about memory are given in bytes.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        precise: if False, all data is rounded (to Mb for memory, to % for percentages)</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        Information about GPU devices.</span>
 <span class="sd">    Raises:</span>
@@ -366,50 +349,55 @@
 
 <span class="sd">        .. code-block:: none</span>
 
-<span class="sd">            [</span>
-<span class="sd">                {</span>
-<span class="sd">                    'util%': 0,</span>
-<span class="sd">                    'total': 11019,</span>
-<span class="sd">                    'used': 0,</span>
-<span class="sd">                    'free': 11019,</span>
-<span class="sd">                    'used%': 0,</span>
-<span class="sd">                    'free%': 100,</span>
-<span class="sd">                },</span>
-<span class="sd">                {</span>
-<span class="sd">                    'util%': 0,</span>
-<span class="sd">                    'total': 11016,</span>
-<span class="sd">                    'used': 0,</span>
-<span class="sd">                    'free': 11016,</span>
-<span class="sd">                    'used%': 0,</span>
-<span class="sd">                    'free%': 100,</span>
-<span class="sd">                },</span>
-<span class="sd">            ]</span>
+<span class="sd">            {</span>
+<span class="sd">                'driver': '440.33.01',</span>
+<span class="sd">                'devices': [</span>
+<span class="sd">                    {</span>
+<span class="sd">                        'name': 'GeForce RTX 2080 Ti',</span>
+<span class="sd">                        'memory_total': 11554717696,</span>
+<span class="sd">                        'memory_free': 11554652160,</span>
+<span class="sd">                        'memory_used': 65536,</span>
+<span class="sd">                        'utilization': 0,</span>
+<span class="sd">                    },</span>
+<span class="sd">                    {</span>
+<span class="sd">                        'name': 'GeForce RTX 2080 Ti',</span>
+<span class="sd">                        'memory_total': 11552096256,</span>
+<span class="sd">                        'memory_free': 11552030720,</span>
+<span class="sd">                        'memory_used': 65536,</span>
+<span class="sd">                        'utilization': 0,</span>
+<span class="sd">                    },</span>
+<span class="sd">                ],</span>
+<span class="sd">            }</span>
 
 <span class="sd">    Warning:</span>
-<span class="sd">        The function directly collects information using the :code:`pynvml` library,</span>
-<span class="sd">        hence, settings like :code:`CUDA_VISIBLE_DEVICES` don't affect the result.</span>
+<span class="sd">        The 'devices' value contains information about *all* gpus regardless of the</span>
+<span class="sd">        value of :code:`CUDA_VISIBLE_DEVICES`.</span>
 <span class="sd">    """</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">smi</span> <span class="o">=</span> <span class="n">nvidia_smi</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span>
+        <span class="n">pynvml</span><span class="o">.</span><span class="n">nvmlInit</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">NVMLError_LibraryNotFound</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
             <span class="s1">'Failed to get information about GPU memory. '</span>
             <span class="s1">'Make sure that you actually have GPU and all relevant software installed.'</span>
         <span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
-    <span class="n">raw_info</span> <span class="o">=</span> <span class="n">smi</span><span class="o">.</span><span class="n">DeviceQuery</span><span class="p">(</span><span class="n">_GPU_INFO_QUERY</span><span class="p">)</span>
-    <span class="n">process_float</span> <span class="o">=</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">if</span> <span class="n">precise</span> <span class="k">else</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span>  <span class="c1"># noqa</span>
-
-    <span class="k">def</span> <span class="nf">unpack_raw_gpu_info</span><span class="p">(</span><span class="n">raw_gpu_info</span><span class="p">):</span>
-        <span class="n">gpu_info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'util%'</span><span class="p">:</span> <span class="n">raw_gpu_info</span><span class="p">[</span><span class="s1">'utilization'</span><span class="p">][</span><span class="s1">'gpu_util'</span><span class="p">]}</span>
-        <span class="n">gpu_info</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">process_float</span><span class="p">(</span><span class="n">raw_gpu_info</span><span class="p">[</span><span class="s1">'fb_memory_usage'</span><span class="p">][</span><span class="n">x</span><span class="p">]))</span>
-            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'total'</span><span class="p">,</span> <span class="s1">'used'</span><span class="p">,</span> <span class="s1">'free'</span><span class="p">]</span>
+    <span class="n">n_devices</span> <span class="o">=</span> <span class="n">pynvml</span><span class="o">.</span><span class="n">nvmlDeviceGetCount</span><span class="p">()</span>
+    <span class="n">devices</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">device_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_devices</span><span class="p">):</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="n">pynvml</span><span class="o">.</span><span class="n">nvmlDeviceGetHandleByIndex</span><span class="p">(</span><span class="n">device_id</span><span class="p">)</span>
+        <span class="n">memory_info</span> <span class="o">=</span> <span class="n">pynvml</span><span class="o">.</span><span class="n">nvmlDeviceGetMemoryInfo</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+        <span class="n">devices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s1">'name'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">pynvml</span><span class="o">.</span><span class="n">nvmlDeviceGetName</span><span class="p">(</span><span class="n">handle</span><span class="p">),</span> <span class="s1">'utf-8'</span><span class="p">),</span>
+                <span class="s1">'memory_total'</span><span class="p">:</span> <span class="n">memory_info</span><span class="o">.</span><span class="n">total</span><span class="p">,</span>
+                <span class="s1">'memory_free'</span><span class="p">:</span> <span class="n">memory_info</span><span class="o">.</span><span class="n">free</span><span class="p">,</span>
+                <span class="s1">'memory_used'</span><span class="p">:</span> <span class="n">memory_info</span><span class="o">.</span><span class="n">used</span><span class="p">,</span>
+                <span class="s1">'utilization'</span><span class="p">:</span> <span class="n">pynvml</span><span class="o">.</span><span class="n">nvmlDeviceGetUtilizationRates</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span><span class="o">.</span><span class="n">gpu</span><span class="p">,</span>
+            <span class="p">}</span>
         <span class="p">)</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="s1">'used'</span><span class="p">,</span> <span class="s1">'free'</span><span class="p">:</span>
-            <span class="n">gpu_info</span><span class="p">[</span><span class="n">x</span> <span class="o">+</span> <span class="s1">'%'</span><span class="p">]</span> <span class="o">=</span> <span class="n">process_float</span><span class="p">(</span><span class="n">gpu_info</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">/</span> <span class="n">gpu_info</span><span class="p">[</span><span class="s1">'total'</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">gpu_info</span>
-
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">unpack_raw_gpu_info</span><span class="p">,</span> <span class="n">raw_info</span><span class="p">[</span><span class="s1">'gpu'</span><span class="p">]))</span></div>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">'driver'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">pynvml</span><span class="o">.</span><span class="n">nvmlSystemGetDriverVersion</span><span class="p">(),</span> <span class="s1">'utf-8'</span><span class="p">),</span>
+        <span class="s1">'devices'</span><span class="p">:</span> <span class="n">devices</span><span class="p">,</span>
+    <span class="p">}</span></div>
 </pre></div>
 
           </article>

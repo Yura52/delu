@@ -1,6 +1,0 @@
-zero.module.evaluation
-======================
-
-.. currentmodule:: zero.module
-
-.. autofunction:: evaluation

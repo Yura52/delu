@@ -1,6 +1,0 @@
-zero.training.ProgressTracker.fail
-==================================
-
-.. currentmodule:: zero.training
-
-.. autoproperty:: ProgressTracker.fail

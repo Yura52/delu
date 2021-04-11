@@ -1,6 +1,0 @@
-zero.module.call
-================
-
-.. currentmodule:: zero.module
-
-.. autofunction:: call
