@@ -93,7 +93,7 @@ def main():
         )
         if args.device.type == 'cuda':
             index = args.device.index or 0
-            msg += f'\nGPU info: {zero.get_gpu_info()[index]}'
+            msg += f'\nGPU info: {zero.get_gpus_info()["devices"][index]}'
         print(msg)
         if progress.fail:
             break
