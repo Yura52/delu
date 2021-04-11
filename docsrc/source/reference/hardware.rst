@@ -12,4 +12,4 @@ functions
     :toctree: api
 
     free_memory
-    get_gpu_info
+    get_gpus_info

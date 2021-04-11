@@ -21,5 +21,5 @@ def test_evaluation(train, grad, n_models):
         x.train(train)
     with evaluation(*models):
         assert all(not x.training for x in models[:-1])
-        assert not torch.is_grad_enabled()  # type: ignore[code]
-    assert torch.is_grad_enabled() == grad  # type: ignore[code]
+        assert not torch.is_grad_enabled()
+    assert torch.is_grad_enabled() == grad
