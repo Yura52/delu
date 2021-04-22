@@ -2,6 +2,7 @@
 
 __all__ = ['ProgressTracker', 'Timer']
 
+import datetime
 import enum
 import time
 from typing import Any, Dict, Optional
@@ -284,7 +285,7 @@ class Timer:
         now = self._pause_time or time.perf_counter()
         return now - self._start_time + self._shift
 
-    def format(self, format_str: str = '%Hh %Mm %Ss') -> str:
+    def format(self, format_str: Optional[str] = None, round_: bool = True) -> str:
         """Format the time elapsed since the start in a human-readable string.
 
         Args:
@@ -297,9 +298,17 @@ class Timer:
 
                 timer = Timer()
                 timer.add(3661)
-                assert timer.format() == '01h 01m 01s'
+                assert timer.format() == '1:01:01'
+                assert timer.format('%Hh %Mm %Ss') == '01h 01m 01s'
         """
-        return time.strftime(format_str, time.gmtime(self()))
+        seconds = self()
+        if round_:
+            seconds = round(seconds)
+        return (
+            str(datetime.timedelta(seconds=seconds))
+            if format_str is None
+            else time.strftime(format_str, time.gmtime(seconds))
+        )
 
     def __enter__(self) -> 'Timer':
         """Measure time within a context.
