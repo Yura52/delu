@@ -2,27 +2,12 @@
 
 __all__ = ['evaluation']
 
-import contextlib
-
 import torch
 import torch.nn as nn
 
 
-@contextlib.contextmanager
-def _evaluation(*modules: nn.Module):
-    assert modules
-    for x in modules:
-        x.eval()
-    no_grad_context = torch.no_grad()
-    no_grad_context.__enter__()
-    try:
-        yield
-    finally:
-        no_grad_context.__exit__(None, None, None)
-
-
-def evaluation(*modules: nn.Module):
-    """Context-manager for models evaluation.
+class evaluation(torch.no_grad):
+    """Context-manager for models evaluation. Can be used as a decorator.
 
     Warning:
         The function must be used only as a context manager as shown below in the
@@ -30,14 +15,22 @@ def evaluation(*modules: nn.Module):
 
     This code...::
 
-        model.eval()
-        with torch.no_grad():
+        with evaluation(model):
+            ...
+
+        @evaluation(model)
+        def f():
             ...
 
     ...is equivalent to ::
 
-        with evaluation(model):
+        model.eval()
+        with torch.no_grad():
             ...
+
+        @torch.no_grad()
+        def f():
+            model.eval()
 
     Args:
         modules
@@ -66,4 +59,12 @@ def evaluation(*modules: nn.Module):
                     assert torch.is_grad_enabled() == grad_before_context
                     # model.training is unspecified here
     """
-    return _evaluation(*modules)
+
+    def __init__(self, *modules: nn.Module) -> None:
+        assert modules
+        self._modules = modules
+
+    def __enter__(self) -> None:
+        for m in self._modules:
+            m.eval()
+        return super().__enter__()

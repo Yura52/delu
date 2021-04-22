@@ -23,3 +23,16 @@ def test_evaluation(train, grad, n_models):
         assert all(not x.training for x in models[:-1])
         assert not torch.is_grad_enabled()
     assert torch.is_grad_enabled() == grad
+    for x in models:
+        x.train(train)
+
+    @evaluation(*models)
+    def f():
+        assert all(not x.training for x in models[:-1])
+        assert not torch.is_grad_enabled()
+        for x in models:
+            x.train(train)
+
+    for _ in range(3):
+        f()
+        assert torch.is_grad_enabled() == grad
