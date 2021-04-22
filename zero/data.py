@@ -386,7 +386,9 @@ def concat(iterable: Iterable[T]) -> T:
     does. Technical specification is unlikely to help here, so there is none :)
 
     Args:
-        iterable: items **of the same structure**
+        iterable: items **of the same structure** (for example, "an iterable of tensors"
+            OR "an iterable of tuples of tensors and all tuples are of the same length"
+            OR "an iterable of dicts of tensors and all dicts have the same keys" etc.)
     Returns:
         Concatenated items of the iterable.
 
