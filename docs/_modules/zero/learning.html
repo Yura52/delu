@@ -309,9 +309,13 @@
 <div class="viewcode-block" id="evaluation"><a class="viewcode-back" href="../../reference/api/zero.learning.evaluation.html#zero.learning.evaluation">[docs]</a><span class="k">class</span> <span class="nc">evaluation</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">):</span>
     <span class="sd">"""Context-manager for models evaluation. Can be used as a decorator.</span>
 
+<span class="sd">    Note:</span>
+<span class="sd">        The training status of modules is undefined once a context is finished or a</span>
+<span class="sd">        decorated function returns.</span>
+
 <span class="sd">    Warning:</span>
-<span class="sd">        The function must be used only as a context manager as shown below in the</span>
-<span class="sd">        examples. The behaviour for call without the `with` keyword is unspecified.</span>
+<span class="sd">        The function must be used only as a context manager or a decorator as shown</span>
+<span class="sd">        below in the examples. Otherwise, the behaviour is undefined.</span>
 
 <span class="sd">    This code...::</span>
 
@@ -345,6 +349,14 @@
 <span class="sd">            with evaluation(a, b):</span>
 <span class="sd">                ...</span>
 
+<span class="sd">            @evaluate(a)</span>
+<span class="sd">            def f():</span>
+<span class="sd">                ...</span>
+
+<span class="sd">            @evaluate(a, b)</span>
+<span class="sd">            def f():</span>
+<span class="sd">                ...</span>
+
 <span class="sd">        .. testcode::</span>
 
 <span class="sd">            model = torch.nn.Linear(1, 1)</span>
@@ -365,9 +377,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span> <span class="o">=</span> <span class="n">modules</span></div>
 
     <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span><span class="p">:</span>
             <span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">result</span></div>
 </pre></div>
 
           </article>
