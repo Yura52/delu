@@ -682,11 +682,16 @@
 <div class="viewcode-block" id="concat"><a class="viewcode-back" href="../../reference/api/zero.data.concat.html#zero.data.concat">[docs]</a><span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
     <span class="sd">"""Concatenate items of the iterable along the first dimension.</span>
 
-<span class="sd">    Use intuition, the tutorial and examples (see below) to understand what the function</span>
-<span class="sd">    does. Technical specification is unlikely to help here, so there is none :)</span>
+<span class="sd">    `concat` is a more general version of :code:`torch.cat(..., dim=0)`. It works not</span>
+<span class="sd">    only with sequences of tensors, but also with sequences of containers (tuples,</span>
+<span class="sd">    dicts etc.) of different types of data (tensors, numpy-arrays, primitive types). See</span>
+<span class="sd">    the tutorial and the examples below to understand what the function does.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        iterable: items **of the same structure**</span>
+<span class="sd">        iterable: items **of the same structure** (for example, "an iterable of tensors"</span>
+<span class="sd">            OR "an iterable of tuples of tensors where all the tuples are of the same</span>
+<span class="sd">            length" OR "an iterable of dicts of tensors and numpy-arrays where all the</span>
+<span class="sd">            dicts have the same keys" etc.)</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        Concatenated items of the iterable.</span>
 

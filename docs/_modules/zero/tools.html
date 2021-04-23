@@ -302,6 +302,7 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'ProgressTracker'</span><span class="p">,</span> <span class="s1">'Timer'</span><span class="p">]</span>
 
+<span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">enum</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
@@ -584,7 +585,7 @@
         <span class="n">now</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span></div>
 
-<div class="viewcode-block" id="Timer.format"><a class="viewcode-back" href="../../reference/api/zero.tools.Timer.format.html#zero.tools.Timer.format">[docs]</a>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'%Hh %Mm %Ss'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.format"><a class="viewcode-back" href="../../reference/api/zero.tools.Timer.format.html#zero.tools.Timer.format">[docs]</a>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_str</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">round_</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">"""Format the time elapsed since the start in a human-readable string.</span>
 
 <span class="sd">        Args:</span>
@@ -597,9 +598,17 @@
 
 <span class="sd">                timer = Timer()</span>
 <span class="sd">                timer.add(3661)</span>
-<span class="sd">                assert timer.format() == '01h 01m 01s'</span>
+<span class="sd">                assert timer.format() == '1:01:01'</span>
+<span class="sd">                assert timer.format('%Hh %Mm %Ss') == '01h 01m 01s'</span>
 <span class="sd">        """</span>
-        <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">format_str</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">(</span><span class="bp">self</span><span class="p">()))</span></div>
+        <span class="n">seconds</span> <span class="o">=</span> <span class="bp">self</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">round_</span><span class="p">:</span>
+            <span class="n">seconds</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">seconds</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">format_str</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">format_str</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">(</span><span class="n">seconds</span><span class="p">))</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Timer.__enter__"><a class="viewcode-back" href="../../reference/api/zero.tools.Timer.__enter__.html#zero.tools.Timer.__enter__">[docs]</a>    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'Timer'</span><span class="p">:</span>
         <span class="sd">"""Measure time within a context.</span>
