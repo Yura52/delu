@@ -382,13 +382,16 @@ def iter_batches(
 def concat(iterable: Iterable[T]) -> T:
     """Concatenate items of the iterable along the first dimension.
 
-    Use intuition, the tutorial and examples (see below) to understand what the function
-    does. Technical specification is unlikely to help here, so there is none :)
+    `concat` is a more general version of :code:`torch.cat(..., dim=0)`. It works not
+    only with sequences of tensors, but also with sequences of containers (tuples,
+    dicts etc.) of different types of data (tensors, numpy-arrays, primitive types). See
+    the tutorial and the examples below to understand what the function does.
 
     Args:
         iterable: items **of the same structure** (for example, "an iterable of tensors"
-            OR "an iterable of tuples of tensors and all tuples are of the same length"
-            OR "an iterable of dicts of tensors and all dicts have the same keys" etc.)
+            OR "an iterable of tuples of tensors where all the tuples are of the same
+            length" OR "an iterable of dicts of tensors and numpy-arrays where all the
+            dicts have the same keys" etc.)
     Returns:
         Concatenated items of the iterable.
 
