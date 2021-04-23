@@ -1,5 +1,5 @@
 """A zero-overhead library for PyTorch users."""
-__version__ = '0.0.3.dev9'
+__version__ = '0.0.3.dev10'
 
 from .data import *  # noqa
 from .hardware import *  # noqa
