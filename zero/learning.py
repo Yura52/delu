@@ -9,9 +9,13 @@ import torch.nn as nn
 class evaluation(torch.no_grad):
     """Context-manager for models evaluation. Can be used as a decorator.
 
+    Note:
+        The training status of modules is undefined once a context is finished or a
+        decorated function returns.
+
     Warning:
-        The function must be used only as a context manager as shown below in the
-        examples. The behaviour for call without the `with` keyword is unspecified.
+        The function must be used only as a context manager or a decorator as shown
+        below in the examples. Otherwise, the behaviour is undefined.
 
     This code...::
 
@@ -45,6 +49,14 @@ class evaluation(torch.no_grad):
             with evaluation(a, b):
                 ...
 
+            @evaluate(a)
+            def f():
+                ...
+
+            @evaluate(a, b)
+            def f():
+                ...
+
         .. testcode::
 
             model = torch.nn.Linear(1, 1)
@@ -65,6 +77,7 @@ class evaluation(torch.no_grad):
         self._modules = modules
 
     def __enter__(self) -> None:
+        result = super().__enter__()
         for m in self._modules:
             m.eval()
-        return super().__enter__()
+        return result
