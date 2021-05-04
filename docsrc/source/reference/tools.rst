@@ -34,6 +34,7 @@ Timer
     Timer.add
     Timer.sub
     Timer.__call__
+    Timer.__str__
     Timer.format
     Timer.__enter__
     Timer.__exit__

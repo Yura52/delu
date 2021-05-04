@@ -59,7 +59,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="zero.tools.Timer.__enter__" href="zero.tools.Timer.__enter__.html" />
-    <link rel="prev" title="zero.tools.Timer.__call__" href="zero.tools.Timer.__call__.html" />
+    <link rel="prev" title="zero.tools.Timer.__str__" href="zero.tools.Timer.__str__.html" />
   
    
 
@@ -319,14 +319,11 @@
 <h1 id="reference-api-zero-tools-timer-format--page-root">zero.tools.Timer.format<a class="headerlink" href="#reference-api-zero-tools-timer-format--page-root" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt id="zero.tools.Timer.format">
-<code class="sig-prename descclassname">Timer.</code><code class="sig-name descname">format</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">format_str</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">round_</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/tools.html#Timer.format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.tools.Timer.format" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Timer.</code><code class="sig-name descname">format</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">format_str</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/tools.html#Timer.format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.tools.Timer.format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Format the time elapsed since the start in a human-readable string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>format_str</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>]</em>) – the format string passed to <a class="reference external" href="https://docs.python.org/3/library/time.html#time.strftime" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time.strftime</span></code></a></p></li>
-<li><p><strong>round_</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – </p></li>
-</ul>
+<dd class="field-odd"><p><strong>format_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – the format string passed to <a class="reference external" href="https://docs.python.org/3/library/time.html#time.strftime" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time.strftime</span></code></a></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Filled <code class="code docutils literal notranslate"><span class="pre">format_str</span></code>.</p>
@@ -338,7 +335,6 @@
 <p class="rubric">Examples</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
 <span class="n">timer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3661</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">timer</span><span class="o">.</span><span class="n">format</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'1:01:01'</span>
 <span class="k">assert</span> <span class="n">timer</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">'%Hh %Mm %Ss'</span><span class="p">)</span> <span class="o">==</span> <span class="s1">'01h 01m 01s'</span>
 </pre></div>
 </div>

@@ -178,10 +178,35 @@ class Timer:
             time.sleep(0.01)
         # timer is on pause and timer() returns the time elapsed within the context
 
-    Note:
-        When a Timer instance is pickled, the result of `Timer.__call__` is saved as
-        shift (hence, the "time elapsed" is preserved) and all other attributes are
-        omitted.
+    `Timer` can be printed and formatted in a human-readable manner:
+
+    .. testcode::
+
+        timer = Timer()
+        timer.add(3661)
+        print('Time elapsed:', timer)
+        assert str(timer) == f'{timer}' == '1:01:01'
+        assert timer.format('%Hh %Mm %Ss') == '01h 01m 01s'
+
+    .. testoutput::
+
+        Time elapsed: 1:01:01
+
+    `Timer` is pickle friendly:
+
+    .. testcode::
+
+        import pickle
+
+        timer = Timer()
+        timer.run()
+        time.sleep(0.01)
+        timer.pause()
+        old_value = timer()
+        timer_bytes = pickle.dumps(timer)
+        time.sleep(0.01)
+        new_timer = pickle.loads(timer_bytes)
+        assert new_timer() == old_value
     """
 
     # mypy cannot infer types from .reset(), so they must be given here
@@ -285,7 +310,15 @@ class Timer:
         now = self._pause_time or time.perf_counter()
         return now - self._start_time + self._shift
 
-    def format(self, format_str: Optional[str] = None, round_: bool = True) -> str:
+    def __str__(self) -> str:
+        """Convert the timer to a string.
+
+        Returns:
+            The string representation of the timer's value rounded to seconds.
+        """
+        return str(datetime.timedelta(seconds=round(self())))
+
+    def format(self, format_str: str) -> str:
         """Format the time elapsed since the start in a human-readable string.
 
         Args:
@@ -298,17 +331,9 @@ class Timer:
 
                 timer = Timer()
                 timer.add(3661)
-                assert timer.format() == '1:01:01'
                 assert timer.format('%Hh %Mm %Ss') == '01h 01m 01s'
         """
-        seconds = self()
-        if round_:
-            seconds = round(seconds)
-        return (
-            str(datetime.timedelta(seconds=seconds))
-            if format_str is None
-            else time.strftime(format_str, time.gmtime(seconds))
-        )
+        return time.strftime(format_str, time.gmtime(self()))
 
     def __enter__(self) -> 'Timer':
         """Measure time within a context.

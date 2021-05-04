@@ -459,11 +459,30 @@ is 0.0.</p>
 <span class="c1"># timer is on pause and timer() returns the time elapsed within the context</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>When a Timer instance is pickled, the result of <a class="reference internal" href="api/zero.tools.Timer.__call__.html#zero.tools.Timer.__call__" title="zero.tools.Timer.__call__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.__call__</span></code></a> is saved as
-shift (hence, the “time elapsed” is preserved) and all other attributes are
-omitted.</p>
+<p><a class="reference internal" href="#zero.tools.Timer" title="zero.tools.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer</span></code></a> can be printed and formatted in a human-readable manner:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
+<span class="n">timer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3661</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Time elapsed:'</span><span class="p">,</span> <span class="n">timer</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">timer</span><span class="p">)</span> <span class="o">==</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">timer</span><span class="si">}</span><span class="s1">'</span> <span class="o">==</span> <span class="s1">'1:01:01'</span>
+<span class="k">assert</span> <span class="n">timer</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">'%Hh %Mm %Ss'</span><span class="p">)</span> <span class="o">==</span> <span class="s1">'01h 01m 01s'</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Time elapsed: 1:01:01
+</pre></div>
+</div>
+<p><a class="reference internal" href="#zero.tools.Timer" title="zero.tools.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer</span></code></a> is pickle friendly:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
+<span class="n">timer</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">timer</span><span class="o">.</span><span class="n">pause</span><span class="p">()</span>
+<span class="n">old_value</span> <span class="o">=</span> <span class="n">timer</span><span class="p">()</span>
+<span class="n">timer_bytes</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">timer</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">new_timer</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">timer_bytes</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">new_timer</span><span class="p">()</span> <span class="o">==</span> <span class="n">old_value</span>
+</pre></div>
 </div>
 </dd></dl>
 <table class="longtable docutils align-default">
@@ -490,13 +509,16 @@ omitted.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="api/zero.tools.Timer.__call__.html#zero.tools.Timer.__call__" title="zero.tools.Timer.__call__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.__call__</span></code></a>()</p></td>
 <td><p>Get time elapsed since the start.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.tools.Timer.format.html#zero.tools.Timer.format" title="zero.tools.Timer.format"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.format</span></code></a>([format_str, round_])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.tools.Timer.__str__.html#zero.tools.Timer.__str__" title="zero.tools.Timer.__str__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.__str__</span></code></a>()</p></td>
+<td><p>Convert the timer to a string.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.tools.Timer.format.html#zero.tools.Timer.format" title="zero.tools.Timer.format"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.format</span></code></a>(format_str)</p></td>
 <td><p>Format the time elapsed since the start in a human-readable string.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/zero.tools.Timer.__enter__.html#zero.tools.Timer.__enter__" title="zero.tools.Timer.__enter__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.__enter__</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.tools.Timer.__enter__.html#zero.tools.Timer.__enter__" title="zero.tools.Timer.__enter__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.__enter__</span></code></a>()</p></td>
 <td><p>Measure time within a context.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.tools.Timer.__exit__.html#zero.tools.Timer.__exit__" title="zero.tools.Timer.__exit__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.__exit__</span></code></a>(*args)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.tools.Timer.__exit__.html#zero.tools.Timer.__exit__" title="zero.tools.Timer.__exit__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.__exit__</span></code></a>(*args)</p></td>
 <td><p>Leave the context and pause the timer.</p></td>
 </tr>
 </tbody>

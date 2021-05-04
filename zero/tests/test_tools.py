@@ -146,12 +146,11 @@ def test_timer_pickle():
 
 
 def test_timer_format():
-    def format_seconds(x, *args, **kwargs):
+    def make_timer(x):
         timer = Timer()
         timer.add(x)
-        return timer.format(*args, **kwargs)
+        return timer
 
-    assert format_seconds(1) == '0:00:01'
-    assert format_seconds(1.1) == '0:00:01'
-    assert format_seconds(1.1, round_=False) == '0:00:01.100000'
-    assert format_seconds(7321, '%Hh %Mm %Ss') == '02h 02m 01s'
+    assert str(make_timer(1)) == '0:00:01'
+    assert str(make_timer(1.1)) == '0:00:01'
+    assert make_timer(7321).format('%Hh %Mm %Ss') == '02h 02m 01s'
