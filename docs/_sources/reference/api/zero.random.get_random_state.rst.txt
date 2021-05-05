@@ -1,6 +1,0 @@
-zero.random.get\_random\_state
-==============================
-
-.. currentmodule:: zero.random
-
-.. autofunction:: get_random_state

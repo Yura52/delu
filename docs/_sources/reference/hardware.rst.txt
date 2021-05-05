@@ -5,9 +5,6 @@ zero.hardware
 
 .. automodule:: zero.hardware
 
-functions
-^^^^^^^^^
-
 .. autosummary::
     :toctree: api
 

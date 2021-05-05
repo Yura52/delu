@@ -1,0 +1,44 @@
+zero.data.Enumerate
+===================
+
+.. currentmodule:: zero.data
+
+.. autoclass:: Enumerate
+
+   .. autosummary::
+      :toctree: api
+
+      ~Enumerate.__init__
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree: api
+   
+      ~Enumerate.dataset
+   
+   
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree: api
+   
+   
+      
+      
+      
+      
+      ~Enumerate.__len__
+      
+      
+      ~Enumerate.__getitem__
+      
+      
+      
+   
+   

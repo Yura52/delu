@@ -1,6 +1,0 @@
-zero.tools.Timer.\_\_str\_\_
-============================
-
-.. currentmodule:: zero.tools
-
-.. automethod:: Timer.__str__

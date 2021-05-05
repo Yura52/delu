@@ -219,7 +219,7 @@
     </li>
     <li class="md-nav__item">
     
-      <span class="md-nav__link caption"><span class="caption-text">REFERENCE</span></span>
+      <span class="md-nav__link caption"><span class="caption-text">API REFERENCE</span></span>
     
     </li>
     <li class="md-nav__item">
@@ -246,28 +246,7 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/learning.html" class="md-nav__link">zero.learning</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../../reference/random.html" class="md-nav__link">zero.random</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/stream.html" class="md-nav__link">zero.stream</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/tools.html" class="md-nav__link">zero.tools</a>
       
     
     </li>
@@ -300,8 +279,6 @@
   <h1 id="modules-zero-random--page-root">Source code for zero.random</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""Random sampling utilities."""</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'get_random_state'</span><span class="p">,</span> <span class="s1">'set_random_state'</span><span class="p">,</span> <span class="s1">'set_randomness'</span><span class="p">]</span>
-
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">secrets</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
@@ -310,7 +287,7 @@
 <span class="kn">import</span> <span class="nn">torch</span>
 
 
-<div class="viewcode-block" id="set_randomness"><a class="viewcode-back" href="../../reference/api/zero.random.set_randomness.html#zero.random.set_randomness">[docs]</a><span class="k">def</span> <span class="nf">set_randomness</span><span class="p">(</span>
+<div class="viewcode-block" id="init"><a class="viewcode-back" href="../../reference/api/zero.random.init.html#zero.random.init">[docs]</a><span class="k">def</span> <span class="nf">init</span><span class="p">(</span>
     <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
     <span class="n">cudnn_deterministic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">cudnn_benchmark</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -334,13 +311,13 @@
 <span class="sd">        If you don't want to set the seed by hand, but still want to have a chance to</span>
 <span class="sd">        reproduce things, you can use the following pattern::</span>
 
-<span class="sd">            print('Seed:', set_randomness(None))</span>
+<span class="sd">            print('Seed:', zero.random.init(None))</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        .. testcode::</span>
 
-<span class="sd">            assert set_randomness(0) == 0</span>
-<span class="sd">            assert set_randomness(), '0 was generated as the seed, which is almost impossible!'</span>
+<span class="sd">            assert zero.random.init(0) == 0</span>
+<span class="sd">            generated_seed = zero.random.init(None)</span>
 <span class="sd">    """</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="n">cudnn_deterministic</span>  <span class="c1"># type: ignore</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">cudnn_benchmark</span>  <span class="c1"># type: ignore</span>
@@ -358,12 +335,12 @@
     <span class="k">return</span> <span class="n">seed</span></div>
 
 
-<div class="viewcode-block" id="get_random_state"><a class="viewcode-back" href="../../reference/api/zero.random.get_random_state.html#zero.random.get_random_state">[docs]</a><span class="k">def</span> <span class="nf">get_random_state</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<div class="viewcode-block" id="get_state"><a class="viewcode-back" href="../../reference/api/zero.random.get_state.html#zero.random.get_state">[docs]</a><span class="k">def</span> <span class="nf">get_state</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="sd">"""Aggregate global random states from `random`, `numpy` and `torch`.</span>
 
 <span class="sd">    The function is useful for creating checkpoints that allow to resume data streams or</span>
 <span class="sd">    other activities dependent on **global** random number generator (see the note below</span>
-<span class="sd">    ). The result of this function can be passed to `set_random_state`.</span>
+<span class="sd">    ). The result of this function can be passed to `set_state`.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        state</span>
@@ -373,11 +350,11 @@
 <span class="sd">        resumable is to create separate random number generators and manage them</span>
 <span class="sd">        manually (for example, `torch.utils.data.DataLoader` accepts the</span>
 <span class="sd">        argument :code:`generator` for that purposes). However, if you rely on the</span>
-<span class="sd">        global random state, this function along with `set_random_state` does everything</span>
+<span class="sd">        global random state, this function along with `set_state` does everything</span>
 <span class="sd">        just right.</span>
 
 <span class="sd">    See also:</span>
-<span class="sd">        `set_random_state`</span>
+<span class="sd">        `set_state`</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        .. testcode::</span>
@@ -388,12 +365,12 @@
 <span class="sd">            checkpoint = {</span>
 <span class="sd">                'model': model.state_dict(),</span>
 <span class="sd">                'optimizer': optimizer.state_dict(),</span>
-<span class="sd">                'random_state': get_random_state(),</span>
+<span class="sd">                'random_state': zero.random.get_state(),</span>
 <span class="sd">            }</span>
 <span class="sd">            # later</span>
 <span class="sd">            # torch.save(checkpoint, 'checkpoint.pt')</span>
 <span class="sd">            # ...</span>
-<span class="sd">            # set_random_state(torch.load('checkpoint.pt')['random_state'])</span>
+<span class="sd">            # zero.random.set_state(torch.load('checkpoint.pt')['random_state'])</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s1">'random'</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">getstate</span><span class="p">(),</span>
@@ -403,16 +380,19 @@
     <span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="set_random_state"><a class="viewcode-back" href="../../reference/api/zero.random.set_random_state.html#zero.random.set_random_state">[docs]</a><span class="k">def</span> <span class="nf">set_random_state</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="set_state"><a class="viewcode-back" href="../../reference/api/zero.random.set_state.html#zero.random.set_state">[docs]</a><span class="k">def</span> <span class="nf">set_state</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">"""Set global random states from `random`, `numpy` and `torch`.</span>
 
-<span class="sd">    The argument must be produced by `get_random_state`.</span>
+<span class="sd">    The argument must be produced by `get_state`.</span>
 
 <span class="sd">    Note:</span>
 <span class="sd">        The size of list :code:`state['torch.cuda']` must be equal to the number of</span>
 <span class="sd">        available cuda devices. If random state of cuda devices is not important, remove</span>
 <span class="sd">        the entry 'torch.cuda' from the state beforehand, or, **at your own risk**</span>
 <span class="sd">        adjust its value.</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        `get_state`</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        AssertionError: if :code:`torch.cuda.device_count() != len(state['torch.cuda'])`</span>

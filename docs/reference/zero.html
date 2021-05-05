@@ -58,7 +58,7 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="zero.data" href="data.html" />
+    <link rel="next" title="zero.Stream" href="api/zero.Stream.html" />
     <link rel="prev" title="Learn" href="../learn.html" />
   
    
@@ -215,7 +215,7 @@
     </li>
     <li class="md-nav__item">
     
-      <span class="md-nav__link caption"><span class="caption-text">REFERENCE</span></span>
+      <span class="md-nav__link caption"><span class="caption-text">API REFERENCE</span></span>
     
     </li>
     <li class="md-nav__item">
@@ -254,28 +254,7 @@
     <li class="md-nav__item">
     
     
-      <a href="learning.html" class="md-nav__link">zero.learning</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="random.html" class="md-nav__link">zero.random</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="stream.html" class="md-nav__link">zero.stream</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="tools.html" class="md-nav__link">zero.tools</a>
       
     
     </li>
@@ -309,32 +288,63 @@
   <section id="zero">
 <span id="id1"></span><h1 id="reference-zero--page-root">zero<a class="headerlink" href="#reference-zero--page-root" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-zero"></span><p>A zero-overhead library for PyTorch users.</p>
+<p class="rubric">Data and Tensors</p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%"/>
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="data.html#module-zero.data" title="zero.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span></code></a></p></td>
-<td><p>Missing batteries from <a class="reference external" href="https://pytorch.org/docs/stable/data.html#module-torch.utils.data" title="(in PyTorch v1.8.0a0+56b43f4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data</span></code></a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="hardware.html#module-zero.hardware" title="zero.hardware"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hardware</span></code></a></p></td>
-<td><p>Tools related to devices, memory, etc.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="learning.html#module-zero.learning" title="zero.learning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">learning</span></code></a></p></td>
-<td><p>Easier training and evaluation.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="random.html#module-zero.random" title="zero.random"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a></p></td>
-<td><p>Random sampling utilities.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="stream.html#module-zero.stream" title="zero.stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stream</span></code></a></p></td>
-<td><p>Smart Python loops.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="tools.html#module-zero.tools" title="zero.tools"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools</span></code></a></p></td>
-<td><p>Tools for early stopping, time measurement, etc.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.Stream.html#zero.Stream" title="zero.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a>(loader)</p></td>
+<td><p>Smart wrapper for data loaders and iterables.</p></td>
 </tr>
 </tbody>
 </table>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 90%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.collate.html#zero.collate" title="zero.collate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collate</span></code></a>(iterable)</p></td>
+<td><p>Almost an alias for <code class="code docutils literal notranslate"><span class="pre">torch.utils.data.dataloader.default_collate</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.concat.html#zero.concat" title="zero.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concat</span></code></a>(iterable)</p></td>
+<td><p>Concatenate items (tensors, tuples of tensors, dicts of tensors etc.) along the first dimension.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.iter_batches.html#zero.iter_batches" title="zero.iter_batches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iter_batches</span></code></a>(data, *args, **kwargs)</p></td>
+<td><p><em>Efficiently</em> iterate over data (tensor, tuple of tensors, dict of tensors etc.) in a batchwise manner.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Utilities</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 90%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.ProgressTracker.html#zero.ProgressTracker" title="zero.ProgressTracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProgressTracker</span></code></a>(patience[, min_delta])</p></td>
+<td><p>Tracks the best score, helps with early stopping.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.Timer.html#zero.Timer" title="zero.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer</span></code></a>()</p></td>
+<td><p>Measures time.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 90%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.evaluation.html#zero.evaluation" title="zero.evaluation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluation</span></code></a>(*modules)</p></td>
+<td><p>Context-manager &amp; decorator for models evaluation.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Submodules</p>
+<p>See the sidebar on the left.</p>
 </section>
 
 

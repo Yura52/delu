@@ -1,6 +1,0 @@
-zero.stream.Stream.load\_state\_dict
-====================================
-
-.. currentmodule:: zero.stream
-
-.. automethod:: Stream.load_state_dict

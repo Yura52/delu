@@ -1,6 +1,0 @@
-zero.tools.Timer.add
-====================
-
-.. currentmodule:: zero.tools
-
-.. automethod:: Timer.add

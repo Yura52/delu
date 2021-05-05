@@ -1,0 +1,42 @@
+zero.Stream
+===========
+
+.. currentmodule:: zero
+
+.. autoclass:: Stream
+
+   .. autosummary::
+      :toctree: api
+
+      ~Stream.__init__
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree: api
+   
+      ~Stream.epoch
+      ~Stream.iteration
+      ~Stream.loader
+   
+   
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree: api
+   
+   
+      
+      
+      
+      
+      
+      
+      
+   
+   

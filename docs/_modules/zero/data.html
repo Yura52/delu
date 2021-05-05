@@ -219,7 +219,7 @@
     </li>
     <li class="md-nav__item">
     
-      <span class="md-nav__link caption"><span class="caption-text">REFERENCE</span></span>
+      <span class="md-nav__link caption"><span class="caption-text">API REFERENCE</span></span>
     
     </li>
     <li class="md-nav__item">
@@ -246,28 +246,7 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/learning.html" class="md-nav__link">zero.learning</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../../reference/random.html" class="md-nav__link">zero.random</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/stream.html" class="md-nav__link">zero.stream</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/tools.html" class="md-nav__link">zero.tools</a>
       
     
     </li>
@@ -300,8 +279,6 @@
   <h1 id="modules-zero-data--page-root">Source code for zero.data</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""Missing batteries from `torch.utils.data`."""</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Enumerate'</span><span class="p">,</span> <span class="s1">'FnDataset'</span><span class="p">,</span> <span class="s1">'collate'</span><span class="p">,</span> <span class="s1">'concat'</span><span class="p">,</span> <span class="s1">'iloader'</span><span class="p">,</span> <span class="s1">'iter_batches'</span><span class="p">]</span>
-
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">Any</span><span class="p">,</span>
@@ -322,11 +299,8 @@
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Enumerate"><a class="viewcode-back" href="../../reference/data.html#zero.data.Enumerate">[docs]</a><span class="k">class</span> <span class="nc">Enumerate</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+<div class="viewcode-block" id="Enumerate"><a class="viewcode-back" href="../../reference/api/zero.data.Enumerate.html#zero.data.Enumerate">[docs]</a><span class="k">class</span> <span class="nc">Enumerate</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
     <span class="sd">"""Make dataset return both indices and items.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        dataset</span>
 
 <span class="sd">    .. rubric:: Tutorial</span>
 
@@ -345,8 +319,13 @@
 <span class="sd">        tensor([6, 7, 8])</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span> <span class="o">=</span> <span class="n">dataset</span>
+<div class="viewcode-block" id="Enumerate.__init__"><a class="viewcode-back" href="../../reference/api/api/zero.data.Enumerate.__init__.html#zero.data.Enumerate.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""Initialize self.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dataset</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span> <span class="o">=</span> <span class="n">dataset</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dataset</span><span class="p">:</span>
@@ -357,11 +336,11 @@
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span>
 
-<div class="viewcode-block" id="Enumerate.__len__"><a class="viewcode-back" href="../../reference/api/zero.data.Enumerate.__len__.html#zero.data.Enumerate.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="Enumerate.__len__"><a class="viewcode-back" href="../../reference/api/api/zero.data.Enumerate.__len__.html#zero.data.Enumerate.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">"""Get the length of the underlying dataset."""</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Enumerate.__getitem__"><a class="viewcode-back" href="../../reference/api/zero.data.Enumerate.__getitem__.html#zero.data.Enumerate.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<div class="viewcode-block" id="Enumerate.__getitem__"><a class="viewcode-back" href="../../reference/api/api/zero.data.Enumerate.__getitem__.html#zero.data.Enumerate.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="sd">"""Return index and the corresponding item from the underlying dataset.</span>
 
 <span class="sd">        Args:</span>
@@ -372,7 +351,7 @@
         <span class="k">return</span> <span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div></div>
 
 
-<div class="viewcode-block" id="FnDataset"><a class="viewcode-back" href="../../reference/data.html#zero.data.FnDataset">[docs]</a><span class="k">class</span> <span class="nc">FnDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+<div class="viewcode-block" id="FnDataset"><a class="viewcode-back" href="../../reference/api/zero.data.FnDataset.html#zero.data.FnDataset">[docs]</a><span class="k">class</span> <span class="nc">FnDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
     <span class="sd">"""A thin wrapper around a loader function and its arguments.</span>
 
 <span class="sd">    `FnDataset` allows to avoid implementing Dataset-classes (well, at least in simple</span>
@@ -397,23 +376,6 @@
 <span class="sd">    With `FnDataset`::</span>
 
 <span class="sd">        dataset = FnDataset(Image.open, filenames, transform)</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        fn: the function that produces values based on arguments from :code:`args`</span>
-<span class="sd">        args: arguments for :code:`fn`. If an iterable, but not a list, then is casted</span>
-<span class="sd">            to a list. If an integer, then the behavior is the same as for</span>
-<span class="sd">            :code:`list(range(args))`. The size of :code:`args` defines the return value</span>
-<span class="sd">            for `FnDataset.__len__`.</span>
-<span class="sd">        transform: if presented, is applied to the return value of `fn` in</span>
-<span class="sd">            `FnDataset.__getitem__`</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        .. code-block::</span>
-
-<span class="sd">            import PIL.Image as Image</span>
-<span class="sd">            import torchvision.transforms as T</span>
-
-<span class="sd">            dataset = FnDataset(Image.open, filenames, T.ToTensor())</span>
 
 <span class="sd">    .. rubric:: Tutorial</span>
 
@@ -485,20 +447,39 @@
 
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<div class="viewcode-block" id="FnDataset.__init__"><a class="viewcode-back" href="../../reference/api/api/zero.data.FnDataset.__init__.html#zero.data.FnDataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">T</span><span class="p">],</span>
         <span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">],</span>
         <span class="n">transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""Initialize self.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fn: the function that produces values based on arguments from :code:`args`</span>
+<span class="sd">            args: arguments for :code:`fn`. If an iterable, but not a list, then is</span>
+<span class="sd">                casted to a list. If an integer, then the behavior is the same as for</span>
+<span class="sd">                :code:`list(range(args))`. The size of :code:`args` defines the return</span>
+<span class="sd">                value for `FnDataset.__len__`.</span>
+<span class="sd">            transform: if presented, is applied to the return value of `fn` in</span>
+<span class="sd">                `FnDataset.__getitem__`</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            .. code-block::</span>
+
+<span class="sd">                import PIL.Image as Image</span>
+<span class="sd">                import torchvision.transforms as T</span>
+
+<span class="sd">                dataset = FnDataset(Image.open, filenames, T.ToTensor())</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fn</span> <span class="o">=</span> <span class="n">fn</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
                 <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="n">args</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span> <span class="o">=</span> <span class="n">transform</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span> <span class="o">=</span> <span class="n">transform</span></div>
 
-<div class="viewcode-block" id="FnDataset.__len__"><a class="viewcode-back" href="../../reference/api/zero.data.FnDataset.__len__.html#zero.data.FnDataset.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="FnDataset.__len__"><a class="viewcode-back" href="../../reference/api/api/zero.data.FnDataset.__len__.html#zero.data.FnDataset.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">"""Get the dataset size.</span>
 
 <span class="sd">        See `FnDataset` for details.</span>
@@ -508,7 +489,7 @@
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span></div>
 
-<div class="viewcode-block" id="FnDataset.__getitem__"><a class="viewcode-back" href="../../reference/api/zero.data.FnDataset.__getitem__.html#zero.data.FnDataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<div class="viewcode-block" id="FnDataset.__getitem__"><a class="viewcode-back" href="../../reference/api/api/zero.data.FnDataset.__getitem__.html#zero.data.FnDataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
         <span class="sd">"""Get value by index.</span>
 
 <span class="sd">        See `FnDataset` for details.</span>
@@ -555,7 +536,7 @@
 <span class="sd">        AssertionError: if size is not positive</span>
 
 <span class="sd">    See also:</span>
-<span class="sd">        `iter_batches`</span>
+<span class="sd">        `zero.iter_batches`</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        Usage for training:</span>
@@ -604,7 +585,7 @@
     <span class="p">)</span>
 
 
-<div class="viewcode-block" id="iter_batches"><a class="viewcode-back" href="../../reference/api/zero.data.iter_batches.html#zero.data.iter_batches">[docs]</a><span class="k">def</span> <span class="nf">iter_batches</span><span class="p">(</span>
+<div class="viewcode-block" id="iter_batches"><a class="viewcode-back" href="../../reference/api/zero.iter_batches.html#zero.data.iter_batches">[docs]</a><span class="k">def</span> <span class="nf">iter_batches</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
         <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
         <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
@@ -614,7 +595,8 @@
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">:</span>
-    <span class="sd">"""*Efficiently* iterate over data in a batchwise manner.</span>
+    <span class="sd">"""*Efficiently* iterate over data (tensor, tuple of tensors, dict of tensors etc.)</span>
+<span class="sd">    in a batchwise manner.</span>
 
 <span class="sd">    The function is useful when you want to *efficiently* iterate **once** over</span>
 <span class="sd">    tensor-based data in a batchwise manner. See examples below for typical use cases.</span>
@@ -641,7 +623,7 @@
 <span class="sd">        :code:`while True:`.</span>
 
 <span class="sd">    See also:</span>
-<span class="sd">        - `iloader`</span>
+<span class="sd">        - `zero.data.iloader`</span>
 <span class="sd">        - `concat`</span>
 
 <span class="sd">    Examples:</span>
@@ -679,8 +661,9 @@
     <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">iloader</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="concat"><a class="viewcode-back" href="../../reference/api/zero.data.concat.html#zero.data.concat">[docs]</a><span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-    <span class="sd">"""Concatenate items of the iterable along the first dimension.</span>
+<div class="viewcode-block" id="concat"><a class="viewcode-back" href="../../reference/api/zero.concat.html#zero.data.concat">[docs]</a><span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="sd">"""Concatenate items (tensors, tuples of tensors, dicts of tensors etc.) along the</span>
+<span class="sd">    first dimension.</span>
 
 <span class="sd">    `concat` is a more general version of :code:`torch.cat(..., dim=0)`. It works not</span>
 <span class="sd">    only with sequences of tensors, but also with sequences of containers (tuples,</span>
@@ -906,7 +889,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="collate"><a class="viewcode-back" href="../../reference/api/zero.data.collate.html#zero.data.collate">[docs]</a><span class="k">def</span> <span class="nf">collate</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<div class="viewcode-block" id="collate"><a class="viewcode-back" href="../../reference/api/zero.collate.html#zero.data.collate">[docs]</a><span class="k">def</span> <span class="nf">collate</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">"""Almost an alias for :code:`torch.utils.data.dataloader.default_collate`.</span>
 
 <span class="sd">    Namely, the input is allowed to be any kind of iterable, not only a list. Firstly,</span>

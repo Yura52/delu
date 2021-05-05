@@ -1,6 +1,0 @@
-zero.tools.Timer.\_\_enter\_\_
-==============================
-
-.. currentmodule:: zero.tools
-
-.. automethod:: Timer.__enter__

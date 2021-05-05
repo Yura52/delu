@@ -1,6 +1,0 @@
-zero.tools.Timer.\_\_call\_\_
-=============================
-
-.. currentmodule:: zero.tools
-
-.. automethod:: Timer.__call__

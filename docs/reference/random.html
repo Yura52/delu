@@ -58,8 +58,8 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="zero.random.set_randomness" href="api/zero.random.set_randomness.html" />
-    <link rel="prev" title="zero.learning.evaluation" href="api/zero.learning.evaluation.html" />
+    <link rel="next" title="zero.random.init" href="api/zero.random.init.html" />
+    <link rel="prev" title="zero.hardware.get_gpus_info" href="api/zero.hardware.get_gpus_info.html" />
   
    
 
@@ -215,7 +215,7 @@
     </li>
     <li class="md-nav__item">
     
-      <span class="md-nav__link caption"><span class="caption-text">REFERENCE</span></span>
+      <span class="md-nav__link caption"><span class="caption-text">API REFERENCE</span></span>
     
     </li>
     <li class="md-nav__item">
@@ -242,13 +242,6 @@
     <li class="md-nav__item">
     
     
-      <a href="learning.html" class="md-nav__link">zero.learning</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     <label class="md-nav__link md-nav__link--active" for="__toc"> zero.random </label>
     
@@ -262,27 +255,6 @@
 
   </ul>
 </nav>
-      <ul class="md-nav__list"> 
-    <li class="md-nav__item">
-    
-    
-      <a href="#functions" class="md-nav__link">functions</a>
-      
-    
-    </li></ul>
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="stream.html" class="md-nav__link">zero.stream</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="tools.html" class="md-nav__link">zero.tools</a>
       
     
     </li>
@@ -316,26 +288,23 @@
   <section id="module-zero.random">
 <span id="zero-random"></span><h1 id="reference-random--page-root">zero.random<a class="headerlink" href="#reference-random--page-root" title="Permalink to this headline">¶</a></h1>
 <p>Random sampling utilities.</p>
-<section id="functions">
-<h2 id="functions">functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%"/>
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.random.set_randomness.html#zero.random.set_randomness" title="zero.random.set_randomness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_randomness</span></code></a>(seed[, cudnn_deterministic, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.random.init.html#zero.random.init" title="zero.random.init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code></a>(seed[, cudnn_deterministic, …])</p></td>
 <td><p>Set seeds and settings in <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.20)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/zero.random.get_random_state.html#zero.random.get_random_state" title="zero.random.get_random_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_random_state</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.random.get_state.html#zero.random.get_state" title="zero.random.get_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_state</span></code></a>()</p></td>
 <td><p>Aggregate global random states from <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.20)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.random.set_random_state.html#zero.random.set_random_state" title="zero.random.set_random_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_random_state</span></code></a>(state)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.random.set_state.html#zero.random.set_state" title="zero.random.set_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_state</span></code></a>(state)</p></td>
 <td><p>Set global random states from <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.20)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>.</p></td>
 </tr>
 </tbody>
 </table>
-</section>
 </section>
 
 

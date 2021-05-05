@@ -1,6 +1,0 @@
-zero.data.concat
-================
-
-.. currentmodule:: zero.data
-
-.. autofunction:: concat

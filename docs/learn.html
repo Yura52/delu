@@ -222,40 +222,12 @@
 
   </ul>
 </nav>
-      <ul class="md-nav__list"> 
-    <li class="md-nav__item">
-    
-    
-      <a href="#how-to-install-zero" class="md-nav__link">How to install Zero?</a>
       
     
     </li>
     <li class="md-nav__item">
     
-    
-      <a href="#what-is-reference" class="md-nav__link">What is Reference?</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="#how-to-import-zero" class="md-nav__link">How to import Zero?</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="#how-to-learn-zero" class="md-nav__link">How to learn Zero?</a>
-      
-    
-    </li></ul>
-    
-    </li>
-    <li class="md-nav__item">
-    
-      <span class="md-nav__link caption"><span class="caption-text">REFERENCE</span></span>
+      <span class="md-nav__link caption"><span class="caption-text">API REFERENCE</span></span>
     
     </li>
     <li class="md-nav__item">
@@ -282,28 +254,7 @@
     <li class="md-nav__item">
     
     
-      <a href="reference/learning.html" class="md-nav__link">zero.learning</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="reference/random.html" class="md-nav__link">zero.random</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="reference/stream.html" class="md-nav__link">zero.stream</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="reference/tools.html" class="md-nav__link">zero.tools</a>
       
     
     </li>
@@ -340,24 +291,16 @@
 <h2 id="how-to-install-zero">How to install Zero?<a class="headerlink" href="#how-to-install-zero" title="Permalink to this headline">¶</a></h2>
 <p>For installation instructions, see <a class="reference internal" href="index.html#installation"><span class="std std-ref">Installation</span></a>.</p>
 </section>
-<section id="what-is-reference">
-<h2 id="what-is-reference">What is Reference?<a class="headerlink" href="#what-is-reference" title="Permalink to this headline">¶</a></h2>
-<p>Reference (see the sidebar) is the main source of knowledge about the library. It
-contains everything you may need to understand how to use specific tools: API
-specification, tutorials and usage examples.</p>
-</section>
-<section id="how-to-import-zero">
-<h2 id="how-to-import-zero">How to import Zero?<a class="headerlink" href="#how-to-import-zero" title="Permalink to this headline">¶</a></h2>
-<p>Simply do <code class="code docutils literal notranslate"><span class="pre">import</span> <span class="pre">zero</span></code> and use what you need without accessing the submodules.
-For example, <code class="code docutils literal notranslate"><span class="pre">zero.evaluation</span></code> is the correct way to access the function, while
-<code class="code docutils literal notranslate"><span class="pre">zero.learning.evaluation</span></code> is not, because the structure of submodules is not
-stable yet.</p>
+<section id="what-is-api-reference">
+<h2 id="what-is-api-reference">What is API Reference?<a class="headerlink" href="#what-is-api-reference" title="Permalink to this headline">¶</a></h2>
+<p>API Reference (see the sidebar) is the main source of knowledge about the library. It
+contains everything you may need: API specification, tutorials and usage examples.</p>
 </section>
 <section id="how-to-learn-zero">
 <h2 id="how-to-learn-zero">How to learn Zero?<a class="headerlink" href="#how-to-learn-zero" title="Permalink to this headline">¶</a></h2>
 <p>Zero, by design, is rather a “toolbox” than a “framework”, so you can learn things and
 start using them in almost any order. If you want to explore the library by yourself,
-<a class="reference internal" href="reference/zero.html#zero"><span class="std std-ref">this page</span></a> is a good place to start.</p>
+just browse the API Reference.</p>
 <p>However, if you want to quickly learn “the most important” things, then understanding of
 <a class="reference external" href="https://github.com/Yura52/zero/blob/master/examples/mnist.py">this classification task</a>
 is enough. To achieve this, you need to walk through some specific parts of Reference
@@ -369,31 +312,30 @@ are the things to learn:</p>
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.learning.evaluation.html#zero.learning.evaluation" title="zero.learning.evaluation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.learning.evaluation</span></code></a>(*modules)</p></td>
-<td><p>Context-manager for models evaluation.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.evaluation.html#zero.evaluation" title="zero.evaluation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.evaluation</span></code></a>(*modules)</p></td>
+<td><p>Context-manager &amp; decorator for models evaluation.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/api/zero.random.set_randomness.html#zero.random.set_randomness" title="zero.random.set_randomness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.random.set_randomness</span></code></a>(seed[, …])</p></td>
-<td><p>Set seeds and settings in <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.20)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/random.html#module-zero.random" title="zero.random"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.random</span></code></a></p></td>
+<td><p>Random sampling utilities.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.random.get_random_state.html#zero.random.get_random_state" title="zero.random.get_random_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.random.get_random_state</span></code></a>()</p></td>
-<td><p>Aggregate global random states from <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.20)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.Stream.html#zero.Stream" title="zero.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.Stream</span></code></a>(loader)</p></td>
+<td><p>Smart wrapper for data loaders and iterables.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/tools.html#zero.tools.ProgressTracker" title="zero.tools.ProgressTracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.tools.ProgressTracker</span></code></a>(patience[, min_delta])</p></td>
-<td><p>Tracks the best score, facilitates early stopping.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/api/zero.ProgressTracker.html#zero.ProgressTracker" title="zero.ProgressTracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.ProgressTracker</span></code></a>(patience[, min_delta])</p></td>
+<td><p>Tracks the best score, helps with early stopping.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/tools.html#zero.tools.Timer" title="zero.tools.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.tools.Timer</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.Timer.html#zero.Timer" title="zero.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.Timer</span></code></a>()</p></td>
 <td><p>Measures time.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="reference/api/zero.hardware.get_gpus_info.html#zero.hardware.get_gpus_info" title="zero.hardware.get_gpus_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.hardware.get_gpus_info</span></code></a>()</p></td>
 <td><p>Get information about GPU devices: driver version, memory, utilization etc.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.data.concat.html#zero.data.concat" title="zero.data.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.data.concat</span></code></a>(iterable)</p></td>
-<td><p>Concatenate items of the iterable along the first dimension.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.concat.html#zero.concat" title="zero.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.concat</span></code></a>(iterable)</p></td>
+<td><p>Concatenate items (tensors, tuples of tensors, dicts of tensors etc.) along the first dimension.</p></td>
 </tr>
 </tbody>
 </table>
-<p>Congratulations! You are ready to apply Zero in practice. You can also visit
-<a class="reference internal" href="reference/zero.html#zero"><span class="std std-ref">this page</span></a> and explore things that are not covered in the list above.</p>
+<p>Congratulations! You are ready to apply Zero in practice.</p>
 </section>
 </section>
 

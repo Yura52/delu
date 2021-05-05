@@ -1,0 +1,6 @@
+zero.random.init
+================
+
+.. currentmodule:: zero.random
+
+.. autofunction:: init

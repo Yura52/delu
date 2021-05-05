@@ -1,6 +1,0 @@
-zero.tools.Timer.pause
-======================
-
-.. currentmodule:: zero.tools
-
-.. automethod:: Timer.pause

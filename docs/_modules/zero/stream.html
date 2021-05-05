@@ -219,7 +219,7 @@
     </li>
     <li class="md-nav__item">
     
-      <span class="md-nav__link caption"><span class="caption-text">REFERENCE</span></span>
+      <span class="md-nav__link caption"><span class="caption-text">API REFERENCE</span></span>
     
     </li>
     <li class="md-nav__item">
@@ -246,28 +246,7 @@
     <li class="md-nav__item">
     
     
-      <a href="../../reference/learning.html" class="md-nav__link">zero.learning</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
       <a href="../../reference/random.html" class="md-nav__link">zero.random</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/stream.html" class="md-nav__link">zero.stream</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../../reference/tools.html" class="md-nav__link">zero.tools</a>
       
     
     </li>
@@ -298,11 +277,7 @@
           <article class="md-content__inner md-typeset" role="main">
             
   <h1 id="modules-zero-stream--page-root">Source code for zero.stream</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Smart Python loops."""</span>
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Stream'</span><span class="p">]</span>
-
-<span class="kn">import</span> <span class="nn">math</span>
+<span></span><span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sized</span><span class="p">,</span> <span class="n">Union</span>
 
@@ -318,8 +293,8 @@
         <span class="k">return</span> <span class="kc">None</span>
 
 
-<div class="viewcode-block" id="Stream"><a class="viewcode-back" href="../../reference/stream.html#zero.stream.Stream">[docs]</a><span class="k">class</span> <span class="nc">Stream</span><span class="p">:</span>
-    <span class="sd">"""Smart wrapper for iterables.</span>
+<div class="viewcode-block" id="Stream"><a class="viewcode-back" href="../../reference/api/zero.Stream.html#zero.Stream">[docs]</a><span class="k">class</span> <span class="nc">Stream</span><span class="p">:</span>
+    <span class="sd">"""Smart wrapper for data loaders and iterables.</span>
 
 <span class="sd">    `Stream` simplifies managing loops, especially in typical deep learning scenarios</span>
 <span class="sd">    (it is usually used to wrap :code:`train_dataloader` or any other data source).</span>
@@ -331,23 +306,6 @@
 <span class="sd">    - allows to customize the size of epoch</span>
 <span class="sd">    - allows to change the underlying data loader on the fly</span>
 <span class="sd">    - enables useful patterns</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        loader: any kind of iterable (DataLoader, list, iterator, generator, ...)</span>
-<span class="sd">    Raises:</span>
-<span class="sd">        AssertionError: if :code:`loader` is not an iterator and is empty</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        .. testcode::</span>
-
-<span class="sd">            stream = Stream([0, 1, 2, 3])</span>
-<span class="sd">            stream = Stream(range(10))</span>
-<span class="sd">            import itertools</span>
-<span class="sd">            stream = Stream(itertools.repeat(0))</span>
-
-<span class="sd">            from torch.utils.data import DataLoader, TensorDataset</span>
-<span class="sd">            dataset = TensorDataset(torch.randn(10, 2))</span>
-<span class="sd">            stream = Stream(DataLoader(dataset, batch_size=3, shuffle=True))</span>
 
 <span class="sd">    .. rubric:: Tutorial</span>
 
@@ -436,7 +394,7 @@
 <span class="sd">        be expressed with the following loop::</span>
 
 <span class="sd">            while True:</span>
-<span class="sd">                for item in loader:  # loader which is passed in the constructor</span>
+<span class="sd">                for item in loader:  # loader which is passed to the constructor</span>
 <span class="sd">                    ...</span>
 
 <span class="sd">        Documentation for `Stream.next` and `Stream.data` provide helpful examples.</span>
@@ -459,14 +417,33 @@
                 <span class="k">raise</span> <span class="ne">StopIteration</span><span class="p">()</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Stream.__init__"><a class="viewcode-back" href="../../reference/api/api/zero.Stream.__init__.html#zero.Stream.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""Initialize self.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            loader: any kind of iterable (DataLoader, list, iterator, generator, ...)</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: if :code:`loader` is not an iterator and is empty</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            .. testcode::</span>
+
+<span class="sd">                stream = Stream([0, 1, 2, 3])</span>
+<span class="sd">                stream = Stream(range(10))</span>
+<span class="sd">                import itertools</span>
+<span class="sd">                stream = Stream(itertools.repeat(0))</span>
+
+<span class="sd">                from torch.utils.data import DataLoader, TensorDataset</span>
+<span class="sd">                dataset = TensorDataset(torch.randn(10, 2))</span>
+<span class="sd">                stream = Stream(DataLoader(dataset, batch_size=3, shuffle=True))</span>
+<span class="sd">        """</span>
         <span class="k">assert</span> <span class="n">_try_len</span><span class="p">(</span><span class="n">loader</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_iteration</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_epoch</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span> <span class="o">=</span> <span class="n">loader</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_progress_bar</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">tqdm</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_should_update_progress_bar</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_should_update_progress_bar</span> <span class="o">=</span> <span class="kc">False</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -489,7 +466,7 @@
         <span class="sd">"""The underlying loader."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span>
 
-<div class="viewcode-block" id="Stream.set_loader"><a class="viewcode-back" href="../../reference/api/zero.stream.Stream.set_loader.html#zero.stream.Stream.set_loader">[docs]</a>    <span class="k">def</span> <span class="nf">set_loader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">set_loader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Set new loader.</span>
 
 <span class="sd">        Args:</span>
@@ -518,12 +495,12 @@
         <span class="k">assert</span> <span class="n">_try_len</span><span class="p">(</span><span class="n">loader</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span> <span class="o">=</span> <span class="n">loader</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">loader</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">loader</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_increment_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_iteration</span> <span class="o">+=</span> <span class="mi">1</span>
 
-<div class="viewcode-block" id="Stream.increment_epoch"><a class="viewcode-back" href="../../reference/api/zero.stream.Stream.increment_epoch.html#zero.stream.Stream.increment_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">increment_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">increment_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Increment `Stream.epoch`.</span>
 
 <span class="sd">        Examples:</span>
@@ -536,9 +513,9 @@
 <span class="sd">                stream.increment_epoch()</span>
 <span class="sd">                assert stream.epoch == 2</span>
 <span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch</span> <span class="o">+=</span> <span class="mi">1</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch</span> <span class="o">+=</span> <span class="mi">1</span>
 
-<div class="viewcode-block" id="Stream.reload_iterator"><a class="viewcode-back" href="../../reference/api/zero.stream.Stream.reload_iterator.html#zero.stream.Stream.reload_iterator">[docs]</a>    <span class="k">def</span> <span class="nf">reload_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reload_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Set the underlying iterator to `iter(self.loader)`.</span>
 
 <span class="sd">        If the underlying loader is a finite iterable, the method can be used to</span>
@@ -560,9 +537,9 @@
 <span class="sd">                stream.reload_iterator()</span>
 <span class="sd">                assert stream.next() == 2</span>
 <span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Stream.next"><a class="viewcode-back" href="../../reference/api/zero.stream.Stream.next.html#zero.stream.Stream.next">[docs]</a>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
         <span class="sd">"""Get the next item and increment iteration.</span>
 
 <span class="sd">        Returns:</span>
@@ -604,9 +581,9 @@
             <span class="c1"># and the exception should be just propagated.</span>
             <span class="n">value</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_increment_iteration</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">value</span></div>
+        <span class="k">return</span> <span class="n">value</span>
 
-<div class="viewcode-block" id="Stream.data"><a class="viewcode-back" href="../../reference/api/zero.stream.Stream.data.html#zero.stream.Stream.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_items</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_items</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">:</span>
         <span class="sd">"""Iterate over the loader.</span>
 
 <span class="sd">        Under the hood, `Stream.next` is called, hence, `Stream.iteration` changes</span>
@@ -644,9 +621,9 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">,</span> <span class="n">Sized</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">()</span>
             <span class="n">n_items</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Stream</span><span class="o">.</span><span class="n">_EpochData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_items</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Stream</span><span class="o">.</span><span class="n">_EpochData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_items</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Stream.epochs"><a class="viewcode-back" href="../../reference/api/zero.stream.Stream.epochs.html#zero.stream.Stream.epochs">[docs]</a>    <span class="k">def</span> <span class="nf">epochs</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">epochs</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">max_epoch</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
         <span class="n">epoch_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -751,9 +728,9 @@
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">epoch_size</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_update_progress_bar</span><span class="p">:</span>
             <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_progress_bar</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
-<div class="viewcode-block" id="Stream.state_dict"><a class="viewcode-back" href="../../reference/api/zero.stream.Stream.state_dict.html#zero.stream.Stream.state_dict">[docs]</a>    <span class="k">def</span> <span class="nf">state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="sd">"""Get the stream's state.</span>
 
 <span class="sd">        The result can be passed to `Stream.load_state_dict`. The result includes:</span>
@@ -782,9 +759,9 @@
 <span class="sd">                stream.increment_epoch()</span>
 <span class="sd">                assert stream.state_dict() == {'epoch': 1, 'iteration': 2}</span>
 <span class="sd">        """</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">'iteration'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">iteration</span><span class="p">,</span> <span class="s1">'epoch'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">epoch</span><span class="p">}</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">'iteration'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">iteration</span><span class="p">,</span> <span class="s1">'epoch'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">epoch</span><span class="p">}</span>
 
-<div class="viewcode-block" id="Stream.load_state_dict"><a class="viewcode-back" href="../../reference/api/zero.stream.Stream.load_state_dict.html#zero.stream.Stream.load_state_dict">[docs]</a>    <span class="k">def</span> <span class="nf">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Load state dictionary.</span>
 
 <span class="sd">        Args:</span>
@@ -816,7 +793,7 @@
 <span class="sd">                assert new_stream.state_dict() == {'epoch': 1, 'iteration': 2}</span>
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_iteration</span> <span class="o">=</span> <span class="n">state_dict</span><span class="p">[</span><span class="s1">'iteration'</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch</span> <span class="o">=</span> <span class="n">state_dict</span><span class="p">[</span><span class="s1">'epoch'</span><span class="p">]</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch</span> <span class="o">=</span> <span class="n">state_dict</span><span class="p">[</span><span class="s1">'epoch'</span><span class="p">]</span></div>
 </pre></div>
 
           </article>
