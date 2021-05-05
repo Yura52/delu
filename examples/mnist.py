@@ -137,10 +137,10 @@ def main():
     if not args.from_checkpoint:
         # TODO replace `join` with `shlex.join` in 3.8
         print(
-            '\nNow, you can test if the last epochs can be reproduced when the training '
-            'is resumed from the last available checkpoint. For that, run:\n'
+            '\nNow, you can test if the last epochs can be reproduced when the '
+            'training is resumed from the last available checkpoint. For that, run:\n'
             'cp checkpoint.pt a.pt\n'
-            'and then relaunch the script as before but with one more option: "-c a.pt"'
+            f'python {" ".join(sys.argv)} -c a.pt'
         )
 
 
