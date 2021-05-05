@@ -425,20 +425,20 @@ class evaluation(torch.no_grad):
             with evaluation(a, b):
                 ...
 
-            @evaluate(a)
+            @evaluation(a)
             def f():
                 ...
 
-            @evaluate(a, b)
+            @evaluation(a, b)
             def f():
                 ...
 
         .. testcode::
 
             model = torch.nn.Linear(1, 1)
-            for grad in False, True:
+            for grad_before_context in False, True:
                 for train in False, True:
-                    torch.set_grad_enabled(grad)
+                    torch.set_grad_enabled(grad_before_context)
                     model.train(train)
                     with evaluation(model):
                         assert not model.training

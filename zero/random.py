@@ -38,7 +38,7 @@ def init(
         .. testcode::
 
             assert zero.random.init(0) == 0
-            generated_seed = zero.random.init()
+            generated_seed = zero.random.init(None)
     """
     torch.backends.cudnn.deterministic = cudnn_deterministic  # type: ignore
     torch.backends.cudnn.benchmark = cudnn_benchmark  # type: ignore

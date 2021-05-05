@@ -38,6 +38,7 @@ autosummary_generate = True
 doctest_global_setup = '''
 import numpy as np
 import torch
+import zero
 from zero import *
 from zero.data import *
 from zero.hardware import *
