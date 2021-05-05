@@ -1,7 +1,3 @@
-"""Smart Python loops."""
-
-__all__ = ['Stream']
-
 import math
 from copy import deepcopy
 from typing import Any, Dict, Iterable, Iterator, Optional, Sized, Union
@@ -19,7 +15,7 @@ def _try_len(x):
 
 
 class Stream:
-    """Smart wrapper for iterables.
+    """Smart wrapper for data loaders and iterables.
 
     `Stream` simplifies managing loops, especially in typical deep learning scenarios
     (it is usually used to wrap :code:`train_dataloader` or any other data source).
@@ -31,23 +27,6 @@ class Stream:
     - allows to customize the size of epoch
     - allows to change the underlying data loader on the fly
     - enables useful patterns
-
-    Args:
-        loader: any kind of iterable (DataLoader, list, iterator, generator, ...)
-    Raises:
-        AssertionError: if :code:`loader` is not an iterator and is empty
-
-    Examples:
-        .. testcode::
-
-            stream = Stream([0, 1, 2, 3])
-            stream = Stream(range(10))
-            import itertools
-            stream = Stream(itertools.repeat(0))
-
-            from torch.utils.data import DataLoader, TensorDataset
-            dataset = TensorDataset(torch.randn(10, 2))
-            stream = Stream(DataLoader(dataset, batch_size=3, shuffle=True))
 
     .. rubric:: Tutorial
 
@@ -136,7 +115,7 @@ class Stream:
         be expressed with the following loop::
 
             while True:
-                for item in loader:  # loader which is passed in the constructor
+                for item in loader:  # loader which is passed to the constructor
                     ...
 
         Documentation for `Stream.next` and `Stream.data` provide helpful examples.
@@ -160,6 +139,25 @@ class Stream:
             return self._stream.next()
 
     def __init__(self, loader: Iterable) -> None:
+        """Initialize self.
+
+        Args:
+            loader: any kind of iterable (DataLoader, list, iterator, generator, ...)
+        Raises:
+            AssertionError: if :code:`loader` is not an iterator and is empty
+
+        Examples:
+            .. testcode::
+
+                stream = Stream([0, 1, 2, 3])
+                stream = Stream(range(10))
+                import itertools
+                stream = Stream(itertools.repeat(0))
+
+                from torch.utils.data import DataLoader, TensorDataset
+                dataset = TensorDataset(torch.randn(10, 2))
+                stream = Stream(DataLoader(dataset, batch_size=3, shuffle=True))
+        """
         assert _try_len(loader) != 0
         self._iteration = 0
         self._epoch = 0

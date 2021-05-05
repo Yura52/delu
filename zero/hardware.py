@@ -1,7 +1,5 @@
 """Tools related to devices, memory, etc."""
 
-__all__ = ['free_memory', 'get_gpus_info']
-
 import gc
 from typing import Any, Dict
 

@@ -39,13 +39,16 @@ doctest_global_setup = '''
 import numpy as np
 import torch
 from zero import *
+from zero.data import *
+from zero.hardware import *
+from zero.random import *
 '''
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
     'numpy': ('https://numpy.org/doc/stable', None),
     'torch': ('https://pytorch.org/docs/stable', None),
-    'ignite': ('https://pytorch.org/ignite', None)
+    'ignite': ('https://pytorch.org/ignite', None),
 }
 
 napoleon_numpy_docstring = False
@@ -68,6 +71,7 @@ repo_url = 'https://github.com/Yura52/zero'
 # }
 
 import sphinx_material  # noqa
+
 html_theme = 'sphinx_material'
 html_theme_options = {
     # Full list of options: https://github.com/bashtage/sphinx-material/blob/master/sphinx_material/sphinx_material/theme.conf
@@ -75,7 +79,7 @@ html_theme_options = {
     # Full list of colors (not all of them are available in sphinx-material, see theme.conf above):
     # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#primary-color
     'color_primary': 'white',
-    'globaltoc_depth': 2,
+    'globaltoc_depth': 1,
     # search here for logo icons: https://www.compart.com/en/unicode
     'logo_icon': '&#127968;',
     'nav_links': [],
@@ -85,7 +89,7 @@ html_theme_options = {
     'repo_type': 'github',
     'master_doc': False,
     'version_dropdown': True,
-    'version_info': {f'{zero.__version__}': ''}
+    'version_info': {f'{zero.__version__}': ''},
 }
 html_sidebars = {
     '**': ['logo-text.html', 'globaltoc.html', 'searchbox.html'],

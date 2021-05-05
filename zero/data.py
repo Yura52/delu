@@ -1,7 +1,5 @@
 """Missing batteries from `torch.utils.data`."""
 
-__all__ = ['Enumerate', 'FnDataset', 'collate', 'concat', 'iloader', 'iter_batches']
-
 import itertools
 from typing import (
     Any,
@@ -25,9 +23,6 @@ T = TypeVar('T')
 class Enumerate(Dataset):
     """Make dataset return both indices and items.
 
-    Args:
-        dataset
-
     .. rubric:: Tutorial
 
     .. testcode::
@@ -46,6 +41,11 @@ class Enumerate(Dataset):
     """
 
     def __init__(self, dataset: Dataset) -> None:
+        """Initialize self.
+
+        Args:
+            dataset
+        """
         self._dataset = dataset
 
     @property
@@ -97,23 +97,6 @@ class FnDataset(Dataset):
     With `FnDataset`::
 
         dataset = FnDataset(Image.open, filenames, transform)
-
-    Args:
-        fn: the function that produces values based on arguments from :code:`args`
-        args: arguments for :code:`fn`. If an iterable, but not a list, then is casted
-            to a list. If an integer, then the behavior is the same as for
-            :code:`list(range(args))`. The size of :code:`args` defines the return value
-            for `FnDataset.__len__`.
-        transform: if presented, is applied to the return value of `fn` in
-            `FnDataset.__getitem__`
-
-    Examples:
-        .. code-block::
-
-            import PIL.Image as Image
-            import torchvision.transforms as T
-
-            dataset = FnDataset(Image.open, filenames, T.ToTensor())
 
     .. rubric:: Tutorial
 
@@ -191,6 +174,25 @@ class FnDataset(Dataset):
         args: Union[int, Iterable],
         transform: Optional[Callable[[T], Any]] = None,
     ) -> None:
+        """Initialize self.
+
+        Args:
+            fn: the function that produces values based on arguments from :code:`args`
+            args: arguments for :code:`fn`. If an iterable, but not a list, then is
+                casted to a list. If an integer, then the behavior is the same as for
+                :code:`list(range(args))`. The size of :code:`args` defines the return
+                value for `FnDataset.__len__`.
+            transform: if presented, is applied to the return value of `fn` in
+                `FnDataset.__getitem__`
+
+        Examples:
+            .. code-block::
+
+                import PIL.Image as Image
+                import torchvision.transforms as T
+
+                dataset = FnDataset(Image.open, filenames, T.ToTensor())
+        """
         self._fn = fn
         if isinstance(args, Iterable):
             if not isinstance(args, list):
@@ -255,7 +257,7 @@ def iloader(size: int, *args, **kwargs) -> DataLoader:
         AssertionError: if size is not positive
 
     See also:
-        `iter_batches`
+        `zero.iter_batches`
 
     Examples:
         Usage for training:
@@ -314,7 +316,8 @@ def iter_batches(
     *args,
     **kwargs,
 ) -> Iterator:
-    """*Efficiently* iterate over data in a batchwise manner.
+    """*Efficiently* iterate over data (tensor, tuple of tensors, dict of tensors etc.)
+    in a batchwise manner.
 
     The function is useful when you want to *efficiently* iterate **once** over
     tensor-based data in a batchwise manner. See examples below for typical use cases.
@@ -341,7 +344,7 @@ def iter_batches(
         :code:`while True:`.
 
     See also:
-        - `iloader`
+        - `zero.data.iloader`
         - `concat`
 
     Examples:
@@ -380,7 +383,8 @@ def iter_batches(
 
 
 def concat(iterable: Iterable[T]) -> T:
-    """Concatenate items of the iterable along the first dimension.
+    """Concatenate items (tensors, tuples of tensors, dicts of tensors etc.) along the
+    first dimension.
 
     `concat` is a more general version of :code:`torch.cat(..., dim=0)`. It works not
     only with sequences of tensors, but also with sequences of containers (tuples,

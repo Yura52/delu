@@ -1,11 +1,10 @@
-"""Tools for early stopping, time measurement, etc."""
-
-__all__ = ['ProgressTracker', 'Timer']
-
 import datetime
 import enum
 import time
 from typing import Any, Dict, Optional
+
+import torch
+import torch.nn as nn
 
 
 class _ProgressStatus(enum.Enum):
@@ -15,7 +14,7 @@ class _ProgressStatus(enum.Enum):
 
 
 class ProgressTracker:
-    """Tracks the best score, facilitates early stopping.
+    """Tracks the best score, helps with early stopping.
 
     For `~ProgressTracker`, **the greater score is the better score**.
     At any moment the tracker is in one of the following states:
@@ -23,18 +22,6 @@ class ProgressTracker:
     - *success*: the last update changed the best score
     - *fail*: last :code:`n > patience` updates are not better than the best score
     - *neutral*: if neither success nor fail
-
-    Args:
-        patience: Allowed number of bad updates. For example, if patience is 2, then
-            2 bad updates is not a fail, but 3 bad updates is a fail. If `None`, then
-            the progress tracker never fails.
-        min_delta: minimal improvement over current best score to count it as success.
-
-    Examples:
-        .. testcode::
-
-            progress = ProgressTracker(2)
-            progress = ProgressTracker(3, 0.1)
 
     .. rubric:: Tutorial
 
@@ -72,6 +59,21 @@ class ProgressTracker:
     """
 
     def __init__(self, patience: Optional[int], min_delta: float = 0.0) -> None:
+        """Initialize self.
+
+        Args:
+            patience: Allowed number of bad updates. For example, if patience is 2, then
+                2 bad updates is not a fail, but 3 bad updates is a fail. If `None`,
+                then the progress tracker never fails.
+            min_delta: minimal improvement over current best score to count it as
+                success.
+
+        Examples:
+            .. testcode::
+
+                progress = ProgressTracker(2)
+                progress = ProgressTracker(3, 0.1)
+        """
         self._patience = patience
         self._min_delta = float(min_delta)
         self._best_score: Optional[float] = None
@@ -140,11 +142,6 @@ class Timer:
 
     Note:
         Measurements are performed via `time.perf_counter`.
-
-    Examples:
-        .. testcode::
-
-            timer = Timer()
 
     .. rubric:: Tutorial
 
@@ -215,6 +212,13 @@ class Timer:
     _shift: float
 
     def __init__(self) -> None:
+        """Initialize self.
+
+        Examples:
+            .. testcode::
+
+                timer = Timer()
+        """
         self.reset()
 
     def reset(self) -> None:
@@ -374,3 +378,82 @@ class Timer:
 
     def __setstate__(self, state: Dict[str, Any]) -> None:
         self.__dict__.update(state)
+
+
+class evaluation(torch.no_grad):
+    """Context-manager & decorator for models evaluation.
+
+    Note:
+        The training status of modules is undefined once a context is finished or a
+        decorated function returns.
+
+    Warning:
+        The function must be used in the same way as `torch.no_grad`, i.e. only as a
+        context manager or a decorator as shown below in the examples. Otherwise, the
+        behaviour is undefined.
+
+    This code...::
+
+        with evaluation(model):
+            ...
+
+        @evaluation(model)
+        def f():
+            ...
+
+    ...is equivalent to the following ::
+
+        with torch.no_grad():
+            model.eval()
+            ...
+
+        @torch.no_grad()
+        def f():
+            model.eval()
+            ...
+
+    Args:
+        modules
+
+    Examples:
+        .. testcode::
+
+            a = torch.nn.Linear(1, 1)
+            b = torch.nn.Linear(2, 2)
+            with evaluation(a):
+                ...
+            with evaluation(a, b):
+                ...
+
+            @evaluate(a)
+            def f():
+                ...
+
+            @evaluate(a, b)
+            def f():
+                ...
+
+        .. testcode::
+
+            model = torch.nn.Linear(1, 1)
+            for grad in False, True:
+                for train in False, True:
+                    torch.set_grad_enabled(grad)
+                    model.train(train)
+                    with evaluation(model):
+                        assert not model.training
+                        assert not torch.is_grad_enabled()
+                        ...
+                    assert torch.is_grad_enabled() == grad_before_context
+                    # model.training is unspecified here
+    """
+
+    def __init__(self, *modules: nn.Module) -> None:
+        assert modules
+        self._modules = modules
+
+    def __enter__(self) -> None:
+        result = super().__enter__()
+        for m in self._modules:
+            m.eval()
+        return result

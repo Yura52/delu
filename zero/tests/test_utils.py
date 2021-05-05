@@ -1,16 +1,18 @@
 import pickle
 from time import perf_counter, sleep
 
-from pytest import approx, raises
+import torch
+import torch.nn as nn
+from pytest import approx, mark, raises
 
-from zero.tools import ProgressTracker, Timer
+import zero
 
 
 def test_progress_tracker():
     score = -999999999
 
     # test initial state
-    tracker = ProgressTracker(0)
+    tracker = zero.ProgressTracker(0)
     assert not tracker.success
     assert not tracker.fail
 
@@ -32,7 +34,7 @@ def test_progress_tracker():
     assert not tracker.success and not tracker.fail
 
     # test positive patience
-    tracker = ProgressTracker(1)
+    tracker = zero.ProgressTracker(1)
     tracker.update(score - 1)
     assert tracker.success
     tracker.update(score)
@@ -43,7 +45,7 @@ def test_progress_tracker():
     assert tracker.fail
 
     # test positive min_delta
-    tracker = ProgressTracker(0, 2)
+    tracker = zero.ProgressTracker(0, 2)
     tracker.update(score - 2)
     assert tracker.success
     tracker.update(score)
@@ -54,7 +56,7 @@ def test_progress_tracker():
     assert tracker.success
 
     # patience=None
-    tracker = ProgressTracker(None)
+    tracker = zero.ProgressTracker(None)
     for i in range(100):
         tracker.update(-i)
         assert not tracker.fail
@@ -62,10 +64,10 @@ def test_progress_tracker():
 
 def test_timer():
     with raises(AssertionError):
-        Timer().pause()
+        zero.Timer().pause()
 
     # initial state, run
-    timer = Timer()
+    timer = zero.Timer()
     sleep(0.001)
     assert not timer()
     timer.run()
@@ -110,7 +112,7 @@ def test_timer_measurements():
     x = perf_counter()
     sleep(0.1)
     correct = perf_counter() - x
-    timer = Timer()
+    timer = zero.Timer()
     timer.run()
     sleep(0.1)
     actual = timer()
@@ -120,12 +122,12 @@ def test_timer_measurements():
 
 
 def test_timer_context():
-    with Timer() as timer:
+    with zero.Timer() as timer:
         sleep(0.01)
     assert timer() > 0.01
     assert timer() == timer()
 
-    timer = Timer()
+    timer = zero.Timer()
     timer.run()
     sleep(0.01)
     timer.pause()
@@ -136,7 +138,7 @@ def test_timer_context():
 
 
 def test_timer_pickle():
-    timer = Timer()
+    timer = zero.Timer()
     timer.run()
     sleep(0.01)
     timer.pause()
@@ -147,10 +149,43 @@ def test_timer_pickle():
 
 def test_timer_format():
     def make_timer(x):
-        timer = Timer()
+        timer = zero.Timer()
         timer.add(x)
         return timer
 
     assert str(make_timer(1)) == '0:00:01'
     assert str(make_timer(1.1)) == '0:00:01'
     assert make_timer(7321).format('%Hh %Mm %Ss') == '02h 02m 01s'
+
+
+@mark.parametrize('train', [False, True])
+@mark.parametrize('grad', [False, True])
+@mark.parametrize('n_models', range(3))
+def test_evaluation(train, grad, n_models):
+    if not n_models:
+        with raises(AssertionError):
+            with zero.evaluation():
+                pass
+        return
+
+    torch.set_grad_enabled(grad)
+    models = [nn.Linear(1, 1) for _ in range(n_models)]
+    for x in models:
+        x.train(train)
+    with zero.evaluation(*models):
+        assert all(not x.training for x in models[:-1])
+        assert not torch.is_grad_enabled()
+    assert torch.is_grad_enabled() == grad
+    for x in models:
+        x.train(train)
+
+    @zero.evaluation(*models)
+    def f():
+        assert all(not x.training for x in models[:-1])
+        assert not torch.is_grad_enabled()
+        for x in models:
+            x.train(train)
+
+    for _ in range(3):
+        f()
+        assert torch.is_grad_enabled() == grad

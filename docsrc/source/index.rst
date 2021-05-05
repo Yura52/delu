@@ -17,12 +17,13 @@ Zero
    learn
 
 .. toctree::
-   :caption: REFERENCE
-   :glob:
+   :caption: API REFERENCE
    :hidden:
 
    reference/zero
-   reference/*
+   reference/data
+   reference/hardware
+   reference/random
 
 ----
 

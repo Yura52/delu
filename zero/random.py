@@ -1,7 +1,5 @@
 """Random sampling utilities."""
 
-__all__ = ['get_random_state', 'set_random_state', 'set_randomness']
-
 import random
 import secrets
 from typing import Any, Dict, Optional
@@ -10,7 +8,7 @@ import numpy as np
 import torch
 
 
-def set_randomness(
+def init(
     seed: Optional[int],
     cudnn_deterministic: bool = True,
     cudnn_benchmark: bool = False,
@@ -34,13 +32,13 @@ def set_randomness(
         If you don't want to set the seed by hand, but still want to have a chance to
         reproduce things, you can use the following pattern::
 
-            print('Seed:', set_randomness(None))
+            print('Seed:', zero.random.init(None))
 
     Examples:
         .. testcode::
 
-            assert set_randomness(0) == 0
-            assert set_randomness(), '0 was generated as the seed, which is almost impossible!'
+            assert zero.random.init(0) == 0
+            generated_seed = zero.random.init()
     """
     torch.backends.cudnn.deterministic = cudnn_deterministic  # type: ignore
     torch.backends.cudnn.benchmark = cudnn_benchmark  # type: ignore
@@ -58,12 +56,12 @@ def set_randomness(
     return seed
 
 
-def get_random_state() -> Dict[str, Any]:
+def get_state() -> Dict[str, Any]:
     """Aggregate global random states from `random`, `numpy` and `torch`.
 
     The function is useful for creating checkpoints that allow to resume data streams or
     other activities dependent on **global** random number generator (see the note below
-    ). The result of this function can be passed to `set_random_state`.
+    ). The result of this function can be passed to `set_state`.
 
     Returns:
         state
@@ -73,11 +71,11 @@ def get_random_state() -> Dict[str, Any]:
         resumable is to create separate random number generators and manage them
         manually (for example, `torch.utils.data.DataLoader` accepts the
         argument :code:`generator` for that purposes). However, if you rely on the
-        global random state, this function along with `set_random_state` does everything
+        global random state, this function along with `set_state` does everything
         just right.
 
     See also:
-        `set_random_state`
+        `set_state`
 
     Examples:
         .. testcode::
@@ -88,12 +86,12 @@ def get_random_state() -> Dict[str, Any]:
             checkpoint = {
                 'model': model.state_dict(),
                 'optimizer': optimizer.state_dict(),
-                'random_state': get_random_state(),
+                'random_state': zero.random.get_state(),
             }
             # later
             # torch.save(checkpoint, 'checkpoint.pt')
             # ...
-            # set_random_state(torch.load('checkpoint.pt')['random_state'])
+            # zero.random.set_state(torch.load('checkpoint.pt')['random_state'])
     """
     return {
         'random': random.getstate(),
@@ -103,16 +101,19 @@ def get_random_state() -> Dict[str, Any]:
     }
 
 
-def set_random_state(state: Dict[str, Any]) -> None:
+def set_state(state: Dict[str, Any]) -> None:
     """Set global random states from `random`, `numpy` and `torch`.
 
-    The argument must be produced by `get_random_state`.
+    The argument must be produced by `get_state`.
 
     Note:
         The size of list :code:`state['torch.cuda']` must be equal to the number of
         available cuda devices. If random state of cuda devices is not important, remove
         the entry 'torch.cuda' from the state beforehand, or, **at your own risk**
         adjust its value.
+
+    See also:
+        `get_state`
 
     Raises:
         AssertionError: if :code:`torch.cuda.device_count() != len(state['torch.cuda'])`

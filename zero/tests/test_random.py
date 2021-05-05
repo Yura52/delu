@@ -9,19 +9,19 @@ import zero
 from .util import requires_gpu
 
 
-def _test_set_randomness(functions):
-    assert isinstance(zero.set_randomness(None), int)
+def _test_init(functions):
+    assert isinstance(zero.random.init(None), int)
     high = 1000000
     for seed in range(10):
         x = [None, None]
         for i in range(2):
-            zero.set_randomness(seed)
+            zero.random.init(seed)
             x[i] = [f(high) for f in functions]
         assert x[0] == x[1]
 
 
 def test_set_randomness_cpu():
-    _test_set_randomness(
+    _test_init(
         [
             lambda x: random.randint(0, x),
             lambda x: np.random.randint(x),
@@ -39,10 +39,10 @@ def test_set_randomness_gpu():
             return (torch.randint(x, (1,), device=f'cuda:{i}')[0].item(),)
 
         functions.append(f)
-    _test_set_randomness(functions)
+    _test_init(functions)
 
 
-def test_get_set_random_state():
+def test_get_set_state():
     high = 1000000
 
     def f():
@@ -59,17 +59,17 @@ def test_get_set_random_state():
             )
         return x
 
-    state = zero.get_random_state()
+    state = zero.random.get_state()
     value = f()
     for _ in range(10):
-        zero.set_random_state(state)
+        zero.random.set_state(state)
         assert value == f()
 
     if torch.cuda.is_available():
         state['torch.cuda'] = []
         with raises(AssertionError):
-            zero.set_random_state(state)
+            zero.random.set_state(state)
     else:
         state['torch.cuda'] = [None]
         with raises(AssertionError):
-            zero.set_random_state(state)
+            zero.random.set_state(state)

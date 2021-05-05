@@ -1,4 +1,6 @@
+import sys
 from argparse import ArgumentParser
+from pathlib import Path
 
 import torch
 import torch.nn as nn
@@ -33,17 +35,20 @@ def split_dataset(dataset, ratio):
 def parse_args():
     parser = ArgumentParser()
     parser.add_argument('-d', '--device', default='cpu', type=torch.device)
-    parser.add_argument('-e', '--epoch-size')
+    parser.add_argument(
+        '-e', '--epoch-size', type=int, help='Number of batches per epoch'
+    )
     parser.add_argument('-n', '--n-epochs', type=int, default=20)
-    parser.add_argument('-p', '--early-stopping-patience', type=int, default=2)
-    parser.add_argument('-s', '--seed', type=int)
+    parser.add_argument('-p', '--early-stopping-patience', type=int, default=1)
+    parser.add_argument('-s', '--seed', type=int, default=0)
+    parser.add_argument('-c', '--from-checkpoint')
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
 
-    zero.set_randomness(args.seed)
+    zero.random.init(args.seed)
     model = nn.Linear(784, 10).to(args.device)
     optimizer = torch.optim.SGD(model.parameters(), 0.005, 0.9)
 
@@ -65,7 +70,18 @@ def main():
 
     timer = zero.Timer()
     progress = zero.ProgressTracker(args.early_stopping_patience, 0.005)
-    best_checkpoint_path = 'checkpoint.pt'
+    checkpoint_path = 'checkpoint.pt'
+    if args.from_checkpoint:
+        assert args.from_checkpoint != 'checkpoint.pt'
+        assert Path(args.from_checkpoint).exists()
+        checkpoint = torch.load(args.from_checkpoint)
+        model.load_state_dict(checkpoint['model'])
+        optimizer.load_state_dict(checkpoint['optimizer'])
+        stream.load_state_dict(checkpoint['stream'])
+        timer = checkpoint['timer']
+        progress = checkpoint['progress']
+        zero.random.set_state(checkpoint['random_state'])
+        print('Resuming from the checkpoint.\n')
 
     for epoch in stream.epochs(args.n_epochs, args.epoch_size):
         print(f'\nEpoch {stream.epoch} started (iterations passed: {stream.iteration})')
@@ -81,35 +97,51 @@ def main():
         accuracy = evaluate(val_loader)
         progress.update(accuracy)
         if progress.success:
+            print('New best score!')
             torch.save(
-                {'model': model.state_dict(), 'random_state': zero.get_random_state()},
-                best_checkpoint_path,
+                {
+                    'model': model.state_dict(),
+                    'optimizer': optimizer.state_dict(),
+                    'stream': stream.state_dict(),
+                    'timer': timer,
+                    'progress': progress,
+                    'random_state': zero.random.get_state(),
+                },
+                checkpoint_path,
             )
 
         msg = (
             f'Epoch {stream.epoch} finished. '
-            f'Time elapsed: {timer.format()}. '
+            f'Time elapsed: {timer}. '
             f'Validation accuracy: {accuracy:.4f}.'
         )
         if args.device.type == 'cuda':
             index = args.device.index or 0
-            msg += f'\nGPU info: {zero.get_gpus_info()["devices"][index]}'
+            msg += f'\nGPU info: {zero.hardware.get_gpus_info()["devices"][index]}'
         print(msg)
         if progress.fail:
             break
 
     timer.pause()
-    model.load_state_dict(torch.load(best_checkpoint_path)['model'])
+    model.load_state_dict(torch.load(checkpoint_path)['model'])
     print(
         f'\nTraining stopped after the epoch {stream.epoch}.\n'
-        f'Total training time: {timer.format()}\n'
+        f'Total training time: {timer}\n'
         f'Test accuracy: {evaluate(test_loader)}'
     )
 
     print('Freeing memory (for fun, not for profit) ...')
     del model, optimizer, step, evaluate
-    zero.free_memory()
+    zero.hardware.free_memory()
     print('\nDONE.')
+    if not args.from_checkpoint:
+        # TODO replace `join` with `shlex.join` in 3.8
+        print(
+            '\nNow, you can test if the last epochs can be reproduced when the training '
+            'is resumed from the last available checkpoint. For that, run:\n'
+            'cp checkpoint.pt a.pt\n'
+            'and then relaunch the script as before but with one more option: "-c a.pt"'
+        )
 
 
 if __name__ == '__main__':
