@@ -13,8 +13,8 @@ Zero is a general-purpose library for PyTorch users. Zero:
   Learning tasks
 - provides a collection of "building blocks" and leaves code organization to you
 - can be used on its own or together with PyTorch frameworks such as
-  `Ignite <https://github.com/pytorch/ignite>`_,
   `Lightning <https://github.com/PytorchLightning/pytorch-lightning>`_,
+  `Ignite <https://github.com/pytorch/ignite>`_,
   `Catalyst <https://github.com/catalyst-team/catalyst>`_ and
   `others <https://pytorch.org/ecosystem>`_
 
