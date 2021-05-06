@@ -321,6 +321,7 @@ class IndexLoader:
         return self._loader
 
     def __len__(self) -> int:
+        """Get the size of the underlying DataLoader."""
         return len(self.loader)
 
     def __iter__(self):
@@ -414,8 +415,8 @@ def iter_batches(
 
 
 def concat(iterable: Iterable[T]) -> T:
-    """Concatenate items (tensors, tuples of tensors, dicts of tensors etc.) along the
-    first dimension.
+    """Concatenate items (tensors, numpy-arrays, tuples, dicts etc.) along the first
+    dimension.
 
     `concat` is a more general version of :code:`torch.cat(..., dim=0)`. It works not
     only with sequences of tensors, but also with sequences of containers (tuples,

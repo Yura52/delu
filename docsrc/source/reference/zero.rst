@@ -10,12 +10,14 @@ zero
 .. rubric:: Data and Tensors
 
 .. autosummary::
+   :nosignatures:
    :toctree: api
    :template: class.rst
 
    Stream
 
 .. autosummary::
+   :nosignatures:
    :toctree: api
 
    collate
@@ -25,6 +27,7 @@ zero
 .. rubric:: Utilities
 
 .. autosummary::
+   :nosignatures:
    :toctree: api
    :template: class.rst
 
@@ -32,6 +35,7 @@ zero
    Timer
 
 .. autosummary::
+   :nosignatures:
    :toctree: api
    :template: class_simple.rst
 

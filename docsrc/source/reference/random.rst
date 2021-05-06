@@ -6,6 +6,7 @@ zero.random
 .. automodule:: zero.random
 
 .. autosummary::
+    :nosignatures:
     :toctree: api
 
     init

@@ -8,6 +8,7 @@ zero.data
 .. automodule:: zero.data
 
 .. autosummary::
+    :nosignatures:
     :toctree: api
     :template: class.rst
 
