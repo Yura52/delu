@@ -662,16 +662,7 @@
 <div class="viewcode-block" id="evaluation"><a class="viewcode-back" href="../../reference/api/zero.evaluation.html#zero.evaluation">[docs]</a><span class="k">class</span> <span class="nc">evaluation</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">):</span>
     <span class="sd">"""Context-manager &amp; decorator for models evaluation.</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        The training status of modules is undefined once a context is finished or a</span>
-<span class="sd">        decorated function returns.</span>
-
-<span class="sd">    Warning:</span>
-<span class="sd">        The function must be used in the same way as `torch.no_grad`, i.e. only as a</span>
-<span class="sd">        context manager or a decorator as shown below in the examples. Otherwise, the</span>
-<span class="sd">        behaviour is undefined.</span>
-
-<span class="sd">    This code...::</span>
+<span class="sd">    This code... ::</span>
 
 <span class="sd">        with evaluation(model):</span>
 <span class="sd">            ...</span>
@@ -680,7 +671,7 @@
 <span class="sd">        def f():</span>
 <span class="sd">            ...</span>
 
-<span class="sd">    ...is equivalent to the following ::</span>
+<span class="sd">    ...is equivalent to the following: ::</span>
 
 <span class="sd">        with torch.no_grad():</span>
 <span class="sd">            model.eval()</span>
@@ -693,6 +684,15 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        modules</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The training status of modules is undefined once a context is finished or a</span>
+<span class="sd">        decorated function returns.</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        The function must be used in the same way as `torch.no_grad`, i.e. only as a</span>
+<span class="sd">        context manager or a decorator as shown below in the examples. Otherwise, the</span>
+<span class="sd">        behaviour is undefined.</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        .. testcode::</span>

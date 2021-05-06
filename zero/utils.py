@@ -383,7 +383,7 @@ class Timer:
 class evaluation(torch.no_grad):
     """Context-manager & decorator for models evaluation.
 
-    This code...::
+    This code... ::
 
         with evaluation(model):
             ...
@@ -392,7 +392,7 @@ class evaluation(torch.no_grad):
         def f():
             ...
 
-    ...is equivalent to the following ::
+    ...is equivalent to the following: ::
 
         with torch.no_grad():
             model.eval()
