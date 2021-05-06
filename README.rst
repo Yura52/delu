@@ -9,8 +9,7 @@ Zero
 
 Zero is a general-purpose library for PyTorch users. Zero:
 
-- simplifies training loop, models evaluation, models application and other typical Deep
-  Learning tasks
+- simplifies training loop, reproducibility, models evaluation and other typical Deep Learning tasks
 - provides a collection of "building blocks" and leaves code organization to you
 - can be used on its own or together with PyTorch frameworks such as
   `Lightning <https://github.com/PytorchLightning/pytorch-lightning>`_,
@@ -18,8 +17,8 @@ Zero is a general-purpose library for PyTorch users. Zero:
   `Catalyst <https://github.com/catalyst-team/catalyst>`_ and
   `others <https://pytorch.org/ecosystem>`_
 
-**NOT READY FOR PRODUCTION USAGE.** Zero is tested, but not battle-tested. You can give
-it a try in non-mission-critical research.
+**NOTE:** Zero is tested (and battle-tested in research projects), but the interface is
+not stable yet, so backward-incompatible changes in future releases are possible.
 
 Overview
 --------
@@ -28,12 +27,7 @@ Overview
 - `Code <https://github.com/Yura52/zero>`_
 - `Learn Zero <https://yura52.github.io/zero/learn.html>`_
 - `Classification task example (MNIST) <https://github.com/Yura52/zero/blob/master/examples/mnist.py>`_
-- Discussions:
-
-  - `Issue on GitHub <https://github.com/Yura52/zero/issues/21>`_
-  - `Post on Medium <https://medium.com/@Yura52/zero-a-new-library-for-pytorch-users-aa14528dc970>`_
-  - `Discussion on Reddit <https://www.reddit.com/r/pytorch/comments/hxqc7u/zero_a_new_generalpurpose_library_for_pytorch>`_
-  - `Discussion on Hacker News <https://news.ycombinator.com/item?id=23950731>`_
+- `The first release announcement <https://github.com/Yura52/zero/issues/21>`_ (Zero itself has changed a lot, but the motivation is still relevant)
 
 .. __INCLUDE_1__
 
