@@ -285,7 +285,7 @@
 <dl class="py class">
 <dt id="zero.data.IndexLoader">
 <em class="property">class </em><code class="sig-prename descclassname">zero.data.</code><code class="sig-name descname">IndexLoader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">size</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="n">device</span><span class="o">=</span><span class="default_value">'cpu'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/data.html#IndexLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.data.IndexLoader" title="Permalink to this definition">¶</a></dt>
-<dd><p>Like ~torch.utils.data.DataLoader, but over indices instead of data.</p>
+<dd><p>Like <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.8.0a0+56b43f4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataLoader</span></code></a>, but over indices instead of data.</p>
 <p><strong>The shuffling logic is delegated to the native PyTorch DataLoader</strong>, i.e. no
 custom logic is performed under the hood. The data loader which actually generates
 indices is available as <a class="reference internal" href="api/zero.data.IndexLoader.loader.html#zero.data.IndexLoader.loader" title="zero.data.IndexLoader.loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IndexLoader.loader</span></code></a>.</p>

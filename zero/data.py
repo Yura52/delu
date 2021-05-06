@@ -244,7 +244,7 @@ class _IndicesDataset(Dataset):
 
 
 class IndexLoader:
-    """Like ~torch.utils.data.DataLoader, but over indices instead of data.
+    """Like `~torch.utils.data.DataLoader`, but over indices instead of data.
 
     **The shuffling logic is delegated to the native PyTorch DataLoader**, i.e. no
     custom logic is performed under the hood. The data loader which actually generates
