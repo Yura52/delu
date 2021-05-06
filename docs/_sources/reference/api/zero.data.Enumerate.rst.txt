@@ -31,12 +31,14 @@ zero.data.Enumerate
    
       
       
-      
-      
       ~Enumerate.__len__
       
       
       ~Enumerate.__getitem__
+      
+      
+      
+      
       
       
       

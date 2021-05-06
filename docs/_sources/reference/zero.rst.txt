@@ -33,7 +33,7 @@ zero
 
 .. autosummary::
    :toctree: api
-   :template: class_as_function.rst
+   :template: class_simple.rst
 
    evaluation
 

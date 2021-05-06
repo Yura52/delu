@@ -1,14 +1,14 @@
-zero.ProgressTracker
-====================
+zero.data.IndexLoader
+=====================
 
-.. currentmodule:: zero
+.. currentmodule:: zero.data
 
-.. autoclass:: ProgressTracker
+.. autoclass:: IndexLoader
 
    .. autosummary::
       :toctree: api
 
-      ~ProgressTracker.__init__
+      ~IndexLoader.__init__
 
    
    
@@ -17,9 +17,7 @@ zero.ProgressTracker
    .. autosummary::
       :toctree: api
    
-      ~ProgressTracker.best_score
-      ~ProgressTracker.fail
-      ~ProgressTracker.success
+      ~IndexLoader.loader
    
    
 
@@ -33,8 +31,12 @@ zero.ProgressTracker
    
       
       
+      ~IndexLoader.__len__
       
       
+      
+      
+      ~IndexLoader.__iter__
       
       
       

@@ -522,28 +522,19 @@
         <span class="k">return</span> <span class="n">i</span>
 
 
-<div class="viewcode-block" id="iloader"><a class="viewcode-back" href="../../reference/api/zero.data.iloader.html#zero.data.iloader">[docs]</a><span class="k">def</span> <span class="nf">iloader</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span>
-    <span class="sd">"""Make `~torch.utils.data.DataLoader` over batches of indices.</span>
+<div class="viewcode-block" id="IndexLoader"><a class="viewcode-back" href="../../reference/api/zero.data.IndexLoader.html#zero.data.IndexLoader">[docs]</a><span class="k">class</span> <span class="nc">IndexLoader</span><span class="p">:</span>
+    <span class="sd">"""Like ~torch.utils.data.DataLoader, but over indices instead of data.</span>
 
 <span class="sd">    **The shuffling logic is delegated to the native PyTorch DataLoader**, i.e. no</span>
-<span class="sd">    custom logic is performed under the hood.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        size: the size of dataset (for example, :code:`len(dataset)`)</span>
-<span class="sd">        *args: positional arguments for `torch.utils.data.DataLoader`</span>
-<span class="sd">        **kwargs: keyword arguments for `torch.utils.data.DataLoader`</span>
-<span class="sd">    Raises:</span>
-<span class="sd">        AssertionError: if size is not positive</span>
-
-<span class="sd">    See also:</span>
-<span class="sd">        `zero.iter_batches`</span>
+<span class="sd">    custom logic is performed under the hood. The data loader which actually generates</span>
+<span class="sd">    indices is available as `IndexLoader.loader`.</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        Usage for training:</span>
 
 <span class="sd">        .. code-block::</span>
 
-<span class="sd">            train_loader = iloader(len(train_dataset), batch_size, shuffle=True)</span>
+<span class="sd">            train_loader = IndexLoader(len(train_dataset), batch_size, shuffle=True)</span>
 <span class="sd">            for epoch in epochs:</span>
 <span class="sd">                for batch_idx in train_loader:</span>
 <span class="sd">                    ...</span>
@@ -553,7 +544,7 @@
 <span class="sd">        .. testcode::</span>
 
 <span class="sd">            dataset_size = 10  # len(dataset)</span>
-<span class="sd">            for batch_idx in iloader(dataset_size, batch_size=3):</span>
+<span class="sd">            for batch_idx in IndexLoader(dataset_size, batch_size=3):</span>
 <span class="sd">                print(batch_idx)</span>
 
 <span class="sd">        .. testoutput::</span>
@@ -566,7 +557,7 @@
 <span class="sd">        .. testcode::</span>
 
 <span class="sd">            dataset_size = 10  # len(dataset)</span>
-<span class="sd">            for batch_idx in iloader(dataset_size, 3, drop_last=True):</span>
+<span class="sd">            for batch_idx in IndexLoader(dataset_size, 3, drop_last=True):</span>
 <span class="sd">                print(batch_idx)</span>
 
 <span class="sd">        .. testoutput::</span>
@@ -574,9 +565,49 @@
 <span class="sd">            tensor([0, 1, 2])</span>
 <span class="sd">            tensor([3, 4, 5])</span>
 <span class="sd">            tensor([6, 7, 8])</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        `zero.iter_batches`</span>
 <span class="sd">    """</span>
-    <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span>
-    <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">_IndicesDataset</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IndexLoader.__init__"><a class="viewcode-back" href="../../reference/api/api/zero.data.IndexLoader.__init__.html#zero.data.IndexLoader.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'cpu'</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""Initialize self.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            size: the number of items (for example, :code:`len(dataset)`)</span>
+<span class="sd">            *args: positional arguments for `torch.utils.data.DataLoader`</span>
+<span class="sd">            device: if not CPU, then all indices are materialized and moved to the</span>
+<span class="sd">                device at the beginning of every loop. It can be useful when the indices</span>
+<span class="sd">                are applied to non-CPU data (e.g. CUDA-tensors) and moving data between</span>
+<span class="sd">                devices takes non-negligable time (which can happen in the case of</span>
+<span class="sd">                simple and fast models like MLPs).</span>
+<span class="sd">            **kwargs: keyword arguments for `torch.utils.data.DataLoader`</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: if size is not positive</span>
+<span class="sd">        """</span>
+        <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">args</span> <span class="k">else</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'batch_size'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">_IndicesDataset</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+            <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device</span> <span class="o">=</span> <span class="n">device</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">loader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span>
+        <span class="sd">"""The underlying DataLoader."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span>
+
+<div class="viewcode-block" id="IndexLoader.__len__"><a class="viewcode-back" href="../../reference/api/api/zero.data.IndexLoader.__len__.html#zero.data.IndexLoader.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IndexLoader.__iter__"><a class="viewcode-back" href="../../reference/api/api/zero.data.IndexLoader.__iter__.html#zero.data.IndexLoader.__iter__">[docs]</a>    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">'cpu'</span>
+            <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_device</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="p">)</span>
+        <span class="p">)</span></div></div>
 
 
 <span class="k">def</span> <span class="nf">_is_namedtuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -608,8 +639,8 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        data:</span>
-<span class="sd">        *args: positional arguments for `iloader`</span>
-<span class="sd">        **kwargs: keyword arguments for `iloader`</span>
+<span class="sd">        *args: positional arguments for `IndexLoader`</span>
+<span class="sd">        **kwargs: keyword arguments for `IndexLoader`</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        Iterator over batches.</span>
 
@@ -623,7 +654,7 @@
 <span class="sd">        :code:`while True:`.</span>
 
 <span class="sd">    See also:</span>
-<span class="sd">        - `zero.data.iloader`</span>
+<span class="sd">        - `zero.data.IndexLoader`</span>
 <span class="sd">        - `concat`</span>
 
 <span class="sd">    Examples:</span>
@@ -658,7 +689,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="fm">__getitem__</span>
         <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># type: ignore # noqa</span>
-    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">iloader</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">IndexLoader</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="concat"><a class="viewcode-back" href="../../reference/api/zero.concat.html#zero.data.concat">[docs]</a><span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
