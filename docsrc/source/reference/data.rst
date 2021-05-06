@@ -13,8 +13,4 @@ zero.data
 
     Enumerate
     FnDataset
-
-.. autosummary::
-    :toctree: api
-
-    iloader
+    IndexLoader

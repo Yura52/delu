@@ -243,28 +243,19 @@ class _IndicesDataset(Dataset):
         return i
 
 
-def iloader(size: int, *args, **kwargs) -> DataLoader:
-    """Make `~torch.utils.data.DataLoader` over batches of indices.
+class IndexLoader:
+    """Like ~torch.utils.data.DataLoader, but over indices instead of data.
 
     **The shuffling logic is delegated to the native PyTorch DataLoader**, i.e. no
-    custom logic is performed under the hood.
-
-    Args:
-        size: the size of dataset (for example, :code:`len(dataset)`)
-        *args: positional arguments for `torch.utils.data.DataLoader`
-        **kwargs: keyword arguments for `torch.utils.data.DataLoader`
-    Raises:
-        AssertionError: if size is not positive
-
-    See also:
-        `zero.iter_batches`
+    custom logic is performed under the hood. The data loader which actually generates
+    indices is available as `IndexLoader.loader`.
 
     Examples:
         Usage for training:
 
         .. code-block::
 
-            train_loader = iloader(len(train_dataset), batch_size, shuffle=True)
+            train_loader = IndexLoader(len(train_dataset), batch_size, shuffle=True)
             for epoch in epochs:
                 for batch_idx in train_loader:
                     ...
@@ -274,7 +265,7 @@ def iloader(size: int, *args, **kwargs) -> DataLoader:
         .. testcode::
 
             dataset_size = 10  # len(dataset)
-            for batch_idx in iloader(dataset_size, batch_size=3):
+            for batch_idx in IndexLoader(dataset_size, batch_size=3):
                 print(batch_idx)
 
         .. testoutput::
@@ -287,7 +278,7 @@ def iloader(size: int, *args, **kwargs) -> DataLoader:
         .. testcode::
 
             dataset_size = 10  # len(dataset)
-            for batch_idx in iloader(dataset_size, 3, drop_last=True):
+            for batch_idx in IndexLoader(dataset_size, 3, drop_last=True):
                 print(batch_idx)
 
         .. testoutput::
@@ -295,9 +286,49 @@ def iloader(size: int, *args, **kwargs) -> DataLoader:
             tensor([0, 1, 2])
             tensor([3, 4, 5])
             tensor([6, 7, 8])
+
+    See also:
+        `zero.iter_batches`
     """
-    assert size > 0
-    return DataLoader(_IndicesDataset(size), *args, **kwargs)
+
+    def __init__(
+        self, size: int, *args, device: Union[int, str, torch.device] = 'cpu', **kwargs
+    ) -> None:
+        """Initialize self.
+
+        Args:
+            size: the number of items (for example, :code:`len(dataset)`)
+            *args: positional arguments for `torch.utils.data.DataLoader`
+            device: if not CPU, then all indices are materialized and moved to the
+                device at the beginning of every loop. It can be useful when the indices
+                are applied to non-CPU data (e.g. CUDA-tensors) and moving data between
+                devices takes non-negligable time (which can happen in the case of
+                simple and fast models like MLPs).
+            **kwargs: keyword arguments for `torch.utils.data.DataLoader`
+        Raises:
+            AssertionError: if size is not positive
+        """
+        assert size > 0
+        self._batch_size = args[0] if args else kwargs.get('batch_size', 1)
+        self._loader = DataLoader(_IndicesDataset(size), *args, **kwargs)
+        if isinstance(device, (int, str)):
+            device = torch.device(device)
+        self._device = device
+
+    @property
+    def loader(self) -> DataLoader:
+        """The underlying DataLoader."""
+        return self._loader
+
+    def __len__(self) -> int:
+        return len(self.loader)
+
+    def __iter__(self):
+        return iter(
+            self._loader
+            if self._device.type == 'cpu'
+            else torch.cat(list(self.loader)).to(self._device).split(self._batch_size)
+        )
 
 
 def _is_namedtuple(x) -> bool:
@@ -329,8 +360,8 @@ def iter_batches(
 
     Args:
         data:
-        *args: positional arguments for `iloader`
-        **kwargs: keyword arguments for `iloader`
+        *args: positional arguments for `IndexLoader`
+        **kwargs: keyword arguments for `IndexLoader`
     Returns:
         Iterator over batches.
 
@@ -344,7 +375,7 @@ def iter_batches(
         :code:`while True:`.
 
     See also:
-        - `zero.data.iloader`
+        - `zero.data.IndexLoader`
         - `concat`
 
     Examples:
@@ -379,7 +410,7 @@ def iter_batches(
     else:
         f = data.__getitem__
         size = len(data)  # type: ignore # noqa
-    return map(f, iloader(size, *args, **kwargs))
+    return map(f, IndexLoader(size, *args, **kwargs))
 
 
 def concat(iterable: Iterable[T]) -> T:
