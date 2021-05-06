@@ -383,15 +383,6 @@ class Timer:
 class evaluation(torch.no_grad):
     """Context-manager & decorator for models evaluation.
 
-    Note:
-        The training status of modules is undefined once a context is finished or a
-        decorated function returns.
-
-    Warning:
-        The function must be used in the same way as `torch.no_grad`, i.e. only as a
-        context manager or a decorator as shown below in the examples. Otherwise, the
-        behaviour is undefined.
-
     This code...::
 
         with evaluation(model):
@@ -414,6 +405,15 @@ class evaluation(torch.no_grad):
 
     Args:
         modules
+
+    Note:
+        The training status of modules is undefined once a context is finished or a
+        decorated function returns.
+
+    Warning:
+        The function must be used in the same way as `torch.no_grad`, i.e. only as a
+        context manager or a decorator as shown below in the examples. Otherwise, the
+        behaviour is undefined.
 
     Examples:
         .. testcode::
