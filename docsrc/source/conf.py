@@ -67,7 +67,7 @@ repo_url = 'https://github.com/Yura52/zero'
 #     'github_type': 'star',
 #     'github_user': 'Yura52',
 #     'github_repo': 'zero',
-#     'page_width': '65%',
+#     'page_width': '75%',
 #     'sidebar_width': '250px'
 # }
 
@@ -79,6 +79,7 @@ html_theme_options = {
     'base_url': 'https://yura52.github.io/zero',
     # Full list of colors (not all of them are available in sphinx-material, see theme.conf above):
     # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#primary-color
+    # Nice colors: white, blue, red, deep purple (indigo in mkdocs)
     'color_primary': 'white',
     'globaltoc_depth': 1,
     # search here for logo icons: https://www.compart.com/en/unicode
