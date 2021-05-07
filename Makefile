@@ -16,21 +16,20 @@ clean:
 	rm -rf .pytest_cache
 	rm -rf dist
 	rm -rf $(DOCSRC)/source/reference/api
-	# the following make clean is implemented in the makefile in $(DOCSRC)
-	cd $(DOCSRC) && make clean
+	make -C $(DOCSRC) clean
 
 coverage:
 	coverage run -m $(PYTEST_CMD)
 	coverage report -m
 
 _docs:
-	cd $(DOCSRC) && make html
+	make -C $(DOCSRC) html
 
 docs: _docs
 	$(VIEW_HTML_CMD) $(DOCSRC)/build/html/index.html
 
 dtest:
-	cd $(DOCSRC) && make doctest
+	make -C $(DOCSRC) doctest
 
 pages:
 	rm -r docs
@@ -43,8 +42,8 @@ lint:
 	black zero --check
 	flake8 zero
 
-# the order is important
-pre-commit: clean lint test dtest typecheck _docs
+# the order is important: clean must be first, _docs must precede dtest
+pre-commit: clean lint test _docs dtest typecheck
 
 test:
 	$(TEST_CMD) $(ARGV)
