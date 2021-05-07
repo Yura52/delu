@@ -90,7 +90,7 @@ html_theme_options = {
     'repo_type': 'github',
     'master_doc': False,
     'version_dropdown': True,
-    'version_info': {'master (unstable)': ''},
+    'version_info': {'Development': ''},
 }
 html_sidebars = {
     '**': ['logo-text.html', 'globaltoc.html', 'searchbox.html'],
