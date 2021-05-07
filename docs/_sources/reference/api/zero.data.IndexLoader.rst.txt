@@ -5,11 +5,6 @@ zero.data.IndexLoader
 
 .. autoclass:: IndexLoader
 
-   .. autosummary::
-      :toctree: api
-
-      ~IndexLoader.__init__
-
    
    
    .. rubric:: Attributes
@@ -22,12 +17,13 @@ zero.data.IndexLoader
    
 
    
-   
    .. rubric:: Methods
 
    .. autosummary::
+      :nosignatures:
       :toctree: api
    
+      ~IndexLoader.__init__
    
       
       
@@ -42,5 +38,4 @@ zero.data.IndexLoader
       
       
       
-   
    

@@ -58,7 +58,7 @@
     <script src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="zero.ProgressTracker.__init__" href="api/zero.ProgressTracker.__init__.html" />
+    <link rel="next" title="zero.ProgressTracker.best_score" href="api/zero.ProgressTracker.best_score.html" />
     <link rel="prev" title="zero.iter_batches" href="zero.iter_batches.html" />
   
    
@@ -325,17 +325,6 @@ At any moment the tracker is in one of the following states:</p>
 <span class="k">assert</span> <span class="n">progress</span><span class="o">.</span><span class="n">best_score</span> <span class="ow">is</span> <span class="kc">None</span>
 </pre></div>
 </div>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%"/>
-<col style="width: 90%"/>
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.ProgressTracker.__init__.html#zero.ProgressTracker.__init__" title="zero.ProgressTracker.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(patience[, min_delta])</p></td>
-<td><p>Initialize self.</p></td>
-</tr>
-</tbody>
-</table>
 <p class="rubric">Attributes</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -361,6 +350,18 @@ At any moment the tracker is in one of the following states:</p>
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.ProgressTracker.__init__.html#zero.ProgressTracker.__init__" title="zero.ProgressTracker.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.ProgressTracker.forget_bad_updates.html#zero.ProgressTracker.forget_bad_updates" title="zero.ProgressTracker.forget_bad_updates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">forget_bad_updates</span></code></a></p></td>
+<td><p>Reset bad updates and status, but not the best score.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.ProgressTracker.reset.html#zero.ProgressTracker.reset" title="zero.ProgressTracker.reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset</span></code></a></p></td>
+<td><p>Reset everything.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.ProgressTracker.update.html#zero.ProgressTracker.update" title="zero.ProgressTracker.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a></p></td>
+<td><p>Update the tracker’s state.</p></td>
+</tr>
 </tbody>
 </table>
 </dd></dl>

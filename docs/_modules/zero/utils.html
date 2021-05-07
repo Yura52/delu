@@ -382,7 +382,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="n">_ProgressStatus</span><span class="o">.</span><span class="n">SUCCESS</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bad_counter</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="ProgressTracker.update"><a class="viewcode-back" href="../../reference/api/api/zero.ProgressTracker.update.html#zero.ProgressTracker.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Update the tracker's state.</span>
 
 <span class="sd">        Args:</span>
@@ -398,17 +398,17 @@
                 <span class="n">_ProgressStatus</span><span class="o">.</span><span class="n">FAIL</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_patience</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bad_counter</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_patience</span>
                 <span class="k">else</span> <span class="n">_ProgressStatus</span><span class="o">.</span><span class="n">NEUTRAL</span>
-            <span class="p">)</span>
+            <span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">forget_bad_updates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="ProgressTracker.forget_bad_updates"><a class="viewcode-back" href="../../reference/api/api/zero.ProgressTracker.forget_bad_updates.html#zero.ProgressTracker.forget_bad_updates">[docs]</a>    <span class="k">def</span> <span class="nf">forget_bad_updates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Reset bad updates and status, but not the best score."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bad_counter</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="n">_ProgressStatus</span><span class="o">.</span><span class="n">NEUTRAL</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="n">_ProgressStatus</span><span class="o">.</span><span class="n">NEUTRAL</span></div>
 
-    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="ProgressTracker.reset"><a class="viewcode-back" href="../../reference/api/api/zero.ProgressTracker.reset.html#zero.ProgressTracker.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Reset everything."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">forget_bad_updates</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_best_score</span> <span class="o">=</span> <span class="kc">None</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_score</span> <span class="o">=</span> <span class="kc">None</span></div></div>
 
 
 <div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../../reference/api/zero.Timer.html#zero.Timer">[docs]</a><span class="k">class</span> <span class="nc">Timer</span><span class="p">:</span>
@@ -500,16 +500,16 @@
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.reset"><a class="viewcode-back" href="../../reference/api/api/zero.Timer.reset.html#zero.Timer.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Reset the timer.</span>
 
 <span class="sd">        Resets the timer to the initial state.</span>
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span> <span class="o">=</span> <span class="mf">0.0</span></div>
 
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.run"><a class="viewcode-back" href="../../reference/api/api/zero.Timer.run.html#zero.Timer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Start/resume the timer.</span>
 
 <span class="sd">        If the timer is on pause, the method resumes the timer.</span>
@@ -520,9 +520,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-    <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.pause"><a class="viewcode-back" href="../../reference/api/api/zero.Timer.pause.html#zero.Timer.pause">[docs]</a>    <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Pause the timer.</span>
 
 <span class="sd">        If the timer is running, the method pauses the timer.</span>
@@ -533,9 +533,9 @@
 <span class="sd">        """</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.add"><a class="viewcode-back" href="../../reference/api/api/zero.Timer.add.html#zero.Timer.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Add non-negative delta to the shift.</span>
 
 <span class="sd">        Args:</span>
@@ -554,9 +554,9 @@
 <span class="sd">                assert timer() == 3.0</span>
 <span class="sd">        """</span>
         <span class="k">assert</span> <span class="n">delta</span> <span class="o">&gt;=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span> <span class="o">+=</span> <span class="n">delta</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span> <span class="o">+=</span> <span class="n">delta</span></div>
 
-    <span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.sub"><a class="viewcode-back" href="../../reference/api/api/zero.Timer.sub.html#zero.Timer.sub">[docs]</a>    <span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Subtract non-negative delta from the shift.</span>
 
 <span class="sd">        Args:</span>
@@ -575,7 +575,7 @@
 <span class="sd">                assert timer() == -3.0</span>
 <span class="sd">        """</span>
         <span class="k">assert</span> <span class="n">delta</span> <span class="o">&gt;=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span> <span class="o">-=</span> <span class="n">delta</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span> <span class="o">-=</span> <span class="n">delta</span></div>
 
 <div class="viewcode-block" id="Timer.__call__"><a class="viewcode-back" href="../../reference/api/api/zero.Timer.__call__.html#zero.Timer.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="sd">"""Get time elapsed since the start.</span>
@@ -601,7 +601,7 @@
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="p">())))</span>
 
-    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.format"><a class="viewcode-back" href="../../reference/api/api/zero.Timer.format.html#zero.Timer.format">[docs]</a>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">"""Format the time elapsed since the start in a human-readable string.</span>
 
 <span class="sd">        Args:</span>
@@ -616,7 +616,7 @@
 <span class="sd">                timer.add(3661)</span>
 <span class="sd">                assert timer.format('%Hh %Mm %Ss') == '01h 01m 01s'</span>
 <span class="sd">        """</span>
-        <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">format_str</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">(</span><span class="bp">self</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">format_str</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">(</span><span class="bp">self</span><span class="p">()))</span></div>
 
 <div class="viewcode-block" id="Timer.__enter__"><a class="viewcode-back" href="../../reference/api/api/zero.Timer.__enter__.html#zero.Timer.__enter__">[docs]</a>    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'Timer'</span><span class="p">:</span>
         <span class="sd">"""Measure time within a context.</span>

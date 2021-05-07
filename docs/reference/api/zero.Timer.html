@@ -59,7 +59,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="zero.Timer.__init__" href="api/zero.Timer.__init__.html" />
-    <link rel="prev" title="zero.ProgressTracker.success" href="api/zero.ProgressTracker.success.html" />
+    <link rel="prev" title="zero.ProgressTracker.update" href="api/zero.ProgressTracker.update.html" />
   
    
 
@@ -286,9 +286,9 @@
 <dt id="zero.Timer">
 <em class="property">class </em><code class="sig-prename descclassname">zero.</code><code class="sig-name descname">Timer</code><a class="reference internal" href="../../_modules/zero/utils.html#Timer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.Timer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Measures time.</p>
-<p>Measures time elapsed since the first call to <code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code> up to “now” plus
+<p>Measures time elapsed since the first call to <a class="reference internal" href="api/zero.Timer.run.html#zero.Timer.run" title="zero.Timer.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a> up to “now” plus
 shift. The shift accumulates all pauses time and can be manually changed with the
-methods <code class="xref py py-obj docutils literal notranslate"><span class="pre">add</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">sub</span></code>. If a timer is just created/reset, the shift
+methods <a class="reference internal" href="api/zero.Timer.add.html#zero.Timer.add" title="zero.Timer.add"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add</span></code></a> and <a class="reference internal" href="api/zero.Timer.sub.html#zero.Timer.sub" title="zero.Timer.sub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub</span></code></a>. If a timer is just created/reset, the shift
 is 0.0.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -349,17 +349,6 @@ is 0.0.</p>
 <span class="k">assert</span> <span class="n">new_timer</span><span class="p">()</span> <span class="o">==</span> <span class="n">old_value</span>
 </pre></div>
 </div>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%"/>
-<col style="width: 90%"/>
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.Timer.__init__.html#zero.Timer.__init__" title="zero.Timer.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
-<td><p>Initialize self.</p></td>
-</tr>
-</tbody>
-</table>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -367,19 +356,40 @@ is 0.0.</p>
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.Timer.__call__.html#zero.Timer.__call__" title="zero.Timer.__call__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.Timer.__init__.html#zero.Timer.__init__" title="zero.Timer.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.Timer.add.html#zero.Timer.add" title="zero.Timer.add"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add</span></code></a></p></td>
+<td><p>Add non-negative delta to the shift.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.Timer.format.html#zero.Timer.format" title="zero.Timer.format"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format</span></code></a></p></td>
+<td><p>Format the time elapsed since the start in a human-readable string.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.Timer.pause.html#zero.Timer.pause" title="zero.Timer.pause"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pause</span></code></a></p></td>
+<td><p>Pause the timer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.Timer.reset.html#zero.Timer.reset" title="zero.Timer.reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset</span></code></a></p></td>
+<td><p>Reset the timer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.Timer.run.html#zero.Timer.run" title="zero.Timer.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a></p></td>
+<td><p>Start/resume the timer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.Timer.sub.html#zero.Timer.sub" title="zero.Timer.sub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub</span></code></a></p></td>
+<td><p>Subtract non-negative delta from the shift.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.Timer.__call__.html#zero.Timer.__call__" title="zero.Timer.__call__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code></a></p></td>
 <td><p>Get time elapsed since the start.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/zero.Timer.__enter__.html#zero.Timer.__enter__" title="zero.Timer.__enter__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__enter__</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.Timer.__enter__.html#zero.Timer.__enter__" title="zero.Timer.__enter__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__enter__</span></code></a></p></td>
 <td><p>Measure time within a context.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.Timer.__exit__.html#zero.Timer.__exit__" title="zero.Timer.__exit__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__exit__</span></code></a>(*args)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.Timer.__exit__.html#zero.Timer.__exit__" title="zero.Timer.__exit__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__exit__</span></code></a></p></td>
 <td><p>Leave the context and pause the timer.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/zero.Timer.__getstate__.html#zero.Timer.__getstate__" title="zero.Timer.__getstate__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__getstate__</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.Timer.__getstate__.html#zero.Timer.__getstate__" title="zero.Timer.__getstate__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__getstate__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.Timer.__setstate__.html#zero.Timer.__setstate__" title="zero.Timer.__setstate__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__setstate__</span></code></a>(state)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.Timer.__setstate__.html#zero.Timer.__setstate__" title="zero.Timer.__setstate__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__setstate__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>

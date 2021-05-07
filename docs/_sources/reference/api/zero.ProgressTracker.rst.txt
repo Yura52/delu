@@ -5,11 +5,6 @@ zero.ProgressTracker
 
 .. autoclass:: ProgressTracker
 
-   .. autosummary::
-      :toctree: api
-
-      ~ProgressTracker.__init__
-
    
    
    .. rubric:: Attributes
@@ -24,12 +19,16 @@ zero.ProgressTracker
    
 
    
-   
    .. rubric:: Methods
 
    .. autosummary::
+      :nosignatures:
       :toctree: api
    
+      ~ProgressTracker.__init__
+      ~ProgressTracker.forget_bad_updates
+      ~ProgressTracker.reset
+      ~ProgressTracker.update
    
       
       
@@ -40,5 +39,4 @@ zero.ProgressTracker
       
       
       
-   
    

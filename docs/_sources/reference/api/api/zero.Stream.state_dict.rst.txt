@@ -1,0 +1,6 @@
+zero.Stream.state\_dict
+=======================
+
+.. currentmodule:: zero
+
+.. automethod:: Stream.state_dict

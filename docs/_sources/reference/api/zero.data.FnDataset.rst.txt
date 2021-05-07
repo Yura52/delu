@@ -5,22 +5,18 @@ zero.data.FnDataset
 
 .. autoclass:: FnDataset
 
-   .. autosummary::
-      :toctree: api
-
-      ~FnDataset.__init__
-
    
    
    
 
-   
    
    .. rubric:: Methods
 
    .. autosummary::
+      :nosignatures:
       :toctree: api
    
+      ~FnDataset.__init__
    
       
       
@@ -35,5 +31,4 @@ zero.data.FnDataset
       
       
       
-   
    
