@@ -76,7 +76,7 @@ import sphinx_material  # noqa
 html_theme = 'sphinx_material'
 html_theme_options = {
     # Full list of options: https://github.com/bashtage/sphinx-material/blob/master/sphinx_material/sphinx_material/theme.conf
-    'base_url': repo_url,
+    'base_url': 'https://yura52.github.io/zero',
     # Full list of colors (not all of them are available in sphinx-material, see theme.conf above):
     # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#primary-color
     'color_primary': 'white',

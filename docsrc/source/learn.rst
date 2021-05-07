@@ -26,6 +26,7 @@ paying attention to *explanations* and *examples*, without diving into API detai
 are the things to learn:
 
 .. autosummary::
+   :nosignatures:
 
    zero.evaluation
    zero.random
