@@ -27,6 +27,16 @@ _docs:
 docs: _docs
 	$(VIEW_HTML_CMD) $(DOCS_DIR)/build/html/index.html
 
+pages:
+	git checkout master
+	make clean
+	make _docs
+	git checkout gh-pages
+	rm -r dev
+	mv docs/build/html dev
+	rm -r docs
+	git add -A
+
 dtest:
 	make -C $(DOCS_DIR) doctest
 
