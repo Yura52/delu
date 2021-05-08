@@ -1,6 +1,0 @@
-zero.Timer.\_\_exit\_\_
-=======================
-
-.. currentmodule:: zero
-
-.. automethod:: Timer.__exit__

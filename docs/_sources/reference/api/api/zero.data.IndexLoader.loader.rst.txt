@@ -1,6 +1,0 @@
-zero.data.IndexLoader.loader
-============================
-
-.. currentmodule:: zero.data
-
-.. autoproperty:: IndexLoader.loader

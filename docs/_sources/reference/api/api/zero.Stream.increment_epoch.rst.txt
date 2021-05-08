@@ -1,6 +1,0 @@
-zero.Stream.increment\_epoch
-============================
-
-.. currentmodule:: zero
-
-.. automethod:: Stream.increment_epoch
