@@ -95,7 +95,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Zero</span>
+          <span class="md-header-nav__topic">Zero 0.0.3.dev10</span>
           <span class="md-header-nav__topic"> zero.ProgressTracker </span>
         </div>
       </div>
@@ -148,13 +148,13 @@
       
       
   
-  <div class="md-flex__cell md-flex__cell--shrink dropdown">
-    <button class="dropdownbutton">Versions</button>
-    <div class="dropdown-content md-hero">
-          <a title="Development" href="">Development</a>
-      
-    </div>
-  </div>
+  <script src="../../_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = "../../_static/versions.json",
+        target_loc = "../../../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
   
 
     </div>
@@ -187,7 +187,7 @@
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.3.dev10 documentation">Zero</a>
+       title="Zero 0.0.3.dev10 documentation">Zero 0.0.3.dev10</a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
