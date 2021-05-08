@@ -17,6 +17,7 @@ version = zero.__version__
 
 # General configuration
 default_role = 'py:obj'
+html_static_path = ['_static']
 templates_path = ['_templates']
 
 # Extensions
@@ -85,13 +86,13 @@ html_theme_options = {
     # search here for logo icons: https://www.compart.com/en/unicode
     'logo_icon': '&#127968;',
     'nav_links': [],
-    'nav_title': project,
+    'nav_title': project + ' ' + version,
     'repo_name': project,
     'repo_url': repo_url,
     'repo_type': 'github',
     'master_doc': False,
     'version_dropdown': True,
-    'version_info': {'Development': ''},
+    'version_json': '_static/versions.json',
 }
 html_sidebars = {
     '**': ['logo-text.html', 'globaltoc.html', 'searchbox.html'],
