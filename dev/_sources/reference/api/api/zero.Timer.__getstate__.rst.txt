@@ -1,0 +1,6 @@
+zero.Timer.\_\_getstate\_\_
+===========================
+
+.. currentmodule:: zero
+
+.. automethod:: Timer.__getstate__

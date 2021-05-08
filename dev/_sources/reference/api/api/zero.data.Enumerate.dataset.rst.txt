@@ -1,0 +1,6 @@
+zero.data.Enumerate.dataset
+===========================
+
+.. currentmodule:: zero.data
+
+.. autoproperty:: Enumerate.dataset
