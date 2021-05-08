@@ -1,6 +1,0 @@
-zero.ProgressTracker.success
-============================
-
-.. currentmodule:: zero
-
-.. autoproperty:: ProgressTracker.success

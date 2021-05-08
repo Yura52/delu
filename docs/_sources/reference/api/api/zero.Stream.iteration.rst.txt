@@ -1,6 +1,0 @@
-zero.Stream.iteration
-=====================
-
-.. currentmodule:: zero
-
-.. autoproperty:: Stream.iteration
