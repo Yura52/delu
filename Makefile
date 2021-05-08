@@ -1,9 +1,8 @@
 .PHONY: default clean coverage _docs docs dtest format lint pages pre-commit test typecheck
 
 PYTEST_CMD = pytest zero
-TEST_CMD = PYTHONPATH='.' $(PYTEST_CMD)
 VIEW_HTML_CMD = open
-DOCSRC = docsrc
+DOCS_DIR = docs
 
 default:
 	echo "Hello, World!"
@@ -15,26 +14,21 @@ clean:
 	rm -rf .mypy_cache
 	rm -rf .pytest_cache
 	rm -rf dist
-	rm -rf $(DOCSRC)/source/reference/api
-	make -C $(DOCSRC) clean
+	rm -rf $(DOCS_DIR)/source/reference/api
+	make -C $(DOCS_DIR) clean
 
 coverage:
 	coverage run -m $(PYTEST_CMD)
 	coverage report -m
 
 _docs:
-	make -C $(DOCSRC) html
+	make -C $(DOCS_DIR) html
 
 docs: _docs
-	$(VIEW_HTML_CMD) $(DOCSRC)/build/html/index.html
+	$(VIEW_HTML_CMD) $(DOCS_DIR)/build/html/index.html
 
 dtest:
-	make -C $(DOCSRC) doctest
-
-pages:
-	rm -r docs
-	cp -r $(DOCSRC)/build/html docs
-	touch docs/.nojekyll
+	make -C $(DOCS_DIR) doctest
 
 lint:
 	python -m pre_commit_hooks.debug_statement_hook zero/**/*.py
@@ -46,7 +40,7 @@ lint:
 pre-commit: clean lint test _docs dtest typecheck
 
 test:
-	$(TEST_CMD) $(ARGV)
+	PYTHONPATH='.' $(PYTEST_CMD) $(ARGV)
 
 typecheck:
 	mypy zero
