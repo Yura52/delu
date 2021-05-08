@@ -1,0 +1,6 @@
+zero.ProgressTracker.\_\_init\_\_
+=================================
+
+.. currentmodule:: zero
+
+.. automethod:: ProgressTracker.__init__
