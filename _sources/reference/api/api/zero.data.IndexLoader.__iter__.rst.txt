@@ -1,0 +1,6 @@
+zero.data.IndexLoader.\_\_iter\_\_
+==================================
+
+.. currentmodule:: zero.data
+
+.. automethod:: IndexLoader.__iter__
