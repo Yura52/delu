@@ -1,0 +1,6 @@
+zero.random.set\_random\_state
+==============================
+
+.. currentmodule:: zero.random
+
+.. autofunction:: set_random_state

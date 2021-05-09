@@ -1,0 +1,6 @@
+zero.metrics.IgniteMetric.reset
+===============================
+
+.. currentmodule:: zero.metrics
+
+.. automethod:: IgniteMetric.reset

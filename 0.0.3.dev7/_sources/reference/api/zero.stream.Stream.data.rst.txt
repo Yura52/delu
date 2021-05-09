@@ -1,0 +1,6 @@
+zero.stream.Stream.data
+=======================
+
+.. currentmodule:: zero.stream
+
+.. automethod:: Stream.data

@@ -1,0 +1,6 @@
+zero.stream.Stream.epochs
+=========================
+
+.. currentmodule:: zero.stream
+
+.. automethod:: Stream.epochs

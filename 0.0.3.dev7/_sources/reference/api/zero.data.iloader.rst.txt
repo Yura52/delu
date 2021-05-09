@@ -1,0 +1,6 @@
+zero.data.iloader
+=================
+
+.. currentmodule:: zero.data
+
+.. autofunction:: iloader

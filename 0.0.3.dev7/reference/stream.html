@@ -1,0 +1,534 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
+
+  
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
+  
+
+  <link rel="stylesheet" href="../_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="../_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="../_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="../_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="../_static/javascripts/modernizr.js"></script>
+  
+  
+  
+    <title>zero.stream &#8212; Zero 0.0.3.dev7 documentation</title>
+    <link rel="stylesheet" href="../_static/material.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="zero.stream.Stream.iteration" href="api/zero.stream.Stream.iteration.html" />
+    <link rel="prev" title="zero.random.set_random_state" href="api/zero.random.set_random_state.html" />
+  
+   
+
+  </head>
+  <body dir=ltr
+        data-md-color-primary=white data-md-color-accent=blue>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#reference/stream" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../index.html" title="Zero 0.0.3.dev7 documentation"
+           class="md-header-nav__button md-logo">
+          
+            <i class="md-icon">&#127968;</i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">Zero</span>
+          <span class="md-header-nav__topic"> zero.stream </span>
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="../search.html" method="GET" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder="Search"
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
+
+    <div class="md-source__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Zero
+  </div>
+</a>
+          </div>
+        </div>
+      
+      
+  
+  <script src="../_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = "../_static/versions.json",
+        target_loc = "../../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../index.html" title="Zero 0.0.3.dev7 documentation" class="md-nav__button md-logo">
+      
+        <i class="md-icon">&#127968;</i>
+      
+    </a>
+    <a href="../index.html"
+       title="Zero 0.0.3.dev7 documentation">Zero</a>
+  </label>
+    <div class="md-nav__source">
+      <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
+
+    <div class="md-source__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Zero
+  </div>
+</a>
+    </div>
+  
+  
+
+  
+  <ul class="md-nav__list">
+    <li class="md-nav__item">
+    
+      <span class="md-nav__link caption"><span class="caption-text">NOTES</span></span>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../learn.html" class="md-nav__link">Learn</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+      <span class="md-nav__link caption"><span class="caption-text">REFERENCE</span></span>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="zero.html" class="md-nav__link">zero</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="data.html" class="md-nav__link">zero.data</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="hardware.html" class="md-nav__link">zero.hardware</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="metrics.html" class="md-nav__link">zero.metrics</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="module.html" class="md-nav__link">zero.module</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="random.html" class="md-nav__link">zero.random</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    <label class="md-nav__link md-nav__link--active" for="__toc"> zero.stream </label>
+    
+      <a href="#" class="md-nav__link md-nav__link--active">zero.stream</a>
+      
+        
+<nav class="md-nav md-nav--secondary">
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="../_sources/reference/stream.rst.txt">Show Source</a> </li>
+
+  </ul>
+</nav>
+      <ul class="md-nav__list"> 
+    <li class="md-nav__item">
+    
+    
+      <a href="#stream" class="md-nav__link">Stream</a>
+      
+    
+    </li></ul>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="time.html" class="md-nav__link">zero.time</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="training.html" class="md-nav__link">zero.training</a>
+      
+    
+    </li>
+  </ul>
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="../_sources/reference/stream.rst.txt">Show Source</a> </li>
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
+  <section id="module-zero.stream">
+<span id="zero-stream"></span><h1 id="reference-stream--page-root">zero.stream<a class="headerlink" href="#reference-stream--page-root" title="Permalink to this headline">¶</a></h1>
+<p>Smart Python loops.</p>
+<section id="stream">
+<h2 id="stream">Stream<a class="headerlink" href="#stream" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="zero.stream.Stream">
+<em class="property">class </em><code class="sig-prename descclassname">zero.stream.</code><code class="sig-name descname">Stream</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">loader</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/zero/stream.html#Stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.stream.Stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Smart wrapper for iterables.</p>
+<p><a class="reference internal" href="#zero.stream.Stream" title="zero.stream.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a> simplifies managing loops, especially in typical deep learning scenarios
+(it is usually used to wrap <code class="code docutils literal notranslate"><span class="pre">train_dataloader</span></code> or any other data source).</p>
+<p><a class="reference internal" href="#zero.stream.Stream" title="zero.stream.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a>:</p>
+<ul class="simple">
+<li><p>simplifies management of the “epoch” and “iteration” variables</p></li>
+<li><p>allows to dump and restore loop’s state: epoch, iteration, etc.</p></li>
+<li><p>allows to customize the size of epoch</p></li>
+<li><p>allows to change the underlying data loader on the fly</p></li>
+<li><p>enables useful patterns</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loader</strong> – any kind of iterable (DataLoader, list, iterator, generator, …)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.9)"><strong>AssertionError</strong></a> – if <code class="code docutils literal notranslate"><span class="pre">loader</span></code> is not an iterator and is empty</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+<p class="rubric">Tutorial</p>
+<p>Let’s revise the conventional approach without <a class="reference internal" href="#zero.stream.Stream" title="zero.stream.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">iteration</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">loader</span><span class="p">:</span>
+        <span class="n">iteration</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Epoch:'</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="s1">'Iteration:'</span><span class="p">,</span> <span class="n">iteration</span><span class="p">)</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>There are several ways how you can use <a class="reference internal" href="#zero.stream.Stream" title="zero.stream.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a> to enhance this loop. Let’s start
+with creating a stream:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The dataloader is accessible via <a class="reference internal" href="api/zero.stream.Stream.loader.html#zero.stream.Stream.loader" title="zero.stream.Stream.loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.loader</span></code></a>. Now, let’s reproduce the loop
+above:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">epochs</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">epoch</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Epoch:'</span><span class="p">,</span> <span class="n">stream</span><span class="o">.</span><span class="n">epoch</span><span class="p">,</span> <span class="s1">'Iteration:'</span><span class="p">,</span> <span class="n">stream</span><span class="o">.</span><span class="n">iteration</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We see that <a class="reference internal" href="api/zero.stream.Stream.epoch.html#zero.stream.Stream.epoch" title="zero.stream.Stream.epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoch</span></code></a> and <a class="reference internal" href="api/zero.stream.Stream.iteration.html#zero.stream.Stream.iteration" title="zero.stream.Stream.iteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.iteration</span></code></a> are managed automatically.
+Additionally, a progress bar is displayed while the loop is running.</p>
+<p>Saving the loop’s state and resuming the loop is possible with the methods
+<a class="reference internal" href="api/zero.stream.Stream.state_dict.html#zero.stream.Stream.state_dict" title="zero.stream.Stream.state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.state_dict</span></code></a>, <a class="reference internal" href="api/zero.stream.Stream.load_state_dict.html#zero.stream.Stream.load_state_dict" title="zero.stream.Stream.load_state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.load_state_dict</span></code></a>. In practice, it may look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">load_from_checkpoint</span><span class="p">:</span>
+    <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s1">'model'</span><span class="p">])</span>
+    <span class="o">...</span>
+    <span class="n">stream</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s1">'stream'</span><span class="p">])</span>
+<span class="o">...</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">epochs</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">epoch</span><span class="p">:</span>
+        <span class="o">...</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s1">'model'</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+            <span class="s1">'optimizer'</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+            <span class="s1">'stream'</span><span class="p">:</span> <span class="n">stream</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+        <span class="p">},</span>
+        <span class="sa">f</span><span class="s1">'checkpoint_</span><span class="si">{</span><span class="n">stream</span><span class="o">.</span><span class="n">epoch</span><span class="si">}</span><span class="s1">.pt'</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Stream’s state does not include the loader’s state. See <a class="reference internal" href="api/zero.stream.Stream.state_dict.html#zero.stream.Stream.state_dict" title="zero.stream.Stream.state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.state_dict</span></code></a> and
+<a class="reference internal" href="api/zero.stream.Stream.load_state_dict.html#zero.stream.Stream.load_state_dict" title="zero.stream.Stream.load_state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.load_state_dict</span></code></a> for details.</p>
+</div>
+<p>In order to customize the epoch size, pass the size as the second argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">epochs</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">,</span> <span class="n">custom_epoch_size</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">epoch</span><span class="p">:</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>Changing the underlying loader on the fly is possible at <em>any</em> moment (even in the
+middle of epoch) via <a class="reference internal" href="api/zero.stream.Stream.set_loader.html#zero.stream.Stream.set_loader" title="zero.stream.Stream.set_loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.set_loader</span></code></a>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">epochs</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">,</span> <span class="n">custom_epoch_size</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">epoch</span><span class="p">:</span>
+        <span class="o">...</span>
+        <span class="k">if</span> <span class="n">need_new_data</span><span class="p">():</span>
+            <span class="n">stream</span><span class="o">.</span><span class="n">set_loader</span><span class="p">(</span><span class="n">new_loader</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the method <a class="reference internal" href="api/zero.stream.Stream.epochs.html#zero.stream.Stream.epochs" title="zero.stream.Stream.epochs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epochs</span></code></a> does not fit your workflow and you want more control
+over the loop, there are more “low-level” methods (in fact, <a class="reference internal" href="api/zero.stream.Stream.epochs.html#zero.stream.Stream.epochs" title="zero.stream.Stream.epochs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epochs</span></code></a> is just
+a thin wrapper around them):</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="api/zero.stream.Stream.increment_epoch.html#zero.stream.Stream.increment_epoch" title="zero.stream.Stream.increment_epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.increment_epoch</span></code></a></p></li>
+<li><p><a class="reference internal" href="api/zero.stream.Stream.data.html#zero.stream.Stream.data" title="zero.stream.Stream.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.data</span></code></a></p></li>
+<li><p><a class="reference internal" href="api/zero.stream.Stream.next.html#zero.stream.Stream.next" title="zero.stream.Stream.next"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.next</span></code></a></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For better technical understanding, keep in mind that <a class="reference internal" href="#zero.stream.Stream" title="zero.stream.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a> simply
+encapsulates an “infinite iterator” that is constantly moving forward. The
+behavior is absolutely the same for both finite and infinite iterables and can
+be expressed with the following loop:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">loader</span><span class="p">:</span>  <span class="c1"># loader which is passed in the constructor</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>Documentation for <a class="reference internal" href="api/zero.stream.Stream.next.html#zero.stream.Stream.next" title="zero.stream.Stream.next"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.next</span></code></a> and <a class="reference internal" href="api/zero.stream.Stream.data.html#zero.stream.Stream.data" title="zero.stream.Stream.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.data</span></code></a> provide helpful examples.</p>
+</div>
+</dd></dl>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 90%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.iteration.html#zero.stream.Stream.iteration" title="zero.stream.Stream.iteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.iteration</span></code></a></p></td>
+<td><p>Current iteration.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.epoch.html#zero.stream.Stream.epoch" title="zero.stream.Stream.epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoch</span></code></a></p></td>
+<td><p>Current epoch.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.increment_epoch.html#zero.stream.Stream.increment_epoch" title="zero.stream.Stream.increment_epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.increment_epoch</span></code></a>()</p></td>
+<td><p>Increment <a class="reference internal" href="api/zero.stream.Stream.epoch.html#zero.stream.Stream.epoch" title="zero.stream.Stream.epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epoch</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.loader.html#zero.stream.Stream.loader" title="zero.stream.Stream.loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.loader</span></code></a></p></td>
+<td><p>The underlying loader.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.set_loader.html#zero.stream.Stream.set_loader" title="zero.stream.Stream.set_loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.set_loader</span></code></a>(loader)</p></td>
+<td><p>Set new loader.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.reload_iterator.html#zero.stream.Stream.reload_iterator" title="zero.stream.Stream.reload_iterator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.reload_iterator</span></code></a>()</p></td>
+<td><p>Set the underlying iterator to <code class="xref py py-obj docutils literal notranslate"><span class="pre">iter(self.loader)</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.next.html#zero.stream.Stream.next" title="zero.stream.Stream.next"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.next</span></code></a>()</p></td>
+<td><p>Get the next item and increment iteration.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.data.html#zero.stream.Stream.data" title="zero.stream.Stream.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.data</span></code></a>([n_items])</p></td>
+<td><p>Iterate over the loader.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.epochs.html#zero.stream.Stream.epochs" title="zero.stream.Stream.epochs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.epochs</span></code></a>(n_epochs[, epoch_size, …])</p></td>
+<td><p>Iterate over data epochs.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/zero.stream.Stream.state_dict.html#zero.stream.Stream.state_dict" title="zero.stream.Stream.state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.state_dict</span></code></a>()</p></td>
+<td><p>Get the stream’s state.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/zero.stream.Stream.load_state_dict.html#zero.stream.Stream.load_state_dict" title="zero.stream.Stream.load_state_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.load_state_dict</span></code></a>(state_dict)</p></td>
+<td><p>Load state dictionary.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2020, Yura52.
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+zero.metrics.Metric.calculate\_iter
+===================================
+
+.. currentmodule:: zero.metrics
+
+.. automethod:: Metric.calculate_iter

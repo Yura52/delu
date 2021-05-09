@@ -1,0 +1,6 @@
+zero.training.ProgressTracker.forget\_bad\_updates
+==================================================
+
+.. currentmodule:: zero.training
+
+.. automethod:: ProgressTracker.forget_bad_updates

@@ -1,0 +1,6 @@
+zero.stream.Stream.epoch
+========================
+
+.. currentmodule:: zero.stream
+
+.. autoproperty:: Stream.epoch

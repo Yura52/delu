@@ -1,0 +1,6 @@
+zero.data.Enumerate.\_\_len\_\_
+===============================
+
+.. currentmodule:: zero.data
+
+.. automethod:: Enumerate.__len__
