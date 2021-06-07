@@ -7,8 +7,7 @@ import torch
 from pynvml import NVMLError_LibraryNotFound
 from pytest import mark, raises
 
-# don't use "from zero.hardware import ...", because it breaks mocking
-import zero.hardware as hardware
+import zero
 
 
 @mark.parametrize('gpu', [False, True])
@@ -16,7 +15,7 @@ def test_free_memory(gpu):
     with (patch('gc.collect')) as _, (patch('torch.cuda.empty_cache')) as _, (
         patch('torch.cuda.synchronize')
     ) as _, (patch('torch.cuda.is_available', lambda: gpu)) as _:
-        hardware.free_memory()
+        zero.hardware.free_memory()
         gc.collect.call_count == 2
         if gpu:
             torch.cuda.synchronize.assert_called_once()
@@ -53,7 +52,7 @@ def test_get_gpus_info():
     ), patch(
         pynvml_fns[6], return_value=driver.encode('utf-8')
     ):
-        assert hardware.get_gpus_info() == {
+        assert zero.hardware.get_gpus_info() == {
             'driver': driver,
             'devices': [
                 {
@@ -73,4 +72,4 @@ def test_get_gpus_info():
 def test_get_gpus_info_without_gpu():
     with patch('pynvml.nvmlInit', side_effect=NVMLError_LibraryNotFound()):
         with raises(RuntimeError):
-            hardware.get_gpus_info()
+            zero.hardware.get_gpus_info()

@@ -10,7 +10,7 @@ import zero  # noqa
 
 # Project information
 author = 'Yura52'
-copyright = '2020, Yura52'
+copyright = '2021, Yura52'
 project = 'Zero'
 release = zero.__version__
 version = zero.__version__
@@ -74,6 +74,7 @@ repo_url = 'https://github.com/Yura52/zero'
 
 import sphinx_material  # noqa
 
+html_logo = 'logo.svg'
 html_theme = 'sphinx_material'
 html_theme_options = {
     # Full list of options: https://github.com/bashtage/sphinx-material/blob/master/sphinx_material/sphinx_material/theme.conf
@@ -84,7 +85,7 @@ html_theme_options = {
     'color_primary': 'white',
     'globaltoc_depth': 1,
     # search here for logo icons: https://www.compart.com/en/unicode
-    'logo_icon': '&#127968;',
+    # 'logo_icon': '&#127968;',
     'nav_links': [],
     'nav_title': project + ' ' + version,
     'repo_name': project,

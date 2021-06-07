@@ -312,9 +312,10 @@ class Stream:
 
         Args:
             n_items: how many items to produce. If `None`, interpreted as
-                :code:`len(self.loader)`. If `float`, must be `math.inf`.
+                :code:`len(self.loader)`. If `float`, must be :code:`float('inf')` or
+                `math.inf`.
         Raises:
-            AssertionError: if :code:`n_items` is float, but not `math.inf`
+            AssertionError: if :code:`n_items` is a finite float or nan.
             ValueError: if :code:`loader` is an iterator and :code:`n_items` is
                 `None`
 
@@ -331,7 +332,7 @@ class Stream:
 
             .. code-block::
 
-                for x in stream.data(math.inf):
+                for x in stream.data(float('inf')):
                     ...
                     if stream.iteration % frequency:
                         ...
@@ -368,7 +369,8 @@ class Stream:
 
         Args:
             max_epoch: defines the number of epochs. The loop goes on while
-                :code:`self.epoch < max_epoch`. If `float`, must be `math.inf`.
+                :code:`self.epoch < max_epoch`. If `float`, must be :code:`float('inf')`
+                or `math.inf`.
             epoch_size: the number of data items in one epoch
                 (is forwarded to `Stream.data`).
             progress_bar_options: if not None, a progress bar for iterations will
@@ -381,7 +383,7 @@ class Stream:
         Returns:
             Iterator over iterators over data from `Stream.loader`.
         Raises:
-            AssertionError: if :code:`max_epoch` if `float`, but not `math.inf`.
+            AssertionError: if :code:`max_epoch` is a finite float or nan.
 
         Examples:
             .. testcode::

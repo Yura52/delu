@@ -4,7 +4,7 @@ import os
 
 from pytest import mark, raises
 
-from zero.stream import Stream
+from zero import Stream
 
 
 def test_properties():
