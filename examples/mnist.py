@@ -48,7 +48,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    zero.random.init(args.seed)
+    zero.improve_reproducibility(args.seed)
     model = nn.Linear(784, 10).to(args.device)
     optimizer = torch.optim.SGD(model.parameters(), 0.005, 0.9)
 

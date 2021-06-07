@@ -1,6 +1,8 @@
 import pickle
+import random
 from time import perf_counter, sleep
 
+import numpy as np
 import torch
 import torch.nn as nn
 from pytest import approx, mark, raises
@@ -189,3 +191,19 @@ def test_evaluation(train, grad, n_models):
     for _ in range(3):
         f()
         assert torch.is_grad_enabled() == grad
+
+
+def test_improve_reproducibility():
+    def f():
+        upper_bound = 100
+        return [
+            random.randint(0, upper_bound),
+            np.random.randint(upper_bound),
+            torch.randint(upper_bound, (1,))[0].item(),
+        ]
+
+    for seed in [None, 0, 1, 2]:
+        seed = zero.improve_reproducibility(seed)
+        results = f()
+        zero.random.seed(seed)
+        assert results == f()

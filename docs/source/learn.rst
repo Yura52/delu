@@ -29,6 +29,7 @@ are the things to learn:
    :nosignatures:
 
    zero.evaluation
+   zero.improve_reproducibility
    zero.random
    zero.Stream
    zero.ProgressTracker

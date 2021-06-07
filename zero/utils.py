@@ -1,10 +1,13 @@
 import datetime
 import enum
+import secrets
 import time
 from typing import Any, Dict, Optional
 
 import torch
 import torch.nn as nn
+
+from . import random as zero_random
 
 
 class _ProgressStatus(enum.Enum):
@@ -457,3 +460,51 @@ class evaluation(torch.no_grad):
         for m in self._modules:
             m.eval()
         return result
+
+
+def improve_reproducibility(seed: Optional[int]) -> int:
+    """Set seeds in `random`, `numpy` and `torch` and make some cuDNN operations deterministic.
+
+    Do everything possible to improve reproducibility for code that relies on global
+    random number generators from the aforementioned modules. See also the note below.
+
+    Sets:
+
+    1. seeds in `random`, `numpy.random`, `torch`, `torch.cuda`
+    2. `torch.backends.cudnn.benchmark` to `False`
+    3. `torch.backends.cudnn.deterministic` to `True`
+
+    Args:
+        seed: the seed for all mentioned libraries. Must be less than
+            :code:`2 ** 32 - 1`. If `None`, a high-quality seed is generated instead.
+
+    Returns:
+        seed: if :code:`seed` is set to `None`, the generated seed is returned;
+            otherwise, :code:`seed` is returned as is
+
+    Note:
+        If you don't want to set the seed by hand, but still want to have a chance to
+        reproduce things, you can use the following pattern::
+
+            print('Seed:', zero.improve_reproducibility(None))
+
+    Note:
+        100% reproducibility is not always possible in PyTorch. See
+        `this page <https://pytorch.org/docs/stable/notes/randomness.html>`_ for
+        details.
+
+    Examples:
+        .. testcode::
+
+            assert zero.improve_reproducibility(0) == 0
+            seed = zero.improve_reproducibility(None)
+    """
+    torch.backends.cudnn.benchmark = False  # type: ignore
+    torch.backends.cudnn.deterministic = True  # type: ignore
+    if seed is None:
+        # See https://numpy.org/doc/1.18/reference/random/bit_generators/index.html#seeding-and-entropy  # noqa
+        seed = secrets.randbits(128) % (2 ** 32 - 1)
+    else:
+        assert seed < (2 ** 32 - 1)
+    zero_random.seed(seed)
+    return seed

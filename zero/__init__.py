@@ -6,4 +6,4 @@ from . import hardware  # noqa
 from . import random  # noqa
 from .data import collate, concat, iter_batches  # noqa
 from .stream import Stream  # noqa
-from .utils import ProgressTracker, Timer, evaluation  # noqa
+from .utils import ProgressTracker, Timer, evaluation, improve_reproducibility  # noqa

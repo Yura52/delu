@@ -9,19 +9,18 @@ import zero
 from .util import requires_gpu
 
 
-def _test_init(functions):
-    assert isinstance(zero.random.init(None), int)
+def _test_seed(functions):
     high = 1000000
     for seed in range(10):
         x = [None, None]
         for i in range(2):
-            zero.random.init(seed)
+            zero.random.seed(seed)
             x[i] = [f(high) for f in functions]
         assert x[0] == x[1]
 
 
-def test_set_randomness_cpu():
-    _test_init(
+def test_seed_cpu():
+    _test_seed(
         [
             lambda x: random.randint(0, x),
             lambda x: np.random.randint(x),
@@ -31,7 +30,7 @@ def test_set_randomness_cpu():
 
 
 @requires_gpu
-def test_set_randomness_gpu():
+def test_seed_gpu():
     functions = []
     for i in range(torch.cuda.device_count()):
 
@@ -39,7 +38,7 @@ def test_set_randomness_gpu():
             return (torch.randint(x, (1,), device=f'cuda:{i}')[0].item(),)
 
         functions.append(f)
-    _test_init(functions)
+    _test_seed(functions)
 
 
 def test_get_set_state():

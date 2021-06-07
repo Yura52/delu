@@ -1,59 +1,33 @@
 """Random sampling utilities."""
 
 import random
-import secrets
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 import numpy as np
 import torch
 
 
-def init(
-    seed: Optional[int],
-    cudnn_deterministic: bool = True,
-    cudnn_benchmark: bool = False,
-) -> int:
-    """Set seeds and settings in `random`, `numpy` and `torch`.
-
-    Sets random seed in `random`, `numpy.random`, `torch`, `torch.cuda` and sets
-    settings in :code:`torch.backends.cudnn`.
+def seed(seed: int) -> None:
+    """Set seeds in `random`, `numpy` and `torch`.
 
     Args:
-        seed: the seed for all mentioned libraries. If `None`, a **high-quality** seed
-            is generated and used instead.
-        cudnn_deterministic: value for :code:`torch.backends.cudnn.deterministic`
-        cudnn_benchmark: value for :code:`torch.backends.cudnn.benchmark`
-
-    Returns:
-        seed: if :code:`seed` is set to `None`, the generated seed is returned;
-            otherwise the :code:`seed` argument is returned as is
-
-    Note:
-        If you don't want to set the seed by hand, but still want to have a chance to
-        reproduce things, you can use the following pattern::
-
-            print('Seed:', zero.random.init(None))
+        seed: the seed for all mentioned libraries. Must be less
+            than :code:`2 ** 32 - 1`.
+    Raises:
+        AssertionError: if the seed is not less than :code:`2 ** 32 - 1`
 
     Examples:
         .. testcode::
 
-            assert zero.random.init(0) == 0
-            generated_seed = zero.random.init(None)
+            zero.random.seed(0)
     """
-    torch.backends.cudnn.deterministic = cudnn_deterministic  # type: ignore
-    torch.backends.cudnn.benchmark = cudnn_benchmark  # type: ignore
-    raw_seed = seed
-    if raw_seed is None:
-        # See https://numpy.org/doc/1.18/reference/random/bit_generators/index.html#seeding-and-entropy  # noqa
-        raw_seed = secrets.randbits(128)
-    seed = raw_seed % (2 ** 32 - 1)
+    assert seed < 2 ** 32 - 1
+    random.seed(seed)
+    np.random.seed(seed)
     torch.manual_seed(seed)
     # mypy doesn't know about the following functions
     torch.cuda.manual_seed(seed)  # type: ignore
     torch.cuda.manual_seed_all(seed)  # type: ignore
-    np.random.seed(seed)
-    random.seed(seed)
-    return seed
 
 
 def get_state() -> Dict[str, Any]:
@@ -65,14 +39,6 @@ def get_state() -> Dict[str, Any]:
 
     Returns:
         state
-
-    Note:
-        The most reliable way to guarantee reproducibility and to make your data streams
-        resumable is to create separate random number generators and manage them
-        manually (for example, `torch.utils.data.DataLoader` accepts the
-        argument :code:`generator` for that purposes). However, if you rely on the
-        global random state, this function along with `set_state` does everything
-        just right.
 
     See also:
         `set_state`
@@ -102,15 +68,12 @@ def get_state() -> Dict[str, Any]:
 
 
 def set_state(state: Dict[str, Any]) -> None:
-    """Set global random states from `random`, `numpy` and `torch`.
+    """Set global random states in `random`, `numpy` and `torch`.
 
-    The argument must be produced by `get_state`.
-
-    Note:
-        The size of list :code:`state['torch.cuda']` must be equal to the number of
-        available cuda devices. If random state of cuda devices is not important, remove
-        the entry 'torch.cuda' from the state beforehand, or, **at your own risk**
-        adjust its value.
+    Args:
+        state: global RNG states. Must be produced by `get_state`. The size of the list
+            :code:`state['torch.cuda']` must be equal to the number of available cuda
+            devices.
 
     See also:
         `get_state`
