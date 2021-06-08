@@ -8,19 +8,20 @@ while not (zero_path.name == 'zero' and zero_path.parent.name != 'zero'):
 sys.path.append(str(zero_path))
 import zero  # noqa
 
-# Project information
+# >>> Project information <<<
 author = 'Yura52'
 copyright = '2021, Yura52'
 project = 'Zero'
 release = zero.__version__
 version = zero.__version__
 
-# General configuration
+# >>> General options <<<
 default_role = 'py:obj'
-html_static_path = ['_static']
+pygments_style = 'default'
+repo_url = 'https://github.com/Yura52/zero'
 templates_path = ['_templates']
 
-# Extensions
+# >>> Extensions options <<<
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
@@ -58,23 +59,13 @@ napoleon_use_admonition_for_examples = False
 
 spelling_show_suggestions = True
 
-# Options for HTML output
-pygments_style = 'default'
-repo_url = 'https://github.com/Yura52/zero'
-
-# html_theme = 'alabaster'
-# html_theme_options = {
-#     'fixed_sidebar': True,
-#     'github_type': 'star',
-#     'github_user': 'Yura52',
-#     'github_repo': 'zero',
-#     'page_width': '75%',
-#     'sidebar_width': '250px'
-# }
+# >>> HTML and theme options <<<
 
 import sphinx_material  # noqa
 
-html_logo = 'logo.svg'
+html_static_path = ['_static']
+html_favicon = 'images/favicon.ico'
+html_logo = 'images/logo.svg'
 html_theme = 'sphinx_material'
 html_theme_options = {
     # Full list of options: https://github.com/bashtage/sphinx-material/blob/master/sphinx_material/sphinx_material/theme.conf
@@ -98,6 +89,16 @@ html_theme_options = {
 html_sidebars = {
     '**': ['logo-text.html', 'globaltoc.html', 'searchbox.html'],
 }
+
+# html_theme = 'alabaster'
+# html_theme_options = {
+#     'fixed_sidebar': True,
+#     'github_type': 'star',
+#     'github_user': 'Yura52',
+#     'github_repo': 'zero',
+#     'page_width': '75%',
+#     'sidebar_width': '250px'
+# }
 
 # import sphinx_rtd_theme  # noqa
 # extensions.append('sphinx_rtd_theme')
