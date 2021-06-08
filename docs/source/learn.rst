@@ -28,10 +28,10 @@ are the things to learn:
 .. autosummary::
    :nosignatures:
 
+   zero.Stream
    zero.evaluation
    zero.improve_reproducibility
    zero.random
-   zero.Stream
    zero.ProgressTracker
    zero.Timer
    zero.hardware.get_gpus_info

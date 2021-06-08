@@ -19,16 +19,13 @@ Zero
     </g>
   </svg>
 
+Zero is a general-purpose library for PyTorch users. Zero simplifies training loops,
+facilitates reproducibility, helps with models evaluation and other typical Deep Learning
+tasks. Zero is a toolbox, not a framework:
 
-Zero is a general-purpose library for PyTorch users. Zero:
-
-- simplifies training loop, reproducibility, models evaluation and other typical Deep Learning tasks
-- provides a collection of "building blocks" and leaves code organization to you
-- can be used on its own or together with PyTorch frameworks such as
-  `Lightning <https://github.com/PytorchLightning/pytorch-lightning>`_,
-  `Ignite <https://github.com/pytorch/ignite>`_,
-  `Catalyst <https://github.com/catalyst-team/catalyst>`_ and
-  `others <https://pytorch.org/ecosystem>`_
+- your training loop stays the same (regardless of whether it is powered by a simple Python loop or by a specialized framework)
+- you can start by using any single tool you need, there is no "central concept"
+- you can replace tools from Zero with custom solutions at any moment
 
 **NOTE:** Zero is tested (and battle-tested in research projects), but the interface is
 not stable yet, so backward-incompatible changes in future releases are possible.
@@ -37,10 +34,10 @@ Overview
 --------
 
 - `Website <https://yura52.github.io/zero>`_
-- `Code <https://github.com/Yura52/zero>`_
 - `Learn Zero <https://yura52.github.io/zero/learn.html>`_
 - `Classification task example (MNIST) <https://github.com/Yura52/zero/blob/master/examples/mnist.py>`_
-- `The first release announcement <https://github.com/Yura52/zero/issues/21>`_ (Zero itself has changed a lot, but the motivation is still relevant)
+- `Code <https://github.com/Yura52/zero>`_
+- `The first release announcement <https://github.com/Yura52/zero/issues/21>`_
 
 .. __INCLUDE_1__
 
@@ -73,6 +70,20 @@ How to contribute
   any other kind of feedback
 
 If your contribution includes pull requests, see `CONTRIBUTING.md <https://github.com/Yura52/zero/blob/master/other/CONTRIBUTING.md>`_
+
+How to cite
+-----------
+
+.. code-block:: none
+
+    @article{gorishniy2020zero,
+        title={Zero: a Zero-Overhead Library for PyTorch Users},
+        author={Yury Gorishniy},
+        journal={GitHub},
+        volume={Yura52/zero},
+        url={https://github.com/Yura52/zero},
+        year={2020},
+    }
 
 Why "Zero"?
 -----------
