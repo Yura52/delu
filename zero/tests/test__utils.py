@@ -204,6 +204,8 @@ def test_improve_reproducibility():
 
     for seed in [None, 0, 1, 2]:
         seed = zero.improve_reproducibility(seed)
+        assert not torch.backends.cudnn.benchmark
+        assert torch.backends.cudnn.deterministic
         results = f()
         zero.random.seed(seed)
         assert results == f()
