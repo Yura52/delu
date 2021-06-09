@@ -17,12 +17,9 @@ def _try_len(x):
 class Stream:
     """Smart wrapper for data loaders and iterables.
 
-    `Stream` simplifies managing loops, especially in typical deep learning scenarios
-    (it is usually used to wrap :code:`train_dataloader` or any other data source).
+    `Stream` simplifies managing loops, especially in typical Deep Learning scenarios. `Stream`:
 
-    `Stream`:
-
-    - simplifies management of the "epoch" and "iteration" variables
+    - manages the "epoch" and "iteration" variables
     - allows to dump and restore loop's state: epoch, iteration, etc.
     - allows to customize the size of epoch
     - allows to change the underlying data loader on the fly
@@ -30,35 +27,34 @@ class Stream:
 
     .. rubric:: Tutorial
 
-    Let's revise the conventional approach without `Stream`:
-
-    .. code-block::
+    Let's start with the most common training loop::
 
         loader = DataLoader(...)
         iteration = 0
         for epoch in range(max_epoch):
-            for x in loader:
+            for batch in loader:
                 iteration += 1
                 print('Epoch:', epoch, 'Iteration:', iteration)
                 ...
 
-    There are several ways how you can use `Stream` to enhance this loop. Let's start
-    with creating a stream::
+    Let's enhance the loop using `Stream`::
 
-        stream = Stream(DataLoader(...))
+        stream = Stream(DataLoader(...))  # (A)
+        for epoch in stream.epochs(max_epoch):  # (B)
+            for batch in epoch:  # (C)
+                print('Epoch:', stream.epoch, 'Iteration:', stream.iteration)  # (D)
+                ...
 
-    The dataloader is accessible via `Stream.loader`. Now, let's reproduce the loop
-    above::
+    Some comments for the above code:
 
-        for epoch in stream.epochs(max_epoch):
-            for x in epoch:
-                print('Epoch:', stream.epoch, 'Iteration:', stream.iteration)
-
-    We see that `Stream.epoch` and `Stream.iteration` are managed automatically.
-    Additionally, a progress bar is displayed while the loop is running.
+    - :code:`(A)` `Stream` is created by passing a dataloader as a single argument (in fact, you can pass any iterable object);
+      the dataloader is accessible via `Stream.loader`
+    - :code:`(B)` :code:`epoch` is an iterator over batches for one epoch
+    - :code:`(C)` a progress bar for batches is displayed (for the whole training loop, not just for one epoch)
+    - :code:`(D)` `Stream.epoch` and `Stream.iteration` are managed automatically
 
     Saving the loop's state and resuming the loop is possible with the methods
-    `Stream.state_dict`, `Stream.load_state_dict`. In practice, it may look like this::
+    `Stream.state_dict`, `Stream.load_state_dict`. In practice, it can look like this::
 
         model = ...
         optimizer = ...
@@ -66,7 +62,7 @@ class Stream:
         if load_from_checkpoint:
             checkpoint = torch.load(checkpoint_path)
             model.load_state_dict(checkpoint['model'])
-            ...
+            optimizer.load_state_dict(checkpoint['optimizer'])
             stream.load_state_dict(checkpoint['stream'])
         ...
         for epoch in stream.epochs(...):
@@ -75,7 +71,7 @@ class Stream:
             torch.save(
                 {
                     'model': model.state_dict(),
-                    'optimizer': model.state_dict(),
+                    'optimizer': optimizer.state_dict(),
                     'stream': stream.state_dict(),
                 },
                 f'checkpoint_{stream.epoch}.pt'
@@ -88,14 +84,14 @@ class Stream:
     In order to customize the epoch size, pass the size as the second argument::
 
         for epoch in stream.epochs(max_epoch, custom_epoch_size):
-            for x in epoch:
+            for batch in epoch:
                 ...
 
     Changing the underlying loader on the fly is possible at *any* moment (even in the
     middle of epoch) via `Stream.set_loader`. For example::
 
         for epoch in stream.epochs(max_epoch, custom_epoch_size):
-            for x in epoch:
+            for batch in epoch:
                 ...
                 if need_new_data():
                     stream.set_loader(new_loader)
@@ -108,6 +104,21 @@ class Stream:
     - `Stream.data`
     - `Stream.next`
 
+    For example, the most common training loop can be implemented as follows::
+
+        while stream.epoch < max_epoch:
+            stream.increment_epoch()
+            for batch in stream.data():
+                ...
+
+    Or even like this::
+
+        while stream.epoch < max_epoch:
+            stream.increment_epoch()
+            for _ in range(len(stream.loader)):
+                batch = stream.next()  # stream.iteration is incremented automatically
+                ...
+
     Note:
         For better technical understanding, keep in mind that `Stream` simply
         encapsulates an "infinite iterator" that is constantly moving forward. The
@@ -115,7 +126,7 @@ class Stream:
         be expressed with the following loop::
 
             while True:
-                for item in loader:  # loader which is passed to the constructor
+                for item in loader:  # the loader which is passed to the constructor
                     ...
 
         Documentation for `Stream.next` and `Stream.data` provide helpful examples.
@@ -357,25 +368,26 @@ class Stream:
         Learning (plus a progress bar)::
 
             for epoch in stream.epochs(max_epoch, epoch_size):
-                for x in epoch:
+                for batch in epoch:
                     ...
 
             # is equivalent to:
 
             while stream.epoch < max_epoch:
                 stream.increment_epoch()
-                for x in stream.data(epoch_size):
+                for batch in stream.data(epoch_size):
                     ...
 
         Args:
-            max_epoch: defines the number of epochs. The loop goes on while
+            max_epoch: defines the number of epochs. The loop keeps running while
                 :code:`self.epoch < max_epoch`. If `float`, must be :code:`float('inf')`
                 or `math.inf`.
             epoch_size: the number of data items in one epoch
                 (is forwarded to `Stream.data`).
-            progress_bar_options: if not None, a progress bar for iterations will
-                be displayed and the argument will be interpreted as key-word arguments
-                for `tqdm <https://tqdm.github.io/docs/tqdm/#__init__>`_. The following
+            progress_bar_options: if not `None` (the default value is :code:`{}`!), a
+                progress bar for iterations will be displayed and the argument will be
+                interpreted as key-word arguments for
+                `tqdm <https://tqdm.github.io/docs/tqdm/#__init__>`_. The following
                 key-word arguments will be automatically added if not presented in
                 :code:`progress_bar_options`: :code:`initial`, :code:`total` (if can be
                 inferred from the arguments and/or from `Stream.loader`).
