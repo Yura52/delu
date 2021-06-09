@@ -1,3 +1,7 @@
+# Run `python mnist.py --help` to see the documentation
+
+import shutil
+import subprocess
 import sys
 from argparse import ArgumentParser
 from pathlib import Path
@@ -20,10 +24,17 @@ except ImportError:
 import zero
 
 
+def download_mnist():
+    path = Path('MNIST.tar.gz')
+    if path.exists():
+        path.unlink()
+        shutil.rmtree('MNIST', ignore_errors=True)
+    subprocess.run(['wget', 'www.di.ens.fr/~lelarge/MNIST.tar.gz'], check=True)
+    subprocess.run(['tar', '-zxvf', 'MNIST.tar.gz'], check=True)
+
+
 def get_dataset(train):
-    return MNIST(
-        '.', train=train, transform=lambda x: ToTensor()(x).view(-1), download=True
-    )
+    return MNIST('.', train=train, transform=lambda x: ToTensor()(x).view(-1))
 
 
 def split_dataset(dataset, ratio):
@@ -33,7 +44,7 @@ def split_dataset(dataset, ratio):
 
 
 def parse_args():
-    parser = ArgumentParser()
+    parser = ArgumentParser(epilog='Example: python mnist.py')
     parser.add_argument('-d', '--device', default='cpu', type=torch.device)
     parser.add_argument(
         '-e', '--epoch-size', type=int, help='Number of batches per epoch'
@@ -46,8 +57,12 @@ def parse_args():
 
 
 def main():
+    assert str(Path.cwd().absolute().resolve()).endswith(
+        'zero/examples'
+    ), 'Run this script from the "examples" directory'
     args = parse_args()
 
+    download_mnist()
     zero.improve_reproducibility(args.seed)
     model = nn.Linear(784, 10).to(args.device)
     optimizer = torch.optim.SGD(model.parameters(), 0.005, 0.9)
