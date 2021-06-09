@@ -1,0 +1,6 @@
+zero.Timer.pause
+================
+
+.. currentmodule:: zero
+
+.. automethod:: Timer.pause

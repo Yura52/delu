@@ -1,0 +1,6 @@
+zero.Stream.loader
+==================
+
+.. currentmodule:: zero
+
+.. autoproperty:: Stream.loader

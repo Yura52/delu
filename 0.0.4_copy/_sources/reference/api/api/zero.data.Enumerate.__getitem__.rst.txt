@@ -1,0 +1,6 @@
+zero.data.Enumerate.\_\_getitem\_\_
+===================================
+
+.. currentmodule:: zero.data
+
+.. automethod:: Enumerate.__getitem__
