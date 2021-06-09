@@ -24,8 +24,9 @@ Overview
 - `Website <https://yura52.github.io/zero>`_
 - `Learn Zero <https://yura52.github.io/zero/learn.html>`_
 - `Classification task example (MNIST) <https://github.com/Yura52/zero/blob/master/examples/mnist.py>`_
-- `Code <https://github.com/Yura52/zero>`_
 - `The first release announcement <https://github.com/Yura52/zero/issues/21>`_
+- `Discussion <https://github.com/Yura52/zero/discussions/26>`_
+- `Code <https://github.com/Yura52/zero>`_
 
 .. __INCLUDE_1__
 
