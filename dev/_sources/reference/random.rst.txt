@@ -9,6 +9,6 @@ zero.random
     :nosignatures:
     :toctree: api
 
-    init
+    seed
     get_state
     set_state

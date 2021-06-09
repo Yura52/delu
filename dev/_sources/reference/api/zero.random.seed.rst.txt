@@ -1,6 +1,6 @@
-zero.random.init
+zero.random.seed
 ================
 
 .. currentmodule:: zero.random
 
-.. autofunction:: init
+.. autofunction:: seed

@@ -56,6 +56,7 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/language_data.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="zero" href="reference/zero.html" />
@@ -86,7 +87,8 @@
         <a href="index.html" title="Zero 0.0.4.dev0 documentation"
            class="md-header-nav__button md-logo">
           
-            <i class="md-icon">&#127968;</i>
+              <img src="_static/logo.svg" height="26"
+                   alt="Zero 0.0.4.dev0 documentation logo">
           
         </a>
       </div>
@@ -176,7 +178,7 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="index.html" title="Zero 0.0.4.dev0 documentation" class="md-nav__button md-logo">
       
-        <i class="md-icon">&#127968;</i>
+        <img src="_static/logo.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="index.html"
@@ -312,25 +314,28 @@ are the things to learn:</p>
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.evaluation.html#zero.evaluation" title="zero.evaluation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.evaluation</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.Stream.html#zero.Stream" title="zero.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.Stream</span></code></a></p></td>
+<td><p>Smart wrapper for data loaders and iterables.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/api/zero.evaluation.html#zero.evaluation" title="zero.evaluation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.evaluation</span></code></a></p></td>
 <td><p>Context-manager &amp; decorator for models evaluation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.improve_reproducibility.html#zero.improve_reproducibility" title="zero.improve_reproducibility"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.improve_reproducibility</span></code></a></p></td>
+<td><p>Set seeds in <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.20)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code> and make some cuDNN operations deterministic.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="reference/random.html#module-zero.random" title="zero.random"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.random</span></code></a></p></td>
 <td><p>Random sampling utilities.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.Stream.html#zero.Stream" title="zero.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.Stream</span></code></a></p></td>
-<td><p>Smart wrapper for data loaders and iterables.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/api/zero.ProgressTracker.html#zero.ProgressTracker" title="zero.ProgressTracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.ProgressTracker</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.ProgressTracker.html#zero.ProgressTracker" title="zero.ProgressTracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.ProgressTracker</span></code></a></p></td>
 <td><p>Tracks the best score, helps with early stopping.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.Timer.html#zero.Timer" title="zero.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.Timer</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/api/zero.Timer.html#zero.Timer" title="zero.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.Timer</span></code></a></p></td>
 <td><p>Measures time.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/api/zero.hardware.get_gpus_info.html#zero.hardware.get_gpus_info" title="zero.hardware.get_gpus_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.hardware.get_gpus_info</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.hardware.get_gpus_info.html#zero.hardware.get_gpus_info" title="zero.hardware.get_gpus_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.hardware.get_gpus_info</span></code></a></p></td>
 <td><p>Get information about GPU devices: driver version, memory, utilization etc.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/api/zero.concat.html#zero.concat" title="zero.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.concat</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/api/zero.concat.html#zero.concat" title="zero.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero.concat</span></code></a></p></td>
 <td><p>Concatenate items (tensors, numpy-arrays, tuples, dicts etc.) along the first dimension.</p></td>
 </tr>
 </tbody>
@@ -355,7 +360,7 @@ are the things to learn:</p>
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2020, Yura52.
+              &#169; Copyright 2021, Yura52.
               
           </div>
             Created using

@@ -56,6 +56,7 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/language_data.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Learn" href="learn.html" />
@@ -85,7 +86,8 @@
         <a href="#" title="Zero 0.0.4.dev0 documentation"
            class="md-header-nav__button md-logo">
           
-            <i class="md-icon">&#127968;</i>
+              <img src="_static/logo.svg" height="26"
+                   alt="Zero 0.0.4.dev0 documentation logo">
           
         </a>
       </div>
@@ -175,7 +177,7 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="#" title="Zero 0.0.4.dev0 documentation" class="md-nav__button md-logo">
       
-        <i class="md-icon">&#127968;</i>
+        <img src="_static/logo.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="#"
@@ -274,15 +276,25 @@
             
   <section id="zero">
 <h1 id="index--page-root">Zero<a class="headerlink" href="#index--page-root" title="Permalink to this headline">¶</a></h1>
-<img src="https://raw.githubusercontent.com/Yura52/zero/master/other/logo.png" style="text-align:center;display:block;" width="190px"/><p>Zero is a general-purpose library for PyTorch users. Zero:</p>
+<svg height="130" style="text-align:center;display:block;" version="1.1" viewbox="270 351 28 28" width="130" xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xl="http://www.w3.org/1999/xlink">
+<defs></defs>
+<g fill="none" fill-opacity="1" id="Canvas_1" stroke="none" stroke-dasharray="none" stroke-opacity="1">
+<title>Canvas 1</title>
+<g id="Canvas_1_Layer_1">
+<title>Layer 1</title>
+<g id="Graphic_7">
+<circle cx="284" cy="365" fill="black" r="13.0000207727246"></circle>
+<circle cx="284" cy="365" r="13.0000207727246" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></circle>
+</g>
+</g>
+</g>
+</svg><p>Zero is a general-purpose library for PyTorch users. Zero simplifies training loops,
+facilitates reproducibility, helps with models evaluation and other typical Deep Learning
+tasks. Zero is a toolbox, not a framework:</p>
 <ul class="simple">
-<li><p>simplifies training loop, reproducibility, models evaluation and other typical Deep Learning tasks</p></li>
-<li><p>provides a collection of “building blocks” and leaves code organization to you</p></li>
-<li><p>can be used on its own or together with PyTorch frameworks such as
-<a class="reference external" href="https://github.com/PytorchLightning/pytorch-lightning">Lightning</a>,
-<a class="reference external" href="https://github.com/pytorch/ignite">Ignite</a>,
-<a class="reference external" href="https://github.com/catalyst-team/catalyst">Catalyst</a> and
-<a class="reference external" href="https://pytorch.org/ecosystem">others</a></p></li>
+<li><p>your training loop stays the same (regardless of whether it is powered by a simple Python loop or by a specialized framework)</p></li>
+<li><p>you can start by using any single tool you need, there is no “central concept”</p></li>
+<li><p>you can replace tools from Zero with custom solutions at any moment</p></li>
 </ul>
 <p><strong>NOTE:</strong> Zero is tested (and battle-tested in research projects), but the interface is
 not stable yet, so backward-incompatible changes in future releases are possible.</p>
@@ -290,17 +302,17 @@ not stable yet, so backward-incompatible changes in future releases are possible
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://yura52.github.io/zero">Website</a></p></li>
-<li><p><a class="reference external" href="https://github.com/Yura52/zero">Code</a></p></li>
 <li><p><a class="reference external" href="https://yura52.github.io/zero/learn.html">Learn Zero</a></p></li>
 <li><p><a class="reference external" href="https://github.com/Yura52/zero/blob/master/examples/mnist.py">Classification task example (MNIST)</a></p></li>
-<li><p><a class="reference external" href="https://github.com/Yura52/zero/issues/21">The first release announcement</a> (Zero itself has changed a lot, but the motivation is still relevant)</p></li>
+<li><p><a class="reference external" href="https://github.com/Yura52/zero">Code</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Yura52/zero/issues/21">The first release announcement</a></p></li>
 </ul>
 </section>
 <section id="installation">
 <span id="id1"></span><h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>If you plan to use the GPU version of PyTorch, install it <strong>before</strong> installing Zero
 (otherwise, the CPU version will be installed together with Zero).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install libzero
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install libzero
 </pre></div>
 </div>
 <section id="dependencies">
@@ -324,6 +336,19 @@ and <a class="reference external" href="https://github.com/Yura52/zero/issues?q=
 any other kind of feedback</p></li>
 </ul>
 <p>If your contribution includes pull requests, see <a class="reference external" href="https://github.com/Yura52/zero/blob/master/other/CONTRIBUTING.md">CONTRIBUTING.md</a></p>
+</section>
+<section id="how-to-cite">
+<h2 id="how-to-cite">How to cite<a class="headerlink" href="#how-to-cite" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@article{gorishniy2020zero,
+    title={Zero: a Zero-Overhead Library for PyTorch Users},
+    author={Yury Gorishniy},
+    journal={GitHub},
+    volume={Yura52/zero},
+    url={https://github.com/Yura52/zero},
+    year={2020},
+}
+</pre></div>
+</div>
 </section>
 <section id="why-zero">
 <h2 id="why-zero">Why “Zero”?<a class="headerlink" href="#why-zero" title="Permalink to this headline">¶</a></h2>
@@ -362,7 +387,7 @@ pretty subjective, so don’t take it too seriously :wink:</p>
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2020, Yura52.
+              &#169; Copyright 2021, Yura52.
               
           </div>
             Created using

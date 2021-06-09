@@ -56,6 +56,7 @@
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="zero.Stream.epochs" href="zero.Stream.epochs.html" />
@@ -86,7 +87,8 @@
         <a href="../../../index.html" title="Zero 0.0.4.dev0 documentation"
            class="md-header-nav__button md-logo">
           
-            <i class="md-icon">&#127968;</i>
+              <img src="../../../_static/logo.svg" height="26"
+                   alt="Zero 0.0.4.dev0 documentation logo">
           
         </a>
       </div>
@@ -184,7 +186,7 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="../../../index.html" title="Zero 0.0.4.dev0 documentation" class="md-nav__button md-logo">
       
-        <i class="md-icon">&#127968;</i>
+        <img src="../../../_static/logo.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../../index.html"
@@ -285,18 +287,19 @@
 <h1 id="reference-api-api-zero-stream-data--page-root">zero.Stream.data<a class="headerlink" href="#reference-api-api-zero-stream-data--page-root" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt id="zero.Stream.data">
-<code class="sig-prename descclassname">Stream.</code><code class="sig-name descname">data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_items</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zero/stream.html#Stream.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.Stream.data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Stream.</code><code class="sig-name descname">data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_items</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zero/_stream.html#Stream.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.Stream.data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterate over the loader.</p>
 <p>Under the hood, <a class="reference internal" href="zero.Stream.next.html#zero.Stream.next" title="zero.Stream.next"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.next</span></code></a> is called, hence, <a class="reference internal" href="zero.Stream.iteration.html#zero.Stream.iteration" title="zero.Stream.iteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.iteration</span></code></a> changes
 during iterations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>n_items</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>]</em><em>]</em>) – how many items to produce. If <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, interpreted as
-<code class="code docutils literal notranslate"><span class="pre">len(self.loader)</span></code>. If <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, must be <a class="reference external" href="https://docs.python.org/3/library/math.html#math.inf" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.inf</span></code></a>.</p>
+<code class="code docutils literal notranslate"><span class="pre">len(self.loader)</span></code>. If <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, must be <code class="code docutils literal notranslate"><span class="pre">float('inf')</span></code> or
+<a class="reference external" href="https://docs.python.org/3/library/math.html#math.inf" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.inf</span></code></a>.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.9)"><strong>AssertionError</strong></a> – if <code class="code docutils literal notranslate"><span class="pre">n_items</span></code> is float, but not <a class="reference external" href="https://docs.python.org/3/library/math.html#math.inf" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.inf</span></code></a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.9)"><strong>AssertionError</strong></a> – if <code class="code docutils literal notranslate"><span class="pre">n_items</span></code> is a finite float or nan.</p></li>
 <li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <code class="code docutils literal notranslate"><span class="pre">loader</span></code> is an iterator and <code class="code docutils literal notranslate"><span class="pre">n_items</span></code> is
     <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p></li>
 </ul>
@@ -315,7 +318,7 @@ during iterations.</p>
 <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="o">==</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s1">'inf'</span><span class="p">)):</span>
     <span class="o">...</span>
     <span class="k">if</span> <span class="n">stream</span><span class="o">.</span><span class="n">iteration</span> <span class="o">%</span> <span class="n">frequency</span><span class="p">:</span>
         <span class="o">...</span>
@@ -340,7 +343,7 @@ during iterations.</p>
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2020, Yura52.
+              &#169; Copyright 2021, Yura52.
               
           </div>
             Created using

@@ -56,6 +56,7 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="prev" title="zero.random.get_state" href="zero.random.get_state.html" />
@@ -85,7 +86,8 @@
         <a href="../../index.html" title="Zero 0.0.4.dev0 documentation"
            class="md-header-nav__button md-logo">
           
-            <i class="md-icon">&#127968;</i>
+              <img src="../../_static/logo.svg" height="26"
+                   alt="Zero 0.0.4.dev0 documentation logo">
           
         </a>
       </div>
@@ -182,7 +184,7 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="../../index.html" title="Zero 0.0.4.dev0 documentation" class="md-nav__button md-logo">
       
-        <i class="md-icon">&#127968;</i>
+        <img src="../../_static/logo.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
@@ -284,15 +286,17 @@
 <dl class="py function">
 <dt id="zero.random.set_state">
 <code class="sig-prename descclassname">zero.random.</code><code class="sig-name descname">set_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">state</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/random.html#set_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.random.set_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set global random states from <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.20)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>.</p>
-<p>The argument must be produced by <a class="reference internal" href="zero.random.get_state.html#zero.random.get_state" title="zero.random.get_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_state</span></code></a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The size of list <code class="code docutils literal notranslate"><span class="pre">state['torch.cuda']</span></code> must be equal to the number of
-available cuda devices. If random state of cuda devices is not important, remove
-the entry ‘torch.cuda’ from the state beforehand, or, <strong>at your own risk</strong>
-adjust its value.</p>
-</div>
+<dd><p>Set global random states in <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.20)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>Any</em><em>]</em>) – global RNG states. Must be produced by <a class="reference internal" href="zero.random.get_state.html#zero.random.get_state" title="zero.random.get_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_state</span></code></a>. The size of the list
+<code class="code docutils literal notranslate"><span class="pre">state['torch.cuda']</span></code> must be equal to the number of available cuda
+devices.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
+</dd>
+</dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="zero.random.get_state.html#zero.random.get_state" title="zero.random.get_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_state</span></code></a></p>
@@ -327,7 +331,7 @@ adjust its value.</p>
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2020, Yura52.
+              &#169; Copyright 2021, Yura52.
               
           </div>
             Created using

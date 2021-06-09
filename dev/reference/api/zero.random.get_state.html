@@ -56,10 +56,11 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="zero.random.set_state" href="zero.random.set_state.html" />
-    <link rel="prev" title="zero.random.init" href="zero.random.init.html" />
+    <link rel="prev" title="zero.random.seed" href="zero.random.seed.html" />
   
    
 
@@ -86,7 +87,8 @@
         <a href="../../index.html" title="Zero 0.0.4.dev0 documentation"
            class="md-header-nav__button md-logo">
           
-            <i class="md-icon">&#127968;</i>
+              <img src="../../_static/logo.svg" height="26"
+                   alt="Zero 0.0.4.dev0 documentation logo">
           
         </a>
       </div>
@@ -183,7 +185,7 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="../../index.html" title="Zero 0.0.4.dev0 documentation" class="md-nav__button md-logo">
       
-        <i class="md-icon">&#127968;</i>
+        <img src="../../_static/logo.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
@@ -297,15 +299,6 @@ other activities dependent on <strong>global</strong> random number generator (s
 <dd class="field-even"><p>Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a>, Any]</p>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The most reliable way to guarantee reproducibility and to make your data streams
-resumable is to create separate random number generators and manage them
-manually (for example, <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.8.0a0+56b43f4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a> accepts the
-argument <code class="code docutils literal notranslate"><span class="pre">generator</span></code> for that purposes). However, if you rely on the
-global random state, this function along with <a class="reference internal" href="zero.random.set_state.html#zero.random.set_state" title="zero.random.set_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_state</span></code></a> does everything
-just right.</p>
-</div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="zero.random.set_state.html#zero.random.set_state" title="zero.random.set_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_state</span></code></a></p>
@@ -344,7 +337,7 @@ just right.</p>
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2020, Yura52.
+              &#169; Copyright 2021, Yura52.
               
           </div>
             Created using

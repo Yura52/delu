@@ -55,6 +55,7 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
   
@@ -83,7 +84,8 @@
         <a href="../../index.html" title="Zero 0.0.4.dev0 documentation"
            class="md-header-nav__button md-logo">
           
-            <i class="md-icon">&#127968;</i>
+              <img src="../../_static/logo.svg" height="26"
+                   alt="Zero 0.0.4.dev0 documentation logo">
           
         </a>
       </div>
@@ -180,7 +182,7 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="../../index.html" title="Zero 0.0.4.dev0 documentation" class="md-nav__button md-logo">
       
-        <i class="md-icon">&#127968;</i>
+        <img src="../../_static/logo.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
@@ -280,59 +282,33 @@
 <span></span><span class="sd">"""Random sampling utilities."""</span>
 
 <span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">secrets</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 
 
-<div class="viewcode-block" id="init"><a class="viewcode-back" href="../../reference/api/zero.random.init.html#zero.random.init">[docs]</a><span class="k">def</span> <span class="nf">init</span><span class="p">(</span>
-    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
-    <span class="n">cudnn_deterministic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">cudnn_benchmark</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">"""Set seeds and settings in `random`, `numpy` and `torch`.</span>
-
-<span class="sd">    Sets random seed in `random`, `numpy.random`, `torch`, `torch.cuda` and sets</span>
-<span class="sd">    settings in :code:`torch.backends.cudnn`.</span>
+<div class="viewcode-block" id="seed"><a class="viewcode-back" href="../../reference/api/zero.random.seed.html#zero.random.seed">[docs]</a><span class="k">def</span> <span class="nf">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">"""Set seeds in `random`, `numpy` and `torch`.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        seed: the seed for all mentioned libraries. If `None`, a **high-quality** seed</span>
-<span class="sd">            is generated and used instead.</span>
-<span class="sd">        cudnn_deterministic: value for :code:`torch.backends.cudnn.deterministic`</span>
-<span class="sd">        cudnn_benchmark: value for :code:`torch.backends.cudnn.benchmark`</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        seed: if :code:`seed` is set to `None`, the generated seed is returned;</span>
-<span class="sd">            otherwise the :code:`seed` argument is returned as is</span>
-
-<span class="sd">    Note:</span>
-<span class="sd">        If you don't want to set the seed by hand, but still want to have a chance to</span>
-<span class="sd">        reproduce things, you can use the following pattern::</span>
-
-<span class="sd">            print('Seed:', zero.random.init(None))</span>
+<span class="sd">        seed: the seed for all mentioned libraries. Must be less</span>
+<span class="sd">            than :code:`2 ** 32 - 1`.</span>
+<span class="sd">    Raises:</span>
+<span class="sd">        AssertionError: if the seed is not less than :code:`2 ** 32 - 1`</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        .. testcode::</span>
 
-<span class="sd">            assert zero.random.init(0) == 0</span>
-<span class="sd">            generated_seed = zero.random.init(None)</span>
+<span class="sd">            zero.random.seed(0)</span>
 <span class="sd">    """</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="n">cudnn_deterministic</span>  <span class="c1"># type: ignore</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">cudnn_benchmark</span>  <span class="c1"># type: ignore</span>
-    <span class="n">raw_seed</span> <span class="o">=</span> <span class="n">seed</span>
-    <span class="k">if</span> <span class="n">raw_seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># See https://numpy.org/doc/1.18/reference/random/bit_generators/index.html#seeding-and-entropy  # noqa</span>
-        <span class="n">raw_seed</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">randbits</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
-    <span class="n">seed</span> <span class="o">=</span> <span class="n">raw_seed</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">seed</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="c1"># mypy doesn't know about the following functions</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed_all</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">seed</span></div>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed_all</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>  <span class="c1"># type: ignore</span></div>
 
 
 <div class="viewcode-block" id="get_state"><a class="viewcode-back" href="../../reference/api/zero.random.get_state.html#zero.random.get_state">[docs]</a><span class="k">def</span> <span class="nf">get_state</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
@@ -344,14 +320,6 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        state</span>
-
-<span class="sd">    Note:</span>
-<span class="sd">        The most reliable way to guarantee reproducibility and to make your data streams</span>
-<span class="sd">        resumable is to create separate random number generators and manage them</span>
-<span class="sd">        manually (for example, `torch.utils.data.DataLoader` accepts the</span>
-<span class="sd">        argument :code:`generator` for that purposes). However, if you rely on the</span>
-<span class="sd">        global random state, this function along with `set_state` does everything</span>
-<span class="sd">        just right.</span>
 
 <span class="sd">    See also:</span>
 <span class="sd">        `set_state`</span>
@@ -381,15 +349,12 @@
 
 
 <div class="viewcode-block" id="set_state"><a class="viewcode-back" href="../../reference/api/zero.random.set_state.html#zero.random.set_state">[docs]</a><span class="k">def</span> <span class="nf">set_state</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">"""Set global random states from `random`, `numpy` and `torch`.</span>
+    <span class="sd">"""Set global random states in `random`, `numpy` and `torch`.</span>
 
-<span class="sd">    The argument must be produced by `get_state`.</span>
-
-<span class="sd">    Note:</span>
-<span class="sd">        The size of list :code:`state['torch.cuda']` must be equal to the number of</span>
-<span class="sd">        available cuda devices. If random state of cuda devices is not important, remove</span>
-<span class="sd">        the entry 'torch.cuda' from the state beforehand, or, **at your own risk**</span>
-<span class="sd">        adjust its value.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        state: global RNG states. Must be produced by `get_state`. The size of the list</span>
+<span class="sd">            :code:`state['torch.cuda']` must be equal to the number of available cuda</span>
+<span class="sd">            devices.</span>
 
 <span class="sd">    See also:</span>
 <span class="sd">        `get_state`</span>
@@ -419,7 +384,7 @@
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2020, Yura52.
+              &#169; Copyright 2021, Yura52.
               
           </div>
             Created using

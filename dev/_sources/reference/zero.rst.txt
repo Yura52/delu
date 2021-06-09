@@ -41,6 +41,12 @@ zero
 
    evaluation
 
+.. autosummary::
+   :nosignatures:
+   :toctree: api
+
+   improve_reproducibility
+
 .. rubric:: Submodules
 
 See the sidebar on the left.
