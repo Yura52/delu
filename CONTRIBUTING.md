@@ -30,5 +30,5 @@ make pre-commit
 
 6. Implement changes and open a [pull request](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests).
 
-P.S. Please, do not update the "gh-pages" branch. As of now, website updates are
-performed manually on demand.
+P.S. Please, do not update the "gh-pages" branch. As of now, the website updates are
+performed manually and the process is not documented.
