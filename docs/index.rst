@@ -17,13 +17,13 @@ Zero
      </g>
    </svg>
 
-.. include:: ../../README.rst
+.. include:: ../README.rst
    :start-after: __INCLUDE_0__
    :end-before: __INCLUDE_1__
 
 .. _installation:
 
-.. include:: ../../README.rst
+.. include:: ../README.rst
    :start-after: __INCLUDE_1__
 
 .. toctree::

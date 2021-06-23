@@ -3,7 +3,7 @@ Zero
 
 .. raw:: html
 
-  <img src="https://raw.githubusercontent.com/Yura52/zero/master/docs/source/images/logo.png" width="130px" style="text-align:center;display:block;">
+  <img src="https://raw.githubusercontent.com/Yura52/zero/master/docs/images/logo.png" width="130px" style="text-align:center;display:block;">
 
 .. __INCLUDE_0__
 
