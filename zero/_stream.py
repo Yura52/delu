@@ -106,17 +106,24 @@ class Stream:
 
     For example, the most common training loop can be implemented as follows::
 
+        # A
         while stream.epoch < max_epoch:
             stream.increment_epoch()
             for batch in stream.data():
                 ...
 
-    Or even like this::
-
+        # B
         while stream.epoch < max_epoch:
             stream.increment_epoch()
             for _ in range(len(stream.loader)):
                 batch = stream.next()  # stream.iteration is incremented automatically
+                ...
+
+    The "infinite" stream of data can be implemented as follows::
+
+        for item in stream.data(float('inf')):
+            ...
+            if condition:  # for example: `if stream.iteration % frequency == 0`
                 ...
 
     Note:
