@@ -33,7 +33,7 @@ Overview
 Installation
 ------------
 
-We recommend to install installing PyTorch **before** installing Zero.
+We recommend installing PyTorch **before** installing Zero.
 
 .. code-block:: bash
 
