@@ -41,6 +41,7 @@ dtest:
 	make -C $(DOCS_DIR) doctest
 
 lint:
+	python -m pre_commit_hooks.debug_statement_hook zero/*.py
 	python -m pre_commit_hooks.debug_statement_hook zero/**/*.py
 	isort zero --check-only
 	black zero --check
