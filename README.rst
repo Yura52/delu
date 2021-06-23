@@ -33,8 +33,7 @@ Overview
 Installation
 ------------
 
-If you plan to use the GPU version of PyTorch, install it **before** installing Zero
-(otherwise, the CPU version will be installed together with Zero).
+We recommend to install installing PyTorch **before** installing Zero.
 
 .. code-block:: bash
 
