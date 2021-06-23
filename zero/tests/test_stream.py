@@ -140,15 +140,15 @@ def test_data(n):
 def test_epochs():
     stream = Stream(range(3))
     with raises(AssertionError):
-        next(stream.epochs(1.0, progress_bar_options=None))
+        next(stream.epochs(1.0, progress_bar_config=None))
     correct = [0, 1, 2]
-    for epoch in stream.epochs(2, progress_bar_options=None):
+    for epoch in stream.epochs(2, progress_bar_config=None):
         assert list(epoch) == correct
     correct = [[0, 1], [2, 0], [1, 2]]
-    for i, epoch in enumerate(stream.epochs(2, progress_bar_options=None)):
+    for i, epoch in enumerate(stream.epochs(2, progress_bar_config=None)):
         assert list(epoch) == correct[i]
     for i, epoch in zip(
-        enumerate(stream.epochs(math.inf, progress_bar_options=None)), range(1000)
+        enumerate(stream.epochs(math.inf, progress_bar_config=None)), range(1000)
     ):
         pass
     for (i, epoch), _ in zip(enumerate(stream.epochs(math.inf, math.inf)), range(10)):
@@ -180,7 +180,7 @@ def test_progress_bar():
     def check(stream: Stream):
         state = {}
         for epoch in stream.epochs(
-            3, progress_bar_options={'file': open(os.devnull, 'w')}
+            3, progress_bar_config={'file': open(os.devnull, 'w')}
         ):
             for _ in epoch:
                 print(stream._progress_bar.n, stream.epoch, stream.iteration)

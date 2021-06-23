@@ -4,7 +4,7 @@ from typing import Any, Dict, Iterable, Iterator, Optional, Sized, Union
 
 from tqdm import tqdm
 
-_DEFAULT_PROGRESS_BAR_OPTIONS: Dict[str, Any] = {}
+_DEFAULT_PROGRESS_BAR_CONFIG: Dict[str, Any] = {}
 
 
 def _try_len(x):
@@ -360,7 +360,7 @@ class Stream:
         self,
         max_epoch: Union[int, float],
         epoch_size: Optional[Union[int, float]] = None,
-        progress_bar_options: Optional[Dict[str, Any]] = _DEFAULT_PROGRESS_BAR_OPTIONS,
+        progress_bar_config: Optional[Dict[str, Any]] = _DEFAULT_PROGRESS_BAR_CONFIG,
     ) -> Iterator[Iterator[Any]]:
         """Iterate over data epochs.
 
@@ -384,12 +384,12 @@ class Stream:
                 or `math.inf`.
             epoch_size: the number of data items in one epoch
                 (is forwarded to `Stream.data`).
-            progress_bar_options: if not `None` (the default value is :code:`{}`!), a
+            progress_bar_config: if not `None` (the default value is :code:`{}`!), a
                 progress bar for iterations will be displayed and the argument will be
                 interpreted as key-word arguments for
                 `tqdm <https://tqdm.github.io/docs/tqdm/#__init__>`_. The following
                 key-word arguments will be automatically added if not presented in
-                :code:`progress_bar_options`: :code:`initial`, :code:`total` (if can be
+                :code:`progress_bar_config`: :code:`initial`, :code:`total` (if can be
                 inferred from the arguments and/or from `Stream.loader`).
 
         Returns:
@@ -439,11 +439,11 @@ class Stream:
         """
         if isinstance(max_epoch, float):
             assert math.isinf(max_epoch)
-        if progress_bar_options is not None:
-            if progress_bar_options is _DEFAULT_PROGRESS_BAR_OPTIONS:
+        if progress_bar_config is not None:
+            if progress_bar_config is _DEFAULT_PROGRESS_BAR_CONFIG:
                 # the default value is MUTABLE, so let's deepcopy it
                 # just in case it is modified later
-                progress_bar_options = deepcopy(progress_bar_options)
+                progress_bar_config = deepcopy(progress_bar_config)
             pbar_epoch_size = (
                 _try_len(self.loader) if epoch_size is None else epoch_size
             )
@@ -455,7 +455,7 @@ class Stream:
                     else max_epoch * pbar_epoch_size
                 ),
             }
-            all_progress_bar_options.update(progress_bar_options)
+            all_progress_bar_options.update(progress_bar_config)
             self._progress_bar = tqdm(**all_progress_bar_options)
             self._should_update_progress_bar = False
         while self.epoch < max_epoch:
