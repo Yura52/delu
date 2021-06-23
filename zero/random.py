@@ -11,17 +11,17 @@ def seed(seed: int) -> None:
     """Set seeds in `random`, `numpy` and `torch`.
 
     Args:
-        seed: the seed for all mentioned libraries. Must be less
+        seed: the seed for all mentioned libraries. Must be a non-negative number less
             than :code:`2 ** 32 - 1`.
     Raises:
-        AssertionError: if the seed is not less than :code:`2 ** 32 - 1`
+        AssertionError: if the seed is not within the required interval
 
     Examples:
         .. testcode::
 
             zero.random.seed(0)
     """
-    assert seed < 2 ** 32 - 1
+    assert 0 <= seed < 2 ** 32 - 1
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)

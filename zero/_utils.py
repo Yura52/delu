@@ -475,8 +475,9 @@ def improve_reproducibility(seed: Optional[int]) -> int:
     3. `torch.backends.cudnn.deterministic` to `True`
 
     Args:
-        seed: the seed for all mentioned libraries. Must be less than
-            :code:`2 ** 32 - 1`. If `None`, a high-quality seed is generated instead.
+        seed: the seed for all mentioned libraries. Must be a non-negative number less
+            than :code:`2 ** 32 - 1`. If `None`, a high-quality seed is generated
+            instead.
 
     Returns:
         seed: if :code:`seed` is set to `None`, the generated seed is returned;

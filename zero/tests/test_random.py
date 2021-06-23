@@ -27,6 +27,9 @@ def test_seed_cpu():
             lambda x: torch.randint(x, (1,))[0].item(),
         ]
     )
+    for seed in [-1, 2 ** 33]:
+        with raises(AssertionError):
+            zero.random.seed(seed)
 
 
 @requires_gpu
