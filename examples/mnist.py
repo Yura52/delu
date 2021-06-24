@@ -53,6 +53,7 @@ def parse_args():
     parser.add_argument('-p', '--early-stopping-patience', type=int, default=1)
     parser.add_argument('-s', '--seed', type=int, default=0)
     parser.add_argument('-c', '--from-checkpoint')
+    parser.add_argument('--skip-download', action='store_true')
     return parser.parse_args()
 
 
@@ -62,7 +63,8 @@ def main():
     ), 'Run this script from the "examples" directory'
     args = parse_args()
 
-    download_mnist()
+    if not args.skip_download:
+        download_mnist()
     zero.improve_reproducibility(args.seed)
     model = nn.Linear(784, 10).to(args.device)
     optimizer = torch.optim.SGD(model.parameters(), 0.005, 0.9)
