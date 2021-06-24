@@ -39,14 +39,7 @@ We recommend installing PyTorch **before** installing Zero.
 
     pip install libzero
 
-Dependencies
-^^^^^^^^^^^^
-
-- Python >= 3.7
-- NumPy >= 1.17
-- PyTorch >= 1.6 (CPU or CUDA >= 10.1)
-- pynvml >= 8.0
-- tqdm >= 4.0
+**Dependencies:** see `pyproject.toml`.
 
 How to contribute
 -----------------
