@@ -3,6 +3,7 @@ __version__ = '0.0.5.dev0'
 
 from . import data  # noqa
 from . import hardware  # noqa
+from . import nn  # noqa
 from . import random  # noqa
 from ._stream import Stream  # noqa
 from ._utils import ProgressTracker, Timer, evaluation, improve_reproducibility  # noqa

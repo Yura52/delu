@@ -39,6 +39,7 @@ Zero
    reference/zero
    reference/data
    reference/hardware
+   reference/nn
    reference/random
 
 ----

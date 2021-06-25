@@ -37,7 +37,7 @@ zero
 .. autosummary::
    :nosignatures:
    :toctree: api
-   :template: class_simple.rst
+   :template: class_just_autoclass.rst
 
    evaluation
 
