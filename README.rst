@@ -39,7 +39,7 @@ We recommend installing PyTorch **before** installing Zero.
 
     pip install libzero
 
-**Dependencies:** see `pyproject.toml`.
+**Dependencies:** see `pyproject.toml` in the repository.
 
 How to contribute
 -----------------
