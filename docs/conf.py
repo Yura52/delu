@@ -59,12 +59,13 @@ napoleon_use_admonition_for_examples = False
 spelling_show_suggestions = True
 
 # >>> HTML and theme options <<<
-
-import sphinx_material  # noqa
-
 html_static_path = ['_static']
 html_favicon = 'images/favicon.ico'
 html_logo = 'images/logo.svg'
+
+# This theme concatenates autosummary tables nicely and supports versioning.
+import sphinx_material  # noqa
+
 html_theme = 'sphinx_material'
 html_theme_options = {
     # Full list of options: https://github.com/bashtage/sphinx-material/blob/master/sphinx_material/sphinx_material/theme.conf
@@ -89,6 +90,9 @@ html_sidebars = {
     '**': ['logo-text.html', 'globaltoc.html', 'searchbox.html'],
 }
 
+# furo looks fine, the navigation is convenient
+# html_theme = 'furo'
+
 # html_theme = 'alabaster'
 # html_theme_options = {
 #     'fixed_sidebar': True,
@@ -96,10 +100,11 @@ html_sidebars = {
 #     'github_user': 'Yura52',
 #     'github_repo': 'zero',
 #     'page_width': '75%',
-#     'sidebar_width': '250px'
+#     'sidebar_width': '250px',
 # }
 
 # import sphinx_rtd_theme  # noqa
+
 # extensions.append('sphinx_rtd_theme')
 # html_theme = 'sphinx_rtd_theme'
 # html_theme_options = {
@@ -108,12 +113,4 @@ html_sidebars = {
 #     'prev_next_buttons_location': None,
 #     'navigation_depth': -1,
 #     'style_nav_header_background': '#343131',  # default sidebar color
-# }
-
-# html_theme = 'pydata_sphinx_theme'
-# html_theme_options = {
-#     'external_links': [],
-#     'github_url': repo_url,
-#     'navigation_with_keys': False,
-#     'show_prev_next': False,
 # }
