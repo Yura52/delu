@@ -1,6 +1,0 @@
-zero.Stream.reload\_iterator
-============================
-
-.. currentmodule:: zero
-
-.. automethod:: Stream.reload_iterator

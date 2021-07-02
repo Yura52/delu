@@ -1,6 +1,0 @@
-zero.Timer.run
-==============
-
-.. currentmodule:: zero
-
-.. automethod:: Timer.run

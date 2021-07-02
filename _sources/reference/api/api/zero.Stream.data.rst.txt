@@ -1,6 +1,0 @@
-zero.Stream.data
-================
-
-.. currentmodule:: zero
-
-.. automethod:: Stream.data

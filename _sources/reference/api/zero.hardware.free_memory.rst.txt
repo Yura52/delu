@@ -1,6 +1,0 @@
-zero.hardware.free\_memory
-==========================
-
-.. currentmodule:: zero.hardware
-
-.. autofunction:: free_memory
