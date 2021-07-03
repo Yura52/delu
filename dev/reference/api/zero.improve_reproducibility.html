@@ -5,8 +5,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="lang:clipboard.copy" content="Copy to clipboard">
@@ -48,7 +47,7 @@
   
   
   
-    <title>zero.improve_reproducibility &#8212; Zero 0.0.5.dev0 documentation</title>
+    <title>zero.improve_reproducibility &#8212; Zero 0.0.6.dev0 documentation</title>
     <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -84,11 +83,11 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.5.dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.6.dev0 documentation"
            class="md-header-nav__button md-logo">
           
               <img src="../../_static/logo.svg" height="26"
-                   alt="Zero 0.0.5.dev0 documentation logo">
+                   alt="Zero 0.0.6.dev0 documentation logo">
           
         </a>
       </div>
@@ -97,7 +96,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Zero 0.0.5.dev0</span>
+          <span class="md-header-nav__topic">Zero 0.0.6.dev0</span>
           <span class="md-header-nav__topic"> zero.improve_reproducibility </span>
         </div>
       </div>
@@ -183,13 +182,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.5.dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.6.dev0 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/logo.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.5.dev0 documentation">Zero 0.0.5.dev0</a>
+       title="Zero 0.0.6.dev0 documentation">Zero 0.0.6.dev0</a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -251,6 +250,13 @@
     <li class="md-nav__item">
     
     
+      <a href="../nn.html" class="md-nav__link">zero.nn</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
       <a href="../random.html" class="md-nav__link">zero.random</a>
       
     
@@ -282,24 +288,25 @@
         <div class="md-content">
           <article class="md-content__inner md-typeset" role="main">
             
-  <section id="zero-improve-reproducibility">
+  
 <h1 id="reference-api-zero-improve-reproducibility--page-root">zero.improve_reproducibility<a class="headerlink" href="#reference-api-zero-improve-reproducibility--page-root" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="zero.improve_reproducibility">
 <code class="sig-prename descclassname">zero.</code><code class="sig-name descname">improve_reproducibility</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seed</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/_utils.html#improve_reproducibility"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.improve_reproducibility" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set seeds in <a class="reference internal" href="../random.html#module-zero.random" title="zero.random"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.20)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code> and make some cuDNN operations deterministic.</p>
+<dd><p>Set seeds in <a class="reference internal" href="../random.html#module-zero.random" title="zero.random"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.21)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code> and make some cuDNN operations deterministic.</p>
 <p>Do everything possible to improve reproducibility for code that relies on global
 random number generators from the aforementioned modules. See also the note below.</p>
 <p>Sets:</p>
 <ol class="arabic simple">
-<li><p>seeds in <a class="reference internal" href="../random.html#module-zero.random" title="zero.random"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/random/index.html#module-numpy.random" title="(in NumPy v1.20)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.random</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>, <a class="reference external" href="https://pytorch.org/docs/stable/cuda.html#module-torch.cuda" title="(in PyTorch v1.8.0a0+56b43f4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda</span></code></a></p></li>
-<li><p><a class="reference external" href="https://pytorch.org/docs/stable/backends.html#torch.backends.cudnn.benchmark" title="(in PyTorch v1.8.0a0+56b43f4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.backends.cudnn.benchmark</span></code></a> to <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a></p></li>
-<li><p><a class="reference external" href="https://pytorch.org/docs/stable/backends.html#torch.backends.cudnn.deterministic" title="(in PyTorch v1.8.0a0+56b43f4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.backends.cudnn.deterministic</span></code></a> to <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a></p></li>
+<li><p>seeds in <a class="reference internal" href="../random.html#module-zero.random" title="zero.random"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/random/index.html#module-numpy.random" title="(in NumPy v1.21)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.random</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>, <a class="reference external" href="https://pytorch.org/docs/stable/cuda.html#module-torch.cuda" title="(in PyTorch v1.9.0a0+gitd69c22d)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda</span></code></a></p></li>
+<li><p><a class="reference external" href="https://pytorch.org/docs/stable/backends.html#torch.backends.cudnn.benchmark" title="(in PyTorch v1.9.0a0+gitd69c22d)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.backends.cudnn.benchmark</span></code></a> to <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a></p></li>
+<li><p><a class="reference external" href="https://pytorch.org/docs/stable/backends.html#torch.backends.cudnn.deterministic" title="(in PyTorch v1.9.0a0+gitd69c22d)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.backends.cudnn.deterministic</span></code></a> to <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a></p></li>
 </ol>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>seed</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>]</em>) – the seed for all mentioned libraries. Must be less than
-<code class="code docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">32</span> <span class="pre">-</span> <span class="pre">1</span></code>. If <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, a high-quality seed is generated instead.</p>
+<dd class="field-odd"><p><strong>seed</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>]</em>) – the seed for all mentioned libraries. Must be a non-negative number less
+than <code class="code docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">32</span> <span class="pre">-</span> <span class="pre">1</span></code>. If <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, a high-quality seed is generated
+instead.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
@@ -332,7 +339,7 @@ details.</p>
 </pre></div>
 </div>
 </dd></dl>
-</section>
+
 
 
           </article>
