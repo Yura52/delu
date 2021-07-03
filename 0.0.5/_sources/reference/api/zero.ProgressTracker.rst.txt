@@ -1,0 +1,42 @@
+zero.ProgressTracker
+====================
+
+.. currentmodule:: zero
+
+.. autoclass:: ProgressTracker
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree: api
+   
+      ~ProgressTracker.best_score
+      ~ProgressTracker.fail
+      ~ProgressTracker.success
+   
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+      :toctree: api
+   
+      ~ProgressTracker.__init__
+      ~ProgressTracker.forget_bad_updates
+      ~ProgressTracker.reset
+      ~ProgressTracker.update
+   
+      
+      
+      
+      
+      
+      
+      
+      
+      
+   

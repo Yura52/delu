@@ -1,0 +1,6 @@
+zero.data.IndexLoader.\_\_init\_\_
+==================================
+
+.. currentmodule:: zero.data
+
+.. automethod:: IndexLoader.__init__

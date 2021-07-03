@@ -1,0 +1,6 @@
+zero.Timer.format
+=================
+
+.. currentmodule:: zero
+
+.. automethod:: Timer.format

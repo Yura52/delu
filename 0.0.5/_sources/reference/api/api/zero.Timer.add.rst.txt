@@ -1,0 +1,6 @@
+zero.Timer.add
+==============
+
+.. currentmodule:: zero
+
+.. automethod:: Timer.add
