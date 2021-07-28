@@ -24,8 +24,8 @@ keywords = "artificial intelligence, deep learning, library, python, pytorch, to
 module = "zero"
 requires = [
     "numpy >=1.17,<2",
-    "pynvml >= 8.0,<9",
-    "torch >= 1.6,<2",
-    "tqdm >= 4.0,<5"
+    "pynvml >=8.0,<9",
+    "torch >=1.6,<2",
+    "tqdm >=4.0,<5"
 ]
 requires-python = ">=3.7"
