@@ -193,6 +193,14 @@ def test_evaluation(train, grad, n_models):
         assert torch.is_grad_enabled() == grad
 
 
+def test_evaluation_generator():
+    with raises(AssertionError):
+
+        @zero.evaluation(nn.Linear(1, 1))
+        def generator():
+            yield 1
+
+
 def test_improve_reproducibility():
     def f():
         upper_bound = 100

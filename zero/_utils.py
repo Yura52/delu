@@ -1,7 +1,9 @@
 import datetime
 import enum
+import inspect
 import secrets
 import time
+from contextlib import ContextDecorator
 from typing import Any, Dict, Optional
 
 import torch
@@ -383,7 +385,7 @@ class Timer:
         self.__dict__.update(state)
 
 
-class evaluation(torch.no_grad):
+class evaluation(ContextDecorator):
     """Context-manager & decorator for models evaluation.
 
     This code... ::
@@ -417,6 +419,15 @@ class evaluation(torch.no_grad):
         The function must be used in the same way as `torch.no_grad`, i.e. only as a
         context manager or a decorator as shown below in the examples. Otherwise, the
         behaviour is undefined.
+
+    Warning:
+        Contrary to `torch.no_grad`, the function cannot be used to decorate generators.
+        So, in the case of generators, you have to manually create a context:
+
+            def my_generator():
+                with evaluation(...):
+                    for a in b:
+                        yield c
 
     Examples:
         .. testcode::
@@ -454,11 +465,32 @@ class evaluation(torch.no_grad):
     def __init__(self, *modules: nn.Module) -> None:
         assert modules
         self._modules = modules
+        self._torch_context: Optional[torch.no_grad] = None
+
+    def __call__(self, func):
+        """Decorate a function with an evaluation context.
+
+        Args:
+            func
+        Raises:
+            AssertionError: if :code:`func` is a generator
+        """
+        assert not inspect.isgeneratorfunction(
+            func
+        ), f'{self.__class__} cannot be used to decorate generators. See the documentation.'
+        return super().__call__(func)
 
     def __enter__(self) -> None:
-        result = super().__enter__()
+        assert self._torch_context is None
+        self._torch_context = torch.no_grad()
+        self._torch_context.__enter__()
         for m in self._modules:
             m.eval()
+
+    def __exit__(self, *exc):
+        assert self._torch_context is not None
+        result = self._torch_context.__exit__(*exc)  # type: ignore
+        self._torch_context = None
         return result
 
 

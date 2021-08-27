@@ -59,7 +59,7 @@ class Enumerate(Dataset):
 
     def __len__(self) -> int:
         """Get the length of the underlying dataset."""
-        return len(self._dataset)
+        return len(self._dataset)  # type: ignore
 
     def __getitem__(self, index) -> Tuple[Any, Any]:
         """Return index and the corresponding item from the underlying dataset.
