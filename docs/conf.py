@@ -89,28 +89,3 @@ html_theme_options = {
 html_sidebars = {
     '**': ['logo-text.html', 'globaltoc.html', 'searchbox.html'],
 }
-
-# furo looks fine, the navigation is convenient
-# html_theme = 'furo'
-
-# html_theme = 'alabaster'
-# html_theme_options = {
-#     'fixed_sidebar': True,
-#     'github_type': 'star',
-#     'github_user': 'Yura52',
-#     'github_repo': 'zero',
-#     'page_width': '75%',
-#     'sidebar_width': '250px',
-# }
-
-# import sphinx_rtd_theme  # noqa
-
-# extensions.append('sphinx_rtd_theme')
-# html_theme = 'sphinx_rtd_theme'
-# html_theme_options = {
-#     'canonical_url': '',
-#     'collapse_navigation': False,
-#     'prev_next_buttons_location': None,
-#     'navigation_depth': -1,
-#     'style_nav_header_background': '#343131',  # default sidebar color
-# }
