@@ -512,8 +512,7 @@ def improve_reproducibility(seed: Optional[int]) -> int:
             instead.
 
     Returns:
-        seed: if :code:`seed` is set to `None`, the generated seed is returned;
-            otherwise, :code:`seed` is returned as is
+        seed: if :code:`seed` is set to `None`, the generated seed is returned; otherwise, :code:`seed` is returned as is
 
     Note:
         If you don't want to set the seed by hand, but still want to have a chance to
