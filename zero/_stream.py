@@ -2,7 +2,12 @@ import math
 from copy import deepcopy
 from typing import Any, Dict, Iterable, Iterator, Optional, Sized, Union
 
-from tqdm import tqdm
+try:
+    import ipywidgets  # noqa
+except ImportError:
+    from tqdm import tqdm
+else:
+    from tqdm.auto import tqdm
 
 _DEFAULT_PROGRESS_BAR_CONFIG: Dict[str, Any] = {}
 
@@ -397,7 +402,10 @@ class Stream:
                 `tqdm <https://tqdm.github.io/docs/tqdm/#__init__>`_. The following
                 key-word arguments will be automatically added if not presented in
                 :code:`progress_bar_config`: :code:`initial`, :code:`total` (if can be
-                inferred from the arguments and/or from `Stream.loader`).
+                inferred from the arguments and/or from `Stream.loader`). If
+                [`ipywidgets`](https://ipywidgets.readthedocs.io) is installed and the
+                program is running in JupyterLab (Jupyter Notebook), then the pretty
+                widget is used instead of the text-based one.
 
         Returns:
             Iterator over iterators over data from `Stream.loader`.
