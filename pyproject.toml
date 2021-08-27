@@ -24,7 +24,7 @@ classifiers = [
 ]
 dependencies = [
     "numpy >=1.17,<2",
-    "pynvml >=8.0,<9",
+    "pynvml >=11.0,<12",
     "torch >=1.7,<2",
     "tqdm >=4.0,<5"
 ]
