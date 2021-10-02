@@ -425,7 +425,7 @@ class evaluation(ContextDecorator):
     Warning:
         Contrary to `torch.no_grad` and `torch.inference_mode`, the function cannot be
         used to decorate generators. So, in the case of generators, you have to manually
-        create a context:
+        create a context::
 
             def my_generator():
                 with evaluation(...):
