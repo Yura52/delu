@@ -34,5 +34,8 @@ dynamic = ["version", "description"]
 [tool.flit.module]
 name = "zero"
 
+[tool.flit.sdist]
+exclude = ["other"]
+
 [tool.black]
 skip_string_normalization = true
