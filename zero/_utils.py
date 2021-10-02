@@ -449,20 +449,6 @@ class evaluation(ContextDecorator):
             @evaluation(a, b)
             def f():
                 ...
-
-        .. testcode::
-
-            model = torch.nn.Linear(1, 1)
-            for grad_before_context in False, True:
-                for train in False, True:
-                    torch.set_grad_enabled(grad_before_context)
-                    model.train(train)
-                    with evaluation(model):
-                        assert not model.training
-                        assert not torch.is_grad_enabled()
-                        ...
-                    assert torch.is_grad_enabled() == grad_before_context
-                    # model.training is unspecified here
     """
 
     def __init__(self, *modules: nn.Module) -> None:
