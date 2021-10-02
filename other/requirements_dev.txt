@@ -16,7 +16,7 @@ sphinx-material
 sphinxcontrib-spelling
 
 # examples
-torchvision
+torchvision==0.8.1
 
 # other
 jupyterlab
