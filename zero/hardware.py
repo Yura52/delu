@@ -38,6 +38,10 @@ def get_gpus_info() -> Dict[str, Any]:
         RuntimeError: if necessary cuda-related libraries are not found. Usually, it
             means that the function is run on a machine without GPU.
 
+    Warning:
+        The 'devices' value contains information about *all* gpus regardless of the
+        value of :code:`CUDA_VISIBLE_DEVICES`.
+
     Examples:
         .. code-block::
 
@@ -66,10 +70,6 @@ def get_gpus_info() -> Dict[str, Any]:
                     },
                 ],
             }
-
-    Warning:
-        The 'devices' value contains information about *all* gpus regardless of the
-        value of :code:`CUDA_VISIBLE_DEVICES`.
     """
     try:
         pynvml.nvmlInit()

@@ -366,14 +366,14 @@ def iter_batches(
     Returns:
         Iterator over batches.
 
+    Note:
+        If you want to infititely iterate over batches, wrap the function in
+        :code:`while True:`.
+
     Warning:
         Numpy-arrays are not supported because of how they behave when indexed by a
         torch tensor of the size 1. For details, see
         `the issue <https://github.com/numpy/numpy/issues/16543>`_
-
-    Note:
-        If you want to infititely iterate over batches, wrap the function in
-        :code:`while True:`.
 
     See also:
         - `zero.data.IndexLoader`
