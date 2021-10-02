@@ -390,20 +390,22 @@ class evaluation(ContextDecorator):
 
     This code... ::
 
-        with evaluation(model):
+        with evaluation(model):  # or: evaluation(model_0, model_1, ...)
             ...
 
-        @evaluation(model)
+        @evaluation(model)  # or: @evaluation(model_0, model_1, ...)
         def f():
             ...
 
     ...is equivalent to the following: ::
 
-        with torch.no_grad():
+        context = getattr(torch, 'inference_mode', torch.no_grad)
+
+        with context():
             model.eval()
             ...
 
-        @torch.no_grad()
+        @context()
         def f():
             model.eval()
             ...
@@ -416,13 +418,14 @@ class evaluation(ContextDecorator):
         decorated function returns.
 
     Warning:
-        The function must be used in the same way as `torch.no_grad`, i.e. only as a
-        context manager or a decorator as shown below in the examples. Otherwise, the
-        behaviour is undefined.
+        The function must be used in the same way as `torch.no_grad` and
+        `torch.inference_mode`, i.e. only as a context manager or a decorator as shown
+        below in the examples. Otherwise, the behaviour is undefined.
 
     Warning:
-        Contrary to `torch.no_grad`, the function cannot be used to decorate generators.
-        So, in the case of generators, you have to manually create a context:
+        Contrary to `torch.no_grad` and `torch.inference_mode`, the function cannot be
+        used to decorate generators. So, in the case of generators, you have to manually
+        create a context:
 
             def my_generator():
                 with evaluation(...):
@@ -465,7 +468,7 @@ class evaluation(ContextDecorator):
     def __init__(self, *modules: nn.Module) -> None:
         assert modules
         self._modules = modules
-        self._torch_context: Optional[torch.no_grad] = None
+        self._torch_context = None
 
     def __call__(self, func):
         """Decorate a function with an evaluation context.
@@ -482,8 +485,8 @@ class evaluation(ContextDecorator):
 
     def __enter__(self) -> None:
         assert self._torch_context is None
-        self._torch_context = torch.no_grad()
-        self._torch_context.__enter__()
+        self._torch_context = getattr(torch, 'inference_mode', torch.no_grad)()
+        self._torch_context.__enter__()  # type: ignore
         for m in self._modules:
             m.eval()
 
