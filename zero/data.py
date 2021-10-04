@@ -302,7 +302,7 @@ class IndexLoader:
             device: if not CPU, then all indices are materialized and moved to the
                 device at the beginning of every loop. It can be useful when the indices
                 are applied to non-CPU data (e.g. CUDA-tensors) and moving data between
-                devices takes non-negligable time (which can happen in the case of
+                devices takes non-negligible time (which can happen in the case of
                 simple and fast models like MLPs).
             **kwargs: keyword arguments for `torch.utils.data.DataLoader`
         Raises:
@@ -367,7 +367,7 @@ def iter_batches(
         Iterator over batches.
 
     Note:
-        If you want to infititely iterate over batches, wrap the function in
+        If you want to infinitely iterate over batches, wrap the function in
         :code:`while True:`.
 
     Warning:

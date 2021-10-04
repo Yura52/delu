@@ -239,7 +239,7 @@ class Timer:
         """Start/resume the timer.
 
         If the timer is on pause, the method resumes the timer.
-        If the timer is runnning, the method does nothing (i.e. it does NOT overwrite
+        If the timer is running, the method does nothing (i.e. it does NOT overwrite
         the previous pause time).
         """
         if self._start_time is None:
