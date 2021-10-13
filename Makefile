@@ -1,4 +1,4 @@
-.PHONY: default clean coverage _docs docs dtest format lint pages pre-commit test typecheck
+.PHONY: default clean coverage _docs docs dtest spelling format lint pages pre-commit test typecheck
 
 PYTEST_CMD = pytest zero
 VIEW_HTML_CMD = open
@@ -40,6 +40,9 @@ pages:
 dtest:
 	make -C $(DOCS_DIR) doctest
 
+spelling:
+	make -C $(DOCS_DIR) docs SPHINXOPTS="-W -b spelling"
+
 lint:
 	python -m pre_commit_hooks.debug_statement_hook zero/*.py
 	python -m pre_commit_hooks.debug_statement_hook zero/**/*.py
@@ -48,7 +51,7 @@ lint:
 	flake8 zero
 
 # the order is important: clean must be first, docs must precede dtest
-pre-commit: clean lint test docs dtest typecheck
+pre-commit: clean lint test docs dtest spelling typecheck
 
 test:
 	PYTHONPATH='.' $(PYTEST_CMD) $(ARGV)
