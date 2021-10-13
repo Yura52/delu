@@ -1,4 +1,4 @@
-zero.random.get\_state
+﻿zero.random.get\_state
 ======================
 
 .. currentmodule:: zero.random

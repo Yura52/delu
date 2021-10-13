@@ -5,7 +5,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="lang:clipboard.copy" content="Copy to clipboard">
@@ -47,14 +47,13 @@
   
   
   
-    <title>zero._utils &#8212; Zero 0.0.6.dev0 documentation</title>
-    <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <title>zero._utils &#8212; Zero 0.0.7.dev0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/material.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -81,11 +80,11 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.6.dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.7.dev0 documentation"
            class="md-header-nav__button md-logo">
           
               <img src="../../_static/logo.svg" height="26"
-                   alt="Zero 0.0.6.dev0 documentation logo">
+                   alt="Zero 0.0.7.dev0 documentation logo">
           
         </a>
       </div>
@@ -94,7 +93,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Zero 0.0.6.dev0</span>
+          <span class="md-header-nav__topic">Zero 0.0.7.dev0</span>
           <span class="md-header-nav__topic"> zero._utils </span>
         </div>
       </div>
@@ -104,7 +103,7 @@
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
-    <form class="md-search__form" action="../../search.html" method="GET" name="search">
+    <form class="md-search__form" action="../../search.html" method="get" name="search">
       <input type="text" class="md-search__input" name="q" placeholder="Search"
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
@@ -180,13 +179,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.6.dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.7.dev0 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/logo.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.6.dev0 documentation">Zero 0.0.6.dev0</a>
+       title="Zero 0.0.7.dev0 documentation">Zero 0.0.7.dev0</a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -288,8 +287,10 @@
   <h1 id="modules-zero-utils--page-root">Source code for zero._utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">enum</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">secrets</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">ContextDecorator</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
@@ -525,7 +526,7 @@
         <span class="sd">"""Start/resume the timer.</span>
 
 <span class="sd">        If the timer is on pause, the method resumes the timer.</span>
-<span class="sd">        If the timer is runnning, the method does nothing (i.e. it does NOT overwrite</span>
+<span class="sd">        If the timer is running, the method does nothing (i.e. it does NOT overwrite</span>
 <span class="sd">        the previous pause time).</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -671,25 +672,27 @@
         <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="evaluation"><a class="viewcode-back" href="../../reference/api/zero.evaluation.html#zero.evaluation">[docs]</a><span class="k">class</span> <span class="nc">evaluation</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">):</span>
+<div class="viewcode-block" id="evaluation"><a class="viewcode-back" href="../../reference/api/zero.evaluation.html#zero.evaluation">[docs]</a><span class="k">class</span> <span class="nc">evaluation</span><span class="p">(</span><span class="n">ContextDecorator</span><span class="p">):</span>
     <span class="sd">"""Context-manager &amp; decorator for models evaluation.</span>
 
 <span class="sd">    This code... ::</span>
 
-<span class="sd">        with evaluation(model):</span>
+<span class="sd">        with evaluation(model):  # or: evaluation(model_0, model_1, ...)</span>
 <span class="sd">            ...</span>
 
-<span class="sd">        @evaluation(model)</span>
+<span class="sd">        @evaluation(model)  # or: @evaluation(model_0, model_1, ...)</span>
 <span class="sd">        def f():</span>
 <span class="sd">            ...</span>
 
 <span class="sd">    ...is equivalent to the following: ::</span>
 
-<span class="sd">        with torch.no_grad():</span>
+<span class="sd">        context = getattr(torch, 'inference_mode', torch.no_grad)</span>
+
+<span class="sd">        with context():</span>
 <span class="sd">            model.eval()</span>
 <span class="sd">            ...</span>
 
-<span class="sd">        @torch.no_grad()</span>
+<span class="sd">        @context()</span>
 <span class="sd">        def f():</span>
 <span class="sd">            model.eval()</span>
 <span class="sd">            ...</span>
@@ -702,9 +705,19 @@
 <span class="sd">        decorated function returns.</span>
 
 <span class="sd">    Warning:</span>
-<span class="sd">        The function must be used in the same way as `torch.no_grad`, i.e. only as a</span>
-<span class="sd">        context manager or a decorator as shown below in the examples. Otherwise, the</span>
-<span class="sd">        behaviour is undefined.</span>
+<span class="sd">        The function must be used in the same way as `torch.no_grad` and</span>
+<span class="sd">        `torch.inference_mode`, i.e. only as a context manager or a decorator as shown</span>
+<span class="sd">        below in the examples. Otherwise, the behaviour is undefined.</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        Contrary to `torch.no_grad` and `torch.inference_mode`, the function cannot be</span>
+<span class="sd">        used to decorate generators. So, in the case of generators, you have to manually</span>
+<span class="sd">        create a context::</span>
+
+<span class="sd">            def my_generator():</span>
+<span class="sd">                with evaluation(...):</span>
+<span class="sd">                    for a in b:</span>
+<span class="sd">                        yield c</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        .. testcode::</span>
@@ -723,30 +736,37 @@
 <span class="sd">            @evaluation(a, b)</span>
 <span class="sd">            def f():</span>
 <span class="sd">                ...</span>
-
-<span class="sd">        .. testcode::</span>
-
-<span class="sd">            model = torch.nn.Linear(1, 1)</span>
-<span class="sd">            for grad_before_context in False, True:</span>
-<span class="sd">                for train in False, True:</span>
-<span class="sd">                    torch.set_grad_enabled(grad_before_context)</span>
-<span class="sd">                    model.train(train)</span>
-<span class="sd">                    with evaluation(model):</span>
-<span class="sd">                        assert not model.training</span>
-<span class="sd">                        assert not torch.is_grad_enabled()</span>
-<span class="sd">                        ...</span>
-<span class="sd">                    assert torch.is_grad_enabled() == grad_before_context</span>
-<span class="sd">                    # model.training is unspecified here</span>
 <span class="sd">    """</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">modules</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">assert</span> <span class="n">modules</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span> <span class="o">=</span> <span class="n">modules</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">"""Decorate a function with an evaluation context.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            func</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: if :code:`func` is a generator</span>
+<span class="sd">        """</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isgeneratorfunction</span><span class="p">(</span>
+            <span class="n">func</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="si">}</span><span class="s1"> cannot be used to decorate generators. See the documentation.'</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torch</span><span class="p">,</span> <span class="s1">'inference_mode'</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">)()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span><span class="p">:</span>
             <span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">exc</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span><span class="o">.</span><span class="fm">__exit__</span><span class="p">(</span><span class="o">*</span><span class="n">exc</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
 
@@ -768,8 +788,7 @@
 <span class="sd">            instead.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        seed: if :code:`seed` is set to `None`, the generated seed is returned;</span>
-<span class="sd">            otherwise, :code:`seed` is returned as is</span>
+<span class="sd">        seed: if :code:`seed` is set to `None`, the generated seed is returned; otherwise, :code:`seed` is returned as is</span>
 
 <span class="sd">    Note:</span>
 <span class="sd">        If you don't want to set the seed by hand, but still want to have a chance to</span>
@@ -818,7 +837,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.1.2.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

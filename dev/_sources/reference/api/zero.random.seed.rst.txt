@@ -1,4 +1,4 @@
-zero.random.seed
+﻿zero.random.seed
 ================
 
 .. currentmodule:: zero.random

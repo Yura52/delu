@@ -1,4 +1,4 @@
-zero.Timer
+﻿zero.Timer
 ==========
 
 .. currentmodule:: zero

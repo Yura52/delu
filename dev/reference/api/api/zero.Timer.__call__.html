@@ -5,7 +5,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="lang:clipboard.copy" content="Copy to clipboard">
@@ -47,14 +48,13 @@
   
   
   
-    <title>zero.Timer.__call__ &#8212; Zero 0.0.6.dev0 documentation</title>
-    <link rel="stylesheet" href="../../../_static/material.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <title>zero.Timer.__call__ &#8212; Zero 0.0.7.dev0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/material.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -83,11 +83,11 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../../index.html" title="Zero 0.0.6.dev0 documentation"
+        <a href="../../../index.html" title="Zero 0.0.7.dev0 documentation"
            class="md-header-nav__button md-logo">
           
               <img src="../../../_static/logo.svg" height="26"
-                   alt="Zero 0.0.6.dev0 documentation logo">
+                   alt="Zero 0.0.7.dev0 documentation logo">
           
         </a>
       </div>
@@ -96,7 +96,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Zero 0.0.6.dev0</span>
+          <span class="md-header-nav__topic">Zero 0.0.7.dev0</span>
           <span class="md-header-nav__topic"> zero.Timer.__call__ </span>
         </div>
       </div>
@@ -106,7 +106,7 @@
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
-    <form class="md-search__form" action="../../../search.html" method="GET" name="search">
+    <form class="md-search__form" action="../../../search.html" method="get" name="search">
       <input type="text" class="md-search__input" name="q" placeholder="Search"
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
@@ -183,13 +183,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../../index.html" title="Zero 0.0.6.dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../../index.html" title="Zero 0.0.7.dev0 documentation" class="md-nav__button md-logo">
       
         <img src="../../../_static/logo.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../../index.html"
-       title="Zero 0.0.6.dev0 documentation">Zero 0.0.6.dev0</a>
+       title="Zero 0.0.7.dev0 documentation">Zero 0.0.7.dev0</a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -289,11 +289,11 @@
         <div class="md-content">
           <article class="md-content__inner md-typeset" role="main">
             
-  
+  <section id="zero-timer-call">
 <h1 id="reference-api-api-zero-timer-call--page-root">zero.Timer.__call__<a class="headerlink" href="#reference-api-api-zero-timer-call--page-root" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
-<dt id="zero.Timer.__call__">
-<code class="sig-prename descclassname">Timer.</code><code class="sig-name descname">__call__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zero/_utils.html#Timer.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.Timer.__call__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="zero.Timer.__call__">
+<span class="sig-prename descclassname"><span class="pre">Timer.</span></span><span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zero/_utils.html#Timer.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zero.Timer.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get time elapsed since the start.</p>
 <p>If the timer is just created/reset, the shift is returned (can be negative!).
 Otherwise, <code class="code docutils literal notranslate"><span class="pre">now</span> <span class="pre">-</span> <span class="pre">start_time</span> <span class="pre">+</span> <span class="pre">shift</span></code> is returned. The shift includes
@@ -304,11 +304,11 @@ all manipulations by <a class="reference internal" href="zero.Timer.add.html#zer
 <dd class="field-odd"><p>Time elapsed.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)">float</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
-
+</section>
 
 
           </article>
@@ -330,7 +330,7 @@ all manipulations by <a class="reference internal" href="zero.Timer.add.html#zer
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.1.2.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

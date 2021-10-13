@@ -5,7 +5,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="lang:clipboard.copy" content="Copy to clipboard">
@@ -47,14 +48,13 @@
   
   
   
-    <title>zero.evaluation &#8212; Zero 0.0.6.dev0 documentation</title>
-    <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <title>zero.evaluation &#8212; Zero 0.0.7.dev0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/material.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -83,11 +83,11 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.6.dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.7.dev0 documentation"
            class="md-header-nav__button md-logo">
           
               <img src="../../_static/logo.svg" height="26"
-                   alt="Zero 0.0.6.dev0 documentation logo">
+                   alt="Zero 0.0.7.dev0 documentation logo">
           
         </a>
       </div>
@@ -96,7 +96,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Zero 0.0.6.dev0</span>
+          <span class="md-header-nav__topic">Zero 0.0.7.dev0</span>
           <span class="md-header-nav__topic"> zero.evaluation </span>
         </div>
       </div>
@@ -106,7 +106,7 @@
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
-    <form class="md-search__form" action="../../search.html" method="GET" name="search">
+    <form class="md-search__form" action="../../search.html" method="get" name="search">
       <input type="text" class="md-search__input" name="q" placeholder="Search"
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
@@ -182,13 +182,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.6.dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.7.dev0 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/logo.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.6.dev0 documentation">Zero 0.0.6.dev0</a>
+       title="Zero 0.0.7.dev0 documentation">Zero 0.0.7.dev0</a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -288,27 +288,29 @@
         <div class="md-content">
           <article class="md-content__inner md-typeset" role="main">
             
-  
+  <section id="zero-evaluation">
 <h1 id="reference-api-zero-evaluation--page-root">zero.evaluation<a class="headerlink" href="#reference-api-zero-evaluation--page-root" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="zero.evaluation">
-<em class="property">class </em><code class="sig-prename descclassname">zero.</code><code class="sig-name descname">evaluation</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">modules</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/_utils.html#evaluation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zero.evaluation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="zero.evaluation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">zero.</span></span><span class="sig-name descname"><span class="pre">evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">modules</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/_utils.html#evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zero.evaluation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Context-manager &amp; decorator for models evaluation.</p>
 <p>This code…</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">evaluation</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">evaluation</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>  <span class="c1"># or: evaluation(model_0, model_1, ...)</span>
     <span class="o">...</span>
 
-<span class="nd">@evaluation</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="nd">@evaluation</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>  <span class="c1"># or: @evaluation(model_0, model_1, ...)</span>
 <span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
     <span class="o">...</span>
 </pre></div>
 </div>
 <p>…is equivalent to the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">context</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torch</span><span class="p">,</span> <span class="s1">'inference_mode'</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">context</span><span class="p">():</span>
     <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
     <span class="o">...</span>
 
-<span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+<span class="nd">@context</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
     <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
     <span class="o">...</span>
@@ -316,7 +318,10 @@
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>modules</strong> – </p>
+<dd class="field-odd"><p><strong>modules</strong> (<em>torch.nn.modules.module.Module</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
 </dd>
 </dl>
 <div class="admonition note">
@@ -326,9 +331,21 @@ decorated function returns.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The function must be used in the same way as <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.no_grad.html#torch.no_grad" title="(in PyTorch v1.9.0a0+gitd69c22d)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.no_grad</span></code></a>, i.e. only as a
-context manager or a decorator as shown below in the examples. Otherwise, the
-behaviour is undefined.</p>
+<p>The function must be used in the same way as <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.no_grad.html#torch.no_grad" title="(in PyTorch v1.9.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.no_grad</span></code></a> and
+<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.inference_mode.html#torch.inference_mode" title="(in PyTorch v1.9.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.inference_mode</span></code></a>, i.e. only as a context manager or a decorator as shown
+below in the examples. Otherwise, the behaviour is undefined.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Contrary to <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.no_grad.html#torch.no_grad" title="(in PyTorch v1.9.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.no_grad</span></code></a> and <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.inference_mode.html#torch.inference_mode" title="(in PyTorch v1.9.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.inference_mode</span></code></a>, the function cannot be
+used to decorate generators. So, in the case of generators, you have to manually
+create a context:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_generator</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">evaluation</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">b</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">c</span>
+</pre></div>
+</div>
 </div>
 <p class="rubric">Examples</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -347,21 +364,8 @@ behaviour is undefined.</p>
     <span class="o">...</span>
 </pre></div>
 </div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">grad_before_context</span> <span class="ow">in</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">train</span> <span class="ow">in</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">torch</span><span class="o">.</span><span class="n">set_grad_enabled</span><span class="p">(</span><span class="n">grad_before_context</span><span class="p">)</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
-        <span class="k">with</span> <span class="n">evaluation</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
-            <span class="k">assert</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">training</span>
-            <span class="k">assert</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_grad_enabled</span><span class="p">()</span>
-            <span class="o">...</span>
-        <span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_grad_enabled</span><span class="p">()</span> <span class="o">==</span> <span class="n">grad_before_context</span>
-        <span class="c1"># model.training is unspecified here</span>
-</pre></div>
-</div>
 </dd></dl>
-
+</section>
 
 
           </article>
@@ -383,7 +387,7 @@ behaviour is undefined.</p>
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.1.2.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

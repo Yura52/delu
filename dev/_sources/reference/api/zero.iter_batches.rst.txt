@@ -1,4 +1,4 @@
-zero.iter\_batches
+﻿zero.iter\_batches
 ==================
 
 .. currentmodule:: zero

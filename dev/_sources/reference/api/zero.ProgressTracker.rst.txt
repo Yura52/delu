@@ -1,4 +1,4 @@
-zero.ProgressTracker
+﻿zero.ProgressTracker
 ====================
 
 .. currentmodule:: zero

@@ -1,4 +1,4 @@
-zero.nn.Lambda
+﻿zero.nn.Lambda
 ==============
 
 .. currentmodule:: zero.nn

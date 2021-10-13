@@ -1,4 +1,4 @@
-zero.hardware.free\_memory
+﻿zero.hardware.free\_memory
 ==========================
 
 .. currentmodule:: zero.hardware

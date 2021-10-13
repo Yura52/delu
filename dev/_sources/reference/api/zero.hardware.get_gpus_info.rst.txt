@@ -1,4 +1,4 @@
-zero.hardware.get\_gpus\_info
+﻿zero.hardware.get\_gpus\_info
 =============================
 
 .. currentmodule:: zero.hardware

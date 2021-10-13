@@ -5,7 +5,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="lang:clipboard.copy" content="Copy to clipboard">
@@ -47,14 +47,13 @@
   
   
   
-    <title>zero.random &#8212; Zero 0.0.6.dev0 documentation</title>
-    <link rel="stylesheet" href="../../_static/material.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <title>zero.random &#8212; Zero 0.0.7.dev0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/material.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -81,11 +80,11 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.6.dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.7.dev0 documentation"
            class="md-header-nav__button md-logo">
           
               <img src="../../_static/logo.svg" height="26"
-                   alt="Zero 0.0.6.dev0 documentation logo">
+                   alt="Zero 0.0.7.dev0 documentation logo">
           
         </a>
       </div>
@@ -94,7 +93,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Zero 0.0.6.dev0</span>
+          <span class="md-header-nav__topic">Zero 0.0.7.dev0</span>
           <span class="md-header-nav__topic"> zero.random </span>
         </div>
       </div>
@@ -104,7 +103,7 @@
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
-    <form class="md-search__form" action="../../search.html" method="GET" name="search">
+    <form class="md-search__form" action="../../search.html" method="get" name="search">
       <input type="text" class="md-search__input" name="q" placeholder="Search"
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
@@ -180,13 +179,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.6.dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.7.dev0 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/logo.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.6.dev0 documentation">Zero 0.0.6.dev0</a>
+       title="Zero 0.0.7.dev0 documentation">Zero 0.0.7.dev0</a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -289,6 +288,7 @@
 <span></span><span class="sd">"""Random sampling utilities."""</span>
 
 <span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -374,6 +374,43 @@
     <span class="n">torch</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_rng_state</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">'torch.random'</span><span class="p">])</span>
     <span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">device_count</span><span class="p">()</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">'torch.cuda'</span><span class="p">])</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">set_rng_state_all</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">'torch.cuda'</span><span class="p">])</span>  <span class="c1"># type: ignore</span></div>
+
+
+<div class="viewcode-block" id="preserve_state"><a class="viewcode-back" href="../../reference/api/zero.random.preserve_state.html#zero.random.preserve_state">[docs]</a><span class="nd">@contextmanager</span>
+<span class="k">def</span> <span class="nf">preserve_state</span><span class="p">():</span>
+    <span class="sd">"""Decorator and a context manager for preserving global random state.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            import random</span>
+
+<span class="sd">            f = lambda: (</span>
+<span class="sd">                random.randint(0, 10),</span>
+<span class="sd">                np.random.randint(10),</span>
+<span class="sd">                torch.randint(10, (1,)).item()</span>
+<span class="sd">            )</span>
+<span class="sd">            with preserve_state():</span>
+<span class="sd">                a = f()</span>
+<span class="sd">            b = f()</span>
+<span class="sd">            assert a == b</span>
+
+<span class="sd">            @preserve_state()</span>
+<span class="sd">            def g():</span>
+<span class="sd">                return f()</span>
+
+<span class="sd">            with preserve_state():</span>
+<span class="sd">                a = g()</span>
+<span class="sd">            b = g()</span>
+<span class="sd">            assert a == b</span>
+
+<span class="sd">    """</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">get_state</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">set_state</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
 </pre></div>
 
           </article>
@@ -395,7 +432,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.1.2.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

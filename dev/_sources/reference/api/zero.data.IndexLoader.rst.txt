@@ -1,4 +1,4 @@
-zero.data.IndexLoader
+﻿zero.data.IndexLoader
 =====================
 
 .. currentmodule:: zero.data
