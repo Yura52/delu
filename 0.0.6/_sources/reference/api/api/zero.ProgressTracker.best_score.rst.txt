@@ -1,0 +1,6 @@
+zero.ProgressTracker.best\_score
+================================
+
+.. currentmodule:: zero
+
+.. autoproperty:: ProgressTracker.best_score

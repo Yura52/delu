@@ -1,0 +1,6 @@
+﻿zero.random.get\_state
+======================
+
+.. currentmodule:: zero.random
+
+.. autofunction:: get_state

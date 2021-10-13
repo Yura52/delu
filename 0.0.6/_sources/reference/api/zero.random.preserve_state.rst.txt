@@ -1,0 +1,6 @@
+﻿zero.random.preserve\_state
+===========================
+
+.. currentmodule:: zero.random
+
+.. autofunction:: preserve_state

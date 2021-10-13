@@ -1,0 +1,6 @@
+zero.Timer.\_\_enter\_\_
+========================
+
+.. currentmodule:: zero
+
+.. automethod:: Timer.__enter__

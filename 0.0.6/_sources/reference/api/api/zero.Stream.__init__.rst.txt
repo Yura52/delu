@@ -1,0 +1,6 @@
+zero.Stream.\_\_init\_\_
+========================
+
+.. currentmodule:: zero
+
+.. automethod:: Stream.__init__
