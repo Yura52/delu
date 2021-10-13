@@ -21,16 +21,16 @@ coverage:
 	coverage run -m $(PYTEST_CMD)
 	coverage report -m
 
-_docs:
+docs:
 	make -C $(DOCS_DIR) html
 
-docs: _docs
+_docs: docs
 	$(VIEW_HTML_CMD) $(DOCS_DIR)/build/html/index.html
 
 pages:
 	git checkout master
 	make clean
-	make _docs
+	make docs
 	git checkout gh-pages
 	rm -r dev
 	mv docs/build/html dev
@@ -47,8 +47,8 @@ lint:
 	black zero --check
 	flake8 zero
 
-# the order is important: clean must be first, _docs must precede dtest
-pre-commit: clean lint test _docs dtest typecheck
+# the order is important: clean must be first, docs must precede dtest
+pre-commit: clean lint test docs dtest typecheck
 
 test:
 	PYTHONPATH='.' $(PYTEST_CMD) $(ARGV)
