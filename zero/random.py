@@ -1,6 +1,7 @@
 """Random sampling utilities."""
 
 import random
+from contextlib import contextmanager
 from typing import Any, Dict
 
 import numpy as np
@@ -86,3 +87,40 @@ def set_state(state: Dict[str, Any]) -> None:
     torch.random.set_rng_state(state['torch.random'])
     assert torch.cuda.device_count() == len(state['torch.cuda'])
     torch.cuda.set_rng_state_all(state['torch.cuda'])  # type: ignore
+
+
+@contextmanager
+def preserve_state():
+    """Decorator and a context manager for preserving global random state.
+
+    Examples:
+
+        .. testcode::
+
+            import random
+
+            f = lambda: (
+                random.randint(0, 10),
+                np.random.randint(10),
+                torch.randint(10, (1,)).item()
+            )
+            with preserve_state():
+                a = f()
+            b = f()
+            assert a == b
+
+            @preserve_state()
+            def g():
+                return f()
+
+            with preserve_state():
+                a = g()
+            b = g()
+            assert a == b
+
+    """
+    state = get_state()
+    try:
+        yield
+    finally:
+        set_state(state)

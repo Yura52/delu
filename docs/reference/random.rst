@@ -12,3 +12,4 @@ zero.random
     seed
     get_state
     set_state
+    preserve_state
