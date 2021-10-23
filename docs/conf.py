@@ -30,6 +30,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'sphinxcontrib.spelling',
+    'sphinx_copybutton',
 ]
 
 autodoc_member_order = 'bysource'
