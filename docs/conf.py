@@ -31,6 +31,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinxcontrib.spelling',
     'sphinx_copybutton',
+    # 'sphinx_rtd_theme',
 ]
 
 autodoc_member_order = 'bysource'
@@ -90,3 +91,18 @@ html_theme_options = {
 html_sidebars = {
     '**': ['logo-text.html', 'globaltoc.html', 'searchbox.html'],
 }
+
+# html_theme = 'sphinx_rtd_theme'
+# github_url = repo_url
+# html_logo = ???  # the current SVG and PNG logos are too big/small, need to scale them
+# html_theme_options = {
+#     'sticky_navigation': False,
+#     'logo_only': True,
+#     'display_version': True,
+#     'prev_next_buttons_location': None,
+#     'style_external_links': True,
+#     # #fcfcfc - docs background
+#     # #343131 - sidebar background
+#     # #757575 - grey from Material for MkDocs
+#     'style_nav_header_background': '#757575',
+# }
