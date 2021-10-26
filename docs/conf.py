@@ -63,7 +63,7 @@ spelling_show_suggestions = True
 # >>> HTML and theme options <<<
 html_static_path = ['_static']
 html_favicon = 'images/favicon.ico'
-html_logo = 'images/logo.svg'
+html_logo = 'images/logo_28x28.svg'
 
 # This theme concatenates autosummary tables nicely and supports versioning.
 import sphinx_material  # noqa
