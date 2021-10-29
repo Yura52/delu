@@ -69,7 +69,7 @@ html_favicon = 'images/favicon.ico'
 import sphinx_material  # noqa
 
 html_theme = 'sphinx_material'
-html_css_files = []
+html_css_files = ['material_theme.css']
 html_logo = 'images/logo_28x28.svg'
 html_theme_options = {
     # Full list of options: https://github.com/bashtage/sphinx-material/blob/master/sphinx_material/sphinx_material/theme.conf
