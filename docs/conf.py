@@ -1,3 +1,4 @@
+import datetime
 import sys
 from pathlib import Path
 
@@ -10,7 +11,7 @@ import zero  # noqa
 
 # >>> Project information <<<
 author = 'Yura52'
-copyright = '2021, Yura52'
+copyright = '{}, {}'.format(datetime.datetime.now().year, author)
 project = 'Zero'
 release = zero.__version__
 version = zero.__version__
@@ -63,12 +64,13 @@ spelling_show_suggestions = True
 # >>> HTML and theme options <<<
 html_static_path = ['_static']
 html_favicon = 'images/favicon.ico'
-html_logo = 'images/logo_28x28.svg'
 
 # This theme concatenates autosummary tables nicely and supports versioning.
 import sphinx_material  # noqa
 
 html_theme = 'sphinx_material'
+html_css_files = []
+html_logo = 'images/logo_28x28.svg'
 html_theme_options = {
     # Full list of options: https://github.com/bashtage/sphinx-material/blob/master/sphinx_material/sphinx_material/theme.conf
     'base_url': 'https://yura52.github.io/zero',
@@ -93,16 +95,13 @@ html_sidebars = {
 }
 
 # html_theme = 'sphinx_rtd_theme'
+# html_css_files = ['rtd_theme.css']
+# html_logo = 'images/logo_120x120.svg'
+
 # github_url = repo_url
-# html_logo = ???  # the current SVG and PNG logos are too big/small, need to scale them
 # html_theme_options = {
-#     'sticky_navigation': False,
 #     'logo_only': True,
-#     'display_version': True,
+#     'display_version': False,
 #     'prev_next_buttons_location': None,
 #     'style_external_links': True,
-#     # #fcfcfc - docs background
-#     # #343131 - sidebar background
-#     # #757575 - grey from Material for MkDocs
-#     'style_nav_header_background': '#757575',
 # }
