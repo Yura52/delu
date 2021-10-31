@@ -1,0 +1,6 @@
+zero.Timer.\_\_setstate\_\_
+===========================
+
+.. currentmodule:: zero
+
+.. automethod:: Timer.__setstate__

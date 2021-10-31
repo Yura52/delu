@@ -1,0 +1,8 @@
+﻿zero.nn.Lambda
+==============
+
+.. currentmodule:: zero.nn
+
+.. autoclass:: Lambda
+    :special-members: __init__
+    :members:

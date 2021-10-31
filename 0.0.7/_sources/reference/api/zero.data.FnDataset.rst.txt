@@ -1,0 +1,34 @@
+﻿zero.data.FnDataset
+===================
+
+.. currentmodule:: zero.data
+
+.. autoclass:: FnDataset
+
+   
+   
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+      :toctree: api
+   
+      ~FnDataset.__init__
+   
+      
+      
+      ~FnDataset.__len__
+      
+      
+      ~FnDataset.__getitem__
+      
+      
+      
+      
+      
+      
+      
+   

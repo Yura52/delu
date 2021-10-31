@@ -1,0 +1,6 @@
+zero.data.FnDataset.\_\_init\_\_
+================================
+
+.. currentmodule:: zero.data
+
+.. automethod:: FnDataset.__init__
