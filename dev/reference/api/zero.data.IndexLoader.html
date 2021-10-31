@@ -48,13 +48,17 @@
   
   
   
-    <title>zero.data.IndexLoader &#8212; Zero 0.0.7.dev0 documentation</title>
+    <title>zero.data.IndexLoader &#8212; Zero 0.0.8.dev0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/material.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/material_theme.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -83,11 +87,11 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.7.dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.8.dev0 documentation"
            class="md-header-nav__button md-logo">
           
-              <img src="../../_static/logo.svg" height="26"
-                   alt="Zero 0.0.7.dev0 documentation logo">
+              <img src="../../_static/logo_28x28.svg" height="26"
+                   alt="Zero 0.0.8.dev0 documentation logo">
           
         </a>
       </div>
@@ -96,7 +100,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Zero 0.0.7.dev0</span>
+          <span class="md-header-nav__topic">Zero 0.0.8.dev0</span>
           <span class="md-header-nav__topic"> zero.data.IndexLoader </span>
         </div>
       </div>
@@ -182,13 +186,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.7.dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.8.dev0 documentation" class="md-nav__button md-logo">
       
-        <img src="../../_static/logo.svg" alt=" logo" width="48" height="48">
+        <img src="../../_static/logo_28x28.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.7.dev0 documentation">Zero 0.0.7.dev0</a>
+       title="Zero 0.0.8.dev0 documentation">Zero 0.0.8.dev0</a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -293,7 +297,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="zero.data.IndexLoader">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">zero.data.</span></span><span class="sig-name descname"><span class="pre">IndexLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/data.html#IndexLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zero.data.IndexLoader" title="Permalink to this definition">¶</a></dt>
-<dd><p>Like <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.9.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataLoader</span></code></a>, but over indices instead of data.</p>
+<dd><p>Like <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.10.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataLoader</span></code></a>, but over indices instead of data.</p>
 <p><strong>The shuffling logic is delegated to the native PyTorch DataLoader</strong>, i.e. no
 custom logic is performed under the hood. The data loader which actually generates
 indices is available as <a class="reference internal" href="api/zero.data.IndexLoader.loader.html#zero.data.IndexLoader.loader" title="zero.data.IndexLoader.loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IndexLoader.loader</span></code></a>.</p>
