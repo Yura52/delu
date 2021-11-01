@@ -38,8 +38,6 @@ extensions = [
 autodoc_member_order = 'bysource'
 autodoc_typehints = 'description'
 
-autosummary_generate = True
-
 doctest_global_setup = '''
 import numpy as np
 import torch
