@@ -23,7 +23,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules"
 ]
 dependencies = [
-    "numpy >=1.17,<2",
+    "numpy >=1.18,<2",
     "pynvml >=11.0,<12",
     "torch >=1.7,<2",
     "tqdm >=4.0,<5"
