@@ -13,7 +13,7 @@ def seed(seed: int) -> None:
 
     Args:
         seed: the seed for all mentioned libraries. Must be a non-negative number less
-            than :code:`2 ** 32 - 1`.
+            than :code:`2 ** 32 - 3`.
     Raises:
         AssertionError: if the seed is not within the required interval
 
@@ -22,13 +22,15 @@ def seed(seed: int) -> None:
 
             zero.random.seed(0)
     """
-    assert 0 <= seed < 2 ** 32 - 1
+    assert 0 <= seed < 2 ** 32 - 3
     random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
+    # why `+ 1`: https://github.com/PyTorchLightning/pytorch-lightning/pull/6960#issuecomment-818393659
+    np.random.seed(seed + 1)
+    torch_seed = seed + 2
+    torch.manual_seed(torch_seed)
     # mypy doesn't know about the following functions
-    torch.cuda.manual_seed(seed)  # type: ignore
-    torch.cuda.manual_seed_all(seed)  # type: ignore
+    torch.cuda.manual_seed(torch_seed)  # type: ignore
+    torch.cuda.manual_seed_all(torch_seed)  # type: ignore
 
 
 def get_state() -> Dict[str, Any]:
