@@ -11,7 +11,8 @@ pytest
 
 # docs
 # it is important to freeze the version because the option -W is used for sphinx-build
-sphinx==4.1.2
+sphinx==4.2.0
+sphinx-copybutton
 sphinx-material
 sphinxcontrib-spelling
 
