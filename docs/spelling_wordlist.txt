@@ -8,6 +8,7 @@ cuDNN
 dataloader
 Dataset
 dataset
+deterministically
 dicts
 FnDataset
 getitem

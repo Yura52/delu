@@ -483,7 +483,9 @@ class evaluation(ContextDecorator):
         return result
 
 
-def improve_reproducibility(seed: Optional[int]) -> int:
+def improve_reproducibility(
+    base_seed: Optional[int], one_cuda_seed: bool = False
+) -> int:
     """Set seeds in `random`, `numpy` and `torch` and make some cuDNN operations deterministic.
 
     Do everything possible to improve reproducibility for code that relies on global
@@ -496,15 +498,16 @@ def improve_reproducibility(seed: Optional[int]) -> int:
     3. `torch.backends.cudnn.deterministic` to `True`
 
     Args:
-        seed: the seed for all mentioned libraries. Must be a non-negative number less
-            than :code:`2 ** 32 - 1`. If `None`, a high-quality seed is generated
-            instead.
+        base_seed: the argument for `zero.random.seed`. If `None`, a high-quality base
+            seed is generated instead.
+        one_cuda_seed: the argument for `zero.random.seed`.
 
     Returns:
-        seed: if :code:`seed` is set to `None`, the generated seed is returned; otherwise, :code:`seed` is returned as is
+        base_seed: if :code:`base_seed` is set to `None`, the generated base seed is
+            returned; otherwise, :code:`base_seed` is returned as is
 
     Note:
-        If you don't want to set the seed by hand, but still want to have a chance to
+        If you don't want to choose the base seed, but still want to have a chance to
         reproduce things, you can use the following pattern::
 
             print('Seed:', zero.improve_reproducibility(None))
@@ -522,10 +525,10 @@ def improve_reproducibility(seed: Optional[int]) -> int:
     """
     torch.backends.cudnn.benchmark = False  # type: ignore
     torch.backends.cudnn.deterministic = True  # type: ignore
-    if seed is None:
+    if base_seed is None:
         # See https://numpy.org/doc/1.18/reference/random/bit_generators/index.html#seeding-and-entropy  # noqa
-        seed = secrets.randbits(128) % (2 ** 32 - 1)
+        base_seed = secrets.randbits(128) % (2 ** 32 - 1024)
     else:
-        assert seed < (2 ** 32 - 1)
-    zero_random.seed(seed)
-    return seed
+        assert base_seed < (2 ** 32 - 1024)
+    zero_random.seed(base_seed, one_cuda_seed)
+    return base_seed

@@ -8,12 +8,22 @@ import numpy as np
 import torch
 
 
-def seed(seed: int) -> None:
+def seed(base_seed: int, one_cuda_seed: bool = False) -> None:
     """Set seeds in `random`, `numpy` and `torch`.
 
+    For all libraries, different seeds (which are _deterministically_ calculated based
+    on the :code:`base_seed` argument) are set.
+
+    Note:
+        Different seed are set to avoid situations where different libraries or devices
+        generate the same random sequences. For example, see
+        `this comment <https://github.com/PyTorchLightning/pytorch-lightning/pull/6960#issuecomment-818393659>`_
+        on setting the same seed for the standard library and NumPy.
     Args:
-        seed: the seed for all mentioned libraries. Must be a non-negative number less
-            than :code:`2 ** 32 - 3`.
+        base_seed: the number used to determine random seeds for all libraries and
+            hardware. Must be a non-negative number less than :code:`2 ** 32 - 10000`.
+        one_cuda_seed: if `True`, then the same seed will be set for all cuda devices,
+            otherwise, different seeds will be set for all cuda devices.
     Raises:
         AssertionError: if the seed is not within the required interval
 
@@ -22,15 +32,22 @@ def seed(seed: int) -> None:
 
             zero.random.seed(0)
     """
-    assert 0 <= seed < 2 ** 32 - 3
-    random.seed(seed)
-    # why `+ 1`: https://github.com/PyTorchLightning/pytorch-lightning/pull/6960#issuecomment-818393659
-    np.random.seed(seed + 1)
-    torch_seed = seed + 2
-    torch.manual_seed(torch_seed)
-    # mypy doesn't know about the following functions
-    torch.cuda.manual_seed(torch_seed)  # type: ignore
-    torch.cuda.manual_seed_all(torch_seed)  # type: ignore
+    assert 0 <= base_seed < 2 ** 32 - 10000
+    random.seed(base_seed)
+    np.random.seed(base_seed + 1)
+    torch.manual_seed(base_seed + 2)
+    cuda_seed = base_seed + 3
+    if one_cuda_seed:
+        torch.cuda.manual_seed_all(cuda_seed)
+    elif torch.cuda.is_available():
+        # the following check should never succeed since torch.manual_seed also calls
+        # torch.cuda.manual_seed_all() inside; but let's keep it just in case
+        if not torch.cuda.is_initialized():
+            torch.cuda.init()
+        # Source: https://github.com/pytorch/pytorch/blob/2f68878a055d7f1064dded1afac05bb2cb11548f/torch/cuda/random.py#L109
+        for i in range(torch.cuda.device_count()):
+            default_generator = torch.cuda.default_generators[i]
+            default_generator.manual_seed(cuda_seed + i)
 
 
 def get_state() -> Dict[str, Any]:
