@@ -1,9 +1,10 @@
 dl.py > dt.sig.sig-object.py {
     background: #f8f8f8;
-    border-top: 2px solid dimgray;
+    border-top: 3px solid #555555;
     scroll-margin-top: 3.5em;
     margin-top: initial;
     padding-top: initial;
+    padding: 0.3rem;
 }
 
 h1 > a.headerlink,

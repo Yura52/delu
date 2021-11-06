@@ -48,7 +48,7 @@
   
   
   
-    <title>zero.random.seed &#8212; Zero 0.0.8.dev0 documentation</title>
+    <title>zero.random.seed &#8212; Zero 0.0.9.dev0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/material.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
@@ -87,11 +87,11 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.8.dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.9.dev0 documentation"
            class="md-header-nav__button md-logo">
           
               <img src="../../_static/logo_28x28.svg" height="26"
-                   alt="Zero 0.0.8.dev0 documentation logo">
+                   alt="Zero 0.0.9.dev0 documentation logo">
           
         </a>
       </div>
@@ -100,7 +100,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Zero 0.0.8.dev0</span>
+          <span class="md-header-nav__topic">Zero 0.0.9.dev0</span>
           <span class="md-header-nav__topic"> zero.random.seed </span>
         </div>
       </div>
@@ -186,13 +186,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.8.dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.9.dev0 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/logo_28x28.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.8.dev0 documentation">Zero 0.0.8.dev0</a>
+       title="Zero 0.0.9.dev0 documentation">Zero 0.0.9.dev0</a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -296,12 +296,25 @@
 <h1 id="reference-api-zero-random-seed--page-root">zero.random.seed<a class="headerlink" href="#reference-api-zero-random-seed--page-root" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="zero.random.seed">
-<span class="sig-prename descclassname"><span class="pre">zero.random.</span></span><span class="sig-name descname"><span class="pre">seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/random.html#seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zero.random.seed" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">zero.random.</span></span><span class="sig-name descname"><span class="pre">seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">one_cuda_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zero/random.html#seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zero.random.seed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set seeds in <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.21)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>.</p>
+<p>For all libraries, different seeds (which are _deterministically_ calculated based
+on the <code class="code docutils literal notranslate"><span class="pre">base_seed</span></code> argument) are set.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Different seed are set to avoid situations where different libraries or devices
+generate the same random sequences. For example, see
+<a class="reference external" href="https://github.com/PyTorchLightning/pytorch-lightning/pull/6960#issuecomment-818393659">this comment</a>
+on setting the same seed for the standard library and NumPy.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the seed for all mentioned libraries. Must be a non-negative number less
-than <code class="code docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">32</span> <span class="pre">-</span> <span class="pre">1</span></code>.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the number used to determine random seeds for all libraries and
+hardware. Must be a non-negative number less than <code class="code docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">32</span> <span class="pre">-</span> <span class="pre">10000</span></code>.</p></li>
+<li><p><strong>one_cuda_seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – if <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>, then the same seed will be set for all cuda devices,
+otherwise, different seeds will be set for all cuda devices.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.10)"><strong>AssertionError</strong></a> – if the seed is not within the required interval</p>
@@ -337,7 +350,7 @@ than <code class="code docutils literal notranslate"><span class="pre">2</span> 
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.1.2.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

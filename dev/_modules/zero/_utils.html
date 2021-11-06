@@ -47,7 +47,7 @@
   
   
   
-    <title>zero._utils &#8212; Zero 0.0.8.dev0 documentation</title>
+    <title>zero._utils &#8212; Zero 0.0.9.dev0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/material.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
@@ -84,11 +84,11 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.8.dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.9.dev0 documentation"
            class="md-header-nav__button md-logo">
           
               <img src="../../_static/logo_28x28.svg" height="26"
-                   alt="Zero 0.0.8.dev0 documentation logo">
+                   alt="Zero 0.0.9.dev0 documentation logo">
           
         </a>
       </div>
@@ -97,7 +97,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Zero 0.0.8.dev0</span>
+          <span class="md-header-nav__topic">Zero 0.0.9.dev0</span>
           <span class="md-header-nav__topic"> zero._utils </span>
         </div>
       </div>
@@ -183,13 +183,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.8.dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.9.dev0 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/logo_28x28.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.8.dev0 documentation">Zero 0.0.8.dev0</a>
+       title="Zero 0.0.9.dev0 documentation">Zero 0.0.9.dev0</a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -774,7 +774,9 @@
         <span class="k">return</span> <span class="n">result</span></div>
 
 
-<div class="viewcode-block" id="improve_reproducibility"><a class="viewcode-back" href="../../reference/api/zero.improve_reproducibility.html#zero.improve_reproducibility">[docs]</a><span class="k">def</span> <span class="nf">improve_reproducibility</span><span class="p">(</span><span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="improve_reproducibility"><a class="viewcode-back" href="../../reference/api/zero.improve_reproducibility.html#zero.improve_reproducibility">[docs]</a><span class="k">def</span> <span class="nf">improve_reproducibility</span><span class="p">(</span>
+    <span class="n">base_seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">one_cuda_seed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="sd">"""Set seeds in `random`, `numpy` and `torch` and make some cuDNN operations deterministic.</span>
 
 <span class="sd">    Do everything possible to improve reproducibility for code that relies on global</span>
@@ -787,15 +789,16 @@
 <span class="sd">    3. `torch.backends.cudnn.deterministic` to `True`</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        seed: the seed for all mentioned libraries. Must be a non-negative number less</span>
-<span class="sd">            than :code:`2 ** 32 - 1`. If `None`, a high-quality seed is generated</span>
-<span class="sd">            instead.</span>
+<span class="sd">        base_seed: the argument for `zero.random.seed`. If `None`, a high-quality base</span>
+<span class="sd">            seed is generated instead.</span>
+<span class="sd">        one_cuda_seed: the argument for `zero.random.seed`.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        seed: if :code:`seed` is set to `None`, the generated seed is returned; otherwise, :code:`seed` is returned as is</span>
+<span class="sd">        base_seed: if :code:`base_seed` is set to `None`, the generated base seed is</span>
+<span class="sd">            returned; otherwise, :code:`base_seed` is returned as is</span>
 
 <span class="sd">    Note:</span>
-<span class="sd">        If you don't want to set the seed by hand, but still want to have a chance to</span>
+<span class="sd">        If you don't want to choose the base seed, but still want to have a chance to</span>
 <span class="sd">        reproduce things, you can use the following pattern::</span>
 
 <span class="sd">            print('Seed:', zero.improve_reproducibility(None))</span>
@@ -813,13 +816,13 @@
 <span class="sd">    """</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># type: ignore</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># type: ignore</span>
-    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">base_seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># See https://numpy.org/doc/1.18/reference/random/bit_generators/index.html#seeding-and-entropy  # noqa</span>
-        <span class="n">seed</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">randbits</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">base_seed</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">randbits</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span> <span class="o">-</span> <span class="mi">1024</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">seed</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">zero_random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">seed</span></div>
+        <span class="k">assert</span> <span class="n">base_seed</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span> <span class="o">-</span> <span class="mi">1024</span><span class="p">)</span>
+    <span class="n">zero_random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">base_seed</span><span class="p">,</span> <span class="n">one_cuda_seed</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">base_seed</span></div>
 </pre></div>
 
           </article>
@@ -841,7 +844,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.1.2.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

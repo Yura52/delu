@@ -47,7 +47,7 @@
   
   
   
-    <title>zero.random &#8212; Zero 0.0.8.dev0 documentation</title>
+    <title>zero.random &#8212; Zero 0.0.9.dev0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/material.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
@@ -84,11 +84,11 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../index.html" title="Zero 0.0.8.dev0 documentation"
+        <a href="../../index.html" title="Zero 0.0.9.dev0 documentation"
            class="md-header-nav__button md-logo">
           
               <img src="../../_static/logo_28x28.svg" height="26"
-                   alt="Zero 0.0.8.dev0 documentation logo">
+                   alt="Zero 0.0.9.dev0 documentation logo">
           
         </a>
       </div>
@@ -97,7 +97,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Zero 0.0.8.dev0</span>
+          <span class="md-header-nav__topic">Zero 0.0.9.dev0</span>
           <span class="md-header-nav__topic"> zero.random </span>
         </div>
       </div>
@@ -183,13 +183,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../index.html" title="Zero 0.0.8.dev0 documentation" class="md-nav__button md-logo">
+    <a href="../../index.html" title="Zero 0.0.9.dev0 documentation" class="md-nav__button md-logo">
       
         <img src="../../_static/logo_28x28.svg" alt=" logo" width="48" height="48">
       
     </a>
     <a href="../../index.html"
-       title="Zero 0.0.8.dev0 documentation">Zero 0.0.8.dev0</a>
+       title="Zero 0.0.9.dev0 documentation">Zero 0.0.9.dev0</a>
   </label>
     <div class="md-nav__source">
       <a href="https://github.com/Yura52/zero" title="Go to repository" class="md-source" data-md-source="github">
@@ -299,12 +299,22 @@
 <span class="kn">import</span> <span class="nn">torch</span>
 
 
-<div class="viewcode-block" id="seed"><a class="viewcode-back" href="../../reference/api/zero.random.seed.html#zero.random.seed">[docs]</a><span class="k">def</span> <span class="nf">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="seed"><a class="viewcode-back" href="../../reference/api/zero.random.seed.html#zero.random.seed">[docs]</a><span class="k">def</span> <span class="nf">seed</span><span class="p">(</span><span class="n">base_seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">one_cuda_seed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">"""Set seeds in `random`, `numpy` and `torch`.</span>
 
+<span class="sd">    For all libraries, different seeds (which are _deterministically_ calculated based</span>
+<span class="sd">    on the :code:`base_seed` argument) are set.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Different seed are set to avoid situations where different libraries or devices</span>
+<span class="sd">        generate the same random sequences. For example, see</span>
+<span class="sd">        `this comment &lt;https://github.com/PyTorchLightning/pytorch-lightning/pull/6960#issuecomment-818393659&gt;`_</span>
+<span class="sd">        on setting the same seed for the standard library and NumPy.</span>
 <span class="sd">    Args:</span>
-<span class="sd">        seed: the seed for all mentioned libraries. Must be a non-negative number less</span>
-<span class="sd">            than :code:`2 ** 32 - 1`.</span>
+<span class="sd">        base_seed: the number used to determine random seeds for all libraries and</span>
+<span class="sd">            hardware. Must be a non-negative number less than :code:`2 ** 32 - 10000`.</span>
+<span class="sd">        one_cuda_seed: if `True`, then the same seed will be set for all cuda devices,</span>
+<span class="sd">            otherwise, different seeds will be set for all cuda devices.</span>
 <span class="sd">    Raises:</span>
 <span class="sd">        AssertionError: if the seed is not within the required interval</span>
 
@@ -313,13 +323,22 @@
 
 <span class="sd">            zero.random.seed(0)</span>
 <span class="sd">    """</span>
-    <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">seed</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="c1"># mypy doesn't know about the following functions</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed_all</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>  <span class="c1"># type: ignore</span></div>
+    <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">base_seed</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span> <span class="o">-</span> <span class="mi">10000</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">base_seed</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">base_seed</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">base_seed</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">cuda_seed</span> <span class="o">=</span> <span class="n">base_seed</span> <span class="o">+</span> <span class="mi">3</span>
+    <span class="k">if</span> <span class="n">one_cuda_seed</span><span class="p">:</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed_all</span><span class="p">(</span><span class="n">cuda_seed</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+        <span class="c1"># the following check should never succeed since torch.manual_seed also calls</span>
+        <span class="c1"># torch.cuda.manual_seed_all() inside; but let's keep it just in case</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">():</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+        <span class="c1"># Source: https://github.com/pytorch/pytorch/blob/2f68878a055d7f1064dded1afac05bb2cb11548f/torch/cuda/random.py#L109</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">device_count</span><span class="p">()):</span>
+            <span class="n">default_generator</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">default_generators</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">default_generator</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">cuda_seed</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_state"><a class="viewcode-back" href="../../reference/api/zero.random.get_state.html#zero.random.get_state">[docs]</a><span class="k">def</span> <span class="nf">get_state</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
@@ -436,7 +455,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.1.2.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>
