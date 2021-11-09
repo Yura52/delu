@@ -2,7 +2,7 @@
 black
 coverage
 flake8
-flit
+flit==3.4.0
 ipdb
 isort
 mypy
