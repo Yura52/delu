@@ -1,0 +1,6 @@
+delu.Stream.next
+================
+
+.. currentmodule:: delu
+
+.. automethod:: Stream.next

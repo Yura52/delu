@@ -1,0 +1,6 @@
+delu.ProgressTracker.forget\_bad\_updates
+=========================================
+
+.. currentmodule:: delu
+
+.. automethod:: ProgressTracker.forget_bad_updates

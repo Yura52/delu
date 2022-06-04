@@ -1,11 +1,11 @@
 .. _data:
 
-zero.data
+delu.data
 =========
 
-.. currentmodule:: zero.data
+.. currentmodule:: delu.data
 
-.. automodule:: zero.data
+.. automodule:: delu.data
 
 .. autosummary::
     :nosignatures:

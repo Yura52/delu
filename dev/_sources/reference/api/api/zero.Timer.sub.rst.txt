@@ -1,6 +1,0 @@
-zero.Timer.sub
-==============
-
-.. currentmodule:: zero
-
-.. automethod:: Timer.sub

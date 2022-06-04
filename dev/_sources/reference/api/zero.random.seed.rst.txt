@@ -1,6 +1,0 @@
-﻿zero.random.seed
-================
-
-.. currentmodule:: zero.random
-
-.. autofunction:: seed

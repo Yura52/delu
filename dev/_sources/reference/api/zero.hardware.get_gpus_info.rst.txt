@@ -1,6 +1,0 @@
-﻿zero.hardware.get\_gpus\_info
-=============================
-
-.. currentmodule:: zero.hardware
-
-.. autofunction:: get_gpus_info

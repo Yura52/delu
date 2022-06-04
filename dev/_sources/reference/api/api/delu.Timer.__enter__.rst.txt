@@ -1,0 +1,6 @@
+delu.Timer.\_\_enter\_\_
+========================
+
+.. currentmodule:: delu
+
+.. automethod:: Timer.__enter__

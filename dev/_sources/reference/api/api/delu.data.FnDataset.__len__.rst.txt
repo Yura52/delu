@@ -1,0 +1,6 @@
+delu.data.FnDataset.\_\_len\_\_
+===============================
+
+.. currentmodule:: delu.data
+
+.. automethod:: FnDataset.__len__

@@ -1,6 +1,0 @@
-﻿zero.iter\_batches
-==================
-
-.. currentmodule:: zero
-
-.. autofunction:: iter_batches

@@ -1,6 +1,0 @@
-zero.ProgressTracker.forget\_bad\_updates
-=========================================
-
-.. currentmodule:: zero
-
-.. automethod:: ProgressTracker.forget_bad_updates

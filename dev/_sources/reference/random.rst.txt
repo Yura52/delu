@@ -1,9 +1,9 @@
-zero.random
+delu.random
 ===========
 
-.. currentmodule:: zero.random
+.. currentmodule:: delu.random
 
-.. automodule:: zero.random
+.. automodule:: delu.random
 
 .. autosummary::
     :nosignatures:

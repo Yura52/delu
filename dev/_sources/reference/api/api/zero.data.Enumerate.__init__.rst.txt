@@ -1,6 +1,0 @@
-zero.data.Enumerate.\_\_init\_\_
-================================
-
-.. currentmodule:: zero.data
-
-.. automethod:: Enumerate.__init__

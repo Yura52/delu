@@ -1,0 +1,6 @@
+delu.Stream.loader
+==================
+
+.. currentmodule:: delu
+
+.. autoproperty:: Stream.loader

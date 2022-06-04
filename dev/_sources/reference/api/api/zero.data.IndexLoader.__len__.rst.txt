@@ -1,6 +1,0 @@
-zero.data.IndexLoader.\_\_len\_\_
-=================================
-
-.. currentmodule:: zero.data
-
-.. automethod:: IndexLoader.__len__
