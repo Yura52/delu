@@ -1,0 +1,6 @@
+delu.Stream.epochs
+==================
+
+.. currentmodule:: delu
+
+.. automethod:: Stream.epochs

@@ -1,0 +1,6 @@
+delu.data.IndexLoader.loader
+============================
+
+.. currentmodule:: delu.data
+
+.. autoproperty:: IndexLoader.loader

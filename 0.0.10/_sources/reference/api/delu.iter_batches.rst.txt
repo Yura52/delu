@@ -1,0 +1,6 @@
+﻿delu.iter\_batches
+==================
+
+.. currentmodule:: delu
+
+.. autofunction:: iter_batches
