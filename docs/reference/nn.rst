@@ -1,9 +1,9 @@
-zero.nn
+delu.nn
 =======
 
-.. currentmodule:: zero.nn
+.. currentmodule:: delu.nn
 
-.. automodule:: zero.nn
+.. automodule:: delu.nn
 
 .. autosummary::
     :nosignatures:

@@ -11,7 +11,7 @@ assignees: ''
 Please, provide information about your software:
 - Operating System:
 - python==
-- zero==
+- delu==
 - numpy==
 - torch==
 - pynvml==

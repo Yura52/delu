@@ -1,4 +1,4 @@
-Zero
+DeLU
 ====
 
 .. raw:: html
@@ -36,7 +36,7 @@ Zero
    :caption: API REFERENCE
    :hidden:
 
-   reference/zero
+   reference/delu
    reference/data
    reference/hardware
    reference/nn

@@ -4,7 +4,7 @@ import numpy as np
 import torch
 from pytest import raises
 
-import zero
+import delu
 
 from .util import requires_gpu
 
@@ -14,7 +14,7 @@ def _test_seed(functions):
     for seed in range(10):
         x = [None, None]
         for i in range(2):
-            zero.random.seed(seed)
+            delu.random.seed(seed)
             x[i] = [f(high) for f in functions]
         assert x[0] == x[1]
 
@@ -27,9 +27,9 @@ def test_seed_cpu():
             lambda x: torch.randint(x, (1,))[0].item(),
         ]
     )
-    for seed in [-1, 2 ** 33]:
+    for seed in [-1, 2**33]:
         with raises(AssertionError):
-            zero.random.seed(seed)
+            delu.random.seed(seed)
 
 
 @requires_gpu
@@ -61,17 +61,17 @@ def test_get_set_state():
             )
         return x
 
-    state = zero.random.get_state()
+    state = delu.random.get_state()
     value = f()
     for _ in range(10):
-        zero.random.set_state(state)
+        delu.random.set_state(state)
         assert value == f()
 
     if torch.cuda.is_available():
         state['torch.cuda'] = []
         with raises(AssertionError):
-            zero.random.set_state(state)
+            delu.random.set_state(state)
     else:
         state['torch.cuda'] = [None]
         with raises(AssertionError):
-            zero.random.set_state(state)
+            delu.random.set_state(state)

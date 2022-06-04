@@ -3,7 +3,7 @@ import torch
 from pytest import mark, raises
 from torch.utils.data import DataLoader, TensorDataset
 
-import zero.data as zd
+import delu.data as zd
 
 from .util import Point
 

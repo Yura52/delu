@@ -1,5 +1,5 @@
-"""A zero-overhead library for PyTorch users."""
-__version__ = '0.0.9.dev0'
+"""Deep Learning Utilities."""
+__version__ = '0.0.11.dev0'
 
 from . import data  # noqa
 from . import hardware  # noqa

@@ -30,9 +30,9 @@ def seed(base_seed: int, one_cuda_seed: bool = False) -> None:
     Examples:
         .. testcode::
 
-            zero.random.seed(0)
+            delu.random.seed(0)
     """
-    assert 0 <= base_seed < 2 ** 32 - 10000
+    assert 0 <= base_seed < 2**32 - 10000
     random.seed(base_seed)
     np.random.seed(base_seed + 1)
     torch.manual_seed(base_seed + 2)
@@ -72,12 +72,12 @@ def get_state() -> Dict[str, Any]:
             checkpoint = {
                 'model': model.state_dict(),
                 'optimizer': optimizer.state_dict(),
-                'random_state': zero.random.get_state(),
+                'random_state': delu.random.get_state(),
             }
             # later
             # torch.save(checkpoint, 'checkpoint.pt')
             # ...
-            # zero.random.set_state(torch.load('checkpoint.pt')['random_state'])
+            # delu.random.set_state(torch.load('checkpoint.pt')['random_state'])
     """
     return {
         'random': random.getstate(),

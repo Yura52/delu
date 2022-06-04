@@ -12,9 +12,9 @@ class Lambda(torch.nn.Module):
 
         .. testcode::
 
-            assert zero.nn.Lambda(lambda: 0)() == 0
-            assert zero.nn.Lambda(lambda x: x)(1) == 1
-            assert zero.nn.Lambda(lambda x, y, z: x + y + z)(1, 2, z=3) == 6
+            assert delu.nn.Lambda(lambda: 0)() == 0
+            assert delu.nn.Lambda(lambda x: x)(1) == 1
+            assert delu.nn.Lambda(lambda x, y, z: x + y + z)(1, 2, z=3) == 6
     """
 
     def __init__(self, fn: Callable):

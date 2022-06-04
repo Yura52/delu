@@ -7,7 +7,7 @@ import torch
 from pynvml import NVMLError_LibraryNotFound
 from pytest import mark, raises
 
-import zero
+import delu
 
 
 @mark.parametrize('gpu', [False, True])
@@ -15,7 +15,7 @@ def test_free_memory(gpu):
     with (patch('gc.collect')) as _, (patch('torch.cuda.empty_cache')) as _, (
         patch('torch.cuda.synchronize')
     ) as _, (patch('torch.cuda.is_available', lambda: gpu)) as _:
-        zero.hardware.free_memory()
+        delu.hardware.free_memory()
         gc.collect.call_count == 2
         if gpu:
             torch.cuda.synchronize.assert_called_once()
@@ -52,7 +52,7 @@ def test_get_gpus_info():
     ), patch(
         pynvml_fns[6], return_value=driver.encode('utf-8')
     ):
-        assert zero.hardware.get_gpus_info() == {
+        assert delu.hardware.get_gpus_info() == {
             'driver': driver,
             'devices': [
                 {
@@ -72,4 +72,4 @@ def test_get_gpus_info():
 def test_get_gpus_info_without_gpu():
     with patch('pynvml.nvmlInit', side_effect=NVMLError_LibraryNotFound()):
         with raises(RuntimeError):
-            zero.hardware.get_gpus_info()
+            delu.hardware.get_gpus_info()

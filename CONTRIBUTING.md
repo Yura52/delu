@@ -4,26 +4,21 @@
 2. Clone your fork
 ```bash
 $ git clone <your fork link> 
-$ cd zero
+$ cd delu
 ```
 
-3. Create a virtual environment, install packages:
+3. Create a virtual environment with python and the **minimum required versions** of all the depependendices listed in the "dependencies" section of [pyproject.toml](./pyproject.toml). Also, in this environment, run:
 ```bash
-$ conda create -n zero "python=3.7.*"
-$ conda activate zero
-$ pip install "numpy==1.17.*" "pynvml==8.0.*"
-$ <install torch==1.6.*, see https://pytorch.org/get-started/locally>
-$ pip install -r other/requirements_dev.txt
+pip install -r requirements_dev.txt
 ```
 
-4. Set up a pre-commit hook (use "`git commit -n ...`" to avoid running the hook for unfinished work):
+4. Set up the pre-commit hook by putting the following content into `.git/hooks/pre-commit` (use "`git commit -n ...`" to avoid running the hook for unfinished work):
 ```bash
-$ echo "#!/bin/sh
+#!/bin/sh
 
 export PYTHONPATH=<REPOSITORY_ROOT>:$PYTHONPATH
-export PATH=<CONDA_ENVIRONMENTS>/zero/bin:$PATH
+export PATH=<CONDA_ENVIRONMENTS>/delu/bin:$PATH
 make pre-commit
-" > .git/hooks/pre-commit
 ```
 
 5. Learn the [Makefile](../Makefile). It contains shortcuts for running linters, code formatters, tests, the pre-commit hook and other useful commands. **All commands must be run from the repository root.**

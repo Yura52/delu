@@ -21,7 +21,7 @@ except ImportError:
     )
     raise
 
-import zero
+import delu
 
 
 def download_mnist():
@@ -59,13 +59,13 @@ def parse_args():
 
 def main():
     assert str(Path.cwd().absolute().resolve()).endswith(
-        'zero/examples'
+        'delu/examples'
     ), 'Run this script from the "examples" directory'
     args = parse_args()
 
     if not args.skip_download:
         download_mnist()
-    zero.improve_reproducibility(args.seed)
+    delu.improve_reproducibility(args.seed)
     model = nn.Linear(784, 10).to(args.device)
     optimizer = torch.optim.SGD(model.parameters(), 0.005, 0.9)
 
@@ -74,19 +74,19 @@ def main():
         return model(X.to(args.device)), y.to(args.device)
 
     def evaluate(loader):
-        with zero.evaluation(model):
-            logits, y = zero.concat(map(step, loader))
+        with delu.evaluation(model):
+            logits, y = delu.concat(map(step, loader))
         y_pred = torch.argmax(logits, dim=1).to(y)
         return (y_pred == y).int().sum().item() / len(y)
 
     train_dataset, val_dataset = split_dataset(get_dataset(True), 0.8)
     test_dataset = get_dataset(False)
-    stream = zero.Stream(DataLoader(train_dataset, batch_size=64, shuffle=True))
+    stream = delu.Stream(DataLoader(train_dataset, batch_size=64, shuffle=True))
     val_loader = DataLoader(val_dataset, batch_size=8096)
     test_loader = DataLoader(test_dataset, batch_size=8096)
 
-    timer = zero.Timer()
-    progress = zero.ProgressTracker(args.early_stopping_patience, 0.005)
+    timer = delu.Timer()
+    progress = delu.ProgressTracker(args.early_stopping_patience, 0.005)
     checkpoint_path = 'checkpoint.pt'
     if args.from_checkpoint:
         assert args.from_checkpoint != 'checkpoint.pt'
@@ -97,7 +97,7 @@ def main():
         stream.load_state_dict(checkpoint['stream'])
         timer = checkpoint['timer']
         progress = checkpoint['progress']
-        zero.random.set_state(checkpoint['random_state'])
+        delu.random.set_state(checkpoint['random_state'])
         print('Resuming from the checkpoint.\n')
 
     for epoch in stream.epochs(args.n_epochs, args.epoch_size):
@@ -122,7 +122,7 @@ def main():
                     'stream': stream.state_dict(),
                     'timer': timer,
                     'progress': progress,
-                    'random_state': zero.random.get_state(),
+                    'random_state': delu.random.get_state(),
                 },
                 checkpoint_path,
             )
@@ -134,7 +134,7 @@ def main():
         )
         if args.device.type == 'cuda':
             index = args.device.index or 0
-            msg += f'\nGPU info: {zero.hardware.get_gpus_info()["devices"][index]}'
+            msg += f'\nGPU info: {delu.hardware.get_gpus_info()["devices"][index]}'
         print(msg)
         if progress.fail:
             break
@@ -149,7 +149,7 @@ def main():
 
     print('Freeing memory (for fun, not for profit) ...')
     del model, optimizer, step, evaluate
-    zero.hardware.free_memory()
+    delu.hardware.free_memory()
     print('\nDONE.')
     if not args.from_checkpoint:
         # TODO replace `join` with `shlex.join` in 3.8

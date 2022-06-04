@@ -3,23 +3,23 @@ import sys
 from pathlib import Path
 
 # Add the repository root to PYTHONPATH
-zero_path = Path.cwd()
-while not (zero_path.name == 'zero' and zero_path.parent.name != 'zero'):
-    zero_path = zero_path.parent
-sys.path.append(str(zero_path))
-import zero  # noqa
+delu_path = Path.cwd()
+while not (delu_path.name == 'delu' and delu_path.parent.name != 'delu'):
+    delu_path = delu_path.parent
+sys.path.append(str(delu_path))
+import delu  # noqa
 
 # >>> Project information <<<
 author = 'Yura52'
 copyright = '{}, {}'.format(datetime.datetime.now().year, author)
-project = 'Zero'
-release = zero.__version__
-version = zero.__version__
+project = 'DeLU'
+release = delu.__version__
+version = delu.__version__
 
 # >>> General options <<<
 default_role = 'py:obj'
 pygments_style = 'default'
-repo_url = 'https://github.com/Yura52/zero'
+repo_url = 'https://github.com/Yura52/delu'
 templates_path = ['_templates']
 
 # >>> Extensions options <<<
@@ -41,11 +41,11 @@ autodoc_typehints = 'description'
 doctest_global_setup = '''
 import numpy as np
 import torch
-import zero
-from zero import *
-from zero.data import *
-from zero.hardware import *
-from zero.random import *
+import delu
+from delu import *
+from delu.data import *
+from delu.hardware import *
+from delu.random import *
 '''
 
 intersphinx_mapping = {
@@ -71,7 +71,7 @@ html_css_files = ['material_theme.css']
 html_logo = 'images/logo_28x28.svg'
 html_theme_options = {
     # Full list of options: https://github.com/bashtage/sphinx-material/blob/master/sphinx_material/sphinx_material/theme.conf
-    'base_url': 'https://yura52.github.io/zero',
+    'base_url': 'https://yura52.github.io/delu',
     # Full list of colors (not all of them are available in sphinx-material, see theme.conf above):
     # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#primary-color
     # Nice colors: white, blue, red, deep purple (indigo in mkdocs)

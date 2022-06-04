@@ -1,11 +1,11 @@
-.. _zero:
+.. _delu:
 
-zero
+delu
 ====
 
-.. currentmodule:: zero
+.. currentmodule:: delu
 
-.. automodule:: zero
+.. automodule:: delu
 
 .. rubric:: Data and Tensors
 

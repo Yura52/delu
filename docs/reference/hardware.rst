@@ -1,9 +1,9 @@
-zero.hardware
+delu.hardware
 =============
 
-.. currentmodule:: zero.hardware
+.. currentmodule:: delu.hardware
 
-.. automodule:: zero.hardware
+.. automodule:: delu.hardware
 
 .. autosummary::
     :nosignatures:

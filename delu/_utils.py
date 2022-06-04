@@ -9,7 +9,7 @@ from typing import Any, Dict, Optional
 import torch
 import torch.nn as nn
 
-from . import random as zero_random
+from . import random as delu_random
 
 
 class _ProgressStatus(enum.Enum):
@@ -454,7 +454,7 @@ class evaluation(ContextDecorator):
     def __init__(self, *modules: nn.Module) -> None:
         assert modules
         self._modules = modules
-        self._torch_context = None
+        self._torch_context: Any = None
 
     def __call__(self, func):
         """Decorate a function with an evaluation context.
@@ -498,9 +498,9 @@ def improve_reproducibility(
     3. `torch.backends.cudnn.deterministic` to `True`
 
     Args:
-        base_seed: the argument for `zero.random.seed`. If `None`, a high-quality base
+        base_seed: the argument for `delu.random.seed`. If `None`, a high-quality base
             seed is generated instead.
-        one_cuda_seed: the argument for `zero.random.seed`.
+        one_cuda_seed: the argument for `delu.random.seed`.
 
     Returns:
         base_seed: if :code:`base_seed` is set to `None`, the generated base seed is
@@ -510,7 +510,7 @@ def improve_reproducibility(
         If you don't want to choose the base seed, but still want to have a chance to
         reproduce things, you can use the following pattern::
 
-            print('Seed:', zero.improve_reproducibility(None))
+            print('Seed:', delu.improve_reproducibility(None))
 
     Note:
         100% reproducibility is not always possible in PyTorch. See
@@ -520,15 +520,15 @@ def improve_reproducibility(
     Examples:
         .. testcode::
 
-            assert zero.improve_reproducibility(0) == 0
-            seed = zero.improve_reproducibility(None)
+            assert delu.improve_reproducibility(0) == 0
+            seed = delu.improve_reproducibility(None)
     """
     torch.backends.cudnn.benchmark = False  # type: ignore
     torch.backends.cudnn.deterministic = True  # type: ignore
     if base_seed is None:
         # See https://numpy.org/doc/1.18/reference/random/bit_generators/index.html#seeding-and-entropy  # noqa
-        base_seed = secrets.randbits(128) % (2 ** 32 - 1024)
+        base_seed = secrets.randbits(128) % (2**32 - 1024)
     else:
-        assert base_seed < (2 ** 32 - 1024)
-    zero_random.seed(base_seed, one_cuda_seed)
+        assert base_seed < (2**32 - 1024)
+    delu_random.seed(base_seed, one_cuda_seed)
     return base_seed

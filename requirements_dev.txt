@@ -1,8 +1,8 @@
 # development
 black
-coverage
+coverage[toml]
 flake8
-flit==3.4.0
+flit==3.7.1
 ipdb
 isort
 mypy

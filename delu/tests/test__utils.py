@@ -7,14 +7,14 @@ import torch
 import torch.nn as nn
 from pytest import approx, mark, raises
 
-import zero
+import delu
 
 
 def test_progress_tracker():
     score = -999999999
 
     # test initial state
-    tracker = zero.ProgressTracker(0)
+    tracker = delu.ProgressTracker(0)
     assert not tracker.success
     assert not tracker.fail
 
@@ -36,7 +36,7 @@ def test_progress_tracker():
     assert not tracker.success and not tracker.fail
 
     # test positive patience
-    tracker = zero.ProgressTracker(1)
+    tracker = delu.ProgressTracker(1)
     tracker.update(score - 1)
     assert tracker.success
     tracker.update(score)
@@ -47,7 +47,7 @@ def test_progress_tracker():
     assert tracker.fail
 
     # test positive min_delta
-    tracker = zero.ProgressTracker(0, 2)
+    tracker = delu.ProgressTracker(0, 2)
     tracker.update(score - 2)
     assert tracker.success
     tracker.update(score)
@@ -58,7 +58,7 @@ def test_progress_tracker():
     assert tracker.success
 
     # patience=None
-    tracker = zero.ProgressTracker(None)
+    tracker = delu.ProgressTracker(None)
     for i in range(100):
         tracker.update(-i)
         assert not tracker.fail
@@ -66,10 +66,10 @@ def test_progress_tracker():
 
 def test_timer():
     with raises(AssertionError):
-        zero.Timer().pause()
+        delu.Timer().pause()
 
     # initial state, run
-    timer = zero.Timer()
+    timer = delu.Timer()
     sleep(0.001)
     assert not timer()
     timer.run()
@@ -114,7 +114,7 @@ def test_timer_measurements():
     x = perf_counter()
     sleep(0.1)
     correct = perf_counter() - x
-    timer = zero.Timer()
+    timer = delu.Timer()
     timer.run()
     sleep(0.1)
     actual = timer()
@@ -124,12 +124,12 @@ def test_timer_measurements():
 
 
 def test_timer_context():
-    with zero.Timer() as timer:
+    with delu.Timer() as timer:
         sleep(0.01)
     assert timer() > 0.01
     assert timer() == timer()
 
-    timer = zero.Timer()
+    timer = delu.Timer()
     timer.run()
     sleep(0.01)
     timer.pause()
@@ -140,7 +140,7 @@ def test_timer_context():
 
 
 def test_timer_pickle():
-    timer = zero.Timer()
+    timer = delu.Timer()
     timer.run()
     sleep(0.01)
     timer.pause()
@@ -151,7 +151,7 @@ def test_timer_pickle():
 
 def test_timer_format():
     def make_timer(x):
-        timer = zero.Timer()
+        timer = delu.Timer()
         timer.add(x)
         return timer
 
@@ -166,7 +166,7 @@ def test_timer_format():
 def test_evaluation(train, grad, n_models):
     if not n_models:
         with raises(AssertionError):
-            with zero.evaluation():
+            with delu.evaluation():
                 pass
         return
 
@@ -174,14 +174,14 @@ def test_evaluation(train, grad, n_models):
     models = [nn.Linear(1, 1) for _ in range(n_models)]
     for x in models:
         x.train(train)
-    with zero.evaluation(*models):
+    with delu.evaluation(*models):
         assert all(not x.training for x in models[:-1])
         assert not torch.is_grad_enabled()
     assert torch.is_grad_enabled() == grad
     for x in models:
         x.train(train)
 
-    @zero.evaluation(*models)
+    @delu.evaluation(*models)
     def f():
         assert all(not x.training for x in models[:-1])
         assert not torch.is_grad_enabled()
@@ -196,7 +196,7 @@ def test_evaluation(train, grad, n_models):
 def test_evaluation_generator():
     with raises(AssertionError):
 
-        @zero.evaluation(nn.Linear(1, 1))
+        @delu.evaluation(nn.Linear(1, 1))
         def generator():
             yield 1
 
@@ -211,9 +211,9 @@ def test_improve_reproducibility():
         ]
 
     for seed in [None, 0, 1, 2]:
-        seed = zero.improve_reproducibility(seed)
+        seed = delu.improve_reproducibility(seed)
         assert not torch.backends.cudnn.benchmark
         assert torch.backends.cudnn.deterministic
         results = f()
-        zero.random.seed(seed)
+        delu.random.seed(seed)
         assert results == f()

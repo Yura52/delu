@@ -8,6 +8,8 @@ cuDNN
 dataloader
 Dataset
 dataset
+DeLU
+delu
 deterministically
 dicts
 FnDataset
@@ -19,6 +21,7 @@ init
 iter
 iterable
 iterables
+Jupyter
 len
 nan
 nn

@@ -288,7 +288,7 @@ class IndexLoader:
             tensor([6, 7, 8])
 
     See also:
-        `zero.iter_batches`
+        `delu.iter_batches`
     """
 
     def __init__(
@@ -376,7 +376,7 @@ def iter_batches(
         `the issue <https://github.com/numpy/numpy/issues/16543>`_
 
     See also:
-        - `zero.data.IndexLoader`
+        - `delu.data.IndexLoader`
         - `concat`
 
     Examples:

@@ -3,14 +3,8 @@ requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "libzero"
-requires-python = ">=3.7"
-license = {file = "LICENSE"}
 authors = [
     {name = "Yura52", email = "strausmg@gmail.com"}
-]
-keywords = [
-    "artificial intelligence", "deep learning", "library", "python", "pytorch", "torch"
 ]
 classifiers = [
     "Intended Audience :: Developers",
@@ -28,14 +22,43 @@ dependencies = [
     "torch >=1.7,<2",
     "tqdm >=4.0,<5"
 ]
-urls = {Documentation = "https://yura52.github.io/zero", Code = "https://github.com/Yura52/zero"}
 dynamic = ["version", "description"]
+keywords = [
+    "artificial intelligence", "deep learning", "library", "python", "pytorch", "torch"
+]
+license = {file = "LICENSE"}
+name = "delu"
+requires-python = ">=3.7"
+urls = {Documentation = "https://yura52.github.io/delu", Code = "https://github.com/Yura52/delu"}
+
+[tool.black]
+skip_string_normalization = true
+
+[tool.coverage.run]
+branch = true
+omit = "delu/tests/*"
+source = "delu"
 
 [tool.flit.module]
-name = "zero"
+name = "delu"
 
 [tool.flit.sdist]
 exclude = ["other"]
 
-[tool.black]
-skip_string_normalization = true
+[tool.isort]
+combine_as_imports = true
+# all the following settings are taken from the isort5.0's "black" profile
+ensure_newline_before_comments = true
+force_grid_wrap = 0
+include_trailing_comma = true
+line_length = 88
+multi_line_output = 3
+use_parentheses = true
+
+[tool.mypy]
+check_untyped_defs = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "delu.*.tests.*"
+ignore_errors = true
