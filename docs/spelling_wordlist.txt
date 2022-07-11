@@ -8,6 +8,7 @@ cuDNN
 dataloader
 Dataset
 dataset
+DataLoader
 DeLU
 delu
 deterministically
@@ -31,3 +32,4 @@ reproducibility
 setstate
 subfolders
 testcode
+utils

@@ -120,7 +120,7 @@ def test_iter_batches_bad_input():
         zd.iter_batches((), 1)
     with raises(AssertionError):
         zd.iter_batches({}, 1)
-    with raises(AssertionError):
+    with raises(ValueError):
         zd.iter_batches(torch.empty(0), 1)
 
 

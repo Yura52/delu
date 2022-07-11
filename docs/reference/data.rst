@@ -15,3 +15,9 @@ delu.data
     Enumerate
     FnDataset
     IndexLoader
+
+.. autosummary::
+    :nosignatures:
+    :toctree: api
+
+    make_index_dataloader
