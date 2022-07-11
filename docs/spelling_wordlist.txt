@@ -17,6 +17,7 @@ FnDataset
 getitem
 getstate
 gpus
+IndexDataset
 IndexLoader
 init
 iter

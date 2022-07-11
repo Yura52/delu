@@ -232,43 +232,33 @@ class FnDataset(Dataset):
         return x if self._transform is None else self._transform(x)
 
 
-class _IndexDataset(Dataset):
-    _size: Optional[int]
+class IndexDataset(Dataset):
+    """The dataset used by `make_index_dataloader`."""
 
-    def __init__(self, size: int, device: Union[None, int, str, torch.device]) -> None:
-        if device is None:
-            self._indices = None
-            self._size = size
-        else:
-            self._indices = torch.arange(size, device=torch.device(device))
-            self._size = None
+    def __init__(self, size: int) -> None:
+        if size < 1:
+            raise ValueError('size must be positive')
+        self.size = size
 
     def __len__(self) -> int:
-        if self._indices is None:
-            assert self._size is not None
-            return self._size
-        else:
-            return len(self._indices)
+        return self.size
 
-    def __getitem__(self, i: int) -> Union[int, torch.Tensor]:
-        return i if self._indices is None else self._indices[i]
+    def __getitem__(self, i: int) -> int:
+        if i >= self.size:
+            raise IndexError(
+                f"index {i} is out of range (dataset's size is {self.size})"
+            )
+        return i
 
 
-def make_index_dataloader(
-    size: int, *args, device: Union[None, int, str, torch.device] = None, **kwargs
-) -> DataLoader:
-    """Make `~torch.utils.data.DataLoader` over index batches instead of data batches.
+def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
+    """Make `~torch.utils.data.DataLoader` over indices instead of data.
 
-    **The shuffling logic is delegated to the native PyTorch DataLoader**, i.e. no
-    custom logic is performed under the hood.
+    This is just a shortcut for ``torch.utils.data.DataLoader(delu.data.IndexDataset(...), ...)``.
 
     Args:
         size: the dataset size
         *args: positional arguments for `torch.utils.data.DataLoader`
-        device: if not `None`, then the indices are materialized and moved to the
-            device. It can be useful when the indices are applied to non-CPU data
-            (e.g. CUDA-tensors) and moving data between devices takes non-negligible
-            time (which can happen in the case of simple and fast models like MLPs).
         **kwargs: keyword arguments for `torch.utils.data.DataLoader`
     Raises:
         ValueError: for invalid inputs
@@ -315,13 +305,11 @@ def make_index_dataloader(
     See also:
         `delu.iter_batches`
     """
-    if size <= 0:
-        raise ValueError('size must be positive')
-    return DataLoader(_IndexDataset(size, device), *args, **kwargs)
+    return DataLoader(IndexDataset(size), *args, **kwargs)
 
 
 class IndexLoader:
-    """**[DEPRECATED, use `make_index_dataloader`]** Like `~torch.utils.data.DataLoader`, but over indices instead of data.
+    """**DEPRECATED, use** `make_index_dataloader` **]** Like `~torch.utils.data.DataLoader`, but over indices instead of data.
 
     Warning:
         This class is deprecated. Use `make_index_dataloader` instead.
@@ -390,7 +378,7 @@ class IndexLoader:
         """
         assert size > 0
         self._batch_size = args[0] if args else kwargs.get('batch_size', 1)
-        self._loader = DataLoader(_IndexDataset(size, None), *args, **kwargs)
+        self._loader = DataLoader(IndexDataset(size), *args, **kwargs)
         if isinstance(device, (int, str)):
             device = torch.device(device)
         self._device = device

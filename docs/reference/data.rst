@@ -14,10 +14,17 @@ delu.data
 
     Enumerate
     FnDataset
-    IndexLoader
+    IndexDataset
 
 .. autosummary::
     :nosignatures:
     :toctree: api
 
     make_index_dataloader
+
+.. autosummary::
+    :nosignatures:
+    :toctree: api
+    :template: class.rst
+
+    IndexLoader
