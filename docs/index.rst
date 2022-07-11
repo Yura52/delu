@@ -1,5 +1,5 @@
-DeLU
-====
+DeLU (Deep Learning Utilities)
+==============================
 
 .. raw:: html
 
