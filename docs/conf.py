@@ -1,4 +1,5 @@
 import datetime
+import platform
 import sys
 from pathlib import Path
 
@@ -30,10 +31,12 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
-    'sphinxcontrib.spelling',
     'sphinx_copybutton',
     # 'sphinx_rtd_theme',
 ]
+if platform.machine() != 'arm64':
+    # libenchant is not available for Apple CPUs
+    extensions.append('sphinxcontrib.spelling')
 
 autodoc_member_order = 'bysource'
 autodoc_typehints = 'description'

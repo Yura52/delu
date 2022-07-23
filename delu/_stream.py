@@ -201,7 +201,7 @@ class Stream:
     def epoch(self) -> int:
         """Current epoch.
 
-        Technically, the number of "succeeded" `Stream.increment_epoch` calls.
+        Technically, the number of `Stream.increment_epoch` calls.
         """
         return self._epoch
 
