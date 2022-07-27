@@ -309,7 +309,7 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
 
 
 class IndexLoader:
-    """**DEPRECATED, use** `make_index_dataloader` **]** Like `~torch.utils.data.DataLoader`, but over indices instead of data.
+    """**[DEPRECATED, use** `make_index_dataloader` **]** Like `~torch.utils.data.DataLoader`, but over indices instead of data.
 
     Warning:
         This class is deprecated. Use `make_index_dataloader` instead.

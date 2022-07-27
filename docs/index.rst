@@ -26,6 +26,13 @@ DeLU (Deep Learning Utilities)
 .. include:: ../README.rst
    :start-after: __INCLUDE_1__
 
+.. the following toctree is needed for themes without the version dropdown
+
+.. .. toctree::
+..    :hidden:
+
+..    version
+
 .. toctree::
    :caption: NOTES
    :hidden:

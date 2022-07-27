@@ -3,27 +3,27 @@ import platform
 import sys
 from pathlib import Path
 
-# Add the repository root to PYTHONPATH
+# add the repository root to PYTHONPATH
 delu_path = Path.cwd()
 while not (delu_path.name == 'delu' and delu_path.parent.name != 'delu'):
     delu_path = delu_path.parent
 sys.path.append(str(delu_path))
 import delu  # noqa
 
-# >>> Project information <<<
+# >>> project >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 author = 'Yura52'
 copyright = '{}, {}'.format(datetime.datetime.now().year, author)
 project = 'DeLU'
 release = delu.__version__
 version = delu.__version__
 
-# >>> General options <<<
+# >>> general >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 default_role = 'py:obj'
 pygments_style = 'default'
 repo_url = 'https://github.com/Yura52/delu'
 templates_path = ['_templates']
 
-# >>> Extensions options <<<
+# >>> extensions >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
@@ -32,7 +32,6 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'sphinx_copybutton',
-    # 'sphinx_rtd_theme',
 ]
 if platform.machine() != 'arm64':
     # libenchant is not available for Apple CPUs
@@ -62,10 +61,11 @@ napoleon_use_admonition_for_examples = False
 
 spelling_show_suggestions = True
 
-# >>> HTML and theme options <<<
+# >>> HTML >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 html_static_path = ['_static']
 html_favicon = 'images/favicon.ico'
 
+# >>> Material Sphinx >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # This theme concatenates autosummary tables nicely and supports versioning.
 import sphinx_material  # noqa
 
@@ -95,6 +95,8 @@ html_sidebars = {
     '**': ['logo-text.html', 'globaltoc.html', 'searchbox.html'],
 }
 
+# >>> Read the Docs >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# extensions.append('sphinx_rtd_theme')
 # html_theme = 'sphinx_rtd_theme'
 # html_css_files = ['rtd_theme.css']
 # html_logo = 'images/logo_120x120.svg'
@@ -105,4 +107,27 @@ html_sidebars = {
 #     'display_version': False,
 #     'prev_next_buttons_location': None,
 #     'style_external_links': True,
+# }
+
+# >>> Furo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# NOTE
+# - uncomment the "version" toctree in index.rst
+# - rename "docs/version.rst.backup" to "docs/version.rst"
+# extensions.append('sphinx_remove_toctrees')
+# remove_from_toctrees = ['reference/api/*']
+
+# html_title = project
+# html_css_files = ['furo.css']
+# html_logo = 'images/logo_120x120.svg'
+# html_theme = 'furo'
+# html_theme_options = {
+#     'sidebar_hide_name': True,
+#     'source_repository': 'https://github.com/Yura52/delu/',
+#     'source_branch': 'main',
+#     'source_directory': 'docs/',
+#     'light_css_variables': {
+#         'admonition-title-font-size': '90.5%',
+#         'admonition-font-size': '90.5%',
+#         'code-font-size': 'var(--font-size--small)',
+#     },
 # }
