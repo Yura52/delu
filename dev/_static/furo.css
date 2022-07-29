@@ -1,0 +1,8 @@
+.longtable {
+    width: 100%;
+}
+
+.longtable tr td:first-child {
+    width: 35%;
+    white-space: nowrap;
+}

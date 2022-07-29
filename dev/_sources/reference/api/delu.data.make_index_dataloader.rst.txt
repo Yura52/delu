@@ -1,0 +1,6 @@
+﻿delu.data.make\_index\_dataloader
+=================================
+
+.. currentmodule:: delu.data
+
+.. autofunction:: make_index_dataloader

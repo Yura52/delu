@@ -7,7 +7,7 @@ delu
 
 .. automodule:: delu
 
-.. rubric:: Data and Tensors
+.. rubric:: Data
 
 .. autosummary::
    :nosignatures:
@@ -15,6 +15,18 @@ delu
    :template: class.rst
 
    Stream
+
+.. rubric:: Monitoring
+
+.. autosummary::
+   :nosignatures:
+   :toctree: api
+   :template: class.rst
+
+   ProgressTracker
+   Timer
+
+.. rubric:: Tensor operations
 
 .. autosummary::
    :nosignatures:
@@ -29,10 +41,8 @@ delu
 .. autosummary::
    :nosignatures:
    :toctree: api
-   :template: class.rst
 
-   ProgressTracker
-   Timer
+   improve_reproducibility
 
 .. autosummary::
    :nosignatures:
@@ -40,12 +50,6 @@ delu
    :template: class_just_autoclass.rst
 
    evaluation
-
-.. autosummary::
-   :nosignatures:
-   :toctree: api
-
-   improve_reproducibility
 
 .. rubric:: Submodules
 
