@@ -22,7 +22,7 @@ Overview
 --------
 
 - `Website <https://yura52.github.io/delu>`_
-- :ref:`Learn DeLU<learn>`
+- `Learn DeLU <https://yura52.github.io/delu/stable/learn>`_
 - `Classification task example (MNIST) <https://github.com/Yura52/delu/blob/main/examples/mnist.py>`_
 - `Code <https://github.com/Yura52/delu>`_
 
