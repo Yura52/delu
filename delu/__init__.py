@@ -1,5 +1,5 @@
 """Deep Learning Utilities for PyTorch users."""
-__version__ = '0.0.13.dev0'
+__version__ = '0.0.13'
 
 from . import data  # noqa
 from . import hardware  # noqa
