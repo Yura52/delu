@@ -1,0 +1,6 @@
+﻿delu.collate
+============
+
+.. currentmodule:: delu
+
+.. autofunction:: collate

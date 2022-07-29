@@ -1,0 +1,6 @@
+delu.ProgressTracker.update
+===========================
+
+.. currentmodule:: delu
+
+.. automethod:: ProgressTracker.update

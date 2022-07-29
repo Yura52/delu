@@ -1,0 +1,8 @@
+﻿delu.nn.Lambda
+==============
+
+.. currentmodule:: delu.nn
+
+.. autoclass:: Lambda
+    :special-members: __init__
+    :members:

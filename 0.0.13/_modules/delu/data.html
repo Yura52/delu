@@ -1,0 +1,981 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
+
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.2.0, furo 2022.06.21"/>
+        <title>delu.data - DeLU</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/furo.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --admonition-title-font-size: 90.5%;
+  --admonition-font-size: 90.5%;
+  --code-font-size: var(--font-size--small);
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">DeLU</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/logo_120x120.svg" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../version.html">v0.0.13 ▼</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">NOTES</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../learn.html">Learn</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/delu.html">delu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/data.html">delu.data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/hardware.html">delu.hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/nn.html">delu.nn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/random.html">delu.random</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <h1>Source code for delu.data</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Missing batteries from `torch.utils.data`.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">Iterator</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+    <span class="n">TypeVar</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">TensorDataset</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Enumerate"><a class="viewcode-back" href="../../reference/api/delu.data.Enumerate.html#delu.data.Enumerate">[docs]</a><span class="k">class</span> <span class="nc">Enumerate</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make dataset return both indices and items.</span>
+
+<span class="sd">    .. rubric:: Tutorial</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        from torch.utils.data import DataLoader, TensorDataset</span>
+<span class="sd">        X, y = torch.randn(9, 2), torch.randn(9)</span>
+<span class="sd">        dataset = TensorDataset(X, y)</span>
+<span class="sd">        for batch_idx, batch in DataLoader(Enumerate(dataset), batch_size=3):</span>
+<span class="sd">            print(batch_idx)</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        tensor([0, 1, 2])</span>
+<span class="sd">        tensor([3, 4, 5])</span>
+<span class="sd">        tensor([6, 7, 8])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Enumerate.__init__"><a class="viewcode-back" href="../../reference/api/api/delu.data.Enumerate.__init__.html#delu.data.Enumerate.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Initialize self.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dataset</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span> <span class="o">=</span> <span class="n">dataset</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dataset</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Access the underlying dataset.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span>
+
+<div class="viewcode-block" id="Enumerate.__len__"><a class="viewcode-back" href="../../reference/api/api/delu.data.Enumerate.__len__.html#delu.data.Enumerate.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the length of the underlying dataset.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="p">)</span>  <span class="c1"># type: ignore</span></div>
+
+<div class="viewcode-block" id="Enumerate.__getitem__"><a class="viewcode-back" href="../../reference/api/api/delu.data.Enumerate.__getitem__.html#delu.data.Enumerate.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Return index and the corresponding item from the underlying dataset.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            (index, item)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="FnDataset"><a class="viewcode-back" href="../../reference/api/delu.data.FnDataset.html#delu.data.FnDataset">[docs]</a><span class="k">class</span> <span class="nc">FnDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A thin wrapper around a loader function and its arguments.</span>
+
+<span class="sd">    `FnDataset` allows to avoid implementing Dataset-classes (well, at least in simple</span>
+<span class="sd">    cases). Below you can find the full tutorial and typical use cases, but here is a</span>
+<span class="sd">    quick example:</span>
+
+<span class="sd">    Without `FnDataset`::</span>
+
+<span class="sd">        class ImagesList(Dataset):</span>
+<span class="sd">            def __init__(self, filenames, transform):</span>
+<span class="sd">                self.filenames = filenames</span>
+<span class="sd">                self.transform = transform</span>
+
+<span class="sd">            def __len__(self):</span>
+<span class="sd">                return len(self.filenames)</span>
+
+<span class="sd">            def __getitem__(self, index):</span>
+<span class="sd">                return self.transform(Image.open(self.filenames[index]))</span>
+
+<span class="sd">        dataset = ImagesList(filenames, transform)</span>
+
+<span class="sd">    With `FnDataset`::</span>
+
+<span class="sd">        dataset = FnDataset(Image.open, filenames, transform)</span>
+
+<span class="sd">    .. rubric:: Tutorial</span>
+
+<span class="sd">    With vanilla PyTorch, in order to create a dataset you have to inherit from</span>
+<span class="sd">    `torch.utils.data.Dataset` and implement three methods:</span>
+
+<span class="sd">    - :code:`__init__`</span>
+<span class="sd">    - :code:`__len__`</span>
+<span class="sd">    - :code:`__getitem__`</span>
+
+<span class="sd">    With `FnDataset` the only thing you *may need* to implement is the :code:`fn`</span>
+<span class="sd">    argument that will power :code:`__getitem__`. The easiest way to learn</span>
+<span class="sd">    `FnDataset` is to go through examples below.</span>
+
+<span class="sd">    A list of images::</span>
+
+<span class="sd">        dataset = FnDataset(Image.open, filenames)</span>
+<span class="sd">        # dataset[i] returns Image.open(filenames[i])</span>
+
+<span class="sd">    A list of images that are cached after the first load::</span>
+
+<span class="sd">        from functools import lru_cache</span>
+<span class="sd">        dataset = FnDataset(lru_cache(None)(Image.open), filenames)</span>
+
+<span class="sd">    `pathlib.Path` is very useful when you want to create a dataset that reads from</span>
+<span class="sd">    files. For example::</span>
+
+<span class="sd">        images_dir = Path(...)</span>
+<span class="sd">        dataset = FnDataset(Image.open, images_dir.iterdir())</span>
+
+<span class="sd">    If there are many files, but you need only those with specific extensions, use</span>
+<span class="sd">    `pathlib.Path.glob`::</span>
+
+<span class="sd">        dataset = FnDataset(Image.open, images_dir.glob(*.png))</span>
+
+<span class="sd">    If there are many files in many subfolders, but you need only those with specific</span>
+<span class="sd">    extensions and that satisfy some condition, use `pathlib.Path.rglob`::</span>
+
+<span class="sd">        dataset = FnDataset(</span>
+<span class="sd">            Image.open, (x for x in images_dir.rglob(*.png) if condition(x))</span>
+<span class="sd">        )</span>
+
+<span class="sd">    A segmentation dataset::</span>
+
+<span class="sd">        image_filenames = ...</span>
+<span class="sd">        gt_filenames = ...</span>
+
+<span class="sd">        def get(i):</span>
+<span class="sd">            return Image.open(image_filenames[i]), Image.open(gt_filenames[i])</span>
+
+<span class="sd">        dataset = FnDataset(get, len(image_filenames))</span>
+
+<span class="sd">    A dummy dataset that demonstrates that `FnDataset` is a very general thing:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        def f(x):</span>
+<span class="sd">            return x * 10</span>
+
+<span class="sd">        def g(x):</span>
+<span class="sd">            return x * 2</span>
+
+<span class="sd">        dataset = FnDataset(f, 3, g)</span>
+<span class="sd">        # dataset[i] returns g(f(i))</span>
+<span class="sd">        assert len(dataset) == 3</span>
+<span class="sd">        assert dataset[0] == 0</span>
+<span class="sd">        assert dataset[1] == 20</span>
+<span class="sd">        assert dataset[2] == 40</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FnDataset.__init__"><a class="viewcode-back" href="../../reference/api/api/delu.data.FnDataset.__init__.html#delu.data.FnDataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">T</span><span class="p">],</span>
+        <span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">],</span>
+        <span class="n">transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Initialize self.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fn: the function that produces values based on arguments from :code:`args`</span>
+<span class="sd">            args: arguments for :code:`fn`. If an iterable, but not a list, then is</span>
+<span class="sd">                casted to a list. If an integer, then the behavior is the same as for</span>
+<span class="sd">                :code:`list(range(args))`. The size of :code:`args` defines the return</span>
+<span class="sd">                value for `FnDataset.__len__`.</span>
+<span class="sd">            transform: if presented, is applied to the return value of `fn` in</span>
+<span class="sd">                `FnDataset.__getitem__`</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            .. code-block::</span>
+
+<span class="sd">                import PIL.Image as Image</span>
+<span class="sd">                import torchvision.transforms as T</span>
+
+<span class="sd">                dataset = FnDataset(Image.open, filenames, T.ToTensor())</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fn</span> <span class="o">=</span> <span class="n">fn</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span> <span class="o">=</span> <span class="n">transform</span></div>
+
+<div class="viewcode-block" id="FnDataset.__len__"><a class="viewcode-back" href="../../reference/api/api/delu.data.FnDataset.__len__.html#delu.data.FnDataset.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the dataset size.</span>
+
+<span class="sd">        See `FnDataset` for details.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            size</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span></div>
+
+<div class="viewcode-block" id="FnDataset.__getitem__"><a class="viewcode-back" href="../../reference/api/api/delu.data.FnDataset.__getitem__.html#delu.data.FnDataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get value by index.</span>
+
+<span class="sd">        See `FnDataset` for details.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            value</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            IndexError: if :code:`index &gt;= len(self)`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Index </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s1"> is out of range&#39;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="IndexDataset"><a class="viewcode-back" href="../../reference/api/delu.data.IndexDataset.html#delu.data.IndexDataset">[docs]</a><span class="k">class</span> <span class="nc">IndexDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The dataset used by `make_index_dataloader`.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IndexDataset.__init__"><a class="viewcode-back" href="../../reference/api/api/delu.data.IndexDataset.__init__.html#delu.data.IndexDataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;size must be positive&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span></div>
+
+<div class="viewcode-block" id="IndexDataset.__len__"><a class="viewcode-back" href="../../reference/api/api/delu.data.IndexDataset.__len__.html#delu.data.IndexDataset.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span></div>
+
+<div class="viewcode-block" id="IndexDataset.__getitem__"><a class="viewcode-back" href="../../reference/api/api/delu.data.IndexDataset.__getitem__.html#delu.data.IndexDataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;index </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> is out of range (dataset&#39;s size is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">i</span></div></div>
+
+
+<div class="viewcode-block" id="make_index_dataloader"><a class="viewcode-back" href="../../reference/api/delu.data.make_index_dataloader.html#delu.data.make_index_dataloader">[docs]</a><span class="k">def</span> <span class="nf">make_index_dataloader</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Make `~torch.utils.data.DataLoader` over indices instead of data.</span>
+
+<span class="sd">    This is just a shortcut for ``torch.utils.data.DataLoader(delu.data.IndexDataset(...), ...)``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        size: the dataset size</span>
+<span class="sd">        *args: positional arguments for `torch.utils.data.DataLoader`</span>
+<span class="sd">        **kwargs: keyword arguments for `torch.utils.data.DataLoader`</span>
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: for invalid inputs</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        Usage for training:</span>
+
+<span class="sd">        .. code-block::</span>
+
+<span class="sd">            train_loader = make_index_dataloader(len(train_dataset), batch_size, shuffle=True)</span>
+<span class="sd">            for epoch in epochs:</span>
+<span class="sd">                for i_batch in train_loader:</span>
+<span class="sd">                    x_batch = X[i_batch]</span>
+<span class="sd">                    y_batch = Y[i_batch]</span>
+<span class="sd">                    ...</span>
+
+<span class="sd">        Other examples:</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            dataset_size = 10  # len(dataset)</span>
+<span class="sd">            for batch_idx in make_index_dataloader(dataset_size, batch_size=3):</span>
+<span class="sd">                print(batch_idx)</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            tensor([0, 1, 2])</span>
+<span class="sd">            tensor([3, 4, 5])</span>
+<span class="sd">            tensor([6, 7, 8])</span>
+<span class="sd">            tensor([9])</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            dataset_size = 10  # len(dataset)</span>
+<span class="sd">            for batch_idx in make_index_dataloader(dataset_size, 3, drop_last=True):</span>
+<span class="sd">                print(batch_idx)</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            tensor([0, 1, 2])</span>
+<span class="sd">            tensor([3, 4, 5])</span>
+<span class="sd">            tensor([6, 7, 8])</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        `delu.iter_batches`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">IndexDataset</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="IndexLoader"><a class="viewcode-back" href="../../reference/api/delu.data.IndexLoader.html#delu.data.IndexLoader">[docs]</a><span class="k">class</span> <span class="nc">IndexLoader</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;**[DEPRECATED, use** `make_index_dataloader` **]** Like `~torch.utils.data.DataLoader`, but over indices instead of data.</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        This class is deprecated. Use `make_index_dataloader` instead.</span>
+
+<span class="sd">    **The shuffling logic is delegated to the native PyTorch DataLoader**, i.e. no</span>
+<span class="sd">    custom logic is performed under the hood. The data loader which actually generates</span>
+<span class="sd">    indices is available as `IndexLoader.loader`.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        Usage for training:</span>
+
+<span class="sd">        .. code-block::</span>
+
+<span class="sd">            train_loader = IndexLoader(len(train_dataset), batch_size, shuffle=True)</span>
+<span class="sd">            for epoch in epochs:</span>
+<span class="sd">                for batch_idx in train_loader:</span>
+<span class="sd">                    ...</span>
+
+<span class="sd">        Other examples:</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            dataset_size = 10  # len(dataset)</span>
+<span class="sd">            for batch_idx in IndexLoader(dataset_size, batch_size=3):</span>
+<span class="sd">                print(batch_idx)</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            tensor([0, 1, 2])</span>
+<span class="sd">            tensor([3, 4, 5])</span>
+<span class="sd">            tensor([6, 7, 8])</span>
+<span class="sd">            tensor([9])</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            dataset_size = 10  # len(dataset)</span>
+<span class="sd">            for batch_idx in IndexLoader(dataset_size, 3, drop_last=True):</span>
+<span class="sd">                print(batch_idx)</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            tensor([0, 1, 2])</span>
+<span class="sd">            tensor([3, 4, 5])</span>
+<span class="sd">            tensor([6, 7, 8])</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        `delu.iter_batches`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IndexLoader.__init__"><a class="viewcode-back" href="../../reference/api/api/delu.data.IndexLoader.__init__.html#delu.data.IndexLoader.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Initialize self.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            size: the number of items (for example, :code:`len(dataset)`)</span>
+<span class="sd">            *args: positional arguments for `torch.utils.data.DataLoader`</span>
+<span class="sd">            device: if not CPU, then all indices are materialized and moved to the</span>
+<span class="sd">                device at the beginning of every loop. It can be useful when the indices</span>
+<span class="sd">                are applied to non-CPU data (e.g. CUDA-tensors) and moving data between</span>
+<span class="sd">                devices takes non-negligible time (which can happen in the case of</span>
+<span class="sd">                simple and fast models like MLPs).</span>
+<span class="sd">            **kwargs: keyword arguments for `torch.utils.data.DataLoader`</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: if size is not positive</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">args</span> <span class="k">else</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;batch_size&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">IndexDataset</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+            <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device</span> <span class="o">=</span> <span class="n">device</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">loader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The underlying DataLoader.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span>
+
+<div class="viewcode-block" id="IndexLoader.__len__"><a class="viewcode-back" href="../../reference/api/api/delu.data.IndexLoader.__len__.html#delu.data.IndexLoader.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the size of the underlying DataLoader.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IndexLoader.__iter__"><a class="viewcode-back" href="../../reference/api/api/delu.data.IndexLoader.__iter__.html#delu.data.IndexLoader.__iter__">[docs]</a>    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;cpu&#39;</span>
+            <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_device</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="p">)</span>
+        <span class="p">)</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_is_namedtuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
+        <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;_make&#39;</span><span class="p">,</span> <span class="s1">&#39;_asdict&#39;</span><span class="p">,</span> <span class="s1">&#39;_replace&#39;</span><span class="p">,</span> <span class="s1">&#39;_fields&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="iter_batches"><a class="viewcode-back" href="../../reference/api/delu.iter_batches.html#delu.data.iter_batches">[docs]</a><span class="k">def</span> <span class="nf">iter_batches</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+        <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
+        <span class="n">TensorDataset</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;*Efficiently* iterate over data (tensor, tuple of tensors, dict of tensors etc.)</span>
+<span class="sd">    in a batchwise manner.</span>
+
+<span class="sd">    The function is useful when you want to *efficiently* iterate **once** over</span>
+<span class="sd">    tensor-based data in a batchwise manner. See examples below for typical use cases.</span>
+
+<span class="sd">    The function is a more efficient alternative to `torch.utils.data.DataLoader` when</span>
+<span class="sd">    it comes to in-memory data, because it uses batch-based indexing instead of</span>
+<span class="sd">    item-based indexing (DataLoader&#39;s behavior). **The shuffling logic is delegated to</span>
+<span class="sd">    the native PyTorch DataLoader**, i.e. no custom logic is performed under the hood.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data:</span>
+<span class="sd">        *args: positional arguments for `IndexLoader`</span>
+<span class="sd">        **kwargs: keyword arguments for `IndexLoader`</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Iterator over batches.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        If you want to infinitely iterate over batches, wrap the function in</span>
+<span class="sd">        :code:`while True:`.</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        Numpy-arrays are not supported because of how they behave when indexed by a</span>
+<span class="sd">        torch tensor of the size 1. For details, see</span>
+<span class="sd">        `the issue &lt;https://github.com/numpy/numpy/issues/16543&gt;`_</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        - `delu.data.IndexLoader`</span>
+<span class="sd">        - `concat`</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        Besides loops over batches, the function can be used in combination with</span>
+<span class="sd">        `concat`:</span>
+
+<span class="sd">        .. code-block::</span>
+
+<span class="sd">            result = concat(map(fn, iter_batches(dataset_or_tensors_or_whatever, ...)))</span>
+
+<span class="sd">        The function can also be used for training:</span>
+
+<span class="sd">        .. code-block::</span>
+
+<span class="sd">            for epoch in epochs:</span>
+<span class="sd">                for batch in iter_batches(data, batch_size, shuffle=True)):</span>
+<span class="sd">                    ...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># mypy understands very little about this function</span>
+    <span class="k">if</span> <span class="n">_is_namedtuple</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">data</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span>  <span class="c1"># type: ignore # noqa</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># type: ignore # noqa</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">data</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)(</span><span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span>  <span class="c1"># type: ignore # noqa</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># type: ignore # noqa</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">data</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>  <span class="c1"># type: ignore # noqa</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>  <span class="c1"># type: ignore # noqa</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="fm">__getitem__</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># type: ignore # noqa</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">make_index_dataloader</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="concat"><a class="viewcode-back" href="../../reference/api/delu.concat.html#delu.data.concat">[docs]</a><span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Concatenate items (tensors, numpy-arrays, tuples, dicts etc.) along the first</span>
+<span class="sd">    dimension.</span>
+
+<span class="sd">    `concat` is a more general version of :code:`torch.cat(..., dim=0)`. It works not</span>
+<span class="sd">    only with sequences of tensors, but also with sequences of containers (tuples,</span>
+<span class="sd">    dicts etc.) of different types of data (tensors, numpy-arrays, primitive types). See</span>
+<span class="sd">    the tutorial and the examples below to understand what the function does.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        iterable: items **of the same structure** (for example, &quot;an iterable of tensors&quot;</span>
+<span class="sd">            OR &quot;an iterable of tuples of tensors where all the tuples are of the same</span>
+<span class="sd">            length&quot; OR &quot;an iterable of dicts of tensors and numpy-arrays where all the</span>
+<span class="sd">            dicts have the same keys&quot; etc.)</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Concatenated items of the iterable.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The concatenation algorithm is fully determined by the first item of the</span>
+<span class="sd">        iterable. If there are items of different structure, then the function is</span>
+<span class="sd">        likely to fail or produce incorrect results, hence the requirement of the</span>
+<span class="sd">        same structure for all items of the iterable.</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        The function starts with conversion of the iterable to a list. Make sure that</span>
+<span class="sd">        you have enough memory for such operation, otherwise, memory limit may be</span>
+<span class="sd">        exceeded. Note that in most cases manual implementation would involve the same</span>
+<span class="sd">        conversion, just keep this in mind when using the function.</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        `iter_batches`</span>
+
+<span class="sd">    .. rubric:: Tutorial</span>
+
+<span class="sd">    For usage examples, scroll further.</span>
+
+<span class="sd">    If you have an iterable that contains/produces batches of some kind (tensors,</span>
+<span class="sd">    numpy-arrays, tuples/dictionaries thereof and other not-too-specific content), then</span>
+<span class="sd">    use `concat` to concatenate all the items. A prominent case is application of models</span>
+<span class="sd">    and functions to batches (e.g. to :code:`DataLoader`)::</span>
+
+<span class="sd">        whole_result = concat(map(model_or_fn, batches))</span>
+<span class="sd">        # or</span>
+<span class="sd">        whole_result = concat(expression(x) for x in batches)</span>
+
+<span class="sd">    For example::</span>
+
+<span class="sd">        dataset = ...  # PyTorch dataset</span>
+<span class="sd">        loader = DataLoader(dataset, batch_size)</span>
+
+<span class="sd">        def step(batch):</span>
+<span class="sd">            X, y = batch</span>
+<span class="sd">            return model(X), y</span>
+
+<span class="sd">        y_pred, y = concat(map(step, loader))</span>
+<span class="sd">        assert len(y_pred) == len(dataset) and len(y) == len(dataset)</span>
+
+<span class="sd">        # or</span>
+<span class="sd">        def step(batch):</span>
+<span class="sd">            X, y = batch</span>
+<span class="sd">            return {&#39;y_pred&#39;: model(X), &#39;y&#39;: y}</span>
+
+<span class="sd">        result = concat(map(step, loader))  # no changes</span>
+<span class="sd">        assert result[&#39;y_pred&#39;] == len(dataset) and len(result[&#39;y&#39;]) == len(dataset)</span>
+
+<span class="sd">    The function can be used in combination with `iter_batches`. For example, this is</span>
+<span class="sd">    how pairwise dot products can be calculated in a batchwise manner if full matrix</span>
+<span class="sd">    multiplication does not fit into memory:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        n_objects = 100</span>
+<span class="sd">        n_features = 16</span>
+<span class="sd">        batch_size = 20</span>
+<span class="sd">        data = torch.randn(n_objects, n_features)</span>
+<span class="sd">        result = concat(</span>
+<span class="sd">            batch.matmul(data.T).to(&#39;cpu&#39;) for batch in iter_batches(data, batch_size)</span>
+<span class="sd">        )</span>
+<span class="sd">        assert result.shape == (n_objects, n_objects)</span>
+
+<span class="sd">    Or even like this:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        n_objects = 100</span>
+<span class="sd">        n_features = 16</span>
+<span class="sd">        batch_size = 20</span>
+<span class="sd">        data = torch.randn(n_objects, n_features)</span>
+<span class="sd">        result = concat(</span>
+<span class="sd">            concat(b.matmul(a.T).to(&#39;cpu&#39;) for b in iter_batches(data, batch_size)).T</span>
+<span class="sd">            for a in iter_batches(data, batch_size)</span>
+<span class="sd">        )</span>
+<span class="sd">        assert result.shape == (n_objects, n_objects)</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        How to read the examples:</span>
+
+<span class="sd">        - the mental model for understanding the following examples is &quot;concatenating</span>
+<span class="sd">          data for 3 batches of sizes (2, 2, 3)&quot;. Note that sizes of batches are</span>
+<span class="sd">          allowed to vary, but the structure is always the same</span>
+<span class="sd">        - in all examples there is :code:`data` - a list of batches; in fact, it can be</span>
+<span class="sd">          any &quot;iterable of batches&quot;, including iterators and generators; the list is</span>
+<span class="sd">          chosen to simplify the demonstration</span>
+
+<span class="sd">        1-D example:</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            result = concat([</span>
+<span class="sd">                torch.tensor([0, 1]), torch.tensor([2, 3]), torch.tensor([4, 5, 6])</span>
+<span class="sd">            ])</span>
+<span class="sd">            assert torch.equal(result, torch.tensor([0, 1, 2, 3, 4, 5, 6]))</span>
+
+<span class="sd">        2-D example:</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            result = concat([</span>
+<span class="sd">                torch.tensor([</span>
+<span class="sd">                    [0, 0],</span>
+<span class="sd">                    [1, 1]</span>
+<span class="sd">                ]),</span>
+<span class="sd">                torch.tensor([</span>
+<span class="sd">                    [2, 2],</span>
+<span class="sd">                    [3, 3]</span>
+<span class="sd">                ]),</span>
+<span class="sd">                torch.tensor([</span>
+<span class="sd">                    [4, 4],</span>
+<span class="sd">                    [5, 5],</span>
+<span class="sd">                    [6, 6],</span>
+<span class="sd">                ]),</span>
+<span class="sd">            ])</span>
+<span class="sd">            assert torch.equal(</span>
+<span class="sd">                result,</span>
+<span class="sd">                torch.tensor([</span>
+<span class="sd">                    [0, 0],</span>
+<span class="sd">                    [1, 1],</span>
+<span class="sd">                    [2, 2],</span>
+<span class="sd">                    [3, 3],</span>
+<span class="sd">                    [4, 4],</span>
+<span class="sd">                    [5, 5],</span>
+<span class="sd">                    [6, 6]</span>
+<span class="sd">                ])</span>
+<span class="sd">            )</span>
+
+<span class="sd">        N-D example: &lt;the same&gt;.</span>
+
+<span class="sd">        The following examples demonstrate support for different kinds of input data;</span>
+<span class="sd">        data is 1-D everywhere just for simplicity (i.e. dimensions can be arbitrary).</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            array = np.array</span>
+<span class="sd">            tensor = torch.tensor</span>
+<span class="sd">            l = [0, 1, 2, 3, 4, 5, 6]</span>
+<span class="sd">            a = array([0, 1, 2, 3, 4, 5, 6])</span>
+<span class="sd">            t = tensor([0, 1, 2, 3, 4, 5, 6])</span>
+
+<span class="sd">            data = [[0, 1], [2, 3], [4, 5, 6]]</span>
+<span class="sd">            assert concat(data) == l</span>
+
+<span class="sd">            data = [array([0, 1]), array([2, 3]), array([4, 5, 6])]</span>
+<span class="sd">            assert np.array_equal(concat(data), a)</span>
+
+<span class="sd">            data = [tensor([0, 1]), tensor([2, 3]), tensor([4, 5, 6])]</span>
+<span class="sd">            assert torch.equal(concat(data), t)</span>
+
+<span class="sd">            # If items are not lists, arrays nor tensors, the data is returned in a form</span>
+<span class="sd">            # of a list. It makes sense since the list of such items is already</span>
+<span class="sd">            # a result for all batches.</span>
+<span class="sd">            data = [&#39;three batches, hence three items&#39;, 0, 1.0]</span>
+<span class="sd">            assert concat(data) == data</span>
+
+<span class="sd">            data = [</span>
+<span class="sd">                ([0, 1], array([0, 1]), tensor([0, 1])),</span>
+<span class="sd">                ([2, 3], array([2, 3]), tensor([2, 3])),</span>
+<span class="sd">                ([4, 5, 6], array([4, 5, 6]), tensor([4, 5, 6])),</span>
+<span class="sd">            ]</span>
+<span class="sd">            result = concat(data)</span>
+<span class="sd">            assert isinstance(result, tuple) and len(result) == 3</span>
+<span class="sd">            assert (</span>
+<span class="sd">                result[0] == l</span>
+<span class="sd">                and np.array_equal(result[1], a)</span>
+<span class="sd">                and torch.equal(result[2], t)</span>
+<span class="sd">            )</span>
+
+<span class="sd">            data = [</span>
+<span class="sd">                {&#39;l&#39;: [0, 1], &#39;a&#39;: array([0, 1]), &#39;t&#39;: tensor([0, 1])},</span>
+<span class="sd">                {&#39;l&#39;: [2, 3], &#39;a&#39;: array([2, 3]), &#39;t&#39;: tensor([2, 3])},</span>
+<span class="sd">                {&#39;l&#39;: [4, 5, 6], &#39;a&#39;: array([4, 5, 6]), &#39;t&#39;: tensor([4, 5, 6])},</span>
+<span class="sd">            ]</span>
+<span class="sd">            result = concat(data)</span>
+<span class="sd">            assert isinstance(result, dict) and list(result) == [&#39;l&#39;, &#39;a&#39;, &#39;t&#39;]</span>
+<span class="sd">            assert (</span>
+<span class="sd">                result[&#39;l&#39;] == l</span>
+<span class="sd">                and np.array_equal(result[&#39;a&#39;], a)</span>
+<span class="sd">                and torch.equal(result[&#39;t&#39;], t)</span>
+<span class="sd">            )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">iterable</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;iterable must be non-empty&#39;</span>
+
+    <span class="k">def</span> <span class="nf">concat_fn</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">sequence</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">sequence</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+            <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+            <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span>
+            <span class="k">else</span> <span class="n">sequence</span>
+        <span class="p">)</span>
+
+    <span class="n">first</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="n">concat_fn</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">first</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">_is_namedtuple</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+        <span class="k">else</span> <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)(</span><span class="n">concat_fn</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">first</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>
+        <span class="k">else</span> <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)((</span><span class="n">key</span><span class="p">,</span> <span class="n">concat_fn</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">first</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="k">else</span> <span class="n">concat_fn</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="collate"><a class="viewcode-back" href="../../reference/api/delu.collate.html#delu.data.collate">[docs]</a><span class="k">def</span> <span class="nf">collate</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Almost an alias for :code:`torch.utils.data.dataloader.default_collate`.</span>
+
+<span class="sd">    Namely, the input is allowed to be any kind of iterable, not only a list. Firstly,</span>
+<span class="sd">    if it is not a list, it is transformed to a list. Then, the list is passed to the</span>
+<span class="sd">    original function and the result is returned as is.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">iterable</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="c1"># &gt; Module has no attribute &quot;default_collate&quot;</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dataloader</span><span class="o">.</span><span class="n">default_collate</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>  <span class="c1"># type: ignore</span></div>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Yura52
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/Yura52/delu" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    </body>
+</html>

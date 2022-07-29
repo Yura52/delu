@@ -1,0 +1,6 @@
+delu.ProgressTracker.best\_score
+================================
+
+.. currentmodule:: delu
+
+.. autoproperty:: ProgressTracker.best_score

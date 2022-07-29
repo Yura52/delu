@@ -1,0 +1,6 @@
+delu.Timer.sub
+==============
+
+.. currentmodule:: delu
+
+.. automethod:: Timer.sub

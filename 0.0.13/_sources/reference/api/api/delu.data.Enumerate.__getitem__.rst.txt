@@ -1,0 +1,6 @@
+delu.data.Enumerate.\_\_getitem\_\_
+===================================
+
+.. currentmodule:: delu.data
+
+.. automethod:: Enumerate.__getitem__

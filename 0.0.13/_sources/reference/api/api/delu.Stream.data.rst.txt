@@ -1,0 +1,6 @@
+delu.Stream.data
+================
+
+.. currentmodule:: delu
+
+.. automethod:: Stream.data
