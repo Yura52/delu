@@ -1,13 +1,88 @@
+import dataclasses
 import pickle
 import random
+from collections.abc import Mapping, Sequence
 from time import perf_counter, sleep
+from types import SimpleNamespace
 
 import numpy as np
+import pytest
 import torch
 import torch.nn as nn
-from pytest import approx, mark, raises
 
 import delu
+
+from .util import Point
+
+
+def flatten(data):
+    if isinstance(data, torch.Tensor):
+        yield data
+    elif isinstance(data, (str, bytes)):
+        # mypy: NaN
+        yield data  # type: ignore
+    elif isinstance(data, Sequence):
+        for x in data:
+            yield from flatten(x)
+    elif isinstance(data, Mapping):
+        for x in data.values():
+            yield from flatten(x)
+    elif isinstance(data, SimpleNamespace):
+        for x in vars(data).values():
+            yield from flatten(x)
+    elif dataclasses.is_dataclass(data):
+        for x in vars(data).values():
+            yield from flatten(x)
+    else:
+        yield data
+
+
+def test_to():
+    with pytest.raises(ValueError):
+        delu.to(None)
+    with pytest.raises(ValueError):
+        delu.to([None, None])
+
+    t = lambda x: torch.tensor(0, dtype=x)  # noqa
+    f32 = torch.float32
+    i64 = torch.int64
+
+    for dtype in f32, i64:
+        x = t(dtype)
+        assert delu.to(x, dtype) is x
+    assert delu.to(t(f32), i64).dtype is i64
+
+    for Container in tuple, Point, list:
+        constructor = Container._make if Container is Point else Container
+        for dtype in [f32, i64]:
+            x = constructor([t(f32), t(f32)])
+            out = delu.to(x, dtype)
+            assert isinstance(out, Container)
+            assert all(x.dtype is dtype for x in out)
+            if dtype is f32:
+                for x, y in zip(out, x):
+                    assert x is y
+
+    data = [t(f32), t(f32)]
+    for x, y in zip(delu.to(data, f32), data):
+        assert x is y
+    assert all(x.dtype is i64 for x in delu.to(data, i64))
+
+    @dataclasses.dataclass
+    class A:
+        a: torch.Tensor
+
+    data = {
+        'a': [t(f32), (t(f32), t(f32))],
+        'b': {'c': {'d': [[[t(f32)]]]}},
+        'c': Point(t(f32), {'d': t(f32)}),
+        'f': SimpleNamespace(g=t(f32), h=A(t(f32))),
+    }
+    for x, y in zip(flatten(delu.to(data, f32)), flatten(data)):
+        assert x is y
+    for x, y in zip(flatten(delu.to(data, i64)), flatten(data)):
+        assert x.dtype is i64
+        assert type(x) is type(y)
 
 
 def test_progress_tracker():
@@ -65,7 +140,7 @@ def test_progress_tracker():
 
 
 def test_timer():
-    with raises(AssertionError):
+    with pytest.raises(AssertionError):
         delu.Timer().pause()
 
     # initial state, run
@@ -84,11 +159,11 @@ def test_timer():
 
     # add, sub
     timer.pause()
-    with raises(AssertionError):
+    with pytest.raises(AssertionError):
         timer.add(-1.0)
     timer.add(1.0)
-    assert timer() - x == approx(1)
-    with raises(AssertionError):
+    assert timer() - x == pytest.approx(1)
+    with pytest.raises(AssertionError):
         timer.sub(-1.0)
     timer.sub(1.0)
     assert timer() == x
@@ -120,7 +195,7 @@ def test_timer_measurements():
     actual = timer()
     # the allowed deviation was obtained from manual runs on my laptop so the test may
     # behave differently on other hardware
-    assert actual == approx(correct, abs=0.01)
+    assert actual == pytest.approx(correct, abs=0.01)
 
 
 def test_timer_context():
@@ -160,12 +235,12 @@ def test_timer_format():
     assert make_timer(7321).format('%Hh %Mm %Ss') == '02h 02m 01s'
 
 
-@mark.parametrize('train', [False, True])
-@mark.parametrize('grad', [False, True])
-@mark.parametrize('n_models', range(3))
+@pytest.mark.parametrize('train', [False, True])
+@pytest.mark.parametrize('grad', [False, True])
+@pytest.mark.parametrize('n_models', range(3))
 def test_evaluation(train, grad, n_models):
     if not n_models:
-        with raises(AssertionError):
+        with pytest.raises(AssertionError):
             with delu.evaluation():
                 pass
         return
@@ -194,7 +269,7 @@ def test_evaluation(train, grad, n_models):
 
 
 def test_evaluation_generator():
-    with raises(AssertionError):
+    with pytest.raises(AssertionError):
 
         @delu.evaluation(nn.Linear(1, 1))
         def generator():

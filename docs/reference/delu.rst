@@ -49,6 +49,7 @@ delu
    :toctree: api
    :template: class_just_autoclass.rst
 
+   to
    evaluation
 
 .. rubric:: Submodules

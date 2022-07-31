@@ -1,15 +1,52 @@
+import dataclasses
 import datetime
 import enum
 import inspect
 import secrets
 import time
 from contextlib import ContextDecorator
-from typing import Any, Dict, Optional
+from types import SimpleNamespace
+from typing import Any, Dict, Optional, TypeVar
 
 import torch
 import torch.nn as nn
 
 from . import random as delu_random
+
+T = TypeVar('T')
+
+
+def _is_namedtuple(x) -> bool:
+    return isinstance(x, tuple) and all(
+        hasattr(x, attr) for attr in ['_make', '_asdict', '_replace', '_fields']
+    )
+
+
+def to(data: T, *args, **kwargs) -> T:
+    """Call (recursively) `torch.Tensor.to`.
+
+    TODO
+    """
+
+    def TO_(x):
+        return to(x, *args, **kwargs)
+
+    # mypy does not understand what is going on here, hence a lot of "type: ignore"
+    if isinstance(data, torch.Tensor):
+        return data.to(*args, **kwargs)  # type: ignore
+    elif isinstance(data, SimpleNamespace) or dataclasses.is_dataclass(data):
+        return type(data)(**{k: TO_(v) for k, v in vars(data).items()})  # type: ignore
+    elif _is_namedtuple(data):
+        return type(data)._make(TO_(x) for x in data)  # type: ignore
+    elif isinstance(data, (tuple, list)):
+        return type(data)(TO_(x) for x in data)  # type: ignore
+    elif isinstance(data, dict):
+        return type(data)({k: TO_(v) for k, v in data.items()})  # type: ignore
+    else:
+        raise ValueError(
+            f'the input contains an object of the unsupported type {type(data)}.'
+            ' See the documentation for details'
+        )
 
 
 class _ProgressStatus(enum.Enum):

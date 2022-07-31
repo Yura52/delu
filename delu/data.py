@@ -17,6 +17,8 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader, Dataset, TensorDataset
 
+from ._utils import _is_namedtuple
+
 T = TypeVar('T')
 
 
@@ -398,12 +400,6 @@ class IndexLoader:
             if self._device.type == 'cpu'
             else torch.cat(list(self.loader)).to(self._device).split(self._batch_size)
         )
-
-
-def _is_namedtuple(x) -> bool:
-    return isinstance(x, tuple) and all(
-        hasattr(x, attr) for attr in ['_make', '_asdict', '_replace', '_fields']
-    )
 
 
 def iter_batches(
