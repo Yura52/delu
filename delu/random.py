@@ -132,9 +132,8 @@ def preserve_state():
             def g():
                 return f()
 
-            with preserve_state():
-                a = g()
-            b = g()
+            a = g()
+            b = f()
             assert a == b
 
     """

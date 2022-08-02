@@ -13,7 +13,7 @@ T = TypeVar('T')
 
 
 def to(data: T, *args, **kwargs) -> T:
-    """Call (recursively) `torch.Tensor.to`.
+    """Call (recursively) `torch.Tensor.to` (set device, dtype, etc.).
 
     TODO
     """
