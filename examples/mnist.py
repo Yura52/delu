@@ -73,15 +73,15 @@ def main():
         X, y = batch
         return model(X.to(args.device)), y.to(args.device)
 
+    @delu.evaluation(model)
     def evaluate(loader):
-        with delu.evaluation(model):
-            logits, y = delu.concat(map(step, loader))
+        logits, y = delu.concat(map(step, loader))
         y_pred = torch.argmax(logits, dim=1).to(y)
         return (y_pred == y).int().sum().item() / len(y)
 
     train_dataset, val_dataset = split_dataset(get_dataset(True), 0.8)
     test_dataset = get_dataset(False)
-    stream = delu.Stream(DataLoader(train_dataset, batch_size=64, shuffle=True))
+    stream = delu.data.Stream(DataLoader(train_dataset, batch_size=64, shuffle=True))
     val_loader = DataLoader(val_dataset, batch_size=8096)
     test_loader = DataLoader(test_dataset, batch_size=8096)
 

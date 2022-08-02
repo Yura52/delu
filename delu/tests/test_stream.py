@@ -4,7 +4,7 @@ import os
 
 from pytest import mark, raises
 
-from delu import Stream
+from delu.data import Stream
 
 
 def test_properties():

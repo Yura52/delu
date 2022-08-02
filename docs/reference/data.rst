@@ -12,6 +12,7 @@ delu.data
     :toctree: api
     :template: class.rst
 
+    Stream
     Enumerate
     FnDataset
     IndexDataset
@@ -21,6 +22,7 @@ delu.data
     :toctree: api
 
     make_index_dataloader
+    collate
 
 .. autosummary::
     :nosignatures:
