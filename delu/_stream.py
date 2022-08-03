@@ -24,8 +24,8 @@ class Stream:
 
     `Stream` simplifies managing loops, especially in typical Deep Learning scenarios. `Stream`:
 
-    - manages the "epoch" and "iteration" variables
-    - allows to dump and restore loop's state: epoch, iteration, etc.
+    - manages the "step" and "epoch" variables
+    - allows to dump and restore loop's state (step and epoch)
     - allows to customize the size of epoch
     - allows to change the underlying data loader on the fly
     - enables useful patterns
@@ -35,11 +35,11 @@ class Stream:
     Let's start with the most common training loop::
 
         loader = DataLoader(...)
-        iteration = 0
+        step = 0
         for epoch in range(max_epoch):
             for batch in loader:
-                iteration += 1
-                print('Epoch:', epoch, 'Iteration:', iteration)
+                step += 1
+                print('Epoch:', epoch, 'Step:', step)
                 ...
 
     Let's enhance the loop using `Stream`::
@@ -47,7 +47,7 @@ class Stream:
         stream = Stream(DataLoader(...))  # (A)
         for epoch in stream.epochs(max_epoch):  # (B)
             for batch in epoch:  # (C)
-                print('Epoch:', stream.epoch, 'Iteration:', stream.iteration)  # (D)
+                print('Epoch:', stream.epoch, 'Step:', stream.step)  # (D)
                 ...
 
     Some comments for the above code:
@@ -56,7 +56,7 @@ class Stream:
       the dataloader is accessible via `Stream.loader`
     - :code:`(B)` :code:`epoch` is an iterator over batches for one epoch
     - :code:`(C)` a progress bar for batches is displayed (for the whole training loop, not just for one epoch)
-    - :code:`(D)` `Stream.epoch` and `Stream.iteration` are managed automatically
+    - :code:`(D)` `Stream.epoch` and `Stream.step` are managed automatically
 
     Saving the loop's state and resuming the loop is possible with the methods
     `Stream.state_dict`, `Stream.load_state_dict`. In practice, it can look like this::
@@ -121,14 +121,14 @@ class Stream:
         while stream.epoch < max_epoch:
             stream.increment_epoch()
             for _ in range(len(stream.loader)):
-                batch = stream.next()  # stream.iteration is incremented automatically
+                batch = stream.next()  # stream.step is incremented automatically
                 ...
 
     The "infinite" stream of data can be implemented as follows::
 
         for item in stream.data(float('inf')):
             ...
-            if condition:  # for example: `if stream.iteration % frequency == 0`
+            if condition:  # for example: `if stream.step % frequency == 0`
                 ...
 
     Note:
@@ -148,16 +148,13 @@ class Stream:
         def __init__(self, stream, size):
             self._stream = stream
             self._size = size
-            self._start = self._stream.iteration
+            self._start = self._stream.step
 
         def __iter__(self):
             return self
 
         def __next__(self):
-            if (
-                self._size is not None
-                and self._stream.iteration - self._start >= self._size
-            ):
+            if self._size is not None and self._stream.step - self._start >= self._size:
                 raise StopIteration()
             return self._stream.next()
 
@@ -182,7 +179,7 @@ class Stream:
                 stream = Stream(DataLoader(dataset, batch_size=3, shuffle=True))
         """
         assert _try_len(loader) != 0
-        self._iteration = 0
+        self._step = 0
         self._epoch = 0
         self._loader = loader
         self._iter: Optional[Iterator] = None
@@ -190,16 +187,13 @@ class Stream:
         self._should_update_progress_bar = False
 
     @property
-    def iteration(self) -> int:
-        """Current iteration.
-
-        Technically, the number of `Stream.next` calls.
-        """
-        return self._iteration
+    def step(self) -> int:
+        """The current step (technically, the number of `Stream.next` calls)."""
+        return self._step
 
     @property
     def epoch(self) -> int:
-        """Current epoch.
+        """The current epoch.
 
         Technically, the number of `Stream.increment_epoch` calls.
         """
@@ -224,8 +218,8 @@ class Stream:
                 from itertools import repeat
                 stream = Stream(repeat(0))
                 for x in stream.data(5):
-                    print(stream.iteration, x)
-                    if stream.iteration == 2:
+                    print(stream.step, x)
+                    if stream.step == 2:
                         stream.set_loader(repeat(1))
 
             .. testoutput::
@@ -241,8 +235,8 @@ class Stream:
         if self._iter is not None:
             self._iter = iter(loader)
 
-    def _increment_iteration(self):
-        self._iteration += 1
+    def _increment_step(self):
+        self._step += 1
 
     def increment_epoch(self) -> None:
         """Increment `Stream.epoch`.
@@ -284,7 +278,7 @@ class Stream:
         self._iter = iter(self.loader)
 
     def next(self) -> Any:
-        """Get the next item and increment iteration.
+        """Get the next item and increment ``self.step``.
 
         Returns:
             The next item.
@@ -295,20 +289,20 @@ class Stream:
             .. testcode::
 
                 stream = Stream(range(3))
-                assert stream.iteration == 0
+                assert stream.step == 0
                 assert stream.next() == 0
-                assert stream.iteration == 1
+                assert stream.step == 1
                 assert stream.next() == 1
                 assert stream.next() == 2
                 assert stream.next() == 0
-                assert stream.iteration == 4
+                assert stream.step == 4
 
             .. code-block::
 
                 while True:
                     x = stream.next()
                     ...
-                    if stream.iteration % frequency:
+                    if stream.step % frequency:
                         ...
         """
         if self._iter is None:
@@ -324,13 +318,13 @@ class Stream:
             # If the following line raises StopIteration too, then the data is over
             # and the exception should be just propagated.
             value = next(self._iter)
-        self._increment_iteration()
+        self._increment_step()
         return value
 
     def data(self, n_items: Optional[Union[int, float]] = None) -> Iterator:
         """Iterate over the loader.
 
-        Under the hood, `Stream.next` is called, hence, `Stream.iteration` changes
+        Under the hood, `Stream.next` is called, hence, `Stream.step` changes
         during iterations.
 
         Args:
@@ -357,7 +351,7 @@ class Stream:
 
                 for x in stream.data(float('inf')):
                     ...
-                    if stream.iteration % frequency:
+                    if stream.step % frequency:
                         ...
         """
         if isinstance(n_items, float):
@@ -397,7 +391,7 @@ class Stream:
             epoch_size: the number of data items in one epoch
                 (is forwarded to `Stream.data`).
             progress_bar_config: if not `None` (the default value is :code:`{}`!), a
-                progress bar for iterations will be displayed and the argument will be
+                progress bar for steps will be displayed and the argument will be
                 interpreted as key-word arguments for
                 `tqdm <https://tqdm.github.io/docs/tqdm/#__init__>`_. The following
                 key-word arguments will be automatically added if not presented in
@@ -463,7 +457,7 @@ class Stream:
                 _try_len(self.loader) if epoch_size is None else epoch_size
             )
             all_progress_bar_options = {
-                'initial': self.iteration,
+                'initial': self.step,
                 'total': (
                     None
                     if (pbar_epoch_size is None or math.isinf(max_epoch))
@@ -485,8 +479,8 @@ class Stream:
 
         The result can be passed to `Stream.load_state_dict`. The result includes:
 
+        - step
         - epoch
-        - iteration
 
         Note:
             Fields related to data (loader, iterator etc.) are **NOT** included in the
@@ -503,13 +497,13 @@ class Stream:
             .. testcode::
 
                 stream = Stream(range(10))
-                assert stream.state_dict() == {'epoch': 0, 'iteration': 0}
+                assert stream.state_dict() == {'step': 0, 'epoch': 0}
                 stream.next()
                 stream.next()
                 stream.increment_epoch()
-                assert stream.state_dict() == {'epoch': 1, 'iteration': 2}
+                assert stream.state_dict() == {'step': 2, 'epoch': 1}
         """
-        return {'iteration': self.iteration, 'epoch': self.epoch}
+        return {'step': self.step, 'epoch': self.epoch}
 
     def load_state_dict(self, state_dict: Dict[str, Any]) -> None:
         """Load state dictionary.
@@ -520,7 +514,7 @@ class Stream:
         Note:
             The method does not affect data that is produced by `Stream.epochs`,
             `Stream.data`, `Stream.next` (see the examples below), i.e. the method
-            only sets some "metadata" such as epoch, iteration etc. If you want to
+            only sets some "metadata" such as step, epoch etc. If you want to
             load the "state of data stream", you have to load the state of corresponding
             random number generators separately.
 
@@ -534,13 +528,13 @@ class Stream:
                 stream = Stream(range(10))
                 stream.next()
                 stream.increment_epoch()
-                assert stream.state_dict() == {'epoch': 1, 'iteration': 1}
+                assert stream.state_dict() == {'step': 1, 'epoch': 1}
 
                 new_stream = Stream(range(10))
                 new_stream.load_state_dict(stream.state_dict())
-                assert new_stream.state_dict() == {'epoch': 1, 'iteration': 1}
+                assert new_stream.state_dict() == {'step': 1, 'epoch': 1}
                 assert new_stream.next() == 0
-                assert new_stream.state_dict() == {'epoch': 1, 'iteration': 2}
+                assert new_stream.state_dict() == {'step': 2, 'epoch': 1}
         """
-        self._iteration = state_dict['iteration']
+        self._step = state_dict['step']
         self._epoch = state_dict['epoch']

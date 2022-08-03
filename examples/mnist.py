@@ -101,7 +101,7 @@ def main():
         print('Resuming from the checkpoint.\n')
 
     for epoch in stream.epochs(args.n_epochs, args.epoch_size):
-        print(f'\nEpoch {stream.epoch} started (iterations passed: {stream.iteration})')
+        print(f'\nEpoch {stream.epoch} started (steps completed: {stream.step})')
         timer.run()
 
         for batch in epoch:

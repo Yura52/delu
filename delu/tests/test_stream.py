@@ -10,10 +10,10 @@ from delu.data import Stream
 def test_properties():
     loader = [0]
     stream = Stream(loader)
-    assert stream.iteration == 0
+    assert stream.step == 0
     assert stream.epoch == 0
     assert stream.loader is loader
-    for attr in 'iteration', 'epoch', 'loader':
+    for attr in 'step', 'epoch', 'loader':
         with raises(AttributeError):
             setattr(stream, attr, None)
 
@@ -56,14 +56,14 @@ def test_reload_iterator():
 
 
 @mark.parametrize('n', range(1, 5))
-def test_next_iteration(n):
+def test_next_step(n):
     stream = Stream(range(n))
-    assert stream.iteration == 0
+    assert stream.step == 0
 
     for epoch in range(2):
         for x in range(n):
             assert stream.next() == x
-            assert stream.iteration == x + epoch * n + 1
+            assert stream.step == x + epoch * n + 1
 
     stream = Stream(iter(range(n)))
     for _ in range(n):
@@ -83,13 +83,13 @@ def test_data(n):
 
     for epoch_size in [None] + list(range(1, 2 * n)):
         effective_epoch_size = n if epoch_size is None else epoch_size
-        max_iteration = n_epochs * effective_epoch_size
+        max_step = n_epochs * effective_epoch_size
         stream = Stream(range(n))
         actual = []
-        while stream.iteration < max_iteration:
+        while stream.step < max_step:
             actual.append(list(stream.data(epoch_size)))
-        assert stream.iteration == max_iteration
-        flat_correct = [x % n for x in range(max_iteration)]
+        assert stream.step == max_step
+        flat_correct = [x % n for x in range(max_step)]
         correct = [
             flat_correct[i * effective_epoch_size : (i + 1) * effective_epoch_size]
             for i in range(n_epochs)
@@ -162,13 +162,13 @@ def test_state_dict():
     stream = Stream(range(10))
     stream.next()
     stream.increment_epoch()
-    assert stream.state_dict() == {'epoch': 1, 'iteration': 1}
+    assert stream.state_dict() == {'epoch': 1, 'step': 1}
 
     new_stream = Stream(range(10))
     new_stream.load_state_dict(stream.state_dict())
-    assert new_stream.state_dict() == {'epoch': 1, 'iteration': 1}
+    assert new_stream.state_dict() == {'epoch': 1, 'step': 1}
     assert new_stream.next() == 0
-    assert new_stream.state_dict() == {'epoch': 1, 'iteration': 2}
+    assert new_stream.state_dict() == {'epoch': 1, 'step': 2}
     assert new_stream.next() == 1
 
     assert stream.next() == 1
@@ -183,10 +183,10 @@ def test_progress_bar():
             3, progress_bar_config={'file': open(os.devnull, 'w')}
         ):
             for _ in epoch:
-                print(stream._progress_bar.n, stream.epoch, stream.iteration)
-                assert stream._progress_bar.n == stream.iteration - 1
+                print(stream._progress_bar.n, stream.epoch, stream.step)
+                assert stream._progress_bar.n == stream.step - 1
             state = stream.state_dict()
-        assert stream._progress_bar.n == stream.iteration
+        assert stream._progress_bar.n == stream.step
         return state
 
     stream = Stream(data)
