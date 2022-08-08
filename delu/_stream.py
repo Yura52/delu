@@ -1,15 +1,5 @@
 import math
-from copy import deepcopy
 from typing import Any, Dict, Iterable, Iterator, Optional, Sized, Union
-
-try:
-    import ipywidgets  # noqa
-except ImportError:
-    from tqdm import tqdm
-else:
-    from tqdm.auto import tqdm
-
-_DEFAULT_PROGRESS_BAR_CONFIG: Dict[str, Any] = {}
 
 
 def _try_len(x):
@@ -46,8 +36,8 @@ class Stream:
 
         stream = Stream(DataLoader(...))  # (A)
         for epoch in stream.epochs(max_epoch):  # (B)
-            for batch in epoch:  # (C)
-                print('Epoch:', stream.epoch, 'Step:', stream.step)  # (D)
+            for batch in epoch:
+                print('Epoch:', stream.epoch, 'Step:', stream.step)  # (C)
                 ...
 
     Some comments for the above code:
@@ -55,8 +45,7 @@ class Stream:
     - :code:`(A)` `Stream` is created by passing a dataloader as a single argument (in fact, you can pass any iterable object);
       the dataloader is accessible via `Stream.loader`
     - :code:`(B)` :code:`epoch` is an iterator over batches for one epoch
-    - :code:`(C)` a progress bar for batches is displayed (for the whole training loop, not just for one epoch)
-    - :code:`(D)` `Stream.epoch` and `Stream.step` are managed automatically
+    - :code:`(C)` `Stream.epoch` and `Stream.step` are managed automatically
 
     Saving the loop's state and resuming the loop is possible with the methods
     `Stream.state_dict`, `Stream.load_state_dict`. In practice, it can look like this::
@@ -183,8 +172,6 @@ class Stream:
         self._epoch = 0
         self._loader = loader
         self._iter: Optional[Iterator] = None
-        self._progress_bar: Optional[tqdm] = None
-        self._should_update_progress_bar = False
 
     @property
     def step(self) -> int:
@@ -307,10 +294,6 @@ class Stream:
         """
         if self._iter is None:
             self._iter = iter(self._loader)
-        if self._progress_bar is not None:
-            if self._should_update_progress_bar:
-                self._progress_bar.update()
-            self._should_update_progress_bar = True
         try:
             value = next(self._iter)
         except StopIteration:
@@ -366,12 +349,11 @@ class Stream:
         self,
         max_epoch: Union[int, float],
         epoch_size: Optional[Union[int, float]] = None,
-        progress_bar_config: Optional[Dict[str, Any]] = _DEFAULT_PROGRESS_BAR_CONFIG,
     ) -> Iterator[Iterator[Any]]:
         """Iterate over data epochs.
 
         A shortcut for what is probably the most popular form of a training loop in Deep
-        Learning (plus a progress bar)::
+        Learning::
 
             for epoch in stream.epochs(max_epoch, epoch_size):
                 for batch in epoch:
@@ -390,16 +372,6 @@ class Stream:
                 or `math.inf`.
             epoch_size: the number of data items in one epoch
                 (is forwarded to `Stream.data`).
-            progress_bar_config: if not `None` (the default value is :code:`{}`!), a
-                progress bar for steps will be displayed and the argument will be
-                interpreted as key-word arguments for
-                `tqdm <https://tqdm.github.io/docs/tqdm/#__init__>`_. The following
-                key-word arguments will be automatically added if not presented in
-                :code:`progress_bar_config`: :code:`initial`, :code:`total` (if can be
-                inferred from the arguments and/or from `Stream.loader`). If
-                [`ipywidgets`](https://ipywidgets.readthedocs.io) is installed and the
-                program is running in JupyterLab (Jupyter Notebook), then the pretty
-                widget is used instead of the text-based one.
 
         Returns:
             Iterator over iterators over data from `Stream.loader`.
@@ -448,31 +420,9 @@ class Stream:
         """
         if isinstance(max_epoch, float):
             assert math.isinf(max_epoch)
-        if progress_bar_config is not None:
-            if progress_bar_config is _DEFAULT_PROGRESS_BAR_CONFIG:
-                # the default value is MUTABLE, so let's deepcopy it
-                # just in case it is modified later
-                progress_bar_config = deepcopy(progress_bar_config)
-            pbar_epoch_size = (
-                _try_len(self.loader) if epoch_size is None else epoch_size
-            )
-            all_progress_bar_options = {
-                'initial': self.step,
-                'total': (
-                    None
-                    if (pbar_epoch_size is None or math.isinf(max_epoch))
-                    else max_epoch * pbar_epoch_size
-                ),
-            }
-            all_progress_bar_options.update(progress_bar_config)
-            self._progress_bar = tqdm(**all_progress_bar_options)
-            self._should_update_progress_bar = False
         while self.epoch < max_epoch:
             self.increment_epoch()
             yield self.data(epoch_size)
-        if self._should_update_progress_bar:
-            assert self._progress_bar is not None
-            self._progress_bar.update()
 
     def state_dict(self) -> Dict[str, Any]:
         """Get the stream's state.

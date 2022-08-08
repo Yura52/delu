@@ -1,6 +1,5 @@
 import itertools
 import math
-import os
 
 from pytest import mark, raises
 
@@ -140,16 +139,14 @@ def test_data(n):
 def test_epochs():
     stream = Stream(range(3))
     with raises(AssertionError):
-        next(stream.epochs(1.0, progress_bar_config=None))
+        next(stream.epochs(1.0))
     correct = [0, 1, 2]
-    for epoch in stream.epochs(2, progress_bar_config=None):
+    for epoch in stream.epochs(2):
         assert list(epoch) == correct
     correct = [[0, 1], [2, 0], [1, 2]]
-    for i, epoch in enumerate(stream.epochs(2, progress_bar_config=None)):
+    for i, epoch in enumerate(stream.epochs(2)):
         assert list(epoch) == correct[i]
-    for i, epoch in zip(
-        enumerate(stream.epochs(math.inf, progress_bar_config=None)), range(1000)
-    ):
+    for i, epoch in zip(enumerate(stream.epochs(math.inf)), range(1000)):
         pass
     for (i, epoch), _ in zip(enumerate(stream.epochs(math.inf, math.inf)), range(10)):
         for (j, _), _ in zip(enumerate(epoch), range(10)):
@@ -172,25 +169,3 @@ def test_state_dict():
     assert new_stream.next() == 1
 
     assert stream.next() == 1
-
-
-def test_progress_bar():
-    data = range(5)
-
-    def check(stream: Stream):
-        state = {}
-        for epoch in stream.epochs(
-            3, progress_bar_config={'file': open(os.devnull, 'w')}
-        ):
-            for _ in epoch:
-                print(stream._progress_bar.n, stream.epoch, stream.step)
-                assert stream._progress_bar.n == stream.step - 1
-            state = stream.state_dict()
-        assert stream._progress_bar.n == stream.step
-        return state
-
-    stream = Stream(data)
-    state = check(stream)
-    stream = Stream(data)
-    stream.load_state_dict(state)
-    check(stream)
