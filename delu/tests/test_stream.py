@@ -1,5 +1,4 @@
 import itertools
-import math
 
 from pytest import mark, raises
 
@@ -7,17 +6,17 @@ from delu.data import Stream
 
 
 def test_properties():
-    loader = [0]
-    stream = Stream(loader)
+    data = [0]
+    stream = Stream(data)
     assert stream.step == 0
     assert stream.epoch == 0
-    assert stream.loader is loader
-    for attr in 'step', 'epoch', 'loader':
+    assert stream.data is data
+    for attr in 'step', 'epoch', 'data':
         with raises(AttributeError):
             setattr(stream, attr, None)
 
 
-def test_bad_loader():
+def test_bad_data():
     with raises(AssertionError):
         Stream([])
 
@@ -29,14 +28,14 @@ def test_increment_epoch():
         stream.increment_epoch()
 
 
-def test_set_loader():
+def test_set_data():
     a = itertools.repeat(0)
     b = itertools.repeat(1)
     stream = Stream([2])
-    stream.set_loader(a)
+    stream.set_data(a)
     for x in range(10):
         assert stream.next() == next(b if x % 2 else a)
-        stream.set_loader(a if x % 2 else b)
+        stream.set_data(a if x % 2 else b)
 
 
 def test_reload_iterator():
@@ -138,20 +137,28 @@ def test_next_n(n):
 
 def test_epochs():
     stream = Stream(range(3))
+
     with raises(AssertionError):
-        next(stream.epochs(1.0))
+        next(stream.epochs('inf '))
+
     correct = [0, 1, 2]
     for epoch in stream.epochs(2):
         assert list(epoch) == correct
+
+    stream = Stream(range(3))
     correct = [[0, 1], [2, 0], [1, 2]]
-    for i, epoch in enumerate(stream.epochs(2)):
+    for i, epoch in enumerate(stream.epochs(3, 2)):
         assert list(epoch) == correct[i]
-    for i, epoch in zip(enumerate(stream.epochs(math.inf)), range(1000)):
+
+    for (i, epoch), _ in zip(enumerate(stream.epochs("inf")), range(1000)):
         pass
-    for (i, epoch), _ in zip(enumerate(stream.epochs(math.inf, math.inf)), range(10)):
+    assert i == 999
+
+    stream = Stream(range(3))
+    for (i, epoch), _ in zip(enumerate(stream.epochs("inf", None)), range(10)):
         for (j, _), _ in zip(enumerate(epoch), range(10)):
             pass
-        assert j == 9
+        assert j == 2
     assert i == 9
 
 

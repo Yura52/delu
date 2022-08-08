@@ -1,4 +1,3 @@
-import math
 from typing import Any, Dict, Iterable, Iterator, Optional, Sized, Union
 
 from typing_extensions import Literal
@@ -22,8 +21,8 @@ class Stream:
 
         def __len__(self) -> int:
             if self._total is None:
-                raise ValueError(
-                    'The iterable is of the infinite size, so it has no "len"'
+                raise RuntimeError(
+                    'The "iterator over N next objects" has N == infinity, so it has no "len"'
                 )
             return self._total - self._current
 
@@ -37,13 +36,13 @@ class Stream:
             else:
                 raise StopIteration()
 
-    def __init__(self, loader: Iterable) -> None:
+    def __init__(self, data: Iterable) -> None:
         """Initialize self.
 
         Args:
-            loader: any kind of iterable (DataLoader, list, iterator, generator, ...)
+            data: any kind of iterable (DataLoader, list, iterator, generator, ...)
         Raises:
-            AssertionError: if :code:`loader` is not an iterator and is empty
+            AssertionError: if ``data`` is not an iterator and is empty
 
         Examples:
             .. testcode::
@@ -57,10 +56,10 @@ class Stream:
                 dataset = TensorDataset(torch.randn(10, 2))
                 stream = Stream(DataLoader(dataset, batch_size=3, shuffle=True))
         """
-        assert _try_len(loader) != 0
+        assert _try_len(data) != 0
         self._step = 0
         self._epoch = 0
-        self._loader = loader
+        self._data = data
         self._iter: Optional[Iterator] = None
 
     @property
@@ -77,17 +76,15 @@ class Stream:
         return self._epoch
 
     @property
-    def loader(self) -> Iterable:
-        """The underlying loader."""
-        return self._loader
+    def data(self) -> Iterable:
+        """The data passed to the constructor."""
+        return self._data
 
-    def set_loader(self, loader: Iterable) -> None:
-        """Set new loader.
+    def set_data(self, data: Iterable) -> None:
+        """Set new data.
 
         Args:
-            loader:
-        Raises:
-            AssertionError: if :code:`loader` is not an iterator and is empty.
+            data: the new data
 
         Examples:
             .. testcode::
@@ -97,7 +94,7 @@ class Stream:
                 for x in stream.next_n(5):
                     print(stream.step, x)
                     if stream.step == 2:
-                        stream.set_loader(repeat(1))
+                        stream.set_data(repeat(1))
 
             .. testoutput::
 
@@ -107,10 +104,10 @@ class Stream:
                 4 1
                 5 1
         """
-        assert _try_len(loader) != 0
-        self._loader = loader
+        assert _try_len(data) != 0
+        self._data = data
         if self._iter is not None:
-            self._iter = iter(loader)
+            self._iter = iter(data)
 
     def _increment_step(self):
         self._step += 1
@@ -131,11 +128,11 @@ class Stream:
         self._epoch += 1
 
     def reload_iterator(self) -> None:
-        """Set the underlying iterator to `iter(self.loader)`.
+        """Set the underlying iterator to `iter(self.data)`.
 
-        If the underlying loader is a finite iterable, the method can be used to
-        interrupt and skip the current epoch (i.e. skip its data). If the loader is an
-        iterator, the method does nothing.
+        If the underlying data source is a finite iterable, the method can be used to
+        interrupt and skip the current epoch (i.e. skip its data). If the data source is
+        an iterator, the method is a no-op.
 
         Examples:
             .. testcode::
@@ -152,7 +149,7 @@ class Stream:
                 stream.reload_iterator()
                 assert stream.next() == 2
         """
-        self._iter = iter(self.loader)
+        self._iter = iter(self.data)
 
     def next(self) -> Any:
         """Get the next item and increment ``self.step``.
@@ -160,7 +157,7 @@ class Stream:
         Returns:
             The next item.
         Raises:
-            StopIteration: if :code:`loader` is a finite iterator and the data is over
+            StopIteration: if `Stream.data` is a finite iterator and the data is over.
 
         Examples:
             .. testcode::
@@ -183,7 +180,7 @@ class Stream:
                         ...
         """
         if self._iter is None:
-            self._iter = iter(self._loader)
+            self._iter = iter(self._data)
         try:
             value = next(self._iter)
         except StopIteration:
@@ -202,9 +199,9 @@ class Stream:
 
         Args:
             n_items: the number of items to iterate over. If `None`, then
-                ``len(self.loader)`` is used instead. Otherwise, must be either a
-                non-negative integer or "inf" (in the latter case, the endless iterator
-                is returned).
+                ``len(self.data)`` is used instead. Otherwise, must be either a
+                non-negative integer or the string "inf" (in the latter case, the
+                endless iterator is returned).
 
         Examples:
             .. testcode::
@@ -227,13 +224,13 @@ class Stream:
         if isinstance(n_items, str):
             assert n_items == 'inf'
         if n_items is None:
-            if not isinstance(self.loader, Sized):
+            if not isinstance(self.data, Sized):
                 raise ValueError()
-            n_items = len(self.loader)
+            n_items = len(self.data)
         return Stream._NextN(self, None if n_items == 'inf' else n_items)
 
     def epochs(
-        self, max_epoch: Union[int, float], epoch_size: Optional[int] = None
+        self, max_epoch: Union[int, Literal['inf']], epoch_size: Optional[int] = None
     ) -> Iterator[Iterator[Any]]:
         """Iterate over data epochs.
 
@@ -253,15 +250,15 @@ class Stream:
 
         Args:
             max_epoch: defines the number of epochs. The loop keeps running while
-                :code:`self.epoch < max_epoch`. If `float`, must be :code:`float('inf')`
-                or `math.inf`.
+                ``self.epoch < max_epoch``. If the string ``"inf"``, then epochs are
+                yielded endlessly.
             epoch_size: the number of data items in one epoch
                 (is forwarded to `Stream.next_n`).
 
         Returns:
-            Iterator over iterators over data from `Stream.loader`.
+            Iterator over iterators over data from `Stream.data`.
         Raises:
-            AssertionError: if :code:`max_epoch` is a finite float or nan.
+            AssertionError: if ``max_epoch`` is a finite float or nan.
 
         Examples:
             .. testcode::
@@ -303,9 +300,13 @@ class Stream:
                 2
                 -
         """
-        if isinstance(max_epoch, float):
-            assert math.isinf(max_epoch)
-        while self.epoch < max_epoch:
+        assert epoch_size is None or isinstance(epoch_size, int)
+        if isinstance(max_epoch, str):
+            assert max_epoch == 'inf'
+            max_epoch_ = float('inf')
+        else:
+            max_epoch_ = max_epoch
+        while self.epoch < max_epoch_:
             self.increment_epoch()
             yield self.next_n(epoch_size)
 
@@ -318,7 +319,7 @@ class Stream:
         - epoch
 
         Note:
-            Fields related to data (loader, iterator etc.) are **NOT** included in the
+            Fields related to data (data source, iterator etc.) are **NOT** included in the
             state. If you want to save the "state of data stream" then you have to save
             the state of corresponding random number generators separately.
 
