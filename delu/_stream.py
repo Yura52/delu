@@ -1,6 +1,8 @@
 import math
 from typing import Any, Dict, Iterable, Iterator, Optional, Sized, Union
 
+from typing_extensions import Literal
+
 
 def _try_len(x):
     try:
@@ -95,15 +97,15 @@ class Stream:
     a thin wrapper around them):
 
     - `Stream.increment_epoch`
-    - `Stream.data`
     - `Stream.next`
+    - `Stream.next_n`
 
     For example, the most common training loop can be implemented as follows::
 
         # A
         while stream.epoch < max_epoch:
             stream.increment_epoch()
-            for batch in stream.data():
+            for batch in stream.next_n():
                 ...
 
         # B
@@ -115,7 +117,7 @@ class Stream:
 
     The "infinite" stream of data can be implemented as follows::
 
-        for item in stream.data(float('inf')):
+        for item in stream.next_n(float('inf')):
             ...
             if condition:  # for example: `if stream.step % frequency == 0`
                 ...
@@ -130,22 +132,31 @@ class Stream:
                 for item in loader:  # the loader which is passed to the constructor
                     ...
 
-        Documentation for `Stream.next` and `Stream.data` provide helpful examples.
+        Documentation for `Stream.next` and `Stream.next_n` provide helpful examples.
     """
 
-    class _EpochData:
-        def __init__(self, stream, size):
+    class _NextN:
+        def __init__(self, stream: 'Stream', n_items: Optional[int]) -> None:
             self._stream = stream
-            self._size = size
-            self._start = self._stream.step
+            self._total = n_items
+            self._current = 0
+
+        def __len__(self) -> int:
+            if self._total is None:
+                raise ValueError(
+                    'The iterable is of the infinite size, so it has no "len"'
+                )
+            return self._total - self._current
 
         def __iter__(self):
             return self
 
-        def __next__(self):
-            if self._size is not None and self._stream.step - self._start >= self._size:
+        def __next__(self) -> Any:
+            if self._total is None or self._current < self._total:
+                self._current += 1
+                return self._stream.next()
+            else:
                 raise StopIteration()
-            return self._stream.next()
 
     def __init__(self, loader: Iterable) -> None:
         """Initialize self.
@@ -204,7 +215,7 @@ class Stream:
 
                 from itertools import repeat
                 stream = Stream(repeat(0))
-                for x in stream.data(5):
+                for x in stream.next_n(5):
                     print(stream.step, x)
                     if stream.step == 2:
                         stream.set_loader(repeat(1))
@@ -304,51 +315,46 @@ class Stream:
         self._increment_step()
         return value
 
-    def data(self, n_items: Optional[Union[int, float]] = None) -> Iterator:
-        """Iterate over the loader.
+    def next_n(self, n_items: Union[None, int, Literal['inf']] = None) -> Iterator:
+        """Iterate over the next N items.
 
-        Under the hood, `Stream.next` is called, hence, `Stream.step` changes
-        during iterations.
+        An iterator is returned, and items are fetched (i.e. `Stream.next` is called)
+        during actual iterations, NOT in advance.
 
         Args:
-            n_items: how many items to produce. If `None`, interpreted as
-                :code:`len(self.loader)`. If `float`, must be :code:`float('inf')` or
-                `math.inf`.
-        Raises:
-            AssertionError: if :code:`n_items` is a finite float or nan.
-            ValueError: if :code:`loader` is an iterator and :code:`n_items` is
-                `None`
+            n_items: the number of items to iterate over. If `None`, then
+                ``len(self.loader)`` is used instead. Otherwise, must be either a
+                non-negative integer or "inf" (in the latter case, the endless iterator
+                is returned).
 
         Examples:
             .. testcode::
 
                 stream = Stream(range(5))
-                assert list(stream.data()) == [0, 1, 2, 3, 4]
-                assert list(stream.data(3)) == [0, 1, 2]
+                assert list(stream.next_n()) == [0, 1, 2, 3, 4]
+                assert list(stream.next_n(3)) == [0, 1, 2]
                 # stream doesn't "start over"!
-                assert list(stream.data(3)) == [3, 4, 0]
-                assert list(stream.data(1)) == [1]
-                assert list(stream.data(2)) == [2, 3]
+                assert list(stream.next_n(3)) == [3, 4, 0]
+                assert list(stream.next_n(1)) == [1]
+                assert list(stream.next_n(2)) == [2, 3]
 
             .. code-block::
 
-                for x in stream.data(float('inf')):
+                for x in stream.next_n('inf'):
                     ...
                     if stream.step % frequency:
                         ...
         """
-        if isinstance(n_items, float):
-            assert math.isinf(n_items)
+        if isinstance(n_items, str):
+            assert n_items == 'inf'
         if n_items is None:
             if not isinstance(self.loader, Sized):
                 raise ValueError()
             n_items = len(self.loader)
-        return Stream._EpochData(self, n_items)
+        return Stream._NextN(self, None if n_items == 'inf' else n_items)
 
     def epochs(
-        self,
-        max_epoch: Union[int, float],
-        epoch_size: Optional[Union[int, float]] = None,
+        self, max_epoch: Union[int, float], epoch_size: Optional[int] = None
     ) -> Iterator[Iterator[Any]]:
         """Iterate over data epochs.
 
@@ -363,7 +369,7 @@ class Stream:
 
             while stream.epoch < max_epoch:
                 stream.increment_epoch()
-                for batch in stream.data(epoch_size):
+                for batch in stream.next_n(epoch_size):
                     ...
 
         Args:
@@ -371,7 +377,7 @@ class Stream:
                 :code:`self.epoch < max_epoch`. If `float`, must be :code:`float('inf')`
                 or `math.inf`.
             epoch_size: the number of data items in one epoch
-                (is forwarded to `Stream.data`).
+                (is forwarded to `Stream.next_n`).
 
         Returns:
             Iterator over iterators over data from `Stream.loader`.
@@ -422,7 +428,7 @@ class Stream:
             assert math.isinf(max_epoch)
         while self.epoch < max_epoch:
             self.increment_epoch()
-            yield self.data(epoch_size)
+            yield self.next_n(epoch_size)
 
     def state_dict(self) -> Dict[str, Any]:
         """Get the stream's state.
@@ -463,7 +469,7 @@ class Stream:
 
         Note:
             The method does not affect data that is produced by `Stream.epochs`,
-            `Stream.data`, `Stream.next` (see the examples below), i.e. the method
+            `Stream.next_n`, `Stream.next` (see the examples below), i.e. the method
             only sets some "metadata" such as step, epoch etc. If you want to
             load the "state of data stream", you have to load the state of corresponding
             random number generators separately.
