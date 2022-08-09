@@ -8,24 +8,14 @@ from delu.data import Stream
 def test_properties():
     data = [0]
     stream = Stream(data)
-    assert stream.step == 0
-    assert stream.epoch == 0
     assert stream.data is data
-    for attr in 'step', 'epoch', 'data':
-        with raises(AttributeError):
-            setattr(stream, attr, None)
+    with raises(AttributeError):
+        stream.data = []
 
 
 def test_bad_data():
     with raises(AssertionError):
         Stream([])
-
-
-def test_increment_epoch():
-    stream = Stream(range(3))
-    for i in range(10):
-        assert stream.epoch == i
-        stream.increment_epoch()
 
 
 def test_set_data():
@@ -54,14 +44,11 @@ def test_reload_iterator():
 
 
 @mark.parametrize('n', range(1, 5))
-def test_next_step(n):
+def test_next(n):
     stream = Stream(range(n))
-    assert stream.step == 0
-
     for epoch in range(2):
         for x in range(n):
             assert stream.next() == x
-            assert stream.step == x + epoch * n + 1
 
     stream = Stream(iter(range(n)))
     for _ in range(n):
@@ -79,18 +66,14 @@ def test_next_n(n):
     stream = Stream(range(n))
     assert [list(stream.next_n(0)) for _ in range(n_epochs)] == [[]] * n_epochs
 
-    for epoch_size in [None] + list(range(1, 2 * n)):
-        effective_epoch_size = n if epoch_size is None else epoch_size
-        max_step = n_epochs * effective_epoch_size
+    for epoch_size in range(1, 2 * n):
         stream = Stream(range(n))
-        actual = []
-        while stream.step < max_step:
-            actual.append(list(stream.next_n(epoch_size)))
-        assert stream.step == max_step
-        flat_correct = [x % n for x in range(max_step)]
+        n_items = n_epochs * epoch_size
+        actual = [list(stream.next_n(epoch_size)) for _ in range(n_epochs)]
+        assert n_items == sum(map(len, actual))
+        flat_correct = [x % n for x in range(sum(map(len, actual)))]
         correct = [
-            flat_correct[i * effective_epoch_size : (i + 1) * effective_epoch_size]
-            for i in range(n_epochs)
+            flat_correct[i * epoch_size : (i + 1) * epoch_size] for i in range(n_epochs)
         ]
         assert actual == correct
 
@@ -102,8 +85,6 @@ def test_next_n(n):
 
     # infinite iterators
     stream = Stream(itertools.count())
-    with raises(ValueError):
-        stream.next_n()
     n_epochs = 10
     for epoch_size in range(1, n):
         stream = Stream(itertools.count())
@@ -116,8 +97,6 @@ def test_next_n(n):
 
     # finite iterators
     stream = Stream(iter(range(n)))
-    with raises(ValueError):
-        stream.next_n()
     n_epochs = 10
     for epoch_size in range(1, 2 * n):
         stream = Stream(iter(range(n)))
@@ -133,46 +112,3 @@ def test_next_n(n):
     # bad input
     with raises(AssertionError):
         stream.next_n('inf ')
-
-
-def test_epochs():
-    stream = Stream(range(3))
-
-    with raises(AssertionError):
-        next(stream.epochs('inf '))
-
-    correct = [0, 1, 2]
-    for epoch in stream.epochs(2):
-        assert list(epoch) == correct
-
-    stream = Stream(range(3))
-    correct = [[0, 1], [2, 0], [1, 2]]
-    for i, epoch in enumerate(stream.epochs(3, 2)):
-        assert list(epoch) == correct[i]
-
-    for (i, epoch), _ in zip(enumerate(stream.epochs("inf")), range(1000)):
-        pass
-    assert i == 999
-
-    stream = Stream(range(3))
-    for (i, epoch), _ in zip(enumerate(stream.epochs("inf", None)), range(10)):
-        for (j, _), _ in zip(enumerate(epoch), range(10)):
-            pass
-        assert j == 2
-    assert i == 9
-
-
-def test_state_dict():
-    stream = Stream(range(10))
-    stream.next()
-    stream.increment_epoch()
-    assert stream.state_dict() == {'epoch': 1, 'step': 1}
-
-    new_stream = Stream(range(10))
-    new_stream.load_state_dict(stream.state_dict())
-    assert new_stream.state_dict() == {'epoch': 1, 'step': 1}
-    assert new_stream.next() == 0
-    assert new_stream.state_dict() == {'epoch': 1, 'step': 2}
-    assert new_stream.next() == 1
-
-    assert stream.next() == 1

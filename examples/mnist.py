@@ -62,6 +62,7 @@ def main():
         'delu/examples'
     ), 'Run this script from the "examples" directory'
     args = parse_args()
+    assert args.n_epochs > 0
 
     if not args.skip_download:
         download_mnist()
@@ -92,34 +93,35 @@ def main():
         assert args.from_checkpoint != 'checkpoint.pt'
         assert Path(args.from_checkpoint).exists()
         checkpoint = torch.load(args.from_checkpoint)
+        start_epoch = checkpoint['epoch'] + 1
         model.load_state_dict(checkpoint['model'])
         optimizer.load_state_dict(checkpoint['optimizer'])
-        stream.load_state_dict(checkpoint['stream'])
         timer = checkpoint['timer']
         progress = checkpoint['progress']
         delu.random.set_state(checkpoint['random_state'])
         print('Resuming from the checkpoint.\n')
+    else:
+        start_epoch = 0
 
-    for epoch in stream.epochs(args.n_epochs, args.epoch_size):
-        print(f'\nEpoch {stream.epoch} started (steps completed: {stream.step})')
-        timer.run()
+    for epoch in range(start_epoch, args.n_epochs):
+        print(f'\nEpoch {epoch} started')
 
-        for batch in epoch:
+        with timer:
             model.train()
-            optimizer.zero_grad()
-            F.cross_entropy(*step(batch)).backward()
-            optimizer.step()
+            for batch in stream.next_n(args.epoch_size):
+                optimizer.zero_grad()
+                F.cross_entropy(*step(batch)).backward()
+                optimizer.step()
 
-        timer.pause()
         accuracy = evaluate(val_loader)
         progress.update(accuracy)
         if progress.success:
             print('New best score!')
             torch.save(
                 {
+                    'epoch': epoch,
                     'model': model.state_dict(),
                     'optimizer': optimizer.state_dict(),
-                    'stream': stream.state_dict(),
                     'timer': timer,
                     'progress': progress,
                     'random_state': delu.random.get_state(),
@@ -128,7 +130,7 @@ def main():
             )
 
         msg = (
-            f'Epoch {stream.epoch} finished. '
+            f'Epoch {epoch} finished. '
             f'Time elapsed: {timer}. '
             f'Validation accuracy: {accuracy:.4f}.'
         )
@@ -142,7 +144,7 @@ def main():
     timer.pause()
     model.load_state_dict(torch.load(checkpoint_path)['model'])
     print(
-        f'\nTraining stopped after the epoch {stream.epoch}.\n'
+        f'\nTraining stopped after the epoch {epoch}.\n'
         f'Total training time: {timer}\n'
         f'Test accuracy: {evaluate(test_loader)}'
     )
