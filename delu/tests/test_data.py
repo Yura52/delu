@@ -39,12 +39,12 @@ def test_fndataset():
     assert dataset[2] == 16
 
 
-def test_iloader():
-    with raises(AssertionError):
-        dd.IndexLoader(0)
+def test_make_index_dataloader():
+    with raises(ValueError):
+        dd.make_index_dataloader(0)
 
     for x in range(1, 10):
-        assert len(dd.IndexLoader(x)) == x
+        assert len(dd.make_index_dataloader(x)) == x
 
     data = torch.arange(10)
     for batch_size in range(1, len(data) + 1):
@@ -52,7 +52,9 @@ def test_iloader():
         correct = list(DataLoader(data, batch_size, shuffle=True, drop_last=True))
         torch.manual_seed(batch_size)
         actual = list(
-            dd.IndexLoader(len(data), batch_size, shuffle=True, drop_last=True)
+            dd.make_index_dataloader(
+                len(data), batch_size, shuffle=True, drop_last=True
+            )
         )
         for x, y in zip(actual, correct):
             assert torch.equal(x, y)
