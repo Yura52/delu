@@ -40,7 +40,7 @@ def get_gpus_info() -> Dict[str, Any]:
 
     Warning:
         The 'devices' value contains information about *all* gpus regardless of the
-        value of :code:`CUDA_VISIBLE_DEVICES`.
+        value of ``CUDA_VISIBLE_DEVICES``.
 
     Examples:
         .. code-block::

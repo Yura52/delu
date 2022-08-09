@@ -29,8 +29,8 @@ def improve_reproducibility(
         one_cuda_seed: the argument for `delu.random.seed`.
 
     Returns:
-        base_seed: if :code:`base_seed` is set to `None`, the generated base seed is
-            returned; otherwise, :code:`base_seed` is returned as is
+        base_seed: if ``base_seed`` is set to `None`, the generated base seed is
+            returned; otherwise, ``base_seed`` is returned as is
 
     Note:
         If you don't want to choose the base seed, but still want to have a chance to
@@ -137,7 +137,7 @@ class evaluation(ContextDecorator):
         Args:
             func
         Raises:
-            AssertionError: if :code:`func` is a generator
+            AssertionError: if ``func`` is a generator
         """
         assert not inspect.isgeneratorfunction(
             func

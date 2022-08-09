@@ -93,12 +93,12 @@ class FnDataset(Dataset):
     With vanilla PyTorch, in order to create a dataset you have to inherit from
     `torch.utils.data.Dataset` and implement three methods:
 
-    - :code:`__init__`
-    - :code:`__len__`
-    - :code:`__getitem__`
+    - ``__init__``
+    - ``__len__``
+    - ``__getitem__``
 
-    With `FnDataset` the only thing you *may need* to implement is the :code:`fn`
-    argument that will power :code:`__getitem__`. The easiest way to learn
+    With `FnDataset` the only thing you *may* need to implement is the ``fn``
+    argument that will power ``__getitem__``. The easiest way to learn
     `FnDataset` is to go through examples below.
 
     A list of images::
@@ -167,10 +167,10 @@ class FnDataset(Dataset):
         """Initialize self.
 
         Args:
-            fn: the function that produces values based on arguments from :code:`args`
-            args: arguments for :code:`fn`. If an iterable, but not a list, then is
+            fn: the function that produces values based on arguments from ``args``
+            args: arguments for ``fn``. If an iterable, but not a list, then is
                 casted to a list. If an integer, then the behavior is the same as for
-                :code:`list(range(args))`. The size of :code:`args` defines the return
+                ``list(range(args))``. The size of ``args`` defines the return
                 value for `FnDataset.__len__`.
             transform: if presented, is applied to the return value of `fn` in
                 `FnDataset.__getitem__`
@@ -210,7 +210,7 @@ class FnDataset(Dataset):
         Returns:
             value
         Raises:
-            IndexError: if :code:`index >= len(self)`
+            IndexError: if ``index >= len(self)``
         """
         if isinstance(self._args, list):
             x = self._args[index]
@@ -299,7 +299,7 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
 
 
 def collate(iterable: Iterable[T]) -> Any:
-    """Almost an alias for :code:`torch.utils.data.dataloader.default_collate`.
+    """A friendly alias for ``torch.utils.data.dataloader.default_collate``.
 
     Namely, the input is allowed to be any kind of iterable, not only a list. Firstly,
     if it is not a list, it is transformed to a list. Then, the list is passed to the
@@ -368,7 +368,7 @@ class IndexLoader:
         """Initialize self.
 
         Args:
-            size: the number of items (for example, :code:`len(dataset)`)
+            size: the number of items (for example, ``len(dataset)``)
             *args: positional arguments for `torch.utils.data.DataLoader`
             device: if not CPU, then all indices are materialized and moved to the
                 device at the beginning of every loop. It can be useful when the indices

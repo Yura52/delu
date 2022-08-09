@@ -43,9 +43,6 @@ source = "delu"
 [tool.flit.module]
 name = "delu"
 
-[tool.flit.sdist]
-exclude = ["other"]
-
 [tool.isort]
 combine_as_imports = true
 # all the following settings are taken from the isort5.0's "black" profile

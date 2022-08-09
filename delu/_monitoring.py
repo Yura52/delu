@@ -17,7 +17,7 @@ class ProgressTracker:
     At any moment the tracker is in one of the following states:
 
     - *success*: the last update changed the best score
-    - *fail*: last :code:`n > patience` updates are not better than the best score
+    - *fail*: last ``n > patience`` updates are not better than the best score
     - *neutral*: if neither success nor fail
 
     .. rubric:: Tutorial
@@ -299,7 +299,7 @@ class Timer:
         """Get time elapsed since the start.
 
         If the timer is just created/reset, the shift is returned (can be negative!).
-        Otherwise, :code:`now - start_time + shift` is returned. The shift includes
+        Otherwise, ``now - start_time + shift`` is returned. The shift includes
         total pause time (including the current pause, if the timer is on pause) and
         all manipulations by `~Timer.add` and `~Timer.sub`.
 
@@ -325,7 +325,7 @@ class Timer:
         Args:
             format_str: the format string passed to `time.strftime`
         Returns:
-            Filled :code:`format_str`.
+            Filled ``format_str``.
 
         Examples:
             .. testcode::

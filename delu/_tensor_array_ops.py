@@ -43,7 +43,7 @@ def concat(iterable: Iterable[T]) -> T:
     """Concatenate items (tensors, numpy-arrays, tuples, dicts etc.) along the first
     dimension.
 
-    `concat` is a more general version of :code:`torch.cat(..., dim=0)`. It works not
+    `concat` is a more general version ``torch.cat(..., dim=0)``. It works not
     only with sequences of tensors, but also with sequences of containers (tuples,
     dicts etc.) of different types of data (tensors, numpy-arrays, primitive types). See
     the tutorial and the examples below to understand what the function does.
@@ -78,7 +78,7 @@ def concat(iterable: Iterable[T]) -> T:
     If you have an iterable that contains/produces batches of some kind (tensors,
     numpy-arrays, tuples/dictionaries thereof and other not-too-specific content), then
     use `concat` to concatenate all the items. A prominent case is application of models
-    and functions to batches (e.g. to :code:`DataLoader`)::
+    and functions to batches (e.g. to ``DataLoader``)::
 
         whole_result = concat(map(model_or_fn, batches))
         # or
@@ -139,7 +139,7 @@ def concat(iterable: Iterable[T]) -> T:
         - the mental model for understanding the following examples is "concatenating
           data for 3 batches of sizes (2, 2, 3)". Note that sizes of batches are
           allowed to vary, but the structure is always the same
-        - in all examples there is :code:`data` - a list of batches; in fact, it can be
+        - in all examples there is ``data`` - a list of batches; in fact, it can be
           any "iterable of batches", including iterators and generators; the list is
           chosen to simplify the demonstration
 
@@ -297,7 +297,7 @@ def iter_batches(
 
     Note:
         If you want to infinitely iterate over batches, wrap the function in
-        :code:`while True:`.
+        ``while True:``.
 
     Warning:
         Numpy-arrays are not supported because of how they behave when indexed by a
@@ -305,7 +305,7 @@ def iter_batches(
         `the issue <https://github.com/numpy/numpy/issues/16543>`_
 
     See also:
-        - `delu.data.IndexLoader`
+        - `delu.data.make_index_dataloader`
         - `concat`
 
     Examples:

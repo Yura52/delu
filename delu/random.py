@@ -11,17 +11,17 @@ import torch
 def seed(base_seed: int, one_cuda_seed: bool = False) -> None:
     """Set seeds in `random`, `numpy` and `torch`.
 
-    For all libraries, different seeds (which are _deterministically_ calculated based
-    on the :code:`base_seed` argument) are set.
+    For all libraries, different seeds (which are *deterministically* calculated based
+    on the ``base_seed`` argument) are set.
 
     Note:
-        Different seed are set to avoid situations where different libraries or devices
+        Different seeds are set to avoid situations where different libraries or devices
         generate the same random sequences. For example, see
         `this comment <https://github.com/PyTorchLightning/pytorch-lightning/pull/6960#issuecomment-818393659>`_
         on setting the same seed for the standard library and NumPy.
     Args:
         base_seed: the number used to determine random seeds for all libraries and
-            hardware. Must be a non-negative number less than :code:`2 ** 32 - 10000`.
+            hardware. Must be a non-negative number less than ``2 ** 32 - 10000``.
         one_cuda_seed: if `True`, then the same seed will be set for all cuda devices,
             otherwise, different seeds will be set for all cuda devices.
     Raises:
@@ -92,14 +92,14 @@ def set_state(state: Dict[str, Any]) -> None:
 
     Args:
         state: global RNG states. Must be produced by `get_state`. The size of the list
-            :code:`state['torch.cuda']` must be equal to the number of available cuda
+            ``state['torch.cuda']`` must be equal to the number of available cuda
             devices.
 
     See also:
         `get_state`
 
     Raises:
-        AssertionError: if :code:`torch.cuda.device_count() != len(state['torch.cuda'])`
+        AssertionError: if ``torch.cuda.device_count() != len(state['torch.cuda'])``
     """
     random.setstate(state['random'])
     np.random.set_state(state['numpy.random'])
@@ -110,7 +110,7 @@ def set_state(state: Dict[str, Any]) -> None:
 
 @contextmanager
 def preserve_state():
-    """Decorator and a context manager for preserving global random state.
+    """Decorator and context manager for preserving global random state.
 
     Examples:
 
