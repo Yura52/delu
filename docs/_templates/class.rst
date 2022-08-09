@@ -26,7 +26,7 @@
       ~{{ name }}.{{ item }}
 
    {%- endfor %}
-   {% for item in ['__call__', '__len__', '__getitem__', '__setitem__', '__iter__', '__enter__', '__exit__', '__getstate__', '__setstate__',] %}
+   {% for item in ['__call__', '__enter__', '__exit__', '__getitem__', '__getstate__', '__iter__', '__len__', '__setitem__', '__setstate__',] %}
       {% if item in members %}
       ~{{ name }}.{{ item }}
       {% endif %}

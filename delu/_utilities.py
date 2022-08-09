@@ -65,7 +65,7 @@ class evaluation(ContextDecorator):
 
     This code... ::
 
-        with evaluation(model):  # or: evaluation(model_0, model_1, ...)
+        with evaluation(model):  # or: with evaluation(model_0, model_1, ...)
             ...
 
         @evaluation(model)  # or: @evaluation(model_0, model_1, ...)

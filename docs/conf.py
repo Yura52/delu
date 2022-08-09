@@ -37,8 +37,8 @@ if platform.machine() != 'arm64':
     # libenchant is not available for Apple CPUs
     extensions.append('sphinxcontrib.spelling')
 
-autodoc_member_order = 'bysource'
 autodoc_typehints = 'description'
+autodoc_typehints_format = 'fully-qualified'
 
 doctest_global_setup = '''
 import numpy as np

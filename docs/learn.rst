@@ -30,9 +30,9 @@ are the things to learn:
 .. autosummary::
    :nosignatures:
 
-   delu.Stream
-   delu.evaluation
+   delu.data.Stream
    delu.improve_reproducibility
+   delu.evaluation
    delu.random
    delu.ProgressTracker
    delu.Timer
