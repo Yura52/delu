@@ -78,17 +78,6 @@ def test_timer():
     sleep(0.001)
     assert timer() == x
 
-    # add, sub
-    timer.pause()
-    with pytest.raises(AssertionError):
-        timer.add(-1.0)
-    timer.add(1.0)
-    assert timer() - x == pytest.approx(1)
-    with pytest.raises(AssertionError):
-        timer.sub(-1.0)
-    timer.sub(1.0)
-    assert timer() == x
-
     # run
     timer.pause()
     x = timer()
@@ -148,7 +137,7 @@ def test_timer_pickle():
 def test_timer_format():
     def make_timer(x):
         timer = delu.Timer()
-        timer.add(x)
+        timer._shift = x
         return timer
 
     assert str(make_timer(1)) == '0:00:01'

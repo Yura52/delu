@@ -132,10 +132,7 @@ class ProgressTracker:
 class Timer:
     """Measures time.
 
-    Measures time elapsed since the first call to `~Timer.run` up to "now" plus
-    shift. The shift accumulates all pauses time and can be manually changed with the
-    methods `~Timer.add` and `~Timer.sub`. If a timer is just created/reset, the shift
-    is 0.0.
+    Measures time elapsed since the first call to `~Timer.run` up to "now" minus pauses.
 
     Note:
         Measurements are performed via `time.perf_counter`.
@@ -158,12 +155,9 @@ class Timer:
         time.sleep(0.01)
         assert timer() == elapsed  # time didn't change because the timer is on pause
 
-        timer.add(1.0)
-        assert timer() == elapsed + 1.0
-
         timer.run()  # resume
         time.sleep(0.01)
-        assert timer() > elapsed + 1.0
+        assert timer() > elapsed
 
         timer.reset()
         assert timer() == 0.0
@@ -172,19 +166,14 @@ class Timer:
             time.sleep(0.01)
         # timer is on pause and timer() returns the time elapsed within the context
 
-    `Timer` can be printed and formatted in a human-readable manner:
-
-    .. testcode::
+    `Timer` can be printed and formatted in a human-readable manner::
 
         timer = Timer()
-        timer.add(3661)
-        print('Time elapsed:', timer)
+        timer.run()
+        <let's assume that 3661 seconds have passed>
+        print('Time elapsed:', timer)  # prints "Time elapsed: 1:01:01"
         assert str(timer) == f'{timer}' == '1:01:01'
         assert timer.format('%Hh %Mm %Ss') == '01h 01m 01s'
-
-    .. testoutput::
-
-        Time elapsed: 1:01:01
 
     `Timer` is pickle friendly:
 
@@ -237,7 +226,7 @@ class Timer:
         if self._start_time is None:
             self._start_time = time.perf_counter()
         elif self._pause_time is not None:
-            self.sub(time.perf_counter() - self._pause_time)
+            self._shift -= time.perf_counter() - self._pause_time
             self._pause_time = None
 
     def pause(self) -> None:
@@ -253,55 +242,8 @@ class Timer:
         if self._pause_time is None:
             self._pause_time = time.perf_counter()
 
-    def add(self, delta: float) -> None:
-        """Add non-negative delta to the shift.
-
-        Args:
-            delta
-        Raises:
-            AssertionError: if delta is negative
-
-        Examples:
-            .. testcode::
-
-                timer = Timer()
-                assert timer() == 0.0
-                timer.add(1.0)
-                assert timer() == 1.0
-                timer.add(2.0)
-                assert timer() == 3.0
-        """
-        assert delta >= 0
-        self._shift += delta
-
-    def sub(self, delta: float) -> None:
-        """Subtract non-negative delta from the shift.
-
-        Args:
-            delta
-        Raises:
-            AssertionError: if delta is negative
-
-        Examples:
-            .. testcode::
-
-                timer = Timer()
-                assert timer() == 0.0
-                timer.sub(1.0)
-                assert timer() == -1.0
-                timer.sub(2.0)
-                assert timer() == -3.0
-        """
-        assert delta >= 0
-        self._shift -= delta
-
     def __call__(self) -> float:
-        """Get time elapsed since the start.
-
-        If the timer is just created/reset, the shift is returned (can be negative!).
-        Otherwise, ``now - start_time + shift`` is returned. The shift includes
-        total pause time (including the current pause, if the timer is on pause) and
-        all manipulations by `~Timer.add` and `~Timer.sub`.
+        """Get the time elapsed since the start.
 
         Returns:
             Time elapsed.
@@ -327,12 +269,11 @@ class Timer:
         Returns:
             Filled ``format_str``.
 
-        Examples:
-            .. testcode::
+        Example::
 
-                timer = Timer()
-                timer.add(3661)
-                assert timer.format('%Hh %Mm %Ss') == '01h 01m 01s'
+            timer = Timer()
+            <let's assume that 3661 seconds have passed>
+            assert timer.format('%Hh %Mm %Ss') == '01h 01m 01s'
         """
         return time.strftime(format_str, time.gmtime(self()))
 
