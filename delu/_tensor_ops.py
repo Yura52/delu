@@ -59,10 +59,10 @@ def to(data: T, *args, **kwargs) -> T:
     elif isinstance(data, (tuple, list)):
         constructor = type(data)._make if is_namedtuple(data) else type(data)  # type: ignore  # noqa: E501
         return constructor(TO_(x) for x in data)  # type: ignore
-    elif dataclasses.is_dataclass(data):
-        return type(data)(**{k: TO_(v) for k, v in vars(data).items()})  # type: ignore
     elif isinstance(data, dict):
         return type(data)((k, TO_(v)) for k, v in data.items())  # type: ignore
+    elif dataclasses.is_dataclass(data):
+        return type(data)(**{k: TO_(v) for k, v in vars(data).items()})  # type: ignore
     else:
         raise ValueError(
             f'the input contains an object of the unsupported type {type(data)}.'
