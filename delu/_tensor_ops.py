@@ -29,21 +29,23 @@ def to(data: T, *args, **kwargs) -> T:
     Examples:
         .. testcode::
 
-            device = torch.device('cpu')  # in practice, this can be 'cuda'
+            # in practice, this can be 'cuda' or any other device
+            device = torch.device('cpu')
+            tensor = torch.tensor
 
-            x = torch.tensor(0)
+            x = tensor(0)
             x = to(x, dtype=torch.float, device=device)
 
             batch = {
-                'x': torch.tensor([0.0, 1.0]),
-                'y': torch.tensor([0, 1]),
+                'x': tensor([0.0, 1.0]),
+                'y': tensor([0, 1]),
             }
             batch = to(batch, device)
 
             x = [
-                torch.tensor(0.0),
-                {'a': torch.tensor(1.0), 'b': torch.tensor(2.0)},
-                (torch.tensor(3.0), torch.tensor(4.0))
+                tensor(0.0),
+                {'a': tensor(1.0), 'b': tensor(2.0)},
+                (tensor(3.0), tensor(4.0))
             ]
             x = to(x, torch.half)
     """
