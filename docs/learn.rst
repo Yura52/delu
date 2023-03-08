@@ -32,7 +32,6 @@ are the things to learn:
 
    delu.Iterator
    delu.improve_reproducibility
-   delu.evaluation
    delu.random
    delu.ProgressTracker
    delu.Timer

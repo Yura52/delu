@@ -1,9 +1,7 @@
 import random
 
 import numpy as np
-import pytest
 import torch
-import torch.nn as nn
 
 import delu
 
@@ -24,44 +22,3 @@ def test_improve_reproducibility():
         results = f()
         delu.random.seed(seed)
         assert results == f()
-
-
-@pytest.mark.parametrize('train', [False, True])
-@pytest.mark.parametrize('grad', [False, True])
-@pytest.mark.parametrize('n_models', range(3))
-def test_evaluation(train, grad, n_models):
-    if not n_models:
-        with pytest.raises(AssertionError):
-            with delu.evaluation():
-                pass
-        return
-
-    torch.set_grad_enabled(grad)
-    models = [nn.Linear(1, 1) for _ in range(n_models)]
-    for x in models:
-        x.train(train)
-    with delu.evaluation(*models):
-        assert all(not x.training for x in models[:-1])
-        assert not torch.is_grad_enabled()
-    assert torch.is_grad_enabled() == grad
-    for x in models:
-        x.train(train)
-
-    @delu.evaluation(*models)
-    def f():
-        assert all(not x.training for x in models[:-1])
-        assert not torch.is_grad_enabled()
-        for x in models:
-            x.train(train)
-
-    for _ in range(3):
-        f()
-        assert torch.is_grad_enabled() == grad
-
-
-def test_evaluation_generator():
-    with pytest.raises(AssertionError):
-
-        @delu.evaluation(nn.Linear(1, 1))
-        def generator():
-            yield 1

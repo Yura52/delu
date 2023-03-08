@@ -58,8 +58,3 @@ def test_make_index_dataloader():
         )
         for x, y in zip(actual, correct):
             assert torch.equal(x, y)
-
-
-def test_collate():
-    # just test that the function is still a valid alias
-    assert torch.equal(dd.collate([1])[0], torch.tensor(1))

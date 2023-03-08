@@ -20,7 +20,8 @@ delu.data
     :toctree: api
 
     make_index_dataloader
-    collate
+
+----
 
 .. autosummary::
     :nosignatures:

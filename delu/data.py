@@ -292,19 +292,6 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
     return DataLoader(_IndexDataset(size), *args, **kwargs)
 
 
-def collate(iterable: Iterable[T]) -> Any:
-    """A friendly alias for ``torch.utils.data.dataloader.default_collate``.
-
-    Namely, the input is allowed to be any kind of iterable, not only a list. First,
-    if it is not a list, it is transformed to a list. Then, the list is passed to the
-    original function and the result is returned as is.
-    """
-    if not isinstance(iterable, list):
-        iterable = list(iterable)
-    # > Module has no attribute "default_collate"
-    return torch.utils.data.dataloader.default_collate(iterable)  # type: ignore
-
-
 class IndexLoader:
     """**DEPRECATED, use** `make_index_dataloader`"""
 

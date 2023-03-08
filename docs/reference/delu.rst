@@ -35,13 +35,6 @@ delu
 
    improve_reproducibility
 
-.. autosummary::
-   :nosignatures:
-   :toctree: api
-   :template: class_just_autoclass.rst
-
-   evaluation
-
 .. rubric:: Submodules
 
 See the sidebar on the left.
