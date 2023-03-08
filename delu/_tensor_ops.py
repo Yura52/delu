@@ -105,8 +105,8 @@ def concat(iterable: Iterable[T]) -> T:
         assert result['y_pred'] == len(dataset) and len(result['y']) == len(dataset)
 
     The function can be used in combination with `iter_batches`. For example, this is
-    how pairwise dot products can be calculated in a batchwise manner if full matrix
-    multiplication does not fit into memory:
+    how pairwise dot products can be computed by batches if full matrix multiplication
+    does not fit into memory:
 
     .. testcode::
 
@@ -278,10 +278,10 @@ def iter_batches(
     **kwargs,
 ) -> Iterator:
     """*Efficiently* iterate over data (tensor, tuple of tensors, dict of tensors etc.)
-    in a batchwise manner.
+    by batches.
 
     The function is useful when you want to *efficiently* iterate **once** over
-    tensor-based data in a batchwise manner. See examples below for typical use cases.
+    tensor-based data by batches. See examples below for typical use cases.
 
     The function is a more efficient alternative to `torch.utils.data.DataLoader` when
     it comes to in-memory data, because it uses batch-based indexing instead of

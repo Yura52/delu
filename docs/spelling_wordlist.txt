@@ -1,4 +1,3 @@
-batchwise
 behaviour
 callables
 casted
