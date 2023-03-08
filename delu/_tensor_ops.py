@@ -1,6 +1,6 @@
 import dataclasses
 from types import SimpleNamespace
-from typing import Any, Dict, Iterable, Iterator, Tuple, TypeVar, Union
+from typing import Iterable, Iterator, TypeVar
 
 import torch
 
@@ -184,31 +184,19 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
         raise ValueError(f'The collection type {type(first)} is not supported.')
 
 
-def iter_batches(
-    data: Union[
-        torch.Tensor,
-        Tuple[torch.Tensor, ...],
-        Dict[Any, torch.Tensor],
-        torch.utils.data.TensorDataset,
-    ],
-    *args,
-    **kwargs,
-) -> Iterator:
-    """Efficiently iterate over data (tensor, tuple of tensors, dict of tensors etc.)
-    by batches.
+def iter_batches(data: T, *args, **kwargs) -> Iterator[T]:
+    """Iterate over collection of tensors by (random) batches.
 
-    The function is useful when you want to *efficiently* iterate **once** over
-    tensor-based data by batches. See examples below for typical use cases.
-
-    The function is a more efficient alternative to `torch.utils.data.DataLoader` when
-    it comes to in-memory data, because it uses batch-based indexing instead of
-    item-based indexing (DataLoader's behavior). **The shuffling logic is delegated to
-    the native PyTorch DataLoader**, i.e. no custom logic is performed under the hood.
+    This function is a more efficient alternative to `torch.utils.data.DataLoader` when
+    it comes to in-memory tensors, because it uses batch-based indexing instead of
+    item-based indexing (the DataLoader's behavior). **The shuffling logic is delegated
+    to the native PyTorch DataLoader**, i.e. no custom logic is performed
+    under the hood.
 
     Args:
         data:
-        *args: positional arguments for `IndexLoader`
-        **kwargs: keyword arguments for `IndexLoader`
+        *args: positional arguments for `delu.data.make_index_dataloader`
+        **kwargs: keyword arguments for `delu.data.make_index_dataloader`
     Returns:
         Iterator over batches.
 
@@ -218,15 +206,15 @@ def iter_batches(
 
     See also:
         - `delu.data.make_index_dataloader`
-        - `concat`
+        - `cat`
 
     Examples:
         Besides loops over batches, the function can be used in combination with
-        `concat`:
+        `cat`:
 
         .. code-block::
 
-            result = concat(map(fn, iter_batches(dataset_or_tensors_or_whatever, ...)))
+            result = cat(map(fn, iter_batches(dataset_or_tensors_or_whatever, ...)))
 
         The function can also be used for training:
 
@@ -239,17 +227,17 @@ def iter_batches(
     # mypy understands very little about this function
     if is_namedtuple(data):
         assert data
-        f = lambda idx: type(data)._make(x[idx] for x in data)  # type: ignore # noqa
+        get_batch = lambda idx: type(data)._make(x[idx] for x in data)  # type: ignore # noqa
         size = len(data[0])  # type: ignore
     elif isinstance(data, tuple):
         assert data
-        f = lambda idx: type(data)(x[idx] for x in data)  # type: ignore # noqa
+        get_batch = lambda idx: type(data)(x[idx] for x in data)  # type: ignore # noqa
         size = len(data[0])  # type: ignore
     elif isinstance(data, dict):
         assert data
-        f = lambda idx: type(data)({k: v[idx] for k, v in data.items()})  # type: ignore # noqa
+        get_batch = lambda idx: type(data)({k: v[idx] for k, v in data.items()})  # type: ignore # noqa
         size = len(next(iter(data.values())))  # type: ignore
     else:
-        f = data.__getitem__
+        get_batch = data.__getitem__  # type: ignore
         size = len(data)  # type: ignore
-    return map(f, make_index_dataloader(size, *args, **kwargs))
+    return map(get_batch, make_index_dataloader(size, *args, **kwargs))
