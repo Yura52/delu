@@ -1,11 +1,11 @@
 """Deep Learning Utilities for PyTorch users."""
 __version__ = '0.0.14.dev0'
 
-from . import data  # noqa
-from . import hardware  # noqa
-from . import nn  # noqa
-from . import random  # noqa
-from ._monitoring import ProgressTracker, Timer  # noqa
-from ._tensor_ops import concat, iter_batches, to  # noqa
-from ._utilities import evaluation, improve_reproducibility  # noqa
-from .data import Stream  # noqa (NOTE: deprecated alias)
+from . import data  # noqa: F401
+from . import hardware  # noqa: F401
+from . import nn  # noqa: F401
+from . import random  # noqa: F401
+from ._iterator import Iterator  # noqa: F401
+from ._monitoring import ProgressTracker, Timer  # noqa: F401
+from ._tensor_ops import concat, iter_batches, to  # noqa: F401
+from ._utilities import evaluation, improve_reproducibility  # noqa: F401

@@ -82,7 +82,7 @@ def main():
 
     train_dataset, val_dataset = split_dataset(get_dataset(True), 0.8)
     test_dataset = get_dataset(False)
-    stream = delu.data.Stream(DataLoader(train_dataset, batch_size=64, shuffle=True))
+    dataiter = delu.Iterator(DataLoader(train_dataset, batch_size=64, shuffle=True))
     val_loader = DataLoader(val_dataset, batch_size=8096)
     test_loader = DataLoader(test_dataset, batch_size=8096)
 
@@ -108,7 +108,7 @@ def main():
 
         with timer:
             model.train()
-            for batch in stream.next_n(args.epoch_size):
+            for batch in dataiter.next_n(args.epoch_size):
                 optimizer.zero_grad()
                 F.cross_entropy(*step(batch)).backward()
                 optimizer.step()

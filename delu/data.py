@@ -5,8 +5,6 @@ from typing import Any, Callable, Iterable, Optional, Tuple, TypeVar, Union
 import torch
 from torch.utils.data import DataLoader, Dataset
 
-from ._stream import Stream as Stream
-
 T = TypeVar('T')
 
 

@@ -12,7 +12,6 @@ delu.data
     :toctree: api
     :template: class.rst
 
-    Stream
     Enumerate
     FnDataset
 

@@ -30,7 +30,7 @@ are the things to learn:
 .. autosummary::
    :nosignatures:
 
-   delu.data.Stream
+   delu.Iterator
    delu.improve_reproducibility
    delu.evaluation
    delu.random
