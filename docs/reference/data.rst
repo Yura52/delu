@@ -15,7 +15,6 @@ delu.data
     Stream
     Enumerate
     FnDataset
-    IndexDataset
 
 .. autosummary::
     :nosignatures:

@@ -222,9 +222,7 @@ class FnDataset(Dataset):
         return x if self._transform is None else self._transform(x)
 
 
-class IndexDataset(Dataset):
-    """The dataset used by `make_index_dataloader`."""
-
+class _IndexDataset(Dataset):
     def __init__(self, size: int) -> None:
         if size < 1:
             raise ValueError('size must be positive')
@@ -242,10 +240,7 @@ class IndexDataset(Dataset):
 
 
 def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
-    """Make `~torch.utils.data.DataLoader` over indices instead of data.
-
-    This is just a shortcut for
-    ``torch.utils.data.DataLoader(delu.data.IndexDataset(...), ...)``.
+    """Make `~torch.utils.data.DataLoader` over *indices* instead of data.
 
     Args:
         size: the dataset size
@@ -296,13 +291,13 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
     See also:
         `delu.iter_batches`
     """  # noqa: E501
-    return DataLoader(IndexDataset(size), *args, **kwargs)
+    return DataLoader(_IndexDataset(size), *args, **kwargs)
 
 
 def collate(iterable: Iterable[T]) -> Any:
     """A friendly alias for ``torch.utils.data.dataloader.default_collate``.
 
-    Namely, the input is allowed to be any kind of iterable, not only a list. Firstly,
+    Namely, the input is allowed to be any kind of iterable, not only a list. First,
     if it is not a list, it is transformed to a list. Then, the list is passed to the
     original function and the result is returned as is.
     """
@@ -382,7 +377,7 @@ class IndexLoader:
         """
         assert size > 0
         self._batch_size = args[0] if args else kwargs.get('batch_size', 1)
-        self._loader = DataLoader(IndexDataset(size), *args, **kwargs)
+        self._loader = DataLoader(_IndexDataset(size), *args, **kwargs)
         if isinstance(device, (int, str)):
             device = torch.device(device)
         self._device = device
