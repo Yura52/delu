@@ -264,7 +264,7 @@ def concat(iterable: Iterable[T]) -> T:
         else type(first)((key, concat_fn(x[key] for x in data)) for key in first)
         if isinstance(first, dict)
         else concat_fn(data)
-    )
+    )  # type: ignore[code]
 
 
 def iter_batches(
