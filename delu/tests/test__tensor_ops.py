@@ -71,7 +71,7 @@ def test_to():
         'a': [t(f32), (t(f32), t(f32))],
         'b': {'c': {'d': [[[t(f32)]]]}},
         'c': Point(t(f32), {'d': t(f32)}),
-        'f': SimpleNamespace(g=t(f32), h=A(t(f32))),
+        'f': A(a=t(f32)),
     }
     for x, y in zip(flatten(delu.to(data, f32)), flatten(data)):
         assert x is y

@@ -1,6 +1,5 @@
 import dataclasses
 import math
-from types import SimpleNamespace
 from typing import Iterable, Iterator, Optional, TypeVar
 
 import torch
@@ -19,8 +18,9 @@ def to(data: T, *args, **kwargs) -> T:
     with `torch.Tensor.to`.
 
     Args:
-        data: a tensor or a (nested) collection of tensors. Only "simple" collections
-            are allowed such as (named)tuples, lists, dictionaries, etc.
+        data: a tensor or a (nested) collection of tensors. Allowed collections include:
+            (named)tuples, lists, dictionaries and dataclasses. For dataclasses, all
+            their fields must be tensors.
         args: positional arguments for `torch.Tensor.to`
         kwargs: positional arguments for `torch.Tensor.to`
     Returns:
@@ -56,14 +56,13 @@ def to(data: T, *args, **kwargs) -> T:
     # mypy does not understand what is going on here, hence a lot of "type: ignore"
     if isinstance(data, torch.Tensor):
         return data.to(*args, **kwargs)  # type: ignore
-    elif isinstance(data, SimpleNamespace) or dataclasses.is_dataclass(data):
-        return type(data)(**{k: TO_(v) for k, v in vars(data).items()})  # type: ignore
-    elif is_namedtuple(data):
-        return type(data)._make(TO_(x) for x in data)  # type: ignore
     elif isinstance(data, (tuple, list)):
-        return type(data)(TO_(x) for x in data)  # type: ignore
+        constructor = type(data)._make if is_namedtuple(data) else type(data)  # type: ignore  # noqa: E501
+        return constructor(TO_(x) for x in data)  # type: ignore
+    elif dataclasses.is_dataclass(data):
+        return type(data)(**{k: TO_(v) for k, v in vars(data).items()})  # type: ignore
     elif isinstance(data, dict):
-        return type(data)({k: TO_(v) for k, v in data.items()})  # type: ignore
+        return type(data)((k, TO_(v)) for k, v in data.items())  # type: ignore
     else:
         raise ValueError(
             f'the input contains an object of the unsupported type {type(data)}.'
