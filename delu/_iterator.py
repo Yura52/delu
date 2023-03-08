@@ -46,14 +46,14 @@ class Iterator(Generic[T]):
                 train(batch)
             evaluate(...)
 
-    Or we can build a "step-based" training loop:
+    Or we can build a "step-based" training loop::
 
         for step, batch in enumerate(dataiter.next_n(n_steps)):
             train(batch)
             if step % epoch_size == 0:
                 evaluate(...)
 
-    In particular, we can build an infinite training loop:
+    In particular, we can build an infinite training loop::
 
         for step, batch in enumerate(dataiter.next_n('inf')):
             train(batch)
@@ -83,6 +83,9 @@ class Iterator(Generic[T]):
                 # or via set_source
                 for item in source:
                     ...
+
+        And, in fact, `Iterator` is not tied to neither PyTorch nor deep learning, but
+        it turns out to be useful in this context.
     """
 
     class _NextN:
