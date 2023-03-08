@@ -49,7 +49,7 @@ DeLU (Deep Learning Utilities)
    learn
 
 .. toctree::
-   :caption: API REFERENCE
+   :caption: REFERENCE
    :hidden:
 
    reference/delu

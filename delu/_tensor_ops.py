@@ -15,7 +15,38 @@ T = TypeVar('T')
 def to(data: T, *args, **kwargs) -> T:
     """Like `torch.Tensor.to`, but for collections of tensors.
 
-    TODO
+    The function takes a (nested) collection of tensors
+    and creates its copy where all the tensors are transformed
+    with `torch.Tensor.to`.
+
+    Args:
+        data: a tensor or a (nested) collection of tensors. Only "simple" collections
+            are allowed such as (named)tuples, lists, dictionaries, etc.
+        args: positional arguments for `torch.Tensor.to`
+        kwargs: positional arguments for `torch.Tensor.to`
+    Returns:
+        transformed data.
+
+    Examples:
+        .. testcode::
+
+            device = torch.device('cpu')  # in practice, this can be 'cuda'
+
+            x = torch.tensor(0)
+            x = to(x, dtype=torch.float, device=device)
+
+            batch = {
+                'x': torch.tensor([0.0, 1.0]),
+                'y': torch.tensor([0, 1]),
+            }
+            batch = to(batch, device)
+
+            x = [
+                torch.tensor(0.0),
+                {'a': torch.tensor(1.0), 'b': torch.tensor(2.0)},
+                (torch.tensor(3.0), torch.tensor(4.0))
+            ]
+            x = to(x, torch.half)
     """
 
     def TO_(x):
