@@ -32,7 +32,7 @@ delu
    :toctree: api
 
    to
-   concat
+   cat
    iter_batches
 
 .. rubric:: Utilities

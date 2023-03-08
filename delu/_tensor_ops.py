@@ -1,15 +1,14 @@
 import dataclasses
-import itertools
 from types import SimpleNamespace
 from typing import Any, Dict, Iterable, Iterator, Tuple, TypeVar, Union
 
-import numpy as np
 import torch
 
 from ._utils import is_namedtuple
 from .data import make_index_dataloader
 
 T = TypeVar('T')
+K = TypeVar('K')
 
 
 def to(data: T, *args, **kwargs) -> T:
@@ -70,231 +69,119 @@ def to(data: T, *args, **kwargs) -> T:
         )
 
 
-def concat(iterable: Iterable[T]) -> T:
-    """Like `torch.cat` with dim=0, but for collections of tensors and arrays.
+def cat(iterable: Iterable[T], dim: int = 0) -> T:
+    """Like `torch.cat`, but for collections of tensors.
 
-    `concat` is a more general version of ``torch.cat(..., dim=0)``. It works not
-    only with sequences of tensors, but also with sequences of containers (tuples,
-    dicts etc.) of different types of data (tensors, numpy-arrays, primitive types). See
-    the tutorial and the examples below to understand what the function does.
+    It is especially useful for concatenating outputs of a function or a model
+    that returns not a single tensor, but a tuple/dictionary/dataclass of tensors.
+    For example::
+
+        class Model(nn.Module):
+            ...
+            def forward(...) -> tuple[Tensor, Tensor]:
+                ...
+                return y_pred, embeddings
+
+        model = Model(...)
+        dataset = Dataset(...)
+        dataloader = DataLoader(...)
+
+        # prediction
+        model.eval()
+        with torch.inference_mode():
+            y_pred, embeddings = cat(model(batch) for batch in dataloader)
+        assert isinstance(y_pred, torch.Tensor) and len(y_pred) == len(dataset)
+        assert isinstance(embeddings, torch.Tensor) and len(embeddings) == len(dataset)
+
+    The function can be best understood from examples.
+    Roughly speaking, the function performs two steps:
+
+        1. Transform the sequence of collections into a collection of sequencies.
+        2. Apply `torch.cat(..., dim=dim)` to the fields of the obtained collection.
+
+    See other examples below.
 
     Args:
-        iterable: items **of the same structure** (for example, "an iterable of tensors"
-            OR "an iterable of tuples of tensors where all the tuples are of the same
-            length" OR "an iterable of dicts of tensors and numpy-arrays where all the
-            dicts have the same keys" etc.)
+        iterable: the iterable of tuples/dictionaries/dataclasses of tensors.
+            All items of the iterable must be of the same type and have the same
+            structure (tuples must be of the same length, dictionaries must have the
+            same keys, dataclasses must have the same fields). Dataclasses can have
+            only tensor-valued fields.
     Returns:
         Concatenated items of the iterable.
-
-    Note:
-        The concatenation algorithm is fully determined by the first item of the
-        iterable. If there are items of different structure, then the function is
-        likely to fail or produce incorrect results, hence the requirement of the
-        same structure for all items of the iterable.
-
-    Warning:
-        The function starts with conversion of the iterable to a list. Make sure that
-        you have enough memory for such operation, otherwise, memory limit may be
-        exceeded. Note that in most cases manual implementation would involve the same
-        conversion, just keep this in mind when using the function.
+    Raises:
+        ValueError: if the iterable is empty or contains unsupported collections.
 
     See also:
         `iter_batches`
 
-    .. rubric:: Tutorial
-
-    For usage examples, scroll further.
-
-    If you have an iterable that contains/produces batches of some kind (tensors,
-    numpy-arrays, tuples/dictionaries thereof and other not-too-specific content), then
-    use `concat` to concatenate all the items. A prominent case is application of models
-    and functions to batches (e.g. to ``DataLoader``)::
-
-        whole_result = concat(map(model_or_fn, batches))
-        # or
-        whole_result = concat(expression(x) for x in batches)
-
-    For example::
-
-        dataset = ...  # PyTorch dataset
-        loader = DataLoader(dataset, batch_size)
-
-        def step(batch):
-            X, y = batch
-            return model(X), y
-
-        y_pred, y = concat(map(step, loader))
-        assert len(y_pred) == len(dataset) and len(y) == len(dataset)
-
-        # or
-        def step(batch):
-            X, y = batch
-            return {'y_pred': model(X), 'y': y}
-
-        result = concat(map(step, loader))  # no changes
-        assert result['y_pred'] == len(dataset) and len(result['y']) == len(dataset)
-
-    The function can be used in combination with `iter_batches`. For example, this is
-    how pairwise dot products can be computed by batches if full matrix multiplication
-    does not fit into memory:
-
-    .. testcode::
-
-        n_objects = 100
-        n_features = 16
-        batch_size = 20
-        data = torch.randn(n_objects, n_features)
-        result = concat(
-            batch.matmul(data.T).to('cpu') for batch in iter_batches(data, batch_size)
-        )
-        assert result.shape == (n_objects, n_objects)
-
-    Or even like this:
-
-    .. testcode::
-
-        n_objects = 100
-        n_features = 16
-        batch_size = 20
-        data = torch.randn(n_objects, n_features)
-        result = concat(
-            concat(b.matmul(a.T).to('cpu') for b in iter_batches(data, batch_size)).T
-            for a in iter_batches(data, batch_size)
-        )
-        assert result.shape == (n_objects, n_objects)
-
     Examples:
-        How to read the examples:
-
-        - the mental model for understanding the following examples is "concatenating
-          data for 3 batches of sizes (2, 2, 3)". Note that sizes of batches are
-          allowed to vary, but the structure is always the same
-        - in all examples there is ``data`` - a list of batches; in fact, it can be
-          any "iterable of batches", including iterators and generators; the list is
-          chosen to simplify the demonstration
-
-        1-D example:
+        Below, only one-dimensional data and dim=0 are considered for simplicity.
 
         .. testcode::
 
-            result = concat([
-                torch.tensor([0, 1]), torch.tensor([2, 3]), torch.tensor([4, 5, 6])
-            ])
-            assert torch.equal(result, torch.tensor([0, 1, 2, 3, 4, 5, 6]))
-
-        2-D example:
-
-        .. testcode::
-
-            result = concat([
-                torch.tensor([
-                    [0, 0],
-                    [1, 1]
-                ]),
-                torch.tensor([
-                    [2, 2],
-                    [3, 3]
-                ]),
-                torch.tensor([
-                    [4, 4],
-                    [5, 5],
-                    [6, 6],
-                ]),
-            ])
-            assert torch.equal(
-                result,
-                torch.tensor([
-                    [0, 0],
-                    [1, 1],
-                    [2, 2],
-                    [3, 3],
-                    [4, 4],
-                    [5, 5],
-                    [6, 6]
-                ])
-            )
-
-        N-D example: <the same>.
-
-        The following examples demonstrate support for different kinds of input data;
-        data is 1-D everywhere just for simplicity (i.e. dimensions can be arbitrary).
-
-        .. testcode::
-
-            array = np.array
             tensor = torch.tensor
-            l = [0, 1, 2, 3, 4, 5, 6]
-            a = array([0, 1, 2, 3, 4, 5, 6])
-            t = tensor([0, 1, 2, 3, 4, 5, 6])
 
-            data = [[0, 1], [2, 3], [4, 5, 6]]
-            assert concat(data) == l
-
-            data = [array([0, 1]), array([2, 3]), array([4, 5, 6])]
-            assert np.array_equal(concat(data), a)
-
-            data = [tensor([0, 1]), tensor([2, 3]), tensor([4, 5, 6])]
-            assert torch.equal(concat(data), t)
-
-            # If items are not lists, arrays nor tensors, the data is returned in a form
-            # of a list. It makes sense since the list of such items is already
-            # a result for all batches.
-            data = ['three batches, hence three items', 0, 1.0]
-            assert concat(data) == data
-
-            data = [
-                ([0, 1], array([0, 1]), tensor([0, 1])),
-                ([2, 3], array([2, 3]), tensor([2, 3])),
-                ([4, 5, 6], array([4, 5, 6]), tensor([4, 5, 6])),
+            parts = [
+                (tensor([0.0, 1.0]), tensor([0, 1])),
+                (tensor([2.0, 3.0]), tensor([2, 3])),
             ]
-            result = concat(data)
-            assert isinstance(result, tuple) and len(result) == 3
-            assert (
-                result[0] == l
-                and np.array_equal(result[1], a)
-                and torch.equal(result[2], t)
-            )
+            concatenated = cat(parts)
+            assert torch.equal(concatenated[0], tensor([0.0, 1.0, 2.0, 3.0]))
+            assert torch.equal(concatenated[1], tensor([0, 1, 2, 3]))
 
-            data = [
-                {'l': [0, 1], 'a': array([0, 1]), 't': tensor([0, 1])},
-                {'l': [2, 3], 'a': array([2, 3]), 't': tensor([2, 3])},
-                {'l': [4, 5, 6], 'a': array([4, 5, 6]), 't': tensor([4, 5, 6])},
+            parts = [
+                {'a': tensor([0.0, 1.0]), 'b': tensor([0, 1])},
+                {'a': tensor([2.0, 3.0]), 'b': tensor([2, 3])},
             ]
-            result = concat(data)
-            assert isinstance(result, dict) and list(result) == ['l', 'a', 't']
-            assert (
-                result['l'] == l
-                and np.array_equal(result['a'], a)
-                and torch.equal(result['t'], t)
-            )
+            concatenated = cat(parts)
+            assert torch.equal(concatenated['a'], tensor([0.0, 1.0, 2.0, 3.0]))
+            assert torch.equal(concatenated['b'], tensor([0, 1, 2, 3]))
+
+            from dataclasses import dataclass
+            @dataclass
+            class Part:
+                # all fields must be tensors
+                a: torch.Tensor
+                b: torch.Tensor
+
+            parts = [
+                Part(tensor([0.0, 1.0]), tensor([0, 1])),
+                Part(tensor([2.0, 3.0]), tensor([2, 3])),
+            ]
+            concatenated = cat(parts)
+            assert torch.equal(concatenated.a, tensor([0.0, 1.0, 2.0, 3.0]))
+            assert torch.equal(concatenated.b, tensor([0, 1, 2, 3]))
     """
     data = iterable if isinstance(iterable, list) else list(iterable)
-    assert data, 'iterable must be non-empty'
+    if not data:
+        raise ValueError('iterable must be non-empty.')
 
-    def concat_fn(sequence):
-        if not isinstance(sequence, list):
-            sequence = list(sequence)
-        x = sequence[0]
-        return (
-            list(itertools.chain.from_iterable(sequence))
-            if isinstance(x, list)
-            else np.concatenate(sequence)
-            if isinstance(x, np.ndarray)
-            else torch.cat(sequence)
-            if isinstance(x, torch.Tensor)
-            else sequence
-        )
+    def tcat(x):
+        return torch.cat(x, dim=dim)
 
     first = data[0]
-    return (
-        type(first)._make(concat_fn(x[i] for x in data) for i, _ in enumerate(first))
-        if is_namedtuple(first)
-        else type(first)(concat_fn(x[i] for x in data) for i, _ in enumerate(first))
-        if isinstance(first, tuple)
-        else type(first)((key, concat_fn(x[key] for x in data)) for key in first)
-        if isinstance(first, dict)
-        else concat_fn(data)
-    )  # type: ignore[code]
+    if isinstance(first, torch.Tensor):
+        raise ValueError(
+            'Use torch.cat instead of delu.cat for concatenating a sequence of tensors.'
+            ' Use delu.cat when concatenating a sequence of collections of tensors.'
+        )
+    elif isinstance(first, tuple):
+        constructor = type(first)._make if is_namedtuple(first) else type(first)  # type: ignore  # noqa: E501
+        return constructor(tcat([x[i] for x in data]) for i in range(len(first)))
+    elif isinstance(first, dict):
+        return type(first)((key, tcat([x[key] for x in data])) for key in first)  # type: ignore  # noqa: E501
+    elif dataclasses.is_dataclass(first):
+        fields = {}
+        for field in dataclasses.fields(first):
+            if field.type is not torch.Tensor:
+                raise ValueError(
+                    f'All dataclass fields must be PyTorch Tensors. Found {field.type}'
+                )
+            fields[field.name] = tcat([getattr(x, field.name) for x in data])
+        return type(first)(**fields)
+    else:
+        raise ValueError(f'The collection type {type(first)} is not supported.')
 
 
 def iter_batches(
@@ -328,11 +215,6 @@ def iter_batches(
     Note:
         If you want to infinitely iterate over batches, wrap the function in
         ``while True:``.
-
-    Warning:
-        Numpy-arrays are not supported because of how they behave when indexed by a
-        torch tensor of the size 1. For details, see
-        `the issue <https://github.com/numpy/numpy/issues/16543>`_
 
     See also:
         - `delu.data.make_index_dataloader`

@@ -77,7 +77,7 @@ def main():
     @torch.inference_mode()
     def evaluate(loader):
         model.eval()  # noqa: F821
-        logits, y = delu.concat(map(step, loader))  # noqa: F821
+        logits, y = delu.cat(map(step, loader))  # noqa: F821
         y_pred = torch.argmax(logits, dim=1).to(y)
         return (y_pred == y).int().sum().item() / len(y)
 

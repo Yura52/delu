@@ -2,7 +2,6 @@ import dataclasses
 from collections.abc import Mapping, Sequence
 from types import SimpleNamespace
 
-import numpy as np
 import pytest
 import torch
 from torch.utils.data import DataLoader, TensorDataset
@@ -82,61 +81,32 @@ def test_to():
         assert type(x) is type(y)
 
 
-def test_concat():
-    a = [0, 1, 2]
-    b = list(map(float, range(3)))
-    assert delu.concat(a) == [0, 1, 2]
-    assert delu.concat(zip(a, b)) == (a, b)
-    correct = Point(a, b)
-    actual = delu.concat(map(Point._make, zip(a, b)))
-    assert isinstance(actual, Point) and actual == correct
-    assert delu.concat({'a': x, 'b': y} for x, y in zip(a, b)) == {'a': a, 'b': b}
+def test_cat():
+    with pytest.raises(ValueError):
+        delu.cat([])
 
-    for container, equal in (np.array, np.array_equal), (torch.tensor, torch.equal):
-        a = [container([0, 1]), container([2, 3])]
-        b = [container([[0, 1]]), container([[2, 3]])]
-        a_correct = container([0, 1, 2, 3])
-        b_correct = container([[0, 1], [2, 3]])
-        assert equal(delu.concat(a), a_correct)
-        actual = delu.concat(zip(a, b))
-        assert isinstance(actual, tuple) and len(actual) == 2
-        assert equal(actual[0], a_correct) and equal(actual[1], b_correct)
-        actual = delu.concat([{'a': a[0], 'b': b[0]}, {'a': a[1], 'b': b[1]}])
-        assert list(actual) == ['a', 'b']
-        assert equal(actual['a'], a_correct) and equal(actual['b'], b_correct)
+    with pytest.raises(ValueError):
+        delu.cat([0])
 
-    a0 = 0
-    b0 = [0, 0]
-    c0 = np.array([0, 0])
-    d0 = torch.tensor([[0, 0]])
-    a1 = 1
-    b1 = [1, 1]
-    c1 = np.array([1, 1])
-    d1 = torch.tensor([[1, 1]])
-    a_correct = [0, 1]
-    b_correct = [0, 0, 1, 1]
-    c_correct = np.array([0, 0, 1, 1])
-    d_correct = torch.tensor([[0, 0], [1, 1]])
+    with pytest.raises(ValueError):
+        delu.cat([[0], [1]])
 
-    def assert_correct(actual, keys):
-        assert actual[keys[0]] == a_correct
-        assert actual[keys[1]] == b_correct
-        assert np.array_equal(actual[keys[2]], c_correct)
-        assert torch.equal(actual[keys[3]], d_correct)
+    # simple cases are alredy tested in the doctests
 
-    data = [(a0, b0, c0, d0), (a1, b1, c1, d1)]
-    actual = delu.concat(data)
-    assert_correct(actual, list(range(4)))
-    data = [{'a': a0, 'b': b0, 'c': c0, 'd': d0}, {'a': a1, 'b': b1, 'c': c1, 'd': d1}]
-    actual = delu.concat(data)
-    assert list(actual) == ['a', 'b', 'c', 'd']
-    assert_correct(actual, ['a', 'b', 'c', 'd'])
+    sequence = [
+        Point(torch.tensor([[0, 1]]), torch.tensor([[[0.0, 1.0]]])),
+        Point(torch.tensor([[2, 3]]), torch.tensor([[[2.0, 3.0]]])),
+    ]
 
-    data = ['a', 0, (1, 2), {'1', '2'}]
-    assert delu.concat(data) is data
+    actual0 = delu.cat(sequence)
+    assert isinstance(actual0, Point)
+    assert torch.equal(actual0.x, torch.tensor([[0, 1], [2, 3]]))
+    assert torch.equal(actual0.y, torch.tensor([[[0.0, 1.0]], [[2.0, 3.0]]]))
 
-    with pytest.raises(AssertionError):
-        delu.concat([])
+    actual1 = delu.cat(sequence, dim=1)
+    assert isinstance(actual1, Point)
+    assert torch.equal(actual1.x, torch.tensor([[0, 1, 2, 3]]))
+    assert torch.equal(actual1.y, torch.tensor([[[0.0, 1.0], [2.0, 3.0]]]))
 
 
 @pytest.mark.parametrize('batch_size', list(range(1, 11)))

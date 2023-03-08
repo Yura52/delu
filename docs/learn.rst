@@ -36,6 +36,6 @@ are the things to learn:
    delu.ProgressTracker
    delu.Timer
    delu.hardware.get_gpus_info
-   delu.concat
+   delu.cat
 
 Congratulations! You are ready to apply DeLU in practice.
