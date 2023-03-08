@@ -7,16 +7,14 @@ DeLU (Deep Learning Utilities)
 
 .. __INCLUDE_0__
 
-DeLU is a general-purpose library for PyTorch users. DeLU simplifies training loops,
-facilitates reproducibility, helps with model evaluation and other typical Deep Learning
-tasks. DeLU is a toolbox, not a framework:
+DeLU is a general-purpose PyTorch library that simplifes development and training of deep learning models.
+DeLU is a toolbox, not a framework:
 
-- your training loop stays the same (regardless of whether it is powered by a simple Python loop or by a specialized framework)
-- you can start by using any single tool you need, there is no "central concept"
-- you can replace tools from DeLU with custom solutions at any moment
+- DeLU provides functions and classes that facilitate training loops, reproducibility and other typical aspects of deep learning projects.
+- there is no need to "rebuild your project around DeLU": you can start using DeLU by picking individual tools that you find helpful.
 
-**NOTE:** DeLU is tested (and battle-tested in research projects), but the interface is
-not stable yet, so backward-incompatible changes in future releases are possible.
+DeLU is tested (and battle-tested in research projects), but the public API is
+still evolving, and backward-incompatible changes in future releases are possible.
 
 Overview
 --------
