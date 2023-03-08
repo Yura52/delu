@@ -194,7 +194,7 @@ def iter_batches(
     *args,
     **kwargs,
 ) -> Iterator:
-    """*Efficiently* iterate over data (tensor, tuple of tensors, dict of tensors etc.)
+    """Efficiently iterate over data (tensor, tuple of tensors, dict of tensors etc.)
     by batches.
 
     The function is useful when you want to *efficiently* iterate **once** over
