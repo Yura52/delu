@@ -93,7 +93,6 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
         assert isinstance(y_pred, torch.Tensor) and len(y_pred) == len(dataset)
         assert isinstance(embeddings, torch.Tensor) and len(embeddings) == len(dataset)
 
-    The function can be best understood from examples.
     Roughly speaking, the function performs two steps:
 
         1. Transform the sequence of collections into a collection of sequencies.
@@ -126,32 +125,35 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
                 (tensor([0.0, 1.0]), tensor([0, 1])),
                 (tensor([2.0, 3.0]), tensor([2, 3])),
             ]
-            concatenated = cat(parts)
-            assert torch.equal(concatenated[0], tensor([0.0, 1.0, 2.0, 3.0]))
-            assert torch.equal(concatenated[1], tensor([0, 1, 2, 3]))
+            result = cat(parts)
+            assert isinstance(result, tuple) and len(result) == 2
+            assert torch.equal(result[0], tensor([0.0, 1.0, 2.0, 3.0]))
+            assert torch.equal(result[1], tensor([0, 1, 2, 3]))
 
             parts = [
                 {'a': tensor([0.0, 1.0]), 'b': tensor([0, 1])},
                 {'a': tensor([2.0, 3.0]), 'b': tensor([2, 3])},
             ]
-            concatenated = cat(parts)
-            assert torch.equal(concatenated['a'], tensor([0.0, 1.0, 2.0, 3.0]))
-            assert torch.equal(concatenated['b'], tensor([0, 1, 2, 3]))
+            result = cat(parts)
+            assert isinstance(result, dict) and set(result) == {'a', 'b'}
+            assert torch.equal(result['a'], tensor([0.0, 1.0, 2.0, 3.0]))
+            assert torch.equal(result['b'], tensor([0, 1, 2, 3]))
 
             from dataclasses import dataclass
             @dataclass
-            class Part:
+            class Data:
                 # all fields must be tensors
                 a: torch.Tensor
                 b: torch.Tensor
 
             parts = [
-                Part(tensor([0.0, 1.0]), tensor([0, 1])),
-                Part(tensor([2.0, 3.0]), tensor([2, 3])),
+                Data(tensor([0.0, 1.0]), tensor([0, 1])),
+                Data(tensor([2.0, 3.0]), tensor([2, 3])),
             ]
-            concatenated = cat(parts)
-            assert torch.equal(concatenated.a, tensor([0.0, 1.0, 2.0, 3.0]))
-            assert torch.equal(concatenated.b, tensor([0, 1, 2, 3]))
+            result = cat(parts)
+            assert isinstance(result, Data)
+            assert torch.equal(result.a, tensor([0.0, 1.0, 2.0, 3.0]))
+            assert torch.equal(result.b, tensor([0, 1, 2, 3]))
     """
     data = iterable if isinstance(iterable, list) else list(iterable)
     if not data:
