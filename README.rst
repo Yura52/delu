@@ -13,8 +13,9 @@ DeLU is a toolbox, not a framework:
 - DeLU provides functions and classes that facilitate training loops, reproducibility and other typical aspects of deep learning projects.
 - there is no need to "rebuild your project around DeLU": you can start using DeLU by picking individual tools that you find helpful.
 
-DeLU is tested (and battle-tested in research projects), but the public API is
-still evolving, and backward-incompatible changes in future releases are possible.
+DeLU is tested and battle-tested in research projects. The public API is still evolving,
+and backward-incompatible are possible (if a function or a class is missing in the docs,
+then try finding it in the docs for previous versions of the library).
 
 Overview
 --------

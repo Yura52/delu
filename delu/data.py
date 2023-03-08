@@ -2,8 +2,7 @@
 
 from typing import Any, Callable, Iterable, Optional, Tuple, TypeVar, Union
 
-import torch
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import Dataset
 
 T = TypeVar('T')
 
@@ -218,107 +217,3 @@ class FnDataset(Dataset):
             raise IndexError(f'Index {index} is out of range')
         x = self._fn(x)
         return x if self._transform is None else self._transform(x)
-
-
-class _IndexDataset(Dataset):
-    def __init__(self, size: int) -> None:
-        if size < 1:
-            raise ValueError('size must be positive')
-        self.size = size
-
-    def __len__(self) -> int:
-        return self.size
-
-    def __getitem__(self, i: int) -> int:
-        if i >= self.size:
-            raise IndexError(
-                f"index {i} is out of range (dataset's size is {self.size})"
-            )
-        return i
-
-
-def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
-    """Make `~torch.utils.data.DataLoader` over *indices* instead of data.
-
-    Args:
-        size: the dataset size
-        *args: positional arguments for `torch.utils.data.DataLoader`
-        **kwargs: keyword arguments for `torch.utils.data.DataLoader`
-    Raises:
-        ValueError: for invalid inputs
-
-    Examples:
-        Usage for training:
-
-        .. code-block::
-
-            train_loader = make_index_dataloader(len(train_dataset), batch_size, shuffle=True)
-            for epoch in epochs:
-                for i_batch in train_loader:
-                    x_batch = X[i_batch]
-                    y_batch = Y[i_batch]
-                    ...
-
-        Other examples:
-
-        .. testcode::
-
-            dataset_size = 10  # len(dataset)
-            for batch_idx in make_index_dataloader(dataset_size, batch_size=3):
-                print(batch_idx)
-
-        .. testoutput::
-
-            tensor([0, 1, 2])
-            tensor([3, 4, 5])
-            tensor([6, 7, 8])
-            tensor([9])
-
-        .. testcode::
-
-            dataset_size = 10  # len(dataset)
-            for batch_idx in make_index_dataloader(dataset_size, 3, drop_last=True):
-                print(batch_idx)
-
-        .. testoutput::
-
-            tensor([0, 1, 2])
-            tensor([3, 4, 5])
-            tensor([6, 7, 8])
-
-    See also:
-        `delu.iter_batches`
-    """  # noqa: E501
-    return DataLoader(_IndexDataset(size), *args, **kwargs)
-
-
-class IndexLoader:
-    """**DEPRECATED, use** `make_index_dataloader`"""
-
-    def __init__(
-        self, size: int, *args, device: Union[int, str, torch.device] = 'cpu', **kwargs
-    ) -> None:
-        """**DEPRECATED, use** `make_index_dataloader`"""
-        assert size > 0
-        self._batch_size = args[0] if args else kwargs.get('batch_size', 1)
-        self._loader = DataLoader(_IndexDataset(size), *args, **kwargs)
-        if isinstance(device, (int, str)):
-            device = torch.device(device)
-        self._device = device
-
-    @property
-    def loader(self) -> DataLoader:
-        """**DEPRECATED, use** `make_index_dataloader`"""
-        return self._loader
-
-    def __len__(self) -> int:
-        """**DEPRECATED, use** `make_index_dataloader`"""
-        return len(self.loader)
-
-    def __iter__(self):
-        """**DEPRECATED, use** `make_index_dataloader`"""
-        return iter(
-            self._loader
-            if self._device.type == 'cpu'
-            else torch.cat(list(self.loader)).to(self._device).split(self._batch_size)
-        )

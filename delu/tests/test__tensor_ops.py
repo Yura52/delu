@@ -4,7 +4,6 @@ from types import SimpleNamespace
 
 import pytest
 import torch
-from torch.utils.data import DataLoader, TensorDataset
 
 import delu
 
@@ -128,45 +127,54 @@ def test_iter_batches(batch_size):
     batches = list(delu.iter_batches(data, batch_size))
     check(batches, data)
 
-    data = Point(torch.arange(n), torch.arange(n))
+    data = Point(torch.arange(n), torch.arange(n, n * 2))
     batches = list(delu.iter_batches(data, batch_size))
     assert all(isinstance(t, Point) for t in batches)
     for i in range(2):
         batches_i = list(x[i] for x in batches)
         check(batches_i, data[i])
 
-    data = (torch.arange(n), torch.arange(n))
+    data = (torch.arange(n), torch.arange(n, n * 2))
     batches = list(delu.iter_batches(data, batch_size))
     for i in range(2):
         batches_i = list(x[i] for x in batches)
         check(batches_i, data[i])
 
-    data = {'a': torch.arange(n), 'b': torch.arange(n)}
+    data = {'a': torch.arange(n), 'b': torch.arange(n, n * 2)}
     batches = list(delu.iter_batches(data, batch_size))
     for key in data:
         batches_i = list(x[key] for x in batches)
         check(batches_i, data[key])
 
-    data = (torch.arange(n), torch.arange(n))
-    batches = list(delu.iter_batches(TensorDataset(*data), batch_size))
-    for i in range(2):
-        batches_i = list(x[i] for x in batches)
-        check(batches_i, data[i])
-
-    # test DataLoader kwargs
-    data = torch.arange(n)
-    kwargs = {'shuffle': True, 'drop_last': True}
-    torch.manual_seed(0)
-    correct_batches = torch.cat(list(DataLoader(data, batch_size, **kwargs)))
-    torch.manual_seed(0)
-    actual_batches = torch.cat(list(delu.iter_batches(data, batch_size, **kwargs)))
-    assert torch.equal(actual_batches, correct_batches)
+    assert (
+        len(list(delu.iter_batches(torch.arange(n), batch_size, drop_last=True)))
+        == n // batch_size
+    )
 
 
-def test_iter_batches_bad_input():
-    with pytest.raises(AssertionError):
-        delu.iter_batches((), 1)
-    with pytest.raises(AssertionError):
-        delu.iter_batches({}, 1)
+def test_iter_batches_shuffle():
+    a = torch.arange(1000)
+
     with pytest.raises(ValueError):
-        delu.iter_batches(torch.empty(0), 1)
+        next(delu.iter_batches(a, 10, generator=torch.Generator()))
+
+    batches = list(delu.iter_batches(a, 10, shuffle=True))
+    assert not torch.equal(torch.cat(batches), a)
+    assert sorted(torch.cat(batches).tolist()) == a.tolist()
+
+    gen = torch.Generator()
+    state = gen.get_state()
+    batches0 = list(delu.iter_batches(a, 10, shuffle=True, generator=gen))
+    gen.set_state(state)
+    batches1 = list(delu.iter_batches(a, 10, shuffle=True, generator=gen))
+    for x in zip(batches0, batches1):
+        assert torch.equal(*x)
+
+
+def test_iter_batches_empty_input():
+    with pytest.raises(ValueError):
+        next(delu.iter_batches((), 1))
+    with pytest.raises(ValueError):
+        next(delu.iter_batches({}, 1))
+    with pytest.raises(ValueError):
+        next(delu.iter_batches(torch.empty(0), 1))

@@ -1,11 +1,11 @@
 import dataclasses
+import math
 from types import SimpleNamespace
-from typing import Iterable, Iterator, TypeVar
+from typing import Iterable, Iterator, Optional, TypeVar
 
 import torch
 
 from ._utils import is_namedtuple
-from .data import make_index_dataloader
 
 T = TypeVar('T')
 K = TypeVar('K')
@@ -184,60 +184,119 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
         raise ValueError(f'The collection type {type(first)} is not supported.')
 
 
-def iter_batches(data: T, *args, **kwargs) -> Iterator[T]:
-    """Iterate over collection of tensors by (random) batches.
+def iter_batches(
+    data: T,
+    batch_size: int,
+    shuffle: bool = False,
+    *,
+    generator: Optional[torch.Generator] = None,
+    drop_last: bool = False,
+) -> Iterator[T]:
+    """Iterate over tensor or collection of tensors by (random) batches.
 
-    This function is a more efficient alternative to `torch.utils.data.DataLoader` when
-    it comes to in-memory tensors, because it uses batch-based indexing instead of
-    item-based indexing (the DataLoader's behavior). **The shuffling logic is delegated
-    to the native PyTorch DataLoader**, i.e. no custom logic is performed
-    under the hood.
+    The function makes batches over the first dimension of the tensors in ``data``
+    and returns an iterator over collections of the same type as the input.
 
     Args:
-        data:
-        *args: positional arguments for `delu.data.make_index_dataloader`
-        **kwargs: keyword arguments for `delu.data.make_index_dataloader`
+        data: the tensor or the collection (tuple/dict/dataclass) of tensors.
+            If data is a collection, then the tensors must have the same first
+            dimension. If data is a dataclass, then all its fields must be tensors.
+        batch_size: the batch size. If ``drop_last`` is False, then the last batch can
+            be smaller than ``batch_size``.
+        shuffle: if True, iterate over random batches (without replacement),
+            not sequentially.
+        generator: the argument for `torch.randperm` when ``shuffle`` is True.
+        drop_last: same as the ``drop_last`` argument for `torch.utils.data.DataLoader`.
+            When True and the last batch is smaller then ``batch_size``, then this last
+            batch is not returned.
     Returns:
         Iterator over batches.
+    Raises:
+        ValueError: if the data is empty.
 
     Note:
-        If you want to infinitely iterate over batches, wrap the function in
-        ``while True:``.
+        The function lazily indexes to the provided input with batches of indices.
+        This works faster than iterating over the tensors in ``data`` with
+        `torch.utils.data.DataLoader`.
 
     See also:
-        - `delu.data.make_index_dataloader`
         - `cat`
 
     Examples:
-        Besides loops over batches, the function can be used in combination with
-        `cat`:
-
-        .. code-block::
-
-            result = cat(map(fn, iter_batches(dataset_or_tensors_or_whatever, ...)))
-
-        The function can also be used for training:
-
         .. code-block::
 
             for epoch in epochs:
                 for batch in iter_batches(data, batch_size, shuffle=True)):
                     ...
+
+        .. testcode::
+
+            a = torch.tensor([0, 1, 2, 3, 4])
+            b = torch.tensor([0, 10, 20, 30, 40])
+            batch_size = 2
+
+            for batch in iter_batches(a, batch_size):
+                assert isinstance(batch, torch.Tensor)
+            for batch in iter_batches((a, b), batch_size):
+                assert isinstance(batch, tuple)
+            for batch in iter_batches({'a': a, 'b': b}, batch_size):
+                assert isinstance(batch, dict) and set(batch) == {'a', 'b'}
+
+            assert len(list(iter_batches((a, b), batch_size))) == 3
+            assert len(list(iter_batches((a, b), batch_size, drop_last=True))) == 2
+
+            from dataclasses import dataclass
+            @dataclass
+            class Data:
+                a: torch.Tensor
+                b: torch.Tensor
+
+            for batch in iter_batches(Data(a, b), batch_size):
+                assert isinstance(batch, Data)
     """
-    # mypy understands very little about this function
-    if is_namedtuple(data):
-        assert data
-        get_batch = lambda idx: type(data)._make(x[idx] for x in data)  # type: ignore # noqa
-        size = len(data[0])  # type: ignore
+    if not shuffle and generator is not None:
+        raise ValueError('When shuffle is False, generator must be None.')
+
+    if isinstance(data, torch.Tensor):
+        if not len(data):
+            raise ValueError('data must be non-empty')
+        item = data
+        get_batch = data.__getitem__
     elif isinstance(data, tuple):
-        assert data
-        get_batch = lambda idx: type(data)(x[idx] for x in data)  # type: ignore # noqa
-        size = len(data[0])  # type: ignore
+        if not data:
+            raise ValueError('data must be non-empty')
+        item = data[0]
+        constructor = type(data)._make if is_namedtuple(data) else type(data)  # type: ignore  # noqa: E501
+        get_batch = lambda idx: constructor(x[idx] for x in data)  # type: ignore  # noqa: E731,E501
     elif isinstance(data, dict):
-        assert data
-        get_batch = lambda idx: type(data)({k: v[idx] for k, v in data.items()})  # type: ignore # noqa
-        size = len(next(iter(data.values())))  # type: ignore
+        if not data:
+            raise ValueError('data must be non-empty')
+        item = next(iter(data.values()))
+        get_batch = lambda idx: type(data)({k: v[idx] for k, v in data.items()})  # type: ignore # noqa: E731,E501
+    elif dataclasses.is_dataclass(data):
+        fields = list(dataclasses.fields(data))
+        if not fields:
+            raise ValueError('data must be non-empty')
+        for field in fields:
+            if field.type is not torch.Tensor:
+                raise ValueError('All dataclass fields must be tensors')
+        item = getattr(data, fields[0].name)
+        get_batch = lambda idx: type(data)(  # type: ignore  # noqa: E731
+            **{field.name: getattr(data, field.name)[idx] for field in fields}
+        )
     else:
-        get_batch = data.__getitem__  # type: ignore
-        size = len(data)  # type: ignore
-    return map(get_batch, make_index_dataloader(size, *args, **kwargs))
+        raise ValueError(f'The collection {type(data)} is not supported.')
+
+    size = len(item)
+    device = item.device
+    n_batches = math.ceil(size / batch_size)
+    for i, idx in enumerate(
+        (
+            torch.randperm(size, generator=generator, device=device)
+            if shuffle
+            else torch.arange(size, device=device)
+        ).split(batch_size)
+    ):
+        if i + 1 == n_batches and len(idx) < batch_size and drop_last:
+            return
+        yield get_batch(idx)  # type: ignore
