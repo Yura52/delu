@@ -5,7 +5,7 @@ from typing import Any, Callable, Iterable, Optional, Tuple, TypeVar, Union
 import torch
 from torch.utils.data import DataLoader, Dataset
 
-from ._stream import Stream as Stream  # noqa
+from ._stream import Stream as Stream
 
 T = TypeVar('T')
 
@@ -244,7 +244,8 @@ class IndexDataset(Dataset):
 def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
     """Make `~torch.utils.data.DataLoader` over indices instead of data.
 
-    This is just a shortcut for ``torch.utils.data.DataLoader(delu.data.IndexDataset(...), ...)``.
+    This is just a shortcut for
+    ``torch.utils.data.DataLoader(delu.data.IndexDataset(...), ...)``.
 
     Args:
         size: the dataset size
@@ -294,7 +295,7 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
 
     See also:
         `delu.iter_batches`
-    """
+    """  # noqa: E501
     return DataLoader(IndexDataset(size), *args, **kwargs)
 
 
@@ -360,7 +361,7 @@ class IndexLoader:
 
     See also:
         `delu.iter_batches`
-    """
+    """  # noqa: E501
 
     def __init__(
         self, size: int, *args, device: Union[int, str, torch.device] = 'cpu', **kwargs

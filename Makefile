@@ -37,7 +37,7 @@ pages:
 	rm -r docs
 	git add -A
 
-dtest:
+doctest:
 	make -C $(DOCS_DIR) doctest
 
 spelling:
@@ -50,10 +50,10 @@ lint:
 	python -m pre_commit_hooks.debug_statement_hook delu/**/*.py
 	isort delu --check-only
 	black delu --check
-	flake8 delu
+	ruff check .
 
-# the order is important: clean must be first, docs must precede dtest
-pre-commit: clean lint test docs dtest spelling typecheck
+# the order is important: clean must be first, docs must precede doctest
+pre-commit: clean lint test docs doctest spelling typecheck
 
 test:
 	PYTHONPATH='.' $(PYTEST_CMD) $(ARGV)

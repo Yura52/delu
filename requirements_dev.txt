@@ -1,25 +1,25 @@
 # development
-black
-coverage[toml]
-flake8
+black==22.6.0
+coverage[toml]==6.4.4
 flit==3.7.1
-ipdb
-isort
-mypy
-pre-commit-hooks
-pytest
+ipdb==0.13.9
+isort==5.10.1
+mypy==0.971
+pre-commit-hooks==4.3.0
+pytest==7.1.2
+ruff==0.0.254
 
 # docs
 # it is important to freeze the version because the option -W is used for sphinx-build
 sphinx==5.1.1
-sphinx-copybutton
-sphinx-remove-toctrees
-sphinxcontrib-spelling
-furo
+sphinx-copybutton==0.5.0
+sphinx-remove-toctrees==0.0.3
+sphinxcontrib-spelling==7.6.0
+furo==2022.6.21
 
 # examples
 # for Apple CPUs, it should be torchvision==0.10.*
 torchvision==0.8.2
 
 # other
-jupyterlab
+jupyterlab==3.6.1

@@ -1,6 +1,4 @@
-from typing import Any, Iterable, Iterator, Optional, Union
-
-from typing_extensions import Literal
+from typing import Any, Iterable, Iterator, Literal, Optional, Union
 
 
 def _try_len(x):
@@ -22,7 +20,8 @@ class Stream:
         def __len__(self) -> int:
             if self._total is None:
                 raise RuntimeError(
-                    'The "iterator over N next objects" has N == infinity, so it has no "len"'
+                    'The "iterator over N next objects" has N == infinity,'
+                    ' so it has no "len"'
                 )
             return self._total - self._current
 

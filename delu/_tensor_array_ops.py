@@ -328,16 +328,16 @@ def iter_batches(
     if is_namedtuple(data):
         assert data
         f = lambda idx: type(data)._make(x[idx] for x in data)  # type: ignore # noqa
-        size = len(data[0])  # type: ignore # noqa
+        size = len(data[0])  # type: ignore
     elif isinstance(data, tuple):
         assert data
         f = lambda idx: type(data)(x[idx] for x in data)  # type: ignore # noqa
-        size = len(data[0])  # type: ignore # noqa
+        size = len(data[0])  # type: ignore
     elif isinstance(data, dict):
         assert data
         f = lambda idx: type(data)({k: v[idx] for k, v in data.items()})  # type: ignore # noqa
-        size = len(next(iter(data.values())))  # type: ignore # noqa
+        size = len(next(iter(data.values())))  # type: ignore
     else:
         f = data.__getitem__
-        size = len(data)  # type: ignore # noqa
+        size = len(data)  # type: ignore
     return map(f, make_index_dataloader(size, *args, **kwargs))

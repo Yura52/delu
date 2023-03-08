@@ -12,7 +12,7 @@ from . import random as delu_random
 def improve_reproducibility(
     base_seed: Optional[int], one_cuda_seed: bool = False
 ) -> int:
-    """Set seeds in `random`, `numpy` and `torch` and make some cuDNN operations deterministic.
+    """Set seeds and turn off non-deterministic algorithms.
 
     Do everything possible to improve reproducibility for code that relies on global
     random number generators from the aforementioned modules. See also the note below.
@@ -139,9 +139,10 @@ class evaluation(ContextDecorator):
         Raises:
             AssertionError: if ``func`` is a generator
         """
-        assert not inspect.isgeneratorfunction(
-            func
-        ), f'{self.__class__} cannot be used to decorate generators. See the documentation.'
+        assert not inspect.isgeneratorfunction(func), (
+            f'{self.__class__} cannot be used to decorate generators.'
+            ' See the documentation.'
+        )
         return super().__call__(func)
 
     def __enter__(self) -> None:
