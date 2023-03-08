@@ -71,10 +71,9 @@ def to(data: T, *args, **kwargs) -> T:
 
 
 def concat(iterable: Iterable[T]) -> T:
-    """Concatenate items (tensors, numpy-arrays, tuples, dicts etc.) along the first
-    dimension.
+    """Like `torch.cat` with dim=0, but for collections of tensors and arrays.
 
-    `concat` is a more general version ``torch.cat(..., dim=0)``. It works not
+    `concat` is a more general version of ``torch.cat(..., dim=0)``. It works not
     only with sequences of tensors, but also with sequences of containers (tuples,
     dicts etc.) of different types of data (tensors, numpy-arrays, primitive types). See
     the tutorial and the examples below to understand what the function does.

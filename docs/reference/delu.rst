@@ -25,7 +25,7 @@ delu
    ProgressTracker
    Timer
 
-.. rubric:: Tensor and array operations
+.. rubric:: Tensor operations
 
 .. autosummary::
    :nosignatures:
