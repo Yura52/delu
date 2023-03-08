@@ -12,12 +12,17 @@ T = TypeVar('T')
 
 
 class Iterator(Generic[T]):
-    """Flexible wrapper for DataLoaders and other iterables for building custom loops.
+    """Flexible wrapper for iterables (e.g. DataLoaders) for building custom loops.
 
-    `Iterator` wraps an iterable (e.g. a DataLoader) and allows:
+    `Iterator` turns an iterable (e.g. a DataLoader) into an infinite iterator
+    and allows:
     - training with custom epoch sizes with `Iterator.next_n`
     - iterating step-by-step with `Iterator.next`
     - changing the data source on-the-fly with `Iterator.set_source`
+
+    Note:
+        If the wrapped data source is a finite iterator, then `Iterator`
+        is finite as well.
 
     .. rubric:: Tutorial
 
@@ -41,15 +46,14 @@ class Iterator(Generic[T]):
                 train(batch)
             evaluate(...)
 
-    Or we can have a "step-based" training loop:
+    Or we can build a "step-based" training loop:
 
-        for step in range(n_steps):
-            batch = dataiter.next()
+        for step, batch in enumerate(dataiter.next_n(n_steps)):
             train(batch)
             if step % epoch_size == 0:
                 evaluate(...)
 
-    Or we can have an infinite training loop:
+    In particular, we can build an infinite training loop:
 
         for step, batch in enumerate(dataiter.next_n('inf')):
             train(batch)
@@ -75,7 +79,9 @@ class Iterator(Generic[T]):
         and can be expressed with the following loop::
 
             while True:
-                for item in data:  # the data source passed to the constructor
+                # `source` is the data source passed to the constructor
+                # or via set_source
+                for item in source:
                     ...
     """
 
