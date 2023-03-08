@@ -12,10 +12,11 @@ T = TypeVar('T')
 
 
 class Iterator(Generic[T]):
-    """Flexible wrapper for iterables (e.g. DataLoaders) for building custom loops.
+    """Flexible wrapper for DataLoaders and other iterables for building custom loops.
 
     `Iterator` turns an iterable (e.g. a DataLoader) into an infinite iterator
     and allows:
+
     - training with custom epoch sizes with `Iterator.next_n`
     - iterating step-by-step with `Iterator.next`
     - changing the data source on-the-fly with `Iterator.set_source`

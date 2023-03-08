@@ -7,6 +7,14 @@ delu
 
 .. automodule:: delu
 
+.. rubric:: Training loop
+.. autosummary::
+   :nosignatures:
+   :toctree: api
+   :template: class.rst
+
+   Iterator
+
 .. rubric:: Monitoring
 
 .. autosummary::
