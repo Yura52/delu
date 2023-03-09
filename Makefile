@@ -13,7 +13,7 @@ clean:
 	rm -rf .ipynb_checkpoints
 	rm -rf .mypy_cache
 	rm -rf .pytest_cache
-	rm -rf .ruff_cacheg
+	rm -rf .ruff_cache
 	rm -rf dist
 	rm -rf $(DOCS_DIR)/reference/api
 	make -C $(DOCS_DIR) clean
