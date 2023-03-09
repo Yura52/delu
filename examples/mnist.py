@@ -1,3 +1,4 @@
+# Do Ctrl+F "delu" to see how DeLU is used.
 # Run `python mnist.py --help` to see the documentation
 
 import shutil
@@ -46,9 +47,6 @@ def split_dataset(dataset, ratio):
 def parse_args():
     parser = ArgumentParser(epilog='Example: python mnist.py')
     parser.add_argument('-d', '--device', default='cpu', type=torch.device)
-    parser.add_argument(
-        '-e', '--epoch-size', type=int, help='Number of batches per epoch'
-    )
     parser.add_argument('-n', '--n-epochs', type=int, default=20)
     parser.add_argument('-p', '--early-stopping-patience', type=int, default=1)
     parser.add_argument('-s', '--seed', type=int, default=0)
@@ -83,7 +81,7 @@ def main():
 
     train_dataset, val_dataset = split_dataset(get_dataset(True), 0.8)
     test_dataset = get_dataset(False)
-    dataiter = delu.Iterator(DataLoader(train_dataset, batch_size=64, shuffle=True))
+    train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=8096)
     test_loader = DataLoader(test_dataset, batch_size=8096)
 
@@ -109,7 +107,7 @@ def main():
 
         with timer:
             model.train()
-            for batch in dataiter.next_n(args.epoch_size):
+            for batch in train_loader:
                 optimizer.zero_grad()
                 F.cross_entropy(*step(batch)).backward()
                 optimizer.step()

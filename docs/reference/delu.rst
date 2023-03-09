@@ -7,13 +7,15 @@ delu
 
 .. automodule:: delu
 
-.. rubric:: Training loop
+.. rubric:: Tensor operations
+
 .. autosummary::
    :nosignatures:
    :toctree: api
-   :template: class.rst
 
-   Iterator
+   to
+   cat
+   iter_batches
 
 .. rubric:: Monitoring
 
@@ -24,16 +26,6 @@ delu
 
    ProgressTracker
    Timer
-
-.. rubric:: Tensor operations
-
-.. autosummary::
-   :nosignatures:
-   :toctree: api
-
-   to
-   cat
-   iter_batches
 
 .. rubric:: Submodules
 

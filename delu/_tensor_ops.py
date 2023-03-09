@@ -73,7 +73,7 @@ def to(data: T, *args, **kwargs) -> T:
 def cat(iterable: Iterable[T], dim: int = 0) -> T:
     """Like `torch.cat`, but for collections of tensors.
 
-    It is especially useful for concatenating outputs of a function or a model
+    The function is especially useful for concatenating outputs of a function or a model
     that returns not a single tensor, but a tuple/dictionary/dataclass of tensors.
     For example::
 
@@ -121,6 +121,13 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
         .. testcode::
 
             tensor = torch.tensor
+
+            a = tensor([0, 1, 2, 3, 4])
+            b = tensor([0, 10, 20, 30, 40])
+            batch_size = 2
+            ab = delu.cat(delu.iter_batches((a, b), batch_size))
+            assert torch.equal(ab[0], a)
+            assert torch.equal(ab[1], b)
 
             parts = [
                 (tensor([0.0, 1.0]), tensor([0, 1])),
@@ -244,10 +251,14 @@ def iter_batches(
             b = torch.tensor([0, 10, 20, 30, 40])
             batch_size = 2
 
+            ab = delu.cat(delu.iter_batches((a, b), batch_size))
+            assert torch.equal(ab[0], a)
+            assert torch.equal(ab[1], b)
+
             for batch in iter_batches(a, batch_size):
                 assert isinstance(batch, torch.Tensor)
             for batch in iter_batches((a, b), batch_size):
-                assert isinstance(batch, tuple)
+                assert isinstance(batch, tuple) and len(batch) == 2
             for batch in iter_batches({'a': a, 'b': b}, batch_size):
                 assert isinstance(batch, dict) and set(batch) == {'a', 'b'}
 
