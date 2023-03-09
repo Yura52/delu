@@ -12,13 +12,8 @@ def seed(base_seed: int, one_cuda_seed: bool = False) -> None:
     """Set seeds in `random`, `numpy` and `torch`.
 
     For all libraries, different seeds (which are *deterministically* calculated based
-    on the ``base_seed`` argument) are set.
+    on the ``base_seed`` argument) are set (see the note below).
 
-    Note:
-        Different seeds are set to avoid situations where different libraries or devices
-        generate the same random sequences. For example, see
-        `this comment <https://github.com/PyTorchLightning/pytorch-lightning/pull/6960#issuecomment-818393659>`_
-        on setting the same seed for the standard library and NumPy.
     Args:
         base_seed: the number used to determine random seeds for all libraries and
             hardware. Must be a non-negative number less than ``2 ** 32 - 10000``.
@@ -26,6 +21,12 @@ def seed(base_seed: int, one_cuda_seed: bool = False) -> None:
             otherwise, different seeds will be set for all cuda devices.
     Raises:
         AssertionError: if the seed is not within the required interval
+
+    Note:
+        Different seeds are set to avoid situations where different libraries or devices
+        generate the same random sequences. See
+        `this comment <https://github.com/PyTorchLightning/pytorch-lightning/pull/6960#issuecomment-818393659>`_
+        for details.
 
     Examples:
         .. testcode::

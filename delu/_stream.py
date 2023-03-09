@@ -14,7 +14,7 @@ def _try_len(x):
         return None
 
 
-@deprecated('Instead, use `delu.Iterator`')
+@deprecated('Currently, no alternatives are available.')
 class Stream:
     """Smart wrapper for data loaders and iterables.
 

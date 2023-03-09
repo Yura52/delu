@@ -45,8 +45,6 @@ See the sidebar on the left.
 
    Stream
 
-.. rubric:: Tensor operations
-
 .. autosummary::
    :nosignatures:
    :toctree: api
