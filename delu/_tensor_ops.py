@@ -275,21 +275,27 @@ def iter_batches(
         if not data:
             raise ValueError('data must be non-empty')
         item = data[0]
+        if any(len(x) != len(item) for x in data):
+            raise ValueError('All tensors must have the same first dimension.')
         constructor = type(data)._make if is_namedtuple(data) else type(data)  # type: ignore  # noqa: E501
         get_batch = lambda idx: constructor(x[idx] for x in data)  # type: ignore  # noqa: E731,E501
     elif isinstance(data, dict):
         if not data:
             raise ValueError('data must be non-empty')
         item = next(iter(data.values()))
+        if any(len(x) != len(item) for x in data.values()):
+            raise ValueError('All tensors must have the same first dimension.')
         get_batch = lambda idx: type(data)({k: v[idx] for k, v in data.items()})  # type: ignore # noqa: E731,E501
     elif dataclasses.is_dataclass(data):
         fields = list(dataclasses.fields(data))
         if not fields:
             raise ValueError('data must be non-empty')
+        item = getattr(data, fields[0].name)
         for field in fields:
             if field.type is not torch.Tensor:
                 raise ValueError('All dataclass fields must be tensors')
-        item = getattr(data, fields[0].name)
+            if len(getattr(data, field.name)) != len(item):
+                raise ValueError('All tensors must have the same first dimension.')
         get_batch = lambda idx: type(data)(  # type: ignore  # noqa: E731
             **{field.name: getattr(data, field.name)[idx] for field in fields}
         )

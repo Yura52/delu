@@ -1,10 +1,17 @@
 from collections import namedtuple
+from dataclasses import dataclass
 
 import pytest
 import torch
 
 Point = namedtuple('Point', ['x', 'y'])
 Model = namedtuple('Model', ['model', 'weight', 'bias', 'loss_fn', 'optimizer', 'data'])
+
+
+@dataclass
+class PointDC:
+    x: torch.Tensor
+    y: torch.Tensor
 
 
 ignore_deprecated_warning = pytest.mark.filterwarnings('ignore:.*deprecated.*')

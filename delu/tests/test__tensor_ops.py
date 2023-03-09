@@ -7,7 +7,7 @@ import torch
 
 import delu
 
-from .util import Point
+from .util import Point, PointDC
 
 
 def flatten(data):
@@ -171,10 +171,28 @@ def test_iter_batches_shuffle():
         assert torch.equal(*x)
 
 
-def test_iter_batches_empty_input():
+def test_iter_batches_bad_input():
+    # empty input
+    with pytest.raises(ValueError):
+        next(delu.iter_batches(torch.empty(0), 1))
     with pytest.raises(ValueError):
         next(delu.iter_batches((), 1))
     with pytest.raises(ValueError):
         next(delu.iter_batches({}, 1))
+
+    @dataclasses.dataclass
+    class BadPoint:
+        pass
+
     with pytest.raises(ValueError):
-        next(delu.iter_batches(torch.empty(0), 1))
+        next(delu.iter_batches(BadPoint(), 1))
+
+    # different lengths
+    a = torch.tensor([0, 1])
+    b = torch.tensor([0, 1, 2])
+    with pytest.raises(ValueError):
+        next(delu.iter_batches((a, b), 2))
+    with pytest.raises(ValueError):
+        next(delu.iter_batches({'a': a, 'b': b}, 2))
+    with pytest.raises(ValueError):
+        next(delu.iter_batches(PointDC(a, b), 2))
