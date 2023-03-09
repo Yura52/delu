@@ -35,14 +35,41 @@ delu
    cat
    iter_batches
 
-.. rubric:: Utilities
+.. rubric:: Submodules
+
+See the sidebar on the left.
+
+.. rubric:: Deprecated items
+
+.. raw:: html
+
+   <details>
+   <summary>Show</summary>
+
+.. autosummary::
+   :nosignatures:
+   :toctree: api
+   :template: class.rst
+
+   Stream
+
+.. rubric:: Tensor operations
 
 .. autosummary::
    :nosignatures:
    :toctree: api
 
+   collate
+   concat
    improve_reproducibility
 
-.. rubric:: Submodules
+.. autosummary::
+   :nosignatures:
+   :toctree: api
+   :template: class_just_autoclass.rst
 
-See the sidebar on the left.
+   evaluation
+
+.. raw:: html
+
+   </details>

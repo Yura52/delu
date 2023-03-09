@@ -66,7 +66,7 @@ def main():
 
     if not args.skip_download:
         download_mnist()
-    delu.improve_reproducibility(args.seed)
+    delu.random.seed(args.seed)
     model = nn.Linear(784, 10).to(args.device)
     optimizer = torch.optim.SGD(model.parameters(), 0.005, 0.9)
 

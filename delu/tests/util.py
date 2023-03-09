@@ -7,6 +7,9 @@ Point = namedtuple('Point', ['x', 'y'])
 Model = namedtuple('Model', ['model', 'weight', 'bias', 'loss_fn', 'optimizer', 'data'])
 
 
+ignore_deprecated_warning = pytest.mark.filterwarnings('ignore:.*deprecated.*')
+
+
 class ObjectCounter:
     def __init__(self, sign):
         self.sign = sign

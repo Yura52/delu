@@ -53,7 +53,7 @@ lint:
 	black delu --check
 	ruff check .
 
-# the order is important: clean must be first, docs must precede doctest
+# The order is important: clean must be first, docs must precede doctest.
 pre-commit: clean lint test docs doctest spelling typecheck
 
 test:

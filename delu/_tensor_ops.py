@@ -4,7 +4,7 @@ from typing import Iterable, Iterator, Optional, TypeVar
 
 import torch
 
-from ._utils import is_namedtuple
+from ._utils import deprecated, is_namedtuple
 
 T = TypeVar('T')
 K = TypeVar('K')
@@ -185,6 +185,12 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
         return type(first)(**fields)
     else:
         raise ValueError(f'The collection type {type(first)} is not supported.')
+
+
+@deprecated('Instead, use `delu.cat`')
+def concat(*args, **kwargs):
+    """"""
+    return cat(*args, **kwargs)
 
 
 def iter_batches(

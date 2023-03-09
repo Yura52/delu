@@ -1,0 +1,2 @@
+class DeLUDeprecationWarning(Warning):
+    pass

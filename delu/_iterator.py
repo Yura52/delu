@@ -12,14 +12,14 @@ T = TypeVar('T')
 
 
 class Iterator(Generic[T]):
-    """Flexible wrapper for DataLoaders and other iterables for building custom loops.
+    """Wrapper for DataLoaders and other iterables for building custom (training) loops.
 
     `Iterator` turns an iterable (e.g. a DataLoader) into an infinite iterator
     and allows:
 
-    - training with custom epoch sizes with `Iterator.next_n`
+    - training with custom epoch size with `Iterator.next_n`
     - iterating step-by-step with `Iterator.next`
-    - changing the data source on-the-fly with `Iterator.set_source`
+    - changing the data source on the fly with `Iterator.set_source`
 
     Note:
         If the wrapped data source is a finite iterator, then `Iterator`
@@ -27,12 +27,12 @@ class Iterator(Generic[T]):
 
     .. rubric:: Tutorial
 
-    Let's say there is a data loader (in fact, it can be any iterable,
+    Let's say we have a data loader (in fact, it can be any iterable,
     e.g. a list of integers or an iterator over file lines)::
 
         loader = DataLoader(...)
 
-    A `Iterator` can be created by wrapping the data loader::
+    `Iterator` can be created by wrapping the data loader::
 
         dataiter = Iterator(loader)
 
@@ -85,7 +85,7 @@ class Iterator(Generic[T]):
                 for item in source:
                     ...
 
-        And, in fact, `Iterator` is not tied to neither PyTorch nor deep learning, but
+        In fact, `Iterator` is not tied to neither PyTorch nor deep learning, but
         it turns out to be useful in this context.
     """
 

@@ -2,7 +2,11 @@
 
 from typing import Any, Callable, Iterable, Optional, Tuple, TypeVar, Union
 
-from torch.utils.data import Dataset
+import torch
+from torch.utils.data import DataLoader, Dataset
+
+from ._stream import Stream  # noqa: F401
+from ._utils import deprecated
 
 T = TypeVar('T')
 
@@ -217,3 +221,188 @@ class FnDataset(Dataset):
             raise IndexError(f'Index {index} is out of range')
         x = self._fn(x)
         return x if self._transform is None else self._transform(x)
+
+
+@deprecated('')
+class IndexDataset(Dataset):
+    """The dataset used by `make_index_dataloader`."""
+
+    def __init__(self, size: int) -> None:
+        if size < 1:
+            raise ValueError('size must be positive')
+        self.size = size
+
+    def __len__(self) -> int:
+        return self.size
+
+    def __getitem__(self, i: int) -> int:
+        if i >= self.size:
+            raise IndexError(
+                f"index {i} is out of range (dataset's size is {self.size})"
+            )
+        return i
+
+
+@deprecated('Instead, use ``torch.arange/randperm`` + ``torch.Tensor.split()``.')
+def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
+    """Make `~torch.utils.data.DataLoader` over indices instead of data.
+
+    This is just a shortcut for
+    ``torch.utils.data.DataLoader(delu.data.IndexDataset(...), ...)``.
+
+    Args:
+        size: the dataset size
+        *args: positional arguments for `torch.utils.data.DataLoader`
+        **kwargs: keyword arguments for `torch.utils.data.DataLoader`
+    Raises:
+        ValueError: for invalid inputs
+    Examples:
+
+        Usage for training:
+
+        .. code-block::
+
+            train_loader = make_index_dataloader(
+                len(train_dataset), batch_size, shuffle=True
+            )
+            for epoch in epochs:
+                for i_batch in train_loader:
+                    x_batch = X[i_batch]
+                    y_batch = Y[i_batch]
+                    ...
+
+        Other examples:
+
+        .. testcode::
+
+            dataset_size = 10  # len(dataset)
+            for batch_idx in make_index_dataloader(dataset_size, batch_size=3):
+                print(batch_idx)
+
+        .. testoutput::
+
+            tensor([0, 1, 2])
+            tensor([3, 4, 5])
+            tensor([6, 7, 8])
+            tensor([9])
+
+        .. testcode::
+
+            dataset_size = 10  # len(dataset)
+            for batch_idx in make_index_dataloader(dataset_size, 3, drop_last=True):
+                print(batch_idx)
+
+        .. testoutput::
+
+            tensor([0, 1, 2])
+            tensor([3, 4, 5])
+            tensor([6, 7, 8])
+    See also:
+        `delu.iter_batches`
+    """
+    return DataLoader(IndexDataset(size), *args, **kwargs)
+
+
+@deprecated('Instead, use ``torch.arange/randperm`` + ``torch.Tensor.split()``.')
+class IndexLoader:
+    """Like `~torch.utils.data.DataLoader`, but over indices instead of data.
+
+    **The shuffling logic is delegated to the native PyTorch DataLoader**, i.e. no
+    custom logic is performed under the hood. The data loader which actually generates
+    indices is available as `IndexLoader.loader`.
+
+    Examples:
+
+        Usage for training:
+
+        .. code-block::
+
+            train_loader = IndexLoader(len(train_dataset), batch_size, shuffle=True)
+            for epoch in epochs:
+                for batch_idx in train_loader:
+                    ...
+
+        Other examples:
+
+        .. testcode::
+
+            dataset_size = 10  # len(dataset)
+            for batch_idx in IndexLoader(dataset_size, batch_size=3):
+                print(batch_idx)
+
+        .. testoutput::
+
+            tensor([0, 1, 2])
+            tensor([3, 4, 5])
+            tensor([6, 7, 8])
+            tensor([9])
+
+        .. testcode::
+
+            dataset_size = 10  # len(dataset)
+            for batch_idx in IndexLoader(dataset_size, 3, drop_last=True):
+                print(batch_idx)
+
+        .. testoutput::
+
+            tensor([0, 1, 2])
+            tensor([3, 4, 5])
+            tensor([6, 7, 8])
+
+    See also:
+
+        `delu.iter_batches`
+    """
+
+    def __init__(
+        self, size: int, *args, device: Union[int, str, torch.device] = 'cpu', **kwargs
+    ) -> None:
+        """Initialize self.
+
+        Args:
+            size: the number of items (for example, :code:`len(dataset)`)
+            *args: positional arguments for `torch.utils.data.DataLoader`
+            device: if not CPU, then all indices are materialized and moved to the
+                device at the beginning of every loop. It can be useful when the indices
+                are applied to non-CPU data (e.g. CUDA-tensors) and moving data between
+                devices takes non-negligible time (which can happen in the case of
+                simple and fast models like MLPs).
+            **kwargs: keyword arguments for `torch.utils.data.DataLoader`
+        Raises:
+            AssertionError: if size is not positive
+        """
+        assert size > 0
+        self._batch_size = args[0] if args else kwargs.get('batch_size', 1)
+        self._loader = DataLoader(IndexDataset(size), *args, **kwargs)
+        if isinstance(device, (int, str)):
+            device = torch.device(device)
+        self._device = device
+
+    @property
+    def loader(self) -> DataLoader:
+        """The underlying DataLoader."""
+        return self._loader
+
+    def __len__(self) -> int:
+        """Get the size of the underlying DataLoader."""
+        return len(self.loader)
+
+    def __iter__(self):
+        return iter(
+            self._loader
+            if self._device.type == 'cpu'
+            else torch.cat(list(self.loader)).to(self._device).split(self._batch_size)
+        )
+
+
+@deprecated('Instead, use `torch.utils.data.dataloader.default_collate`')
+def collate(iterable: Iterable) -> Any:
+    """Almost an alias for :code:`torch.utils.data.dataloader.default_collate`.
+    Namely, the input is allowed to be any kind of iterable, not only a list. Firstly,
+    if it is not a list, it is transformed to a list. Then, the list is passed to the
+    original function and the result is returned as is.
+    """
+    if not isinstance(iterable, list):
+        iterable = list(iterable)
+    # > Module has no attribute "default_collate"
+    return torch.utils.data.dataloader.default_collate(iterable)  # type: ignore
