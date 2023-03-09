@@ -8,6 +8,15 @@ import torch
 from pynvml import NVMLError_LibraryNotFound
 
 
+def _to_str(x):
+    if isinstance(x, str):
+        return x
+    elif isinstance(x, bytes):
+        return str(x, 'utf-8')
+    else:
+        raise ValueError('Internal error')
+
+
 def free_memory() -> None:
     """Free GPU-memory occupied by `torch` and run the garbage collector.
 
@@ -85,7 +94,7 @@ def get_gpus_info() -> Dict[str, Any]:
         memory_info = pynvml.nvmlDeviceGetMemoryInfo(handle)
         devices.append(
             {
-                'name': str(pynvml.nvmlDeviceGetName(handle), 'utf-8'),
+                'name': _to_str(pynvml.nvmlDeviceGetName(handle)),
                 'memory_total': memory_info.total,
                 'memory_free': memory_info.free,
                 'memory_used': memory_info.used,
@@ -93,6 +102,6 @@ def get_gpus_info() -> Dict[str, Any]:
             }
         )
     return {
-        'driver': str(pynvml.nvmlSystemGetDriverVersion(), 'utf-8'),
+        'driver': _to_str(pynvml.nvmlSystemGetDriverVersion()),
         'devices': devices,
     }
