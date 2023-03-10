@@ -223,27 +223,66 @@ class FnDataset(Dataset):
         return x if self._transform is None else self._transform(x)
 
 
-@deprecated('')
 class IndexDataset(Dataset):
-    """The dataset used by `make_index_dataloader`."""
+    """A trivial dataset that yeilds indices back to user (useful for DDP).
+
+    This simple dataset is useful when:
+
+    1. you need a dataloader that yeilds batches of *indices* instead of *objects*
+    2. AND you work in the `Distributed Data Parallel <https://pytorch.org/tutorials/intermediate/ddp_tutorial.html>`_ setup
+
+    Note:
+        If only the first condition is true, consider using the combinatation of
+        `torch.randperm` and `torch.Tensor.split` instead.
+
+    Example::
+
+        from torch.utils.data import DataLoader
+        from torch.utils.data.distributed import DistributedSampler
+
+        train_size = 123456
+        batch_size = 123
+        dataset = delu.data.IndexDataset(dataset_size)
+        for i in range(train_size):
+            assert dataset[i] == i
+        dataloader = DataLoader(
+            dataset,
+            batch_size,
+            sampler=DistributedSampler(dataset)
+        )
+
+        for epoch in range(n_epochs):
+            for batch_indices in dataloader:
+                ...
+    """  # noqa: E501
 
     def __init__(self, size: int) -> None:
+        """Initialize self.
+
+        Args:
+            size: the dataset size
+        """
         if size < 1:
             raise ValueError('size must be positive')
         self.size = size
 
     def __len__(self) -> int:
+        """Get the dataset size."""
         return self.size
 
     def __getitem__(self, i: int) -> int:
-        if i >= self.size:
+        """Get the same index back.
+
+        The index must be an integer from ``range(len(self))``.
+        """
+        if i < 0 or i >= self.size:
             raise IndexError(
                 f"index {i} is out of range (dataset's size is {self.size})"
             )
         return i
 
 
-@deprecated('Instead, use ``torch.arange/randperm`` + ``torch.Tensor.split()``.')
+@deprecated('Instead, use `~torch.utils.data.DataLoader` and `delu.data.IndexDataset`')
 def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
     """Make `~torch.utils.data.DataLoader` over indices instead of data.
 
@@ -303,7 +342,7 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
     return DataLoader(IndexDataset(size), *args, **kwargs)
 
 
-@deprecated('Instead, use ``torch.arange/randperm`` + ``torch.Tensor.split()``.')
+@deprecated('Instead, use `~torch.utils.data.DataLoader` and `delu.data.IndexDataset`')
 class IndexLoader:
     """Like `~torch.utils.data.DataLoader`, but over indices instead of data.
 

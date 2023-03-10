@@ -6,7 +6,7 @@ import torch.nn
 
 
 class Lambda(torch.nn.Module):
-    """A parameters-free module for wrapping callables.
+    """A parameter-free module for wrapping callables.
 
     Examples:
 

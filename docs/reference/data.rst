@@ -14,6 +14,7 @@ delu.data
 
     Enumerate
     FnDataset
+    IndexDataset
 
 .. rubric:: Deprecated items
 

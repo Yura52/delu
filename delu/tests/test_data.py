@@ -41,6 +41,18 @@ def test_fndataset():
     assert dataset[2] == 16
 
 
+def test_index_dataset():
+    n = 10
+    d = delu.data.IndexDataset(n)
+    assert len(d) == n
+    for i in range(n):
+        assert d[i] == i
+    with pytest.raises(IndexError):
+        d[-1]
+    with pytest.raises(IndexError):
+        d[n]
+
+
 @ignore_deprecated_warning
 def test_collate():
     # just test that the function is still a valid alias
