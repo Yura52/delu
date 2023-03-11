@@ -102,7 +102,7 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
     See other examples below.
 
     Args:
-        iterable: the iterable of tuples/dictionaries/dataclasses of tensors.
+        iterable: the iterable of (named)tuples/dictionaries/dataclasses of tensors.
             All items of the iterable must be of the same type and have the same
             structure (tuples must be of the same length, dictionaries must have the
             same keys, dataclasses must have the same fields). Dataclasses can have
