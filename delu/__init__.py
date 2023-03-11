@@ -1,5 +1,5 @@
 """Deep Learning Utilities for PyTorch users."""
-__version__ = '0.0.14.dev0'
+__version__ = '0.0.14'
 
 from . import cuda  # noqa: F401
 from . import data  # noqa: F401
