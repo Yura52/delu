@@ -11,7 +11,7 @@ import torch
 def seed(base_seed: int, one_cuda_seed: bool = False) -> None:
     """Set seeds in `random`, `numpy` and `torch`.
 
-    For all libraries, different seeds (which are *deterministically* calculated based
+    For all libraries, different seeds (which are *deterministically* computed based
     on the ``base_seed`` argument) are set (see the note below).
 
     Args:
@@ -54,32 +54,37 @@ def seed(base_seed: int, one_cuda_seed: bool = False) -> None:
 def get_state() -> Dict[str, Any]:
     """Aggregate global random states from `random`, `numpy` and `torch`.
 
-    The function is useful for creating checkpoints that allow to resume data streams or
-    other activities dependent on **global** random number generator (see the note below
-    ). The result of this function can be passed to `set_state`.
+    The function is useful for creating checkpoints and allows resuming activities
+    dependent on global random states (e.g. data streams) in a reproducible manner.
+    Also, see the note below.
+    The result of this function can be passed to `set_state`.
 
     Returns:
         state
 
     See also:
-        `set_state`
+        `delu.random.set_state`
 
-    Examples:
-        .. testcode::
+    Example::
 
-            model = torch.nn.Linear(1, 1)
-            optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
+        # Resuming from a checkpoint:
+        checkpoint_path = ...
+        if checkpoint_path.exists():
+            checkpoint = torch.load(checkpoint_path)
+            delu.random.set_state(checkpoint['random_state'])
+        ...
+        # Training:
+        for batch in batches:
             ...
-            checkpoint = {
-                'model': model.state_dict(),
-                'optimizer': optimizer.state_dict(),
-                'random_state': delu.random.get_state(),
-            }
-            ...
-            # Later:
-            # torch.save(checkpoint, 'checkpoint.pt')
-            # ...
-            # delu.random.set_state(torch.load('checkpoint.pt')['random_state'])
+            if step % checkpoint_frequency == 0:
+                torch.save(
+                    {
+                        'model': ...,
+                        'optimizer': ...,
+                        'random_state': delu.random.get_state(),
+                    },
+                    checkpoint_path,
+                )
     """
     return {
         'random': random.getstate(),
@@ -92,13 +97,15 @@ def get_state() -> Dict[str, Any]:
 def set_state(state: Dict[str, Any]) -> None:
     """Set global random states in `random`, `numpy` and `torch`.
 
+    See `get_state` for a usage example.
+
     Args:
-        state: global RNG states. Must be produced by `get_state`. The size of the list
-            ``state['torch.cuda']`` must be equal to the number of available cuda
+        state: the global RNG states. Must be produced by `get_state`. The size of the
+            list ``state['torch.cuda']`` must be equal to the number of available cuda
             devices.
 
     See also:
-        `get_state`
+        `delu.random.get_state`
 
     Raises:
         AssertionError: if ``torch.cuda.device_count() != len(state['torch.cuda'])``
@@ -114,8 +121,10 @@ def set_state(state: Dict[str, Any]) -> None:
 def preserve_state():
     """Decorator and context manager for preserving global random state.
 
-    Examples:
+    The function saves the global random state when entering the context
+    and restores it on exit.
 
+    Examples:
         .. testcode::
 
             import random

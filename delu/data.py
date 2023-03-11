@@ -66,7 +66,7 @@ class Enumerate(Dataset):
 class FnDataset(Dataset):
     """A thin wrapper around a loader function and its arguments.
 
-    `FnDataset` allows to avoid implementing Dataset-classes (well, at least in simple
+    `FnDataset` allows avoiding implementing Dataset-classes (well, at least in simple
     cases). Below you can find the full tutorial and typical use cases, but here is a
     quick example:
 
@@ -91,7 +91,7 @@ class FnDataset(Dataset):
 
     .. rubric:: Tutorial
 
-    With vanilla PyTorch, in order to create a dataset you have to inherit from
+    With the vanilla PyTorch, in order to create a dataset you have to inherit from
     `torch.utils.data.Dataset` and implement three methods:
 
     - ``__init__``
@@ -121,13 +121,13 @@ class FnDataset(Dataset):
     If there are many files, but you need only those with specific extensions, use
     `pathlib.Path.glob`::
 
-        dataset = delu.data.FnDataset(Image.open, images_dir.glob(*.png))
+        dataset = delu.data.FnDataset(Image.open, images_dir.glob('*.png'))
 
     If there are many files in many subfolders, but you need only those with specific
     extensions and that satisfy some condition, use `pathlib.Path.rglob`::
 
         dataset = delu.data.FnDataset(
-            Image.open, (x for x in images_dir.rglob(*.png) if condition(x))
+            Image.open, (x for x in images_dir.rglob('*.png') if condition(x))
         )
 
     A segmentation dataset::
@@ -395,7 +395,6 @@ class IndexLoader:
             tensor([6, 7, 8])
 
     See also:
-
         `delu.iter_batches`
     """
 

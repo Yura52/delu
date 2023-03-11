@@ -16,8 +16,8 @@ class ProgressTracker:
     For `~ProgressTracker`, **the greater score is the better score**.
     At any moment the tracker is in one of the following states:
 
-    - *success*: the last update changed the best score
-    - *fail*: last ``n > patience`` updates are not better than the best score
+    - *success*: the last update increased the best score
+    - *fail*: last ``n > patience`` updates did not improve the best score
     - *neutral*: if neither success nor fail
 
     .. rubric:: Tutorial
@@ -59,11 +59,13 @@ class ProgressTracker:
         """Initialize self.
 
         Args:
-            patience: Allowed number of bad updates. For example, if patience is 2, then
-                2 bad updates is not a fail, but 3 bad updates is a fail. If `None`,
-                then the progress tracker never fails.
-            min_delta: minimal improvement over current best score to count it as
-                success.
+            patience: Allowed number of unsuccessfull updates. For example, if patience
+                is 2, then 2 unsuccessfull updates in a row is not a fail,
+                but 3 unsuccessfull updates in a row is a fail.
+                `None` means "infinite patience" and the progress tracker is never
+                in the "fail" state.
+            min_delta: the minimal improvement over the current best score
+                to count it as success.
 
         Examples:
             .. testcode::
@@ -87,12 +89,12 @@ class ProgressTracker:
 
     @property
     def success(self) -> bool:
-        """Check if the tracker is in the 'success' state."""
+        """Check if the tracker is in the "success" state."""
         return self._status == _ProgressStatus.SUCCESS
 
     @property
     def fail(self) -> bool:
-        """Check if the tracker is in the 'fail' state."""
+        """Check if the tracker is in the "fail" state."""
         return self._status == _ProgressStatus.FAIL
 
     def _set_success(self, score: float) -> None:
@@ -101,7 +103,7 @@ class ProgressTracker:
         self._bad_counter = 0
 
     def update(self, score: float) -> None:
-        """Update the tracker's state.
+        """Submit a new score and update the tracker's state accordingly.
 
         Args:
             score: the score to use for the update.
@@ -119,12 +121,22 @@ class ProgressTracker:
             )
 
     def forget_bad_updates(self) -> None:
-        """Reset bad updates and status, but not the best score."""
+        """Reset unsuccessfull update counter and set the status to "neutral".
+
+        Note that this method does NOT reset the best score.
+
+        See also:
+            `ProgressTracker.reset`
+        """
         self._bad_counter = 0
         self._status = _ProgressStatus.NEUTRAL
 
     def reset(self) -> None:
-        """Reset everything."""
+        """Reset everything.
+
+        See also:
+            `ProgressTracker.forget_bad_updates`
+        """
         self.forget_bad_updates()
         self._best_score = None
 

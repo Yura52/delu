@@ -1,6 +1,8 @@
 # Do Ctrl+F "delu" to see how DeLU is used.
 # Run `python mnist.py --help` to see the documentation
 
+# ruff: noqa: F821,E501
+
 import shutil
 import subprocess
 import sys
@@ -64,18 +66,21 @@ def main():
 
     if not args.skip_download:
         download_mnist()
+    # Set seeds in all "standard" libraries: random, numpy, torch
     delu.random.seed(args.seed)
     model = nn.Linear(784, 10).to(args.device)
     optimizer = torch.optim.SGD(model.parameters(), 0.005, 0.9)
 
     def step(batch):
-        X, y = batch
-        return model(X.to(args.device)), y.to(args.device)  # noqa: F821
+        # Change device and/or dtype for a collection of tensors.
+        X, y = delu.to(batch, args.device)
+        return model(X), y
 
     @torch.inference_mode()
     def evaluate(loader):
-        model.eval()  # noqa: F821
-        logits, y = delu.cat(map(step, loader))  # noqa: F821
+        model.eval()
+        # Concatenate a sequence of tuples `(batch_logits, batch_y)` into a single tuple.
+        logits, y = delu.cat(map(step, loader))
         y_pred = torch.argmax(logits, dim=1).to(y)
         return (y_pred == y).int().sum().item() / len(y)
 
@@ -85,7 +90,9 @@ def main():
     val_loader = DataLoader(val_dataset, batch_size=8096)
     test_loader = DataLoader(test_dataset, batch_size=8096)
 
+    # Create a timer, see the usage below.
     timer = delu.Timer()
+    # Create a progress tracker for tracking the best score and for early stopping.
     progress = delu.ProgressTracker(args.early_stopping_patience, 0.005)
     checkpoint_path = 'checkpoint.pt'
     if args.from_checkpoint:
@@ -97,6 +104,7 @@ def main():
         optimizer.load_state_dict(checkpoint['optimizer'])
         timer = checkpoint['timer']
         progress = checkpoint['progress']
+        # Restore the global random state for full reproducibility.
         delu.random.set_state(checkpoint['random_state'])
         print('Resuming from the checkpoint.\n')
     else:
@@ -123,6 +131,7 @@ def main():
                     'optimizer': optimizer.state_dict(),
                     'timer': timer,
                     'progress': progress,
+                    # Save the global random state.
                     'random_state': delu.random.get_state(),
                 },
                 checkpoint_path,
@@ -135,6 +144,7 @@ def main():
         )
         if args.device.type == 'cuda':
             index = args.device.index or 0
+            # A handy function for getting the information about GPUs.
             msg += f'\nGPU info: {delu.hardware.get_gpus_info()["devices"][index]}'
         print(msg)
         if progress.fail:
@@ -150,6 +160,7 @@ def main():
 
     print('Freeing memory (for fun, not for profit) ...')
     del model, optimizer, step, evaluate
+    # A handy function for freeing GPU memory.
     delu.hardware.free_memory()
     print('\nDONE.')
     if not args.from_checkpoint:

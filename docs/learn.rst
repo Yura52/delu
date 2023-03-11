@@ -17,23 +17,10 @@ It is the main source of knowledge about the library.
 How to learn DeLU?
 ------------------
 
-DeLU, by design, is a "toolbox", not a "framework", so you can learn things and
-start using them in almost any order. If you want to explore the library by yourself,
+DeLU is a toolbox, not a framework, so you can learn things and
+start using them in any order. If you want to explore the library by yourself,
 just browse the Reference.
 
-However, if you want to quickly learn some basic things, then understanding of
-`this classification task <https://github.com/Yura52/delu/blob/main/examples/mnist.py>`_
-is enough. To achieve this, you need to walk through some specific parts of Reference
-paying attention to *explanations* and *examples*, without diving into API details. Here
-are the things to learn:
+Also, we provide some examples, where you can do ``Ctrl+F "delu."`` and see how DeLU can be used:
 
-.. autosummary::
-   :nosignatures:
-
-   delu.random
-   delu.cat
-   delu.ProgressTracker
-   delu.Timer
-   delu.hardware.get_gpus_info
-
-Congratulations! You are ready to apply DeLU in practice.
+- `(Computer Vision) Classification <https://github.com/Yura52/delu/blob/main/examples/mnist.py>`_
