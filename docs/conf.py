@@ -38,16 +38,12 @@ if platform.machine() != 'arm64':
     extensions.append('sphinxcontrib.spelling')
 
 autodoc_typehints = 'description'
-autodoc_typehints_format = 'fully-qualified'
+# autodoc_typehints_format = 'fully-qualified'
 
 doctest_global_setup = '''
 import numpy as np
 import torch
 import delu
-from delu import *
-from delu.data import *
-from delu.hardware import *
-from delu.random import *
 '''
 
 intersphinx_mapping = {

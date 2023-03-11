@@ -21,7 +21,7 @@ class Enumerate(Dataset):
         from torch.utils.data import DataLoader, TensorDataset
         X, y = torch.randn(9, 2), torch.randn(9)
         dataset = TensorDataset(X, y)
-        for batch_idx, batch in DataLoader(Enumerate(dataset), batch_size=3):
+        for batch_idx, batch in DataLoader(delu.data.Enumerate(dataset), batch_size=3):
             print(batch_idx)
 
     .. testoutput::
@@ -87,7 +87,7 @@ class FnDataset(Dataset):
 
     With `FnDataset`::
 
-        dataset = FnDataset(Image.open, filenames, transform)
+        dataset = delu.data.FnDataset(Image.open, filenames, transform)
 
     .. rubric:: Tutorial
 
@@ -104,29 +104,29 @@ class FnDataset(Dataset):
 
     A list of images::
 
-        dataset = FnDataset(Image.open, filenames)
+        dataset = delu.data.FnDataset(Image.open, filenames)
         # dataset[i] returns Image.open(filenames[i])
 
     A list of images that are cached after the first load::
 
         from functools import lru_cache
-        dataset = FnDataset(lru_cache(None)(Image.open), filenames)
+        dataset = delu.data.FnDataset(lru_cache(None)(Image.open), filenames)
 
     `pathlib.Path` is very useful when you want to create a dataset that reads from
     files. For example::
 
         images_dir = Path(...)
-        dataset = FnDataset(Image.open, images_dir.iterdir())
+        dataset = delu.data.FnDataset(Image.open, images_dir.iterdir())
 
     If there are many files, but you need only those with specific extensions, use
     `pathlib.Path.glob`::
 
-        dataset = FnDataset(Image.open, images_dir.glob(*.png))
+        dataset = delu.data.FnDataset(Image.open, images_dir.glob(*.png))
 
     If there are many files in many subfolders, but you need only those with specific
     extensions and that satisfy some condition, use `pathlib.Path.rglob`::
 
-        dataset = FnDataset(
+        dataset = delu.data.FnDataset(
             Image.open, (x for x in images_dir.rglob(*.png) if condition(x))
         )
 
@@ -138,7 +138,7 @@ class FnDataset(Dataset):
         def get(i):
             return Image.open(image_filenames[i]), Image.open(gt_filenames[i])
 
-        dataset = FnDataset(get, len(image_filenames))
+        dataset = delu.data.FnDataset(get, len(image_filenames))
 
     A dummy dataset that demonstrates that `FnDataset` is a very general thing:
 
@@ -150,7 +150,7 @@ class FnDataset(Dataset):
         def g(x):
             return x * 2
 
-        dataset = FnDataset(f, 3, g)
+        dataset = delu.data.FnDataset(f, 3, g)
         # dataset[i] returns g(f(i))
         assert len(dataset) == 3
         assert dataset[0] == 0
@@ -182,7 +182,7 @@ class FnDataset(Dataset):
                 import PIL.Image as Image
                 import torchvision.transforms as T
 
-                dataset = FnDataset(Image.open, filenames, T.ToTensor())
+                dataset = delu.data.FnDataset(Image.open, filenames, T.ToTensor())
         """
         self._fn = fn
         if isinstance(args, Iterable):
@@ -282,7 +282,7 @@ class IndexDataset(Dataset):
         return i
 
 
-@deprecated('Instead, use `~torch.utils.data.DataLoader` and `delu.data.IndexDataset`')
+@deprecated('Instead, use `delu.data.IndexDataset` and `~torch.utils.data.DataLoader`')
 def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
     """Make `~torch.utils.data.DataLoader` over indices instead of data.
 
@@ -301,7 +301,7 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
 
         .. code-block::
 
-            train_loader = make_index_dataloader(
+            train_loader = delu.data.make_index_dataloader(
                 len(train_dataset), batch_size, shuffle=True
             )
             for epoch in range(n_epochs):
@@ -315,7 +315,9 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
         .. testcode::
 
             dataset_size = 10  # len(dataset)
-            for batch_idx in make_index_dataloader(dataset_size, batch_size=3):
+            for batch_idx in delu.data.make_index_dataloader(
+                dataset_size, batch_size=3
+            ):
                 print(batch_idx)
 
         .. testoutput::
@@ -328,7 +330,9 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
         .. testcode::
 
             dataset_size = 10  # len(dataset)
-            for batch_idx in make_index_dataloader(dataset_size, 3, drop_last=True):
+            for batch_idx in delu.data.make_index_dataloader(
+                dataset_size, 3, drop_last=True
+            ):
                 print(batch_idx)
 
         .. testoutput::
@@ -342,7 +346,7 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
     return DataLoader(IndexDataset(size), *args, **kwargs)
 
 
-@deprecated('Instead, use `~torch.utils.data.DataLoader` and `delu.data.IndexDataset`')
+@deprecated('Instead, use `delu.data.IndexDataset` and `~torch.utils.data.DataLoader`')
 class IndexLoader:
     """Like `~torch.utils.data.DataLoader`, but over indices instead of data.
 
@@ -356,7 +360,9 @@ class IndexLoader:
 
         .. code-block::
 
-            train_loader = IndexLoader(len(train_dataset), batch_size, shuffle=True)
+            train_loader = delu.data.IndexLoader(
+                len(train_dataset), batch_size, shuffle=True
+            )
             for epoch in range(n_epochs):
                 for batch_idx in train_loader:
                     ...
@@ -366,7 +372,7 @@ class IndexLoader:
         .. testcode::
 
             dataset_size = 10  # len(dataset)
-            for batch_idx in IndexLoader(dataset_size, batch_size=3):
+            for batch_idx in delu.data.IndexLoader(dataset_size, batch_size=3):
                 print(batch_idx)
 
         .. testoutput::
@@ -379,7 +385,7 @@ class IndexLoader:
         .. testcode::
 
             dataset_size = 10  # len(dataset)
-            for batch_idx in IndexLoader(dataset_size, 3, drop_last=True):
+            for batch_idx in delu.data.IndexLoader(dataset_size, 3, drop_last=True):
                 print(batch_idx)
 
         .. testoutput::

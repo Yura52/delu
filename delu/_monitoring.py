@@ -24,7 +24,7 @@ class ProgressTracker:
 
     .. testcode::
 
-        progress = ProgressTracker(2)
+        progress = delu.ProgressTracker(2)
         progress.update(-999999999)
         assert progress.success  # the first update always updates the best score
 
@@ -68,8 +68,8 @@ class ProgressTracker:
         Examples:
             .. testcode::
 
-                progress = ProgressTracker(2)
-                progress = ProgressTracker(3, 0.1)
+                progress = delu.ProgressTracker(2)
+                progress = delu.ProgressTracker(3, 0.1)
         """
         self._patience = patience
         self._min_delta = float(min_delta)
@@ -143,9 +143,9 @@ class Timer:
 
         import time
 
-        assert Timer()() == 0.0
+        assert delu.Timer()() == 0.0
 
-        timer = Timer()
+        timer = delu.Timer()
         timer.run()  # start
         time.sleep(0.01)
         assert timer()  # some time has passed
@@ -162,13 +162,13 @@ class Timer:
         timer.reset()
         assert timer() == 0.0
 
-        with Timer() as timer:
+        with delu.Timer() as timer:
             time.sleep(0.01)
         # timer is on pause and timer() returns the time elapsed within the context
 
     `Timer` can be printed and formatted in a human-readable manner::
 
-        timer = Timer()
+        timer = delu.Timer()
         timer.run()
         <let's assume that 3661 seconds have passed>
         print('Time elapsed:', timer)  # prints "Time elapsed: 1:01:01"
@@ -181,7 +181,7 @@ class Timer:
 
         import pickle
 
-        timer = Timer()
+        timer = delu.Timer()
         timer.run()
         time.sleep(0.01)
         timer.pause()
@@ -203,7 +203,7 @@ class Timer:
         Examples:
             .. testcode::
 
-                timer = Timer()
+                timer = delu.Timer()
         """
         self.reset()
 
@@ -271,7 +271,7 @@ class Timer:
 
         Example::
 
-            timer = Timer()
+            timer = delu.Timer()
             <let's assume that 3661 seconds have passed>
             assert timer.format('%Hh %Mm %Ss') == '01h 01m 01s'
         """
@@ -290,7 +290,7 @@ class Timer:
             ..testcode::
 
                 import time
-                with Timer() as timer:
+                with delu.Timer() as timer:
                     time.sleep(0.01)
                 elapsed = timer()
                 assert elapsed > 0.01

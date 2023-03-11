@@ -24,7 +24,7 @@ def free_memory() -> None:
         There is a small chunk of GPU-memory (occupied by drivers) that is impossible to
         free. It is a `torch` "limitation", so the function inherits this property.
 
-    Inspired by: https://github.com/xtinkt/editable/blob/1c80efb80c196cdb925fc994fc9ed576a246c7a1/lib/utils/basic.py#L124
+    Inspired by `this function <https://github.com/xtinkt/editable/blob/1c80efb80c196cdb925fc994fc9ed576a246c7a1/lib/utils/basic.py#L124>`_.
     """  # noqa: E501
     gc.collect()
     if torch.cuda.is_available():
@@ -54,7 +54,7 @@ def get_gpus_info() -> Dict[str, Any]:
     Examples:
         .. code-block::
 
-            print(get_gpu_info())
+            print(delu.hardware.get_gpu_info())
 
         Output example (formatted for convenience):
 

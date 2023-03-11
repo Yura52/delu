@@ -71,9 +71,9 @@ class evaluation(ContextDecorator):
 
     This code... ::
 
-        with evaluation(model):  # or: evaluation(model_0, model_1, ...)
+        with delu.evaluation(model):  # or: evaluation(model_0, model_1, ...)
             ...
-        @evaluation(model)  # or: @evaluation(model_0, model_1, ...)
+        @delu.evaluation(model)  # or: @evaluation(model_0, model_1, ...)
         def f():
             ...
 
@@ -103,7 +103,7 @@ class evaluation(ContextDecorator):
         create a context::
 
             def my_generator():
-                with evaluation(...):
+                with delu.evaluation(...):
                     for a in b:
                         yield c
 
@@ -113,14 +113,14 @@ class evaluation(ContextDecorator):
 
             a = torch.nn.Linear(1, 1)
             b = torch.nn.Linear(2, 2)
-            with evaluation(a):
+            with delu.evaluation(a):
                 ...
-            with evaluation(a, b):
+            with delu.evaluation(a, b):
                 ...
-            @evaluation(a)
+            @delu.evaluation(a)
             def f():
                 ...
-            @evaluation(a, b)
+            @delu.evaluation(a, b)
             def f():
                 ...
     """

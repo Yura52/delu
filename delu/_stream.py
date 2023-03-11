@@ -41,7 +41,7 @@ class Stream:
 
     Let's enhance the loop using `Stream`::
 
-        stream = Stream(DataLoader(...))  # (A)
+        stream = delu.Stream(DataLoader(...))  # (A)
         for epoch in stream.epochs(max_epoch):  # (B)
             for batch in epoch:  # (C)
                 print('Epoch:', stream.epoch, 'Iteration:', stream.iteration)  # (D)
@@ -60,7 +60,7 @@ class Stream:
 
         model = ...
         optimizer = ...
-        stream = Stream(DataLoader(...))
+        stream = delu.Stream(DataLoader(...))
         if load_from_checkpoint:
             checkpoint = torch.load(checkpoint_path)
             model.load_state_dict(checkpoint['model'])
@@ -169,14 +169,14 @@ class Stream:
         Examples:
             .. testcode::
 
-                stream = Stream([0, 1, 2, 3])
-                stream = Stream(range(10))
+                stream = delu.Stream([0, 1, 2, 3])
+                stream = delu.Stream(range(10))
                 import itertools
-                stream = Stream(itertools.repeat(0))
+                stream = delu.Stream(itertools.repeat(0))
 
                 from torch.utils.data import DataLoader, TensorDataset
                 dataset = TensorDataset(torch.randn(10, 2))
-                stream = Stream(DataLoader(dataset, batch_size=3, shuffle=True))
+                stream = delu.Stream(DataLoader(dataset, batch_size=3, shuffle=True))
         """
         assert _try_len(loader) != 0
         self._iteration = 0
@@ -219,7 +219,7 @@ class Stream:
             .. testcode::
 
                 from itertools import repeat
-                stream = Stream(repeat(0))
+                stream = delu.Stream(repeat(0))
                 for x in stream.data(5):
                     print(stream.iteration, x)
                     if stream.iteration == 2:
@@ -247,7 +247,7 @@ class Stream:
         Examples:
             .. testcode::
 
-                stream = Stream(range(5))
+                stream = delu.Stream(range(5))
                 assert stream.epoch == 0
                 stream.increment_epoch()
                 assert stream.epoch == 1
@@ -266,13 +266,13 @@ class Stream:
         Examples:
             .. testcode::
 
-                stream = Stream(range(5))
+                stream = delu.Stream(range(5))
                 assert stream.next() == 0
                 assert stream.next() == 1
                 stream.reload_iterator()
                 assert stream.next() == 0
 
-                stream = Stream(iter(range(5)))
+                stream = delu.Stream(iter(range(5)))
                 assert stream.next() == 0
                 assert stream.next() == 1
                 stream.reload_iterator()
@@ -291,7 +291,7 @@ class Stream:
         Examples:
             .. testcode::
 
-                stream = Stream(range(3))
+                stream = delu.Stream(range(3))
                 assert stream.iteration == 0
                 assert stream.next() == 0
                 assert stream.iteration == 1
@@ -342,7 +342,7 @@ class Stream:
         Examples:
             .. testcode::
 
-                stream = Stream(range(5))
+                stream = delu.Stream(range(5))
                 assert list(stream.data()) == [0, 1, 2, 3, 4]
                 assert list(stream.data(3)) == [0, 1, 2]
                 # stream doesn't "start over"!
@@ -412,7 +412,7 @@ class Stream:
         Examples:
             .. testcode::
 
-                stream = Stream(range(3))
+                stream = delu.Stream(range(3))
                 for epoch in stream.epochs(2):
                     for x in epoch:
                         print(x)
@@ -431,7 +431,7 @@ class Stream:
 
             .. testcode::
 
-                stream = Stream(range(3))
+                stream = delu.Stream(range(3))
                 for epoch in stream.epochs(3, 2):
                     for x in epoch:
                         print(x)
@@ -501,7 +501,7 @@ class Stream:
         Examples:
             .. testcode::
 
-                stream = Stream(range(10))
+                stream = delu.Stream(range(10))
                 assert stream.state_dict() == {'epoch': 0, 'iteration': 0}
                 stream.next()
                 stream.next()
@@ -530,12 +530,12 @@ class Stream:
 
             .. testcode::
 
-                stream = Stream(range(10))
+                stream = delu.Stream(range(10))
                 stream.next()
                 stream.increment_epoch()
                 assert stream.state_dict() == {'epoch': 1, 'iteration': 1}
 
-                new_stream = Stream(range(10))
+                new_stream = delu.Stream(range(10))
                 new_stream.load_state_dict(stream.state_dict())
                 assert new_stream.state_dict() == {'epoch': 1, 'iteration': 1}
                 assert new_stream.next() == 0

@@ -75,7 +75,8 @@ def get_state() -> Dict[str, Any]:
                 'optimizer': optimizer.state_dict(),
                 'random_state': delu.random.get_state(),
             }
-            # later
+            ...
+            # Later:
             # torch.save(checkpoint, 'checkpoint.pt')
             # ...
             # delu.random.set_state(torch.load('checkpoint.pt')['random_state'])
@@ -124,12 +125,12 @@ def preserve_state():
                 np.random.randint(10),
                 torch.randint(10, (1,)).item()
             )
-            with preserve_state():
+            with delu.random.preserve_state():
                 a = f()
             b = f()
             assert a == b
 
-            @preserve_state()
+            @delu.random.preserve_state()
             def g():
                 return f()
 

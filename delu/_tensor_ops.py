@@ -34,20 +34,20 @@ def to(data: T, *args, **kwargs) -> T:
             tensor = torch.tensor
 
             x = tensor(0)
-            x = to(x, dtype=torch.float, device=device)
+            x = delu.to(x, dtype=torch.float, device=device)
 
             batch = {
                 'x': tensor([0.0, 1.0]),
                 'y': tensor([0, 1]),
             }
-            batch = to(batch, device)
+            batch = delu.to(batch, device)
 
             x = [
                 tensor(0.0),
                 {'a': tensor(1.0), 'b': tensor(2.0)},
                 (tensor(3.0), tensor(4.0))
             ]
-            x = to(x, torch.half)
+            x = delu.to(x, torch.half)
     """
 
     def TO_(x):
@@ -90,7 +90,7 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
         # prediction
         model.eval()
         with torch.inference_mode():
-            y_pred, embeddings = cat(model(batch) for batch in dataloader)
+            y_pred, embeddings = delu.cat(model(batch) for batch in dataloader)
         assert isinstance(y_pred, torch.Tensor) and len(y_pred) == len(dataset)
         assert isinstance(embeddings, torch.Tensor) and len(embeddings) == len(dataset)
 
@@ -122,18 +122,11 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
 
             tensor = torch.tensor
 
-            a = tensor([0, 1, 2, 3, 4])
-            b = tensor([0, 10, 20, 30, 40])
-            batch_size = 2
-            ab = delu.cat(delu.iter_batches((a, b), batch_size))
-            assert torch.equal(ab[0], a)
-            assert torch.equal(ab[1], b)
-
             parts = [
                 (tensor([0.0, 1.0]), tensor([0, 1])),
                 (tensor([2.0, 3.0]), tensor([2, 3])),
             ]
-            result = cat(parts)
+            result = delu.cat(parts)
             assert isinstance(result, tuple) and len(result) == 2
             assert torch.equal(result[0], tensor([0.0, 1.0, 2.0, 3.0]))
             assert torch.equal(result[1], tensor([0, 1, 2, 3]))
@@ -142,7 +135,7 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
                 {'a': tensor([0.0, 1.0]), 'b': tensor([0, 1])},
                 {'a': tensor([2.0, 3.0]), 'b': tensor([2, 3])},
             ]
-            result = cat(parts)
+            result = delu.cat(parts)
             assert isinstance(result, dict) and set(result) == {'a', 'b'}
             assert torch.equal(result['a'], tensor([0.0, 1.0, 2.0, 3.0]))
             assert torch.equal(result['b'], tensor([0, 1, 2, 3]))
@@ -158,10 +151,17 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
                 Data(tensor([0.0, 1.0]), tensor([0, 1])),
                 Data(tensor([2.0, 3.0]), tensor([2, 3])),
             ]
-            result = cat(parts)
+            result = delu.cat(parts)
             assert isinstance(result, Data)
             assert torch.equal(result.a, tensor([0.0, 1.0, 2.0, 3.0]))
             assert torch.equal(result.b, tensor([0, 1, 2, 3]))
+
+            a = tensor([0, 1, 2, 3, 4])
+            b = tensor([0, 10, 20, 30, 40])
+            batch_size = 2
+            ab = delu.cat(delu.iter_batches((a, b), batch_size))
+            assert torch.equal(ab[0], a)
+            assert torch.equal(ab[1], b)
     """
     data = iterable if isinstance(iterable, list) else list(iterable)
     if not data:
@@ -214,7 +214,7 @@ def iter_batches(
     and returns an iterator over collections of the same type as the input.
 
     Args:
-        data: the tensor or the collection (tuple/dict/dataclass) of tensors.
+        data: the tensor or the collection ((named)tuple/dict/dataclass) of tensors.
             If data is a collection, then the tensors must have the same first
             dimension. If data is a dataclass, then all its fields must be tensors.
         batch_size: the batch size. If ``drop_last`` is False, then the last batch can
@@ -242,7 +242,7 @@ def iter_batches(
         .. code-block::
 
             for epoch in range(n_epochs):
-                for batch in iter_batches(data, batch_size, shuffle=True)):
+                for batch in delu.iter_batches(data, batch_size, shuffle=True)):
                     ...
 
         .. testcode::
@@ -251,19 +251,12 @@ def iter_batches(
             b = torch.tensor([0, 10, 20, 30, 40])
             batch_size = 2
 
-            ab = delu.cat(delu.iter_batches((a, b), batch_size))
-            assert torch.equal(ab[0], a)
-            assert torch.equal(ab[1], b)
-
-            for batch in iter_batches(a, batch_size):
+            for batch in delu.iter_batches(a, batch_size):
                 assert isinstance(batch, torch.Tensor)
-            for batch in iter_batches((a, b), batch_size):
+            for batch in delu.iter_batches((a, b), batch_size):
                 assert isinstance(batch, tuple) and len(batch) == 2
-            for batch in iter_batches({'a': a, 'b': b}, batch_size):
+            for batch in delu.iter_batches({'a': a, 'b': b}, batch_size):
                 assert isinstance(batch, dict) and set(batch) == {'a', 'b'}
-
-            assert len(list(iter_batches((a, b), batch_size))) == 3
-            assert len(list(iter_batches((a, b), batch_size, drop_last=True))) == 2
 
             from dataclasses import dataclass
             @dataclass
@@ -271,8 +264,15 @@ def iter_batches(
                 a: torch.Tensor
                 b: torch.Tensor
 
-            for batch in iter_batches(Data(a, b), batch_size):
+            for batch in delu.iter_batches(Data(a, b), batch_size):
                 assert isinstance(batch, Data)
+
+            ab = delu.cat(delu.iter_batches((a, b), batch_size))
+            assert torch.equal(ab[0], a)
+            assert torch.equal(ab[1], b)
+
+            assert len(list(delu.iter_batches((a, b), batch_size))) == 3
+            assert len(list(delu.iter_batches((a, b), batch_size, drop_last=True))) == 2
     """
     if not shuffle and generator is not None:
         raise ValueError('When shuffle is False, generator must be None.')
