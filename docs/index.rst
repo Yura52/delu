@@ -53,6 +53,7 @@ DeLU (Deep Learning Utilities)
    :hidden:
 
    reference/delu
+   reference/cuda
    reference/data
    reference/hardware
    reference/nn

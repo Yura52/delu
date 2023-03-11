@@ -1,4 +1,4 @@
-"""Missing batteries from `torch.utils.data`."""
+"""An addition to `torch.utils.data`."""
 
 from typing import Any, Callable, Iterable, Optional, Tuple, TypeVar, Union
 

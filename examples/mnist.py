@@ -142,10 +142,6 @@ def main():
             f'Time elapsed: {timer}. '
             f'Validation accuracy: {accuracy:.4f}.'
         )
-        if args.device.type == 'cuda':
-            index = args.device.index or 0
-            # A handy function for getting the information about GPUs.
-            msg += f'\nGPU info: {delu.hardware.get_gpus_info()["devices"][index]}'
         print(msg)
         if progress.fail:
             break
@@ -161,7 +157,7 @@ def main():
     print('Freeing memory (for fun, not for profit) ...')
     del model, optimizer, step, evaluate
     # A handy function for freeing GPU memory.
-    delu.hardware.free_memory()
+    delu.cuda.free_memory()
     print('\nDONE.')
     if not args.from_checkpoint:
         # TODO replace `join` with `shlex.join` in 3.8

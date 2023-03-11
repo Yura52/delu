@@ -1,4 +1,4 @@
-"""Missing batteries from `torch.nn`."""
+"""An addition to `torch.nn`."""
 
 from typing import Callable
 

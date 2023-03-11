@@ -2,8 +2,8 @@
 
 from typing import Any, Dict
 
-from ._utilities import free_memory as free_memory_original
 from ._utils import deprecated
+from .cuda import free_memory as free_memory_original
 
 try:
     import pynvml
@@ -22,7 +22,7 @@ def _to_str(x):
         raise ValueError('Internal error')
 
 
-@deprecated('Instead, use `delu.free_memory`.')
+@deprecated('Instead, use `delu.cuda.free_memory`.')
 def free_memory(*args, **kwargs) -> None:
     """"""
     return free_memory_original(*args, **kwargs)

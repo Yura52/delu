@@ -27,14 +27,6 @@ delu
    ProgressTracker
    Timer
 
-.. rubric:: Utilities
-
-.. autosummary::
-   :nosignatures:
-   :toctree: api
-
-   free_memory
-
 .. rubric:: Submodules
 
 See the sidebar on the left.
