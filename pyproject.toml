@@ -18,7 +18,6 @@ classifiers = [
 ]
 dependencies = [
     "numpy >=1.18,<2",
-    "pynvml >=11.0,<12",
     "torch >=1.7,<2",
 ]
 dynamic = ["version", "description"]
@@ -61,5 +60,5 @@ ignore_errors = true
 
 [tool.ruff]
 line-length = 88
-extend-select = ["UP", "RUF"]
+extend-select = ["RUF", "UP"]
 target-version = "py38"

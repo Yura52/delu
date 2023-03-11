@@ -1,11 +1,16 @@
 """Tools related to devices, memory, etc."""
 
-import gc
 from typing import Any, Dict
 
-import pynvml
-import torch
-from pynvml import NVMLError_LibraryNotFound
+from ._utilities import free_memory as free_memory_original
+from ._utils import deprecated
+
+try:
+    import pynvml
+except ImportError:
+    pynvml = None
+if pynvml is not None:
+    from pynvml import NVMLError_LibraryNotFound
 
 
 def _to_str(x):
@@ -17,24 +22,13 @@ def _to_str(x):
         raise ValueError('Internal error')
 
 
-def free_memory() -> None:
-    """Free GPU-memory occupied by `torch` and run the garbage collector.
-
-    Warning:
-        There is a small chunk of GPU-memory (occupied by drivers) that is impossible to
-        free. It is a `torch` "limitation", so the function inherits this property.
-
-    Inspired by `this function <https://github.com/xtinkt/editable/blob/1c80efb80c196cdb925fc994fc9ed576a246c7a1/lib/utils/basic.py#L124>`_.
-    """  # noqa: E501
-    gc.collect()
-    if torch.cuda.is_available():
-        # torch has wrong .pyi
-        torch.cuda.synchronize()  # type: ignore
-    gc.collect()
-    if torch.cuda.is_available():
-        torch.cuda.empty_cache()
+@deprecated('Instead, use `delu.free_memory`.')
+def free_memory(*args, **kwargs) -> None:
+    """"""
+    return free_memory_original(*args, **kwargs)
 
 
+@deprecated('Instead, use functions from `torch.cuda`')
 def get_gpus_info() -> Dict[str, Any]:
     """Get information about GPU devices: driver version, memory, utilization etc.
 
@@ -80,6 +74,11 @@ def get_gpus_info() -> Dict[str, Any]:
                 ],
             }
     """
+    if pynvml is None:
+        raise RuntimeError(
+            'To use this function, install pynvml via `pip install pynvml<12.0`'
+        )
+
     try:
         pynvml.nvmlInit()
     except NVMLError_LibraryNotFound as err:

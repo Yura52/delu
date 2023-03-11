@@ -1,3 +1,4 @@
+import gc
 import inspect
 import secrets
 from contextlib import ContextDecorator
@@ -8,6 +9,29 @@ import torch.nn as nn
 
 from . import random as delu_random
 from ._utils import deprecated
+
+
+def free_memory() -> None:
+    """Free (GPU-)memory: `torch.cuda.synchronize` + `gc.collect` + `torch.cuda.empty_cache`.
+
+    Warning:
+        There is a small chunk of GPU-memory (occupied by drivers) that is impossible to
+        free. It is a `torch` "limitation", so the function inherits this property.
+
+    Example:
+        .. testcode::
+
+            delu.free_memory()
+    """  # noqa: E501
+    # Step 1: finish the ongoing computations.
+    if torch.cuda.is_available():
+        # torch has wrong .pyi
+        torch.cuda.synchronize()  # type: ignore
+    # Step 2: collect unused objects.
+    gc.collect()
+    # Step 3: free GPU-cache.
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
 
 
 @deprecated(
