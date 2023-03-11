@@ -31,6 +31,8 @@ delu
 
 See the sidebar on the left.
 
+----
+
 .. rubric:: Deprecated items
 
 .. raw:: html

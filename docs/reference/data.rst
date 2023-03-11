@@ -16,6 +16,8 @@ delu.data
     FnDataset
     IndexDataset
 
+----
+
 .. rubric:: Deprecated items
 
 .. raw:: html

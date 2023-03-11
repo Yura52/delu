@@ -304,7 +304,7 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
             train_loader = make_index_dataloader(
                 len(train_dataset), batch_size, shuffle=True
             )
-            for epoch in epochs:
+            for epoch in range(n_epochs):
                 for i_batch in train_loader:
                     x_batch = X[i_batch]
                     y_batch = Y[i_batch]
@@ -357,7 +357,7 @@ class IndexLoader:
         .. code-block::
 
             train_loader = IndexLoader(len(train_dataset), batch_size, shuffle=True)
-            for epoch in epochs:
+            for epoch in range(n_epochs):
                 for batch_idx in train_loader:
                     ...
 

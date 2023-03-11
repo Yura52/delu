@@ -241,7 +241,7 @@ def iter_batches(
     Examples:
         .. code-block::
 
-            for epoch in epochs:
+            for epoch in range(n_epochs):
                 for batch in iter_batches(data, batch_size, shuffle=True)):
                     ...
 
