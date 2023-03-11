@@ -1,14 +1,14 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="delu.Stream.increment_epoch" href="delu.Stream.increment_epoch.html" /><link rel="prev" title="delu.Stream.data" href="delu.Stream.data.html" />
 
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.2.0, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
         <title>delu.Stream.epochs - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/furo.css" />
@@ -139,7 +139,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -148,7 +148,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../../../_static/logo_120x120.svg" alt="Logo"/>
@@ -156,7 +156,7 @@
   
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -168,9 +168,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../learn.html">Learn</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../delu.html">delu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cuda.html">delu.cuda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../data.html">delu.data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../hardware.html">delu.hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../nn.html">delu.nn</a></li>
@@ -211,14 +212,14 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
           <section id="delu-stream-epochs">
-<h1>delu.Stream.epochs<a class="headerlink" href="#delu-stream-epochs" title="Permalink to this headline">#</a></h1>
+<h1>delu.Stream.epochs<a class="headerlink" href="#delu-stream-epochs" title="Permalink to this heading">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.Stream.epochs">
 <span class="sig-prename descclassname"><span class="pre">Stream.</span></span><span class="sig-name descname"><span class="pre">epochs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_bar_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/delu/_stream.html#Stream.epochs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.Stream.epochs" title="Permalink to this definition">#</a></dt>
@@ -238,14 +239,14 @@ Learning (plus a progress bar):</p>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>max_epoch</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – defines the number of epochs. The loop keeps running while
-<code class="code docutils literal notranslate"><span class="pre">self.epoch</span> <span class="pre">&lt;</span> <span class="pre">max_epoch</span></code>. If <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, must be <code class="code docutils literal notranslate"><span class="pre">float('inf')</span></code>
-or <a class="reference external" href="https://docs.python.org/3/library/math.html#math.inf" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.inf</span></code></a>.</p></li>
-<li><p><strong>epoch_size</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em><em>]</em>) – the number of data items in one epoch
+<li><p><strong>max_epoch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – defines the number of epochs. The loop keeps running while
+<code class="code docutils literal notranslate"><span class="pre">self.epoch</span> <span class="pre">&lt;</span> <span class="pre">max_epoch</span></code>. If <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, must be <code class="code docutils literal notranslate"><span class="pre">float('inf')</span></code>
+or <a class="reference external" href="https://docs.python.org/3/library/math.html#math.inf" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">math.inf</span></code></a>.</p></li>
+<li><p><strong>epoch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> | </em><em>None</em>) – the number of data items in one epoch
 (is forwarded to <a class="reference internal" href="delu.Stream.data.html#delu.Stream.data" title="delu.Stream.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.data</span></code></a>).</p></li>
-<li><p><strong>progress_bar_config</strong> (<em>Optional</em><em>[</em><em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>Any</em><em>]</em><em>]</em>) – if not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> (the default value is <code class="code docutils literal notranslate"><span class="pre">{}</span></code>!), a
+<li><p><strong>progress_bar_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a><em>] </em><em>| </em><em>None</em>) – if not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> (the default value is <code class="code docutils literal notranslate"><span class="pre">{}</span></code>!), a
 progress bar for iterations will be displayed and the argument will be
 interpreted as key-word arguments for
 <a class="reference external" href="https://tqdm.github.io/docs/tqdm/#__init__">tqdm</a>. The following
@@ -257,18 +258,18 @@ program is running in JupyterLab (Jupyter Notebook), then the pretty
 widget is used instead of the text-based one.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Iterator over iterators over data from <a class="reference internal" href="delu.Stream.loader.html#delu.Stream.loader" title="delu.Stream.loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream.loader</span></code></a>.</p>
 </dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.10)"><strong>AssertionError</strong></a> – if <code class="code docutils literal notranslate"><span class="pre">max_epoch</span></code> is a finite float or nan.</p>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.11)"><strong>AssertionError</strong></a> – if <code class="code docutils literal notranslate"><span class="pre">max_epoch</span></code> is a finite float or nan.</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Iterator[Iterator[Any]]</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.11)"><em>Iterator</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.11)"><em>Iterator</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a>]]</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stream</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">Stream</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">epochs</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">epoch</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -285,7 +286,7 @@ widget is used instead of the text-based one.</p></li>
 -
 </pre></div>
 </div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stream</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">Stream</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">epochs</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">epoch</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -319,10 +320,10 @@ widget is used instead of the text-based one.</p></li>
                 </div>
                 <div class="title">delu.Stream.increment_epoch</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="delu.Stream.data.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -336,7 +337,7 @@ widget is used instead of the text-based one.</p></li>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, Yura52
+                Copyright &#169; 2023, Yura52
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -357,16 +358,34 @@ widget is used instead of the text-based one.</p></li>
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">delu.Stream.epochs</a><ul>
+<li><a class="reference internal" href="#delu.Stream.epochs"><code class="docutils literal notranslate"><span class="pre">Stream.epochs()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
   </div>
 </div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/scripts/furo.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>

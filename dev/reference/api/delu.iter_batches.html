@@ -1,14 +1,14 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.improve_reproducibility" href="delu.improve_reproducibility.html" /><link rel="prev" title="delu.concat" href="delu.concat.html" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.ProgressTracker" href="delu.ProgressTracker.html" /><link rel="prev" title="delu.cat" href="delu.cat.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.2.0, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
         <title>delu.iter_batches - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../_static/furo.css" />
@@ -139,7 +139,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -148,7 +148,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../../_static/logo_120x120.svg" alt="Logo"/>
@@ -156,7 +156,7 @@
   
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -168,9 +168,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../learn.html">Learn</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../delu.html">delu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cuda.html">delu.cuda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data.html">delu.data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hardware.html">delu.hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nn.html">delu.nn</a></li>
@@ -211,68 +212,92 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
           <section id="delu-iter-batches">
-<h1>delu.iter_batches<a class="headerlink" href="#delu-iter-batches" title="Permalink to this headline">#</a></h1>
+<h1>delu.iter_batches<a class="headerlink" href="#delu-iter-batches" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="delu.iter_batches">
-<span class="sig-prename descclassname"><span class="pre">delu.</span></span><span class="sig-name descname"><span class="pre">iter_batches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/data.html#iter_batches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.iter_batches" title="Permalink to this definition">#</a></dt>
-<dd><p><em>Efficiently</em> iterate over data (tensor, tuple of tensors, dict of tensors etc.)
-in a batchwise manner.</p>
-<p>The function is useful when you want to <em>efficiently</em> iterate <strong>once</strong> over
-tensor-based data in a batchwise manner. See examples below for typical use cases.</p>
-<p>The function is a more efficient alternative to <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a> when
-it comes to in-memory data, because it uses batch-based indexing instead of
-item-based indexing (DataLoader’s behavior). <strong>The shuffling logic is delegated to
-the native PyTorch DataLoader</strong>, i.e. no custom logic is performed under the hood.</p>
+<span class="sig-prename descclassname"><span class="pre">delu.</span></span><span class="sig-name descname"><span class="pre">iter_batches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_last</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/_tensor_ops.html#iter_batches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.iter_batches" title="Permalink to this definition">#</a></dt>
+<dd><p>Iterate over tensor or collection of tensors by (random) batches.</p>
+<p>The function makes batches over the first dimension of the tensors in <code class="docutils literal notranslate"><span class="pre">data</span></code>
+and returns an iterator over collections of the same type as the input.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v1.12)"><em>torch.Tensor</em></a><em>, </em><em>Tuple</em><em>[</em><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v1.12)"><em>torch.Tensor</em></a><em>, </em><em>...</em><em>]</em><em>, </em><em>Dict</em><em>[</em><em>Any</em><em>, </em><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v1.12)"><em>torch.Tensor</em></a><em>]</em><em>, </em><em>torch.utils.data.dataset.TensorDataset</em><em>]</em>) – </p></li>
-<li><p><strong>*args</strong> – positional arguments for <code class="xref py py-obj docutils literal notranslate"><span class="pre">IndexLoader</span></code></p></li>
-<li><p><strong>**kwargs</strong> – keyword arguments for <code class="xref py py-obj docutils literal notranslate"><span class="pre">IndexLoader</span></code></p></li>
+<li><p><strong>data</strong> (<em>T</em>) – the tensor or the collection ((named)tuple/dict/dataclass) of tensors.
+If data is a collection, then the tensors must have the same first
+dimension. If data is a dataclass, then all its fields must be tensors.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – the batch size. If <code class="docutils literal notranslate"><span class="pre">drop_last</span></code> is False, then the last batch can
+be smaller than <code class="docutils literal notranslate"><span class="pre">batch_size</span></code>.</p></li>
+<li><p><strong>shuffle</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – if True, iterate over random batches (without replacement),
+not sequentially.</p></li>
+<li><p><strong>generator</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.Generator.html#torch.Generator" title="(in PyTorch v1.13)"><em>Generator</em></a><em> | </em><em>None</em>) – the argument for <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.randperm.html#torch.randperm" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.randperm</span></code></a> when <code class="docutils literal notranslate"><span class="pre">shuffle</span></code> is True.</p></li>
+<li><p><strong>drop_last</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – same as the <code class="docutils literal notranslate"><span class="pre">drop_last</span></code> argument for <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a>.
+When True and the last batch is smaller then <code class="docutils literal notranslate"><span class="pre">batch_size</span></code>, then this last
+batch is not returned.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Iterator over batches.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Iterator</p>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if the data is empty.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.11)"><em>Iterator</em></a>[<em>T</em>]</p>
 </dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you want to infinitely iterate over batches, wrap the function in
-<code class="code docutils literal notranslate"><span class="pre">while</span> <span class="pre">True:</span></code>.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Numpy-arrays are not supported because of how they behave when indexed by a
-torch tensor of the size 1. For details, see
-<a class="reference external" href="https://github.com/numpy/numpy/issues/16543">the issue</a></p>
+<p>The function lazily indexes to the provided input with batches of indices.
+This works faster than iterating over the tensors in <code class="docutils literal notranslate"><span class="pre">data</span></code> with
+<a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a>.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="delu.data.IndexLoader.html#delu.data.IndexLoader" title="delu.data.IndexLoader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.data.IndexLoader</span></code></a></p></li>
-<li><p><a class="reference internal" href="delu.concat.html#delu.concat" title="delu.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concat</span></code></a></p></li>
+<li><p><a class="reference internal" href="delu.cat.html#delu.cat" title="delu.cat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.cat</span></code></a></p></li>
 </ul>
 </div>
 <p class="rubric">Examples</p>
-<p>Besides loops over batches, the function can be used in combination with
-<a class="reference internal" href="delu.concat.html#delu.concat" title="delu.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concat</span></code></a>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">iter_batches</span><span class="p">(</span><span class="n">dataset_or_tensors_or_whatever</span><span class="p">,</span> <span class="o">...</span><span class="p">)))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">delu</span><span class="o">.</span><span class="n">iter_batches</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)):</span>
+        <span class="o">...</span>
 </pre></div>
 </div>
-<p>The function can also be used for training:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">iter_batches</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)):</span>
-        <span class="o">...</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">20</span><span class="p">],</span> <span class="p">[</span><span class="mi">30</span><span class="p">],</span> <span class="p">[</span><span class="mi">40</span><span class="p">]])</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">delu</span><span class="o">.</span><span class="n">iter_batches</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">delu</span><span class="o">.</span><span class="n">iter_batches</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">delu</span><span class="o">.</span><span class="n">iter_batches</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="n">b</span><span class="p">},</span> <span class="n">batch_size</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">set</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">}</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Data</span><span class="p">:</span>
+    <span class="n">a</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+    <span class="n">b</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">delu</span><span class="o">.</span><span class="n">iter_batches</span><span class="p">(</span><span class="n">Data</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">Data</span><span class="p">)</span>
+
+<span class="n">ab</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">delu</span><span class="o">.</span><span class="n">iter_batches</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">))</span>
+<span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">ab</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">ab</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="n">n_batches</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">delu</span><span class="o">.</span><span class="n">iter_batches</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">)))</span>
+<span class="k">assert</span> <span class="n">n_batches</span> <span class="o">==</span> <span class="mi">3</span>
+<span class="n">n_batches</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">delu</span><span class="o">.</span><span class="n">iter_batches</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
+<span class="k">assert</span> <span class="n">n_batches</span> <span class="o">==</span> <span class="mi">2</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -284,23 +309,23 @@ torch tensor of the size 1. For details, see
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="delu.improve_reproducibility.html">
+          <a class="next-page" href="delu.ProgressTracker.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">delu.improve_reproducibility</div>
+                <div class="title">delu.ProgressTracker</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="delu.concat.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+          <a class="prev-page" href="delu.cat.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">delu.concat</div>
+                <div class="title">delu.cat</div>
                 
               </div>
             </a>
@@ -308,7 +333,7 @@ torch tensor of the size 1. For details, see
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, Yura52
+                Copyright &#169; 2023, Yura52
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -329,16 +354,34 @@ torch tensor of the size 1. For details, see
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">delu.iter_batches</a><ul>
+<li><a class="reference internal" href="#delu.iter_batches"><code class="docutils literal notranslate"><span class="pre">iter_batches()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
   </div>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>

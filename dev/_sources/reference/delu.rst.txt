@@ -7,14 +7,15 @@ delu
 
 .. automodule:: delu
 
-.. rubric:: Data
+.. rubric:: Tensor operations
 
 .. autosummary::
    :nosignatures:
    :toctree: api
-   :template: class.rst
 
-   Stream
+   to
+   cat
+   iter_batches
 
 .. rubric:: Monitoring
 
@@ -26,7 +27,25 @@ delu
    ProgressTracker
    Timer
 
-.. rubric:: Tensor operations
+.. rubric:: Submodules
+
+See the sidebar on the left.
+
+----
+
+.. rubric:: Deprecated items
+
+.. raw:: html
+
+   <details>
+   <summary>Show</summary>
+
+.. autosummary::
+   :nosignatures:
+   :toctree: api
+   :template: class.rst
+
+   Stream
 
 .. autosummary::
    :nosignatures:
@@ -34,14 +53,6 @@ delu
 
    collate
    concat
-   iter_batches
-
-.. rubric:: Utilities
-
-.. autosummary::
-   :nosignatures:
-   :toctree: api
-
    improve_reproducibility
 
 .. autosummary::
@@ -51,6 +62,6 @@ delu
 
    evaluation
 
-.. rubric:: Submodules
+.. raw:: html
 
-See the sidebar on the left.
+   </details>

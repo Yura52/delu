@@ -1,14 +1,14 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="delu.data.FnDataset.__len__" href="delu.data.FnDataset.__len__.html" /><link rel="prev" title="delu.data.FnDataset" href="../delu.data.FnDataset.html" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="delu.data.FnDataset.__getitem__" href="delu.data.FnDataset.__getitem__.html" /><link rel="prev" title="delu.data.FnDataset" href="../delu.data.FnDataset.html" />
 
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.2.0, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
         <title>delu.data.FnDataset.__init__ - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/furo.css" />
@@ -139,7 +139,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -148,7 +148,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../../../_static/logo_120x120.svg" alt="Logo"/>
@@ -156,7 +156,7 @@
   
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -168,9 +168,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../learn.html">Learn</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../delu.html">delu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cuda.html">delu.cuda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../data.html">delu.data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../hardware.html">delu.hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../nn.html">delu.nn</a></li>
@@ -211,39 +212,39 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
           <section id="delu-data-fndataset-init">
-<h1>delu.data.FnDataset.__init__<a class="headerlink" href="#delu-data-fndataset-init" title="Permalink to this headline">#</a></h1>
+<h1>delu.data.FnDataset.__init__<a class="headerlink" href="#delu-data-fndataset-init" title="Permalink to this heading">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.data.FnDataset.__init__">
 <span class="sig-prename descclassname"><span class="pre">FnDataset.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/delu/data.html#FnDataset.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.data.FnDataset.__init__" title="Permalink to this definition">#</a></dt>
 <dd><p>Initialize self.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>delu.data.T</em><em>]</em>) – the function that produces values based on arguments from <code class="code docutils literal notranslate"><span class="pre">args</span></code></p></li>
-<li><p><strong>args</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>Iterable</em><em>]</em>) – arguments for <code class="code docutils literal notranslate"><span class="pre">fn</span></code>. If an iterable, but not a list, then is
+<li><p><strong>fn</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.11)"><em>Callable</em></a><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>T</em><em>]</em>) – the function that produces values based on arguments from <code class="docutils literal notranslate"><span class="pre">args</span></code></p></li>
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.11)"><em>Iterable</em></a>) – arguments for <code class="docutils literal notranslate"><span class="pre">fn</span></code>. If an iterable, but not a list, then is
 casted to a list. If an integer, then the behavior is the same as for
-<code class="code docutils literal notranslate"><span class="pre">list(range(args))</span></code>. The size of <code class="code docutils literal notranslate"><span class="pre">args</span></code> defines the return
+<code class="docutils literal notranslate"><span class="pre">list(range(args))</span></code>. The size of <code class="docutils literal notranslate"><span class="pre">args</span></code> defines the return
 value for <a class="reference internal" href="delu.data.FnDataset.__len__.html#delu.data.FnDataset.__len__" title="delu.data.FnDataset.__len__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FnDataset.__len__</span></code></a>.</p></li>
-<li><p><strong>transform</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><em>delu.data.T</em><em>]</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – if presented, is applied to the return value of <code class="xref py py-obj docutils literal notranslate"><span class="pre">fn</span></code> in
+<li><p><strong>transform</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.11)"><em>Callable</em></a><em>[</em><em>[</em><em>T</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a><em>] </em><em>| </em><em>None</em>) – if presented, is applied to the return value of <code class="xref py py-obj docutils literal notranslate"><span class="pre">fn</span></code> in
 <a class="reference internal" href="delu.data.FnDataset.__getitem__.html#delu.data.FnDataset.__getitem__" title="delu.data.FnDataset.__getitem__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FnDataset.__getitem__</span></code></a></p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">PIL.Image</span> <span class="k">as</span> <span class="nn">Image</span>
 <span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">T</span>
 
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">FnDataset</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">,</span> <span class="n">filenames</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">())</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">FnDataset</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">,</span> <span class="n">filenames</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">())</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -255,17 +256,17 @@ value for <a class="reference internal" href="delu.data.FnDataset.__len__.html#d
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="delu.data.FnDataset.__len__.html">
+          <a class="next-page" href="delu.data.FnDataset.__getitem__.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">delu.data.FnDataset.__len__</div>
+                <div class="title">delu.data.FnDataset.__getitem__</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="../delu.data.FnDataset.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -279,7 +280,7 @@ value for <a class="reference internal" href="delu.data.FnDataset.__len__.html#d
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, Yura52
+                Copyright &#169; 2023, Yura52
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -300,16 +301,34 @@ value for <a class="reference internal" href="delu.data.FnDataset.__len__.html#d
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">delu.data.FnDataset.__init__</a><ul>
+<li><a class="reference internal" href="#delu.data.FnDataset.__init__"><code class="docutils literal notranslate"><span class="pre">FnDataset.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
   </div>
 </div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/scripts/furo.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>

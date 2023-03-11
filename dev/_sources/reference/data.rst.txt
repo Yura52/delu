@@ -16,6 +16,15 @@ delu.data
     FnDataset
     IndexDataset
 
+----
+
+.. rubric:: Deprecated items
+
+.. raw:: html
+
+   <details>
+   <summary>Show</summary>
+
 .. autosummary::
     :nosignatures:
     :toctree: api
@@ -28,3 +37,7 @@ delu.data
     :template: class.rst
 
     IndexLoader
+
+.. raw:: html
+
+   </details>

@@ -1,17 +1,17 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="delu.Timer.__call__" href="delu.Timer.__call__.html" /><link rel="prev" title="delu.Timer.run" href="delu.Timer.run.html" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.data" href="../data.html" /><link rel="prev" title="delu.cuda" href="../cuda.html" />
 
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.2.0, furo 2022.06.21"/>
-        <title>delu.Timer.sub - DeLU</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/furo.css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
+        <title>delu.cuda.free_memory - DeLU</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/furo.css" />
     
     
 
@@ -128,7 +128,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">DeLU</div></a>
+      <a href="../../index.html"><div class="brand">DeLU</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -139,7 +139,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -148,33 +148,34 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   <div class="sidebar-logo-container">
-    <img class="sidebar-logo" src="../../../_static/logo_120x120.svg" alt="Logo"/>
+    <img class="sidebar-logo" src="../../_static/logo_120x120.svg" alt="Logo"/>
   </div>
   
   
-</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../version.html">v0.0.13 ▼</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version.html">v0.0.13 ▼</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">NOTES</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../learn.html">Learn</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../delu.html">delu</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../data.html">delu.data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../hardware.html">delu.hardware</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../nn.html">delu.nn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../random.html">delu.random</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../delu.html">delu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cuda.html">delu.cuda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data.html">delu.data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hardware.html">delu.hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nn.html">delu.nn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../random.html">delu.random</a></li>
 </ul>
 
 </div>
@@ -195,7 +196,7 @@
         </a>
         <div class="content-icon-container">
           <div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/Yura52/delu/edit/main/docs/reference/api/api/delu.Timer.sub.rst" title="Edit this page">
+  <a class="muted-link" href="https://github.com/Yura52/delu/edit/main/docs/reference/api/delu.cuda.free_memory.rst" title="Edit this page">
     <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
@@ -211,38 +212,32 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="delu-timer-sub">
-<h1>delu.Timer.sub<a class="headerlink" href="#delu-timer-sub" title="Permalink to this headline">#</a></h1>
-<dl class="py method">
-<dt class="sig sig-object py" id="delu.Timer.sub">
-<span class="sig-prename descclassname"><span class="pre">Timer.</span></span><span class="sig-name descname"><span class="pre">sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/delu/_utils.html#Timer.sub"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.Timer.sub" title="Permalink to this definition">#</a></dt>
-<dd><p>Subtract non-negative delta from the shift.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>delta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – </p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.10)"><strong>AssertionError</strong></a> – if delta is negative</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
-<span class="k">assert</span> <span class="n">timer</span><span class="p">()</span> <span class="o">==</span> <span class="mf">0.0</span>
-<span class="n">timer</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">timer</span><span class="p">()</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1.0</span>
-<span class="n">timer</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">timer</span><span class="p">()</span> <span class="o">==</span> <span class="o">-</span><span class="mf">3.0</span>
+          <section id="delu-cuda-free-memory">
+<h1>delu.cuda.free_memory<a class="headerlink" href="#delu-cuda-free-memory" title="Permalink to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="delu.cuda.free_memory">
+<span class="sig-prename descclassname"><span class="pre">delu.cuda.</span></span><span class="sig-name descname"><span class="pre">free_memory</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/cuda.html#free_memory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.cuda.free_memory" title="Permalink to this definition">#</a></dt>
+<dd><p>Free GPU memory: <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.cuda.synchronize.html#torch.cuda.synchronize" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda.synchronize</span></code></a> + <a class="reference external" href="https://docs.python.org/3/library/gc.html#gc.collect" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gc.collect</span></code></a> + <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.cuda.empty_cache.html#torch.cuda.empty_cache" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda.empty_cache</span></code></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>There is a small chunk of GPU-memory (occupied by drivers) that is impossible to
+free. It is a <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a> “limitation”, so the function inherits this property.</p>
+</div>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">delu</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">free_memory</span><span class="p">()</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -252,23 +247,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="delu.Timer.__call__.html">
+          <a class="next-page" href="../data.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">delu.Timer.__call__</div>
+                <div class="title">delu.data</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="delu.Timer.run.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+          <a class="prev-page" href="../cuda.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">delu.Timer.run</div>
+                <div class="title">delu.cuda</div>
                 
               </div>
             </a>
@@ -276,7 +271,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, Yura52
+                Copyright &#169; 2023, Yura52
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -297,18 +292,36 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">delu.cuda.free_memory</a><ul>
+<li><a class="reference internal" href="#delu.cuda.free_memory"><code class="docutils literal notranslate"><span class="pre">free_memory()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
   </div>
-</div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/scripts/furo.js"></script>
-    <script src="../../../_static/clipboard.min.js"></script>
-    <script src="../../../_static/copybutton.js"></script>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
     </body>
 </html>

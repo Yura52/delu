@@ -1,14 +1,14 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="v0.0.13 ▼" href="version.html" />
 
-    <link rel="shortcut icon" href="_static/favicon.ico"/><meta name="generator" content="sphinx-4.2.0, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
         <title>DeLU</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="_static/furo.css" />
@@ -148,7 +148,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="#">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="_static/logo_120x120.svg" alt="Logo"/>
@@ -156,7 +156,7 @@
   
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -168,9 +168,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="learn.html">Learn</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="reference/delu.html">delu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/cuda.html">delu.cuda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/data.html">delu.data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/hardware.html">delu.hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/nn.html">delu.nn</a></li>
@@ -218,24 +219,22 @@
         </div>
         <article role="main">
           <section id="delu-deep-learning-utilities">
-<h1>DeLU (Deep Learning Utilities)<a class="headerlink" href="#delu-deep-learning-utilities" title="Permalink to this headline">#</a></h1>
+<h1>DeLU (Deep Learning Utilities)<a class="headerlink" href="#delu-deep-learning-utilities" title="Permalink to this heading">#</a></h1>
 <div>
    <script async defer src="https://buttons.github.io/buttons.js"></script>
    <a class="github-button" href="https://github.com/Yura52/delu"
       data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" data-show-count="false"
       aria-label="Star Yura52/delu on GitHub">Star</a>
-</div><p>DeLU is a general-purpose library for PyTorch users. DeLU simplifies training loops,
-facilitates reproducibility, helps with models evaluation and other typical Deep Learning
-tasks. DeLU is a toolbox, not a framework:</p>
+</div><p>DeLU is a general-purpose PyTorch library that simplifes development and training of deep learning models.
+DeLU is a toolbox, not a framework:</p>
 <ul class="simple">
-<li><p>your training loop stays the same (regardless of whether it is powered by a simple Python loop or by a specialized framework)</p></li>
-<li><p>you can start by using any single tool you need, there is no “central concept”</p></li>
-<li><p>you can replace tools from DeLU with custom solutions at any moment</p></li>
+<li><p>DeLU provides functions and classes that facilitate training loops, reproducibility, tensor manipulations and other typical aspects of deep learning projects.</p></li>
+<li><p>there is no need to “rebuild your project around DeLU”: you can start using DeLU by picking individual tools that you find helpful.</p></li>
 </ul>
-<p><strong>NOTE:</strong> DeLU is tested (and battle-tested in research projects), but the interface is
-not stable yet, so backward-incompatible changes in future releases are possible.</p>
+<p>DeLU is tested and battle-tested in research projects. The public API is still evolving,
+and backward-incompatible changes are possible.</p>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://yura52.github.io/delu">Website</a></p></li>
 <li><p><a class="reference external" href="https://yura52.github.io/delu/stable/learn">Learn DeLU</a></p></li>
@@ -244,14 +243,14 @@ not stable yet, so backward-incompatible changes in future releases are possible
 </ul>
 </section>
 <section id="installation">
-<span id="id1"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h2>
+<span id="id1"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install delu
 </pre></div>
 </div>
 <p><strong>Dependencies:</strong> see <code class="xref py py-obj docutils literal notranslate"><span class="pre">pyproject.toml</span></code> in the repository.</p>
 </section>
 <section id="how-to-contribute">
-<h2>How to contribute<a class="headerlink" href="#how-to-contribute" title="Permalink to this headline">#</a></h2>
+<h2>How to contribute<a class="headerlink" href="#how-to-contribute" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Help to resolve <a class="reference external" href="https://github.com/Yura52/delu/issues">issues</a></p></li>
 <li><p>Report <a class="reference external" href="https://github.com/Yura52/delu/issues/new/choose">bugs and issues</a></p></li>
@@ -260,7 +259,7 @@ not stable yet, so backward-incompatible changes in future releases are possible
 <p>If your contribution includes pull requests, see <a class="reference external" href="https://github.com/Yura52/delu/blob/main/other/CONTRIBUTING.md">CONTRIBUTING.md</a></p>
 </section>
 <section id="how-to-cite">
-<h2>How to cite<a class="headerlink" href="#how-to-cite" title="Permalink to this headline">#</a></h2>
+<h2>How to cite<a class="headerlink" href="#how-to-cite" title="Permalink to this heading">#</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@article{gorishniy2020delu,
     title={DeLU: a Lightweight Toolbox for Deep Learning Researchers and Practitioners},
     author={Yury Gorishniy},
@@ -280,7 +279,7 @@ not stable yet, so backward-incompatible changes in future releases are possible
 </section>
 <hr class="docutils" />
 <section id="indices-and-tables">
-<h2>Indices and Tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">#</a></h2>
+<h2>Indices and Tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
@@ -300,14 +299,14 @@ not stable yet, so backward-incompatible changes in future releases are possible
                 </div>
                 <div class="title">v0.0.13 ▼</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, Yura52
+                Copyright &#169; 2023, Yura52
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -334,7 +333,7 @@ not stable yet, so backward-incompatible changes in future releases are possible
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            Contents
+            On this page
           </span>
         </div>
         <div class="toc-tree-container">
@@ -360,9 +359,8 @@ not stable yet, so backward-incompatible changes in future releases are possible
     </aside>
   </div>
 </div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/scripts/furo.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>

@@ -1,0 +1,6 @@
+﻿delu.cat
+========
+
+.. currentmodule:: delu
+
+.. autofunction:: cat

@@ -1,14 +1,14 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.evaluation" href="delu.evaluation.html" /><link rel="prev" title="delu.iter_batches" href="delu.iter_batches.html" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.evaluation" href="delu.evaluation.html" /><link rel="prev" title="delu.concat" href="delu.concat.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.2.0, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
         <title>delu.improve_reproducibility - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../_static/furo.css" />
@@ -139,7 +139,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -148,7 +148,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../../_static/logo_120x120.svg" alt="Logo"/>
@@ -156,7 +156,7 @@
   
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -168,9 +168,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../learn.html">Learn</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../delu.html">delu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cuda.html">delu.cuda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data.html">delu.data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hardware.html">delu.hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nn.html">delu.nn</a></li>
@@ -211,42 +212,42 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
           <section id="delu-improve-reproducibility">
-<h1>delu.improve_reproducibility<a class="headerlink" href="#delu-improve-reproducibility" title="Permalink to this headline">#</a></h1>
+<h1>delu.improve_reproducibility<a class="headerlink" href="#delu-improve-reproducibility" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="delu.improve_reproducibility">
-<span class="sig-prename descclassname"><span class="pre">delu.</span></span><span class="sig-name descname"><span class="pre">improve_reproducibility</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">one_cuda_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/_utils.html#improve_reproducibility"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.improve_reproducibility" title="Permalink to this definition">#</a></dt>
-<dd><p>Set seeds in <a class="reference internal" href="../random.html#module-delu.random" title="delu.random"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.23)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch v1.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a> and make some cuDNN operations deterministic.</p>
+<span class="sig-prename descclassname"><span class="pre">delu.</span></span><span class="sig-name descname"><span class="pre">improve_reproducibility</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">one_cuda_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/_utilities.html#improve_reproducibility"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.improve_reproducibility" title="Permalink to this definition">#</a></dt>
+<dd><p>[<strong>DEPRECATED</strong> | Instead, use <a class="reference internal" href="delu.random.seed.html#delu.random.seed" title="delu.random.seed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.random.seed</span></code></a> and manually set flags mentioned in the <a class="reference external" href="https://pytorch.org/docs/stable/notes/randomness.html">PyTorch docs on reproducibility</a>] Set seeds and turn off non-deterministic algorithms.</p>
 <p>Do everything possible to improve reproducibility for code that relies on global
-random number generators from the aforementioned modules. See also the note below.</p>
+random number generators. See also the note below.</p>
 <p>Sets:</p>
 <ol class="arabic simple">
-<li><p>seeds in <a class="reference internal" href="../random.html#module-delu.random" title="delu.random"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/random/index.html#module-numpy.random" title="(in NumPy v1.23)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.random</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch v1.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/cuda.html#module-torch.cuda" title="(in PyTorch v1.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda</span></code></a></p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.backends.cudnn.benchmark</span></code> to <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a></p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.backends.cudnn.deterministic</span></code> to <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a></p></li>
+<li><p>seeds in <a class="reference internal" href="../random.html#module-delu.random" title="delu.random"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/random/index.html#module-numpy.random" title="(in NumPy v1.24)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.random</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/cuda.html#module-torch.cuda" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda</span></code></a></p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.backends.cudnn.benchmark</span></code> to <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a></p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.backends.cudnn.deterministic</span></code> to <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a></p></li>
 </ol>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>base_seed</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – the argument for <a class="reference internal" href="delu.random.seed.html#delu.random.seed" title="delu.random.seed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.random.seed</span></code></a>. If <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, a high-quality base
+<li><p><strong>base_seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> | </em><em>None</em>) – the argument for <a class="reference internal" href="delu.random.seed.html#delu.random.seed" title="delu.random.seed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.random.seed</span></code></a>. If <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, a high-quality base
 seed is generated instead.</p></li>
-<li><p><strong>one_cuda_seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – the argument for <a class="reference internal" href="delu.random.seed.html#delu.random.seed" title="delu.random.seed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.random.seed</span></code></a>.</p></li>
+<li><p><strong>one_cuda_seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – the argument for <a class="reference internal" href="delu.random.seed.html#delu.random.seed" title="delu.random.seed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.random.seed</span></code></a>.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><dl class="simple">
-<dt>if <code class="code docutils literal notranslate"><span class="pre">base_seed</span></code> is set to <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, the generated base seed is</dt><dd><p>returned; otherwise, <code class="code docutils literal notranslate"><span class="pre">base_seed</span></code> is returned as is</p>
+<dt>if <code class="docutils literal notranslate"><span class="pre">base_seed</span></code> is set to <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, the generated base seed is</dt><dd><p>returned; otherwise, <code class="docutils literal notranslate"><span class="pre">base_seed</span></code> is returned as is</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>base_seed</p>
 </dd>
 </dl>
@@ -265,7 +266,7 @@ reproduce things, you can use the following pattern:</p>
 details.</p>
 </div>
 <p class="rubric">Examples</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">delu</span><span class="o">.</span><span class="n">improve_reproducibility</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">delu</span><span class="o">.</span><span class="n">improve_reproducibility</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
 <span class="n">seed</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">improve_reproducibility</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -285,16 +286,16 @@ details.</p>
                 </div>
                 <div class="title">delu.evaluation</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="delu.iter_batches.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+          <a class="prev-page" href="delu.concat.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">delu.iter_batches</div>
+                <div class="title">delu.concat</div>
                 
               </div>
             </a>
@@ -302,7 +303,7 @@ details.</p>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, Yura52
+                Copyright &#169; 2023, Yura52
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -323,16 +324,34 @@ details.</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">delu.improve_reproducibility</a><ul>
+<li><a class="reference internal" href="#delu.improve_reproducibility"><code class="docutils literal notranslate"><span class="pre">improve_reproducibility()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
   </div>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>

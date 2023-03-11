@@ -1,13 +1,13 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.2.0, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
         <title>delu._stream - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../_static/furo.css" />
@@ -147,7 +147,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../../_static/logo_120x120.svg" alt="Logo"/>
@@ -155,7 +155,7 @@
   
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -167,9 +167,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../learn.html">Learn</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/delu.html">delu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/cuda.html">delu.cuda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/data.html">delu.data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/hardware.html">delu.hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/nn.html">delu.nn</a></li>
@@ -212,12 +213,7 @@
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sized</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">ipywidgets</span>  <span class="c1"># noqa</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">._utils</span> <span class="kn">import</span> <span class="n">deprecated</span>
 
 <span class="n">_DEFAULT_PROGRESS_BAR_CONFIG</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -229,10 +225,12 @@
         <span class="k">return</span> <span class="kc">None</span>
 
 
-<div class="viewcode-block" id="Stream"><a class="viewcode-back" href="../../reference/api/delu.Stream.html#delu.Stream">[docs]</a><span class="k">class</span> <span class="nc">Stream</span><span class="p">:</span>
+<div class="viewcode-block" id="Stream"><a class="viewcode-back" href="../../reference/api/delu.Stream.html#delu.Stream">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;Currently, no alternatives are available.&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Stream</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Smart wrapper for data loaders and iterables.</span>
 
-<span class="sd">    `Stream` simplifies managing loops, especially in typical Deep Learning scenarios. `Stream`:</span>
+<span class="sd">    `Stream` simplifies managing loops, especially in typical Deep Learning scenarios.</span>
+<span class="sd">    `Stream`:</span>
 
 <span class="sd">    - manages the &quot;epoch&quot; and &quot;iteration&quot; variables</span>
 <span class="sd">    - allows to dump and restore loop&#39;s state: epoch, iteration, etc.</span>
@@ -254,7 +252,7 @@
 
 <span class="sd">    Let&#39;s enhance the loop using `Stream`::</span>
 
-<span class="sd">        stream = Stream(DataLoader(...))  # (A)</span>
+<span class="sd">        stream = delu.Stream(DataLoader(...))  # (A)</span>
 <span class="sd">        for epoch in stream.epochs(max_epoch):  # (B)</span>
 <span class="sd">            for batch in epoch:  # (C)</span>
 <span class="sd">                print(&#39;Epoch:&#39;, stream.epoch, &#39;Iteration:&#39;, stream.iteration)  # (D)</span>
@@ -273,7 +271,7 @@
 
 <span class="sd">        model = ...</span>
 <span class="sd">        optimizer = ...</span>
-<span class="sd">        stream = Stream(DataLoader(...))</span>
+<span class="sd">        stream = delu.Stream(DataLoader(...))</span>
 <span class="sd">        if load_from_checkpoint:</span>
 <span class="sd">            checkpoint = torch.load(checkpoint_path)</span>
 <span class="sd">            model.load_state_dict(checkpoint[&#39;model&#39;])</span>
@@ -352,7 +350,7 @@
 <span class="sd">                    ...</span>
 
 <span class="sd">        Documentation for `Stream.next` and `Stream.data` provide helpful examples.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">class</span> <span class="nc">_EpochData</span><span class="p">:</span>
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
@@ -382,21 +380,21 @@
 <span class="sd">        Examples:</span>
 <span class="sd">            .. testcode::</span>
 
-<span class="sd">                stream = Stream([0, 1, 2, 3])</span>
-<span class="sd">                stream = Stream(range(10))</span>
+<span class="sd">                stream = delu.Stream([0, 1, 2, 3])</span>
+<span class="sd">                stream = delu.Stream(range(10))</span>
 <span class="sd">                import itertools</span>
-<span class="sd">                stream = Stream(itertools.repeat(0))</span>
+<span class="sd">                stream = delu.Stream(itertools.repeat(0))</span>
 
 <span class="sd">                from torch.utils.data import DataLoader, TensorDataset</span>
 <span class="sd">                dataset = TensorDataset(torch.randn(10, 2))</span>
-<span class="sd">                stream = Stream(DataLoader(dataset, batch_size=3, shuffle=True))</span>
+<span class="sd">                stream = delu.Stream(DataLoader(dataset, batch_size=3, shuffle=True))</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">_try_len</span><span class="p">(</span><span class="n">loader</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_iteration</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_epoch</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span> <span class="o">=</span> <span class="n">loader</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_progress_bar</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">tqdm</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_progress_bar</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_should_update_progress_bar</span> <span class="o">=</span> <span class="kc">False</span></div>
 
     <span class="nd">@property</span>
@@ -432,7 +430,7 @@
 <span class="sd">            .. testcode::</span>
 
 <span class="sd">                from itertools import repeat</span>
-<span class="sd">                stream = Stream(repeat(0))</span>
+<span class="sd">                stream = delu.Stream(repeat(0))</span>
 <span class="sd">                for x in stream.data(5):</span>
 <span class="sd">                    print(stream.iteration, x)</span>
 <span class="sd">                    if stream.iteration == 2:</span>
@@ -460,7 +458,7 @@
 <span class="sd">        Examples:</span>
 <span class="sd">            .. testcode::</span>
 
-<span class="sd">                stream = Stream(range(5))</span>
+<span class="sd">                stream = delu.Stream(range(5))</span>
 <span class="sd">                assert stream.epoch == 0</span>
 <span class="sd">                stream.increment_epoch()</span>
 <span class="sd">                assert stream.epoch == 1</span>
@@ -479,13 +477,13 @@
 <span class="sd">        Examples:</span>
 <span class="sd">            .. testcode::</span>
 
-<span class="sd">                stream = Stream(range(5))</span>
+<span class="sd">                stream = delu.Stream(range(5))</span>
 <span class="sd">                assert stream.next() == 0</span>
 <span class="sd">                assert stream.next() == 1</span>
 <span class="sd">                stream.reload_iterator()</span>
 <span class="sd">                assert stream.next() == 0</span>
 
-<span class="sd">                stream = Stream(iter(range(5)))</span>
+<span class="sd">                stream = delu.Stream(iter(range(5)))</span>
 <span class="sd">                assert stream.next() == 0</span>
 <span class="sd">                assert stream.next() == 1</span>
 <span class="sd">                stream.reload_iterator()</span>
@@ -504,7 +502,7 @@
 <span class="sd">        Examples:</span>
 <span class="sd">            .. testcode::</span>
 
-<span class="sd">                stream = Stream(range(3))</span>
+<span class="sd">                stream = delu.Stream(range(3))</span>
 <span class="sd">                assert stream.iteration == 0</span>
 <span class="sd">                assert stream.next() == 0</span>
 <span class="sd">                assert stream.iteration == 1</span>
@@ -555,7 +553,7 @@
 <span class="sd">        Examples:</span>
 <span class="sd">            .. testcode::</span>
 
-<span class="sd">                stream = Stream(range(5))</span>
+<span class="sd">                stream = delu.Stream(range(5))</span>
 <span class="sd">                assert list(stream.data()) == [0, 1, 2, 3, 4]</span>
 <span class="sd">                assert list(stream.data(3)) == [0, 1, 2]</span>
 <span class="sd">                # stream doesn&#39;t &quot;start over&quot;!</span>
@@ -625,7 +623,7 @@
 <span class="sd">        Examples:</span>
 <span class="sd">            .. testcode::</span>
 
-<span class="sd">                stream = Stream(range(3))</span>
+<span class="sd">                stream = delu.Stream(range(3))</span>
 <span class="sd">                for epoch in stream.epochs(2):</span>
 <span class="sd">                    for x in epoch:</span>
 <span class="sd">                        print(x)</span>
@@ -644,7 +642,7 @@
 
 <span class="sd">            .. testcode::</span>
 
-<span class="sd">                stream = Stream(range(3))</span>
+<span class="sd">                stream = delu.Stream(range(3))</span>
 <span class="sd">                for epoch in stream.epochs(3, 2):</span>
 <span class="sd">                    for x in epoch:</span>
 <span class="sd">                        print(x)</span>
@@ -664,7 +662,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">max_epoch</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
             <span class="k">assert</span> <span class="n">math</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">max_epoch</span><span class="p">)</span>
+        <span class="n">progress_bar_config</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">progress_bar_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;unreachable&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">progress_bar_config</span> <span class="ow">is</span> <span class="n">_DEFAULT_PROGRESS_BAR_CONFIG</span><span class="p">:</span>
                 <span class="c1"># the default value is MUTABLE, so let&#39;s deepcopy it</span>
                 <span class="c1"># just in case it is modified later</span>
@@ -681,7 +681,7 @@
                 <span class="p">),</span>
             <span class="p">}</span>
             <span class="n">all_progress_bar_options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">progress_bar_config</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_progress_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="o">**</span><span class="n">all_progress_bar_options</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_progress_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="o">**</span><span class="n">all_progress_bar_options</span><span class="p">)</span>  <span class="c1"># type: ignore  # noqa: F821,E501</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_should_update_progress_bar</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">epoch</span> <span class="o">&lt;</span> <span class="n">max_epoch</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">increment_epoch</span><span class="p">()</span>
@@ -712,7 +712,7 @@
 <span class="sd">        Examples:</span>
 <span class="sd">            .. testcode::</span>
 
-<span class="sd">                stream = Stream(range(10))</span>
+<span class="sd">                stream = delu.Stream(range(10))</span>
 <span class="sd">                assert stream.state_dict() == {&#39;epoch&#39;: 0, &#39;iteration&#39;: 0}</span>
 <span class="sd">                stream.next()</span>
 <span class="sd">                stream.next()</span>
@@ -741,12 +741,12 @@
 
 <span class="sd">            .. testcode::</span>
 
-<span class="sd">                stream = Stream(range(10))</span>
+<span class="sd">                stream = delu.Stream(range(10))</span>
 <span class="sd">                stream.next()</span>
 <span class="sd">                stream.increment_epoch()</span>
 <span class="sd">                assert stream.state_dict() == {&#39;epoch&#39;: 1, &#39;iteration&#39;: 1}</span>
 
-<span class="sd">                new_stream = Stream(range(10))</span>
+<span class="sd">                new_stream = delu.Stream(range(10))</span>
 <span class="sd">                new_stream.load_state_dict(stream.state_dict())</span>
 <span class="sd">                assert new_stream.state_dict() == {&#39;epoch&#39;: 1, &#39;iteration&#39;: 1}</span>
 <span class="sd">                assert new_stream.next() == 0</span>
@@ -766,7 +766,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, Yura52
+                Copyright &#169; 2023, Yura52
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -794,9 +794,8 @@
     </aside>
   </div>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>

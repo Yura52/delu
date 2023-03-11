@@ -1,13 +1,13 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.2.0, furo 2022.06.21"/>
-        <title>delu._utils - DeLU</title>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
+        <title>delu._monitoring - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../_static/furo.css" />
@@ -147,7 +147,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../../_static/logo_120x120.svg" alt="Logo"/>
@@ -155,7 +155,7 @@
   
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -167,9 +167,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../learn.html">Learn</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/delu.html">delu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/cuda.html">delu.cuda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/data.html">delu.data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/hardware.html">delu.hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/nn.html">delu.nn</a></li>
@@ -207,19 +208,11 @@
           </label>
         </div>
         <article role="main">
-          <h1>Source code for delu._utils</h1><div class="highlight"><pre>
+          <h1>Source code for delu._monitoring</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">enum</span>
-<span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">import</span> <span class="nn">secrets</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">ContextDecorator</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
-
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">random</span> <span class="k">as</span> <span class="n">delu_random</span>
 
 
 <span class="k">class</span> <span class="nc">_ProgressStatus</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
@@ -234,15 +227,15 @@
 <span class="sd">    For `~ProgressTracker`, **the greater score is the better score**.</span>
 <span class="sd">    At any moment the tracker is in one of the following states:</span>
 
-<span class="sd">    - *success*: the last update changed the best score</span>
-<span class="sd">    - *fail*: last :code:`n &gt; patience` updates are not better than the best score</span>
+<span class="sd">    - *success*: the last update increased the best score</span>
+<span class="sd">    - *fail*: last ``n &gt; patience`` updates did not improve the best score</span>
 <span class="sd">    - *neutral*: if neither success nor fail</span>
 
 <span class="sd">    .. rubric:: Tutorial</span>
 
 <span class="sd">    .. testcode::</span>
 
-<span class="sd">        progress = ProgressTracker(2)</span>
+<span class="sd">        progress = delu.ProgressTracker(2)</span>
 <span class="sd">        progress.update(-999999999)</span>
 <span class="sd">        assert progress.success  # the first update always updates the best score</span>
 
@@ -277,17 +270,19 @@
         <span class="sd">&quot;&quot;&quot;Initialize self.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            patience: Allowed number of bad updates. For example, if patience is 2, then</span>
-<span class="sd">                2 bad updates is not a fail, but 3 bad updates is a fail. If `None`,</span>
-<span class="sd">                then the progress tracker never fails.</span>
-<span class="sd">            min_delta: minimal improvement over current best score to count it as</span>
-<span class="sd">                success.</span>
+<span class="sd">            patience: Allowed number of unsuccessfull updates. For example, if patience</span>
+<span class="sd">                is 2, then 2 unsuccessfull updates in a row is not a fail,</span>
+<span class="sd">                but 3 unsuccessfull updates in a row is a fail.</span>
+<span class="sd">                `None` means &quot;infinite patience&quot; and the progress tracker is never</span>
+<span class="sd">                in the &quot;fail&quot; state.</span>
+<span class="sd">            min_delta: the minimal improvement over the current best score</span>
+<span class="sd">                to count it as success.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            .. testcode::</span>
 
-<span class="sd">                progress = ProgressTracker(2)</span>
-<span class="sd">                progress = ProgressTracker(3, 0.1)</span>
+<span class="sd">                progress = delu.ProgressTracker(2)</span>
+<span class="sd">                progress = delu.ProgressTracker(3, 0.1)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_patience</span> <span class="o">=</span> <span class="n">patience</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_min_delta</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">min_delta</span><span class="p">)</span>
@@ -305,12 +300,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">success</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Check if the tracker is in the &#39;success&#39; state.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Check if the tracker is in the &quot;success&quot; state.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">==</span> <span class="n">_ProgressStatus</span><span class="o">.</span><span class="n">SUCCESS</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">fail</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Check if the tracker is in the &#39;fail&#39; state.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Check if the tracker is in the &quot;fail&quot; state.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">==</span> <span class="n">_ProgressStatus</span><span class="o">.</span><span class="n">FAIL</span>
 
     <span class="k">def</span> <span class="nf">_set_success</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -319,7 +314,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_bad_counter</span> <span class="o">=</span> <span class="mi">0</span>
 
 <div class="viewcode-block" id="ProgressTracker.update"><a class="viewcode-back" href="../../reference/api/api/delu.ProgressTracker.update.html#delu.ProgressTracker.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Update the tracker&#39;s state.</span>
+        <span class="sd">&quot;&quot;&quot;Submit a new score and update the tracker&#39;s state accordingly.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            score: the score to use for the update.</span>
@@ -337,12 +332,22 @@
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ProgressTracker.forget_bad_updates"><a class="viewcode-back" href="../../reference/api/api/delu.ProgressTracker.forget_bad_updates.html#delu.ProgressTracker.forget_bad_updates">[docs]</a>    <span class="k">def</span> <span class="nf">forget_bad_updates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Reset bad updates and status, but not the best score.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Reset unsuccessfull update counter and set the status to &quot;neutral&quot;.</span>
+
+<span class="sd">        Note that this method does NOT reset the best score.</span>
+
+<span class="sd">        See also:</span>
+<span class="sd">            `ProgressTracker.reset`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bad_counter</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="n">_ProgressStatus</span><span class="o">.</span><span class="n">NEUTRAL</span></div>
 
 <div class="viewcode-block" id="ProgressTracker.reset"><a class="viewcode-back" href="../../reference/api/api/delu.ProgressTracker.reset.html#delu.ProgressTracker.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Reset everything.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Reset everything.</span>
+
+<span class="sd">        See also:</span>
+<span class="sd">            `ProgressTracker.forget_bad_updates`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">forget_bad_updates</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_best_score</span> <span class="o">=</span> <span class="kc">None</span></div></div>
 
@@ -350,10 +355,7 @@
 <div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../../reference/api/delu.Timer.html#delu.Timer">[docs]</a><span class="k">class</span> <span class="nc">Timer</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Measures time.</span>
 
-<span class="sd">    Measures time elapsed since the first call to `~Timer.run` up to &quot;now&quot; plus</span>
-<span class="sd">    shift. The shift accumulates all pauses time and can be manually changed with the</span>
-<span class="sd">    methods `~Timer.add` and `~Timer.sub`. If a timer is just created/reset, the shift</span>
-<span class="sd">    is 0.0.</span>
+<span class="sd">    Measures time elapsed since the first call to `~Timer.run` up to &quot;now&quot; minus pauses.</span>
 
 <span class="sd">    Note:</span>
 <span class="sd">        Measurements are performed via `time.perf_counter`.</span>
@@ -364,9 +366,9 @@
 
 <span class="sd">        import time</span>
 
-<span class="sd">        assert Timer()() == 0.0</span>
+<span class="sd">        assert delu.Timer()() == 0.0</span>
 
-<span class="sd">        timer = Timer()</span>
+<span class="sd">        timer = delu.Timer()</span>
 <span class="sd">        timer.run()  # start</span>
 <span class="sd">        time.sleep(0.01)</span>
 <span class="sd">        assert timer()  # some time has passed</span>
@@ -376,33 +378,25 @@
 <span class="sd">        time.sleep(0.01)</span>
 <span class="sd">        assert timer() == elapsed  # time didn&#39;t change because the timer is on pause</span>
 
-<span class="sd">        timer.add(1.0)</span>
-<span class="sd">        assert timer() == elapsed + 1.0</span>
-
 <span class="sd">        timer.run()  # resume</span>
 <span class="sd">        time.sleep(0.01)</span>
-<span class="sd">        assert timer() &gt; elapsed + 1.0</span>
+<span class="sd">        assert timer() &gt; elapsed</span>
 
 <span class="sd">        timer.reset()</span>
 <span class="sd">        assert timer() == 0.0</span>
 
-<span class="sd">        with Timer() as timer:</span>
+<span class="sd">        with delu.Timer() as timer:</span>
 <span class="sd">            time.sleep(0.01)</span>
 <span class="sd">        # timer is on pause and timer() returns the time elapsed within the context</span>
 
-<span class="sd">    `Timer` can be printed and formatted in a human-readable manner:</span>
+<span class="sd">    `Timer` can be printed and formatted in a human-readable manner::</span>
 
-<span class="sd">    .. testcode::</span>
-
-<span class="sd">        timer = Timer()</span>
-<span class="sd">        timer.add(3661)</span>
-<span class="sd">        print(&#39;Time elapsed:&#39;, timer)</span>
+<span class="sd">        timer = delu.Timer()</span>
+<span class="sd">        timer.run()</span>
+<span class="sd">        &lt;let&#39;s assume that 3661 seconds have passed&gt;</span>
+<span class="sd">        print(&#39;Time elapsed:&#39;, timer)  # prints &quot;Time elapsed: 1:01:01&quot;</span>
 <span class="sd">        assert str(timer) == f&#39;{timer}&#39; == &#39;1:01:01&#39;</span>
 <span class="sd">        assert timer.format(&#39;%Hh %Mm %Ss&#39;) == &#39;01h 01m 01s&#39;</span>
-
-<span class="sd">    .. testoutput::</span>
-
-<span class="sd">        Time elapsed: 1:01:01</span>
 
 <span class="sd">    `Timer` is pickle friendly:</span>
 
@@ -410,7 +404,7 @@
 
 <span class="sd">        import pickle</span>
 
-<span class="sd">        timer = Timer()</span>
+<span class="sd">        timer = delu.Timer()</span>
 <span class="sd">        timer.run()</span>
 <span class="sd">        time.sleep(0.01)</span>
 <span class="sd">        timer.pause()</span>
@@ -432,7 +426,7 @@
 <span class="sd">        Examples:</span>
 <span class="sd">            .. testcode::</span>
 
-<span class="sd">                timer = Timer()</span>
+<span class="sd">                timer = delu.Timer()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
 
@@ -455,7 +449,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span> <span class="o">-=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="Timer.pause"><a class="viewcode-back" href="../../reference/api/api/delu.Timer.pause.html#delu.Timer.pause">[docs]</a>    <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -471,55 +465,8 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Timer.add"><a class="viewcode-back" href="../../reference/api/api/delu.Timer.add.html#delu.Timer.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Add non-negative delta to the shift.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            delta</span>
-<span class="sd">        Raises:</span>
-<span class="sd">            AssertionError: if delta is negative</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            .. testcode::</span>
-
-<span class="sd">                timer = Timer()</span>
-<span class="sd">                assert timer() == 0.0</span>
-<span class="sd">                timer.add(1.0)</span>
-<span class="sd">                assert timer() == 1.0</span>
-<span class="sd">                timer.add(2.0)</span>
-<span class="sd">                assert timer() == 3.0</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="n">delta</span> <span class="o">&gt;=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span> <span class="o">+=</span> <span class="n">delta</span></div>
-
-<div class="viewcode-block" id="Timer.sub"><a class="viewcode-back" href="../../reference/api/api/delu.Timer.sub.html#delu.Timer.sub">[docs]</a>    <span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Subtract non-negative delta from the shift.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            delta</span>
-<span class="sd">        Raises:</span>
-<span class="sd">            AssertionError: if delta is negative</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            .. testcode::</span>
-
-<span class="sd">                timer = Timer()</span>
-<span class="sd">                assert timer() == 0.0</span>
-<span class="sd">                timer.sub(1.0)</span>
-<span class="sd">                assert timer() == -1.0</span>
-<span class="sd">                timer.sub(2.0)</span>
-<span class="sd">                assert timer() == -3.0</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="n">delta</span> <span class="o">&gt;=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span> <span class="o">-=</span> <span class="n">delta</span></div>
-
 <div class="viewcode-block" id="Timer.__call__"><a class="viewcode-back" href="../../reference/api/api/delu.Timer.__call__.html#delu.Timer.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get time elapsed since the start.</span>
-
-<span class="sd">        If the timer is just created/reset, the shift is returned (can be negative!).</span>
-<span class="sd">        Otherwise, :code:`now - start_time + shift` is returned. The shift includes</span>
-<span class="sd">        total pause time (including the current pause, if the timer is on pause) and</span>
-<span class="sd">        all manipulations by `~Timer.add` and `~Timer.sub`.</span>
+        <span class="sd">&quot;&quot;&quot;Get the time elapsed since the start.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Time elapsed.</span>
@@ -543,14 +490,13 @@
 <span class="sd">        Args:</span>
 <span class="sd">            format_str: the format string passed to `time.strftime`</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            Filled :code:`format_str`.</span>
+<span class="sd">            Filled ``format_str``.</span>
 
-<span class="sd">        Examples:</span>
-<span class="sd">            .. testcode::</span>
+<span class="sd">        Example::</span>
 
-<span class="sd">                timer = Timer()</span>
-<span class="sd">                timer.add(3661)</span>
-<span class="sd">                assert timer.format(&#39;%Hh %Mm %Ss&#39;) == &#39;01h 01m 01s&#39;</span>
+<span class="sd">            timer = delu.Timer()</span>
+<span class="sd">            &lt;let&#39;s assume that 3661 seconds have passed&gt;</span>
+<span class="sd">            assert timer.format(&#39;%Hh %Mm %Ss&#39;) == &#39;01h 01m 01s&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">format_str</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">(</span><span class="bp">self</span><span class="p">()))</span></div>
 
@@ -567,7 +513,7 @@
 <span class="sd">            ..testcode::</span>
 
 <span class="sd">                import time</span>
-<span class="sd">                with Timer() as timer:</span>
+<span class="sd">                with delu.Timer() as timer:</span>
 <span class="sd">                    time.sleep(0.01)</span>
 <span class="sd">                elapsed = timer()</span>
 <span class="sd">                assert elapsed &gt; 0.01</span>
@@ -593,155 +539,6 @@
 
 <div class="viewcode-block" id="Timer.__setstate__"><a class="viewcode-back" href="../../reference/api/api/delu.Timer.__setstate__.html#delu.Timer.__setstate__">[docs]</a>    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div></div>
-
-
-<div class="viewcode-block" id="evaluation"><a class="viewcode-back" href="../../reference/api/delu.evaluation.html#delu.evaluation">[docs]</a><span class="k">class</span> <span class="nc">evaluation</span><span class="p">(</span><span class="n">ContextDecorator</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Context-manager &amp; decorator for models evaluation.</span>
-
-<span class="sd">    This code... ::</span>
-
-<span class="sd">        with evaluation(model):  # or: evaluation(model_0, model_1, ...)</span>
-<span class="sd">            ...</span>
-
-<span class="sd">        @evaluation(model)  # or: @evaluation(model_0, model_1, ...)</span>
-<span class="sd">        def f():</span>
-<span class="sd">            ...</span>
-
-<span class="sd">    ...is equivalent to the following: ::</span>
-
-<span class="sd">        context = getattr(torch, &#39;inference_mode&#39;, torch.no_grad)</span>
-
-<span class="sd">        with context():</span>
-<span class="sd">            model.eval()</span>
-<span class="sd">            ...</span>
-
-<span class="sd">        @context()</span>
-<span class="sd">        def f():</span>
-<span class="sd">            model.eval()</span>
-<span class="sd">            ...</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        modules</span>
-
-<span class="sd">    Note:</span>
-<span class="sd">        The training status of modules is undefined once a context is finished or a</span>
-<span class="sd">        decorated function returns.</span>
-
-<span class="sd">    Warning:</span>
-<span class="sd">        The function must be used in the same way as `torch.no_grad` and</span>
-<span class="sd">        `torch.inference_mode`, i.e. only as a context manager or a decorator as shown</span>
-<span class="sd">        below in the examples. Otherwise, the behaviour is undefined.</span>
-
-<span class="sd">    Warning:</span>
-<span class="sd">        Contrary to `torch.no_grad` and `torch.inference_mode`, the function cannot be</span>
-<span class="sd">        used to decorate generators. So, in the case of generators, you have to manually</span>
-<span class="sd">        create a context::</span>
-
-<span class="sd">            def my_generator():</span>
-<span class="sd">                with evaluation(...):</span>
-<span class="sd">                    for a in b:</span>
-<span class="sd">                        yield c</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        .. testcode::</span>
-
-<span class="sd">            a = torch.nn.Linear(1, 1)</span>
-<span class="sd">            b = torch.nn.Linear(2, 2)</span>
-<span class="sd">            with evaluation(a):</span>
-<span class="sd">                ...</span>
-<span class="sd">            with evaluation(a, b):</span>
-<span class="sd">                ...</span>
-
-<span class="sd">            @evaluation(a)</span>
-<span class="sd">            def f():</span>
-<span class="sd">                ...</span>
-
-<span class="sd">            @evaluation(a, b)</span>
-<span class="sd">            def f():</span>
-<span class="sd">                ...</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">modules</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">modules</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span> <span class="o">=</span> <span class="n">modules</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Decorate a function with an evaluation context.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            func</span>
-<span class="sd">        Raises:</span>
-<span class="sd">            AssertionError: if :code:`func` is a generator</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="ow">not</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isgeneratorfunction</span><span class="p">(</span>
-            <span class="n">func</span>
-        <span class="p">),</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="si">}</span><span class="s1"> cannot be used to decorate generators. See the documentation.&#39;</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span> <span class="ow">is</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torch</span><span class="p">,</span> <span class="s1">&#39;inference_mode&#39;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">)()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
-        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span><span class="p">:</span>
-            <span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">exc</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span><span class="o">.</span><span class="fm">__exit__</span><span class="p">(</span><span class="o">*</span><span class="n">exc</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_torch_context</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="n">result</span></div>
-
-
-<div class="viewcode-block" id="improve_reproducibility"><a class="viewcode-back" href="../../reference/api/delu.improve_reproducibility.html#delu.improve_reproducibility">[docs]</a><span class="k">def</span> <span class="nf">improve_reproducibility</span><span class="p">(</span>
-    <span class="n">base_seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">one_cuda_seed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Set seeds in `random`, `numpy` and `torch` and make some cuDNN operations deterministic.</span>
-
-<span class="sd">    Do everything possible to improve reproducibility for code that relies on global</span>
-<span class="sd">    random number generators from the aforementioned modules. See also the note below.</span>
-
-<span class="sd">    Sets:</span>
-
-<span class="sd">    1. seeds in `random`, `numpy.random`, `torch`, `torch.cuda`</span>
-<span class="sd">    2. `torch.backends.cudnn.benchmark` to `False`</span>
-<span class="sd">    3. `torch.backends.cudnn.deterministic` to `True`</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        base_seed: the argument for `delu.random.seed`. If `None`, a high-quality base</span>
-<span class="sd">            seed is generated instead.</span>
-<span class="sd">        one_cuda_seed: the argument for `delu.random.seed`.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        base_seed: if :code:`base_seed` is set to `None`, the generated base seed is</span>
-<span class="sd">            returned; otherwise, :code:`base_seed` is returned as is</span>
-
-<span class="sd">    Note:</span>
-<span class="sd">        If you don&#39;t want to choose the base seed, but still want to have a chance to</span>
-<span class="sd">        reproduce things, you can use the following pattern::</span>
-
-<span class="sd">            print(&#39;Seed:&#39;, delu.improve_reproducibility(None))</span>
-
-<span class="sd">    Note:</span>
-<span class="sd">        100% reproducibility is not always possible in PyTorch. See</span>
-<span class="sd">        `this page &lt;https://pytorch.org/docs/stable/notes/randomness.html&gt;`_ for</span>
-<span class="sd">        details.</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        .. testcode::</span>
-
-<span class="sd">            assert delu.improve_reproducibility(0) == 0</span>
-<span class="sd">            seed = delu.improve_reproducibility(None)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># type: ignore</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># type: ignore</span>
-    <span class="k">if</span> <span class="n">base_seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># See https://numpy.org/doc/1.18/reference/random/bit_generators/index.html#seeding-and-entropy  # noqa</span>
-        <span class="n">base_seed</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">randbits</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">32</span> <span class="o">-</span> <span class="mi">1024</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">base_seed</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">32</span> <span class="o">-</span> <span class="mi">1024</span><span class="p">)</span>
-    <span class="n">delu_random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">base_seed</span><span class="p">,</span> <span class="n">one_cuda_seed</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">base_seed</span></div>
 </pre></div>
         </article>
       </div>
@@ -754,7 +551,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, Yura52
+                Copyright &#169; 2023, Yura52
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -782,9 +579,8 @@
     </aside>
   </div>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>

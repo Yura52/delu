@@ -1,14 +1,14 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.data.IndexLoader.loader" href="api/delu.data.IndexLoader.loader.html" /><link rel="prev" title="delu.data.make_index_dataloader" href="delu.data.make_index_dataloader.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.2.0, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
         <title>delu.data.IndexLoader - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../_static/furo.css" />
@@ -148,7 +148,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../../_static/logo_120x120.svg" alt="Logo"/>
@@ -156,7 +156,7 @@
   
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -168,9 +168,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../learn.html">Learn</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../delu.html">delu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cuda.html">delu.cuda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data.html">delu.data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hardware.html">delu.hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nn.html">delu.nn</a></li>
@@ -218,29 +219,27 @@
         </div>
         <article role="main">
           <section id="delu-data-indexloader">
-<h1>delu.data.IndexLoader<a class="headerlink" href="#delu-data-indexloader" title="Permalink to this headline">#</a></h1>
+<h1>delu.data.IndexLoader<a class="headerlink" href="#delu-data-indexloader" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="delu.data.IndexLoader">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">delu.data.</span></span><span class="sig-name descname"><span class="pre">IndexLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/data.html#IndexLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.data.IndexLoader" title="Permalink to this definition">#</a></dt>
-<dd><p><strong>[DEPRECATED, use</strong> <a class="reference internal" href="delu.data.make_index_dataloader.html#delu.data.make_index_dataloader" title="delu.data.make_index_dataloader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_index_dataloader</span></code></a> <strong>]</strong> Like <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataLoader</span></code></a>, but over indices instead of data.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This class is deprecated. Use <a class="reference internal" href="delu.data.make_index_dataloader.html#delu.data.make_index_dataloader" title="delu.data.make_index_dataloader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_index_dataloader</span></code></a> instead.</p>
-</div>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">delu.data.</span></span><span class="sig-name descname"><span class="pre">IndexLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/data.html#IndexLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.data.IndexLoader" title="Permalink to this definition">#</a></dt>
+<dd><p>[<strong>DEPRECATED</strong> | Instead, use <a class="reference internal" href="delu.data.IndexDataset.html#delu.data.IndexDataset" title="delu.data.IndexDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.data.IndexDataset</span></code></a> and <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataLoader</span></code></a>] Like <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataLoader</span></code></a>, but over indices instead of data.</p>
 <p><strong>The shuffling logic is delegated to the native PyTorch DataLoader</strong>, i.e. no
 custom logic is performed under the hood. The data loader which actually generates
 indices is available as <a class="reference internal" href="api/delu.data.IndexLoader.loader.html#delu.data.IndexLoader.loader" title="delu.data.IndexLoader.loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IndexLoader.loader</span></code></a>.</p>
 <p class="rubric">Examples</p>
 <p>Usage for training:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">train_loader</span> <span class="o">=</span> <span class="n">IndexLoader</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">train_loader</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">IndexLoader</span><span class="p">(</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">batch_idx</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
         <span class="o">...</span>
 </pre></div>
 </div>
 <p>Other examples:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset_size</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># len(dataset)</span>
-<span class="k">for</span> <span class="n">batch_idx</span> <span class="ow">in</span> <span class="n">IndexLoader</span><span class="p">(</span><span class="n">dataset_size</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset_size</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># len(dataset)</span>
+<span class="k">for</span> <span class="n">batch_idx</span> <span class="ow">in</span> <span class="n">delu</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">IndexLoader</span><span class="p">(</span><span class="n">dataset_size</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">batch_idx</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -250,8 +249,8 @@ tensor([6, 7, 8])
 tensor([9])
 </pre></div>
 </div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset_size</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># len(dataset)</span>
-<span class="k">for</span> <span class="n">batch_idx</span> <span class="ow">in</span> <span class="n">IndexLoader</span><span class="p">(</span><span class="n">dataset_size</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset_size</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># len(dataset)</span>
+<span class="k">for</span> <span class="n">batch_idx</span> <span class="ow">in</span> <span class="n">delu</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">IndexLoader</span><span class="p">(</span><span class="n">dataset_size</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">batch_idx</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -265,12 +264,8 @@ tensor([6, 7, 8])
 <p><a class="reference internal" href="delu.iter_batches.html#delu.iter_batches" title="delu.iter_batches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.iter_batches</span></code></a></p>
 </div>
 <p class="rubric">Attributes</p>
-<div class="table-wrapper longtable docutils container">
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/delu.data.IndexLoader.loader.html#delu.data.IndexLoader.loader" title="delu.data.IndexLoader.loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loader</span></code></a></p></td>
 <td><p>The underlying DataLoader.</p></td>
@@ -279,34 +274,27 @@ tensor([6, 7, 8])
 </table>
 </div>
 <p class="rubric">Methods</p>
-<div class="table-wrapper longtable docutils container">
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/delu.data.IndexLoader.__init__.html#delu.data.IndexLoader.__init__" title="delu.data.IndexLoader.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p>Initialize self.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/delu.data.IndexLoader.__len__.html#delu.data.IndexLoader.__len__" title="delu.data.IndexLoader.__len__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__len__</span></code></a></p></td>
-<td><p>Get the size of the underlying DataLoader.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/delu.data.IndexLoader.__iter__.html#delu.data.IndexLoader.__iter__" title="delu.data.IndexLoader.__iter__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__iter__</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/delu.data.IndexLoader.__iter__.html#delu.data.IndexLoader.__iter__" title="delu.data.IndexLoader.__iter__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__iter__</span></code></a></p></td>
 <td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/delu.data.IndexLoader.__len__.html#delu.data.IndexLoader.__len__" title="delu.data.IndexLoader.__len__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__len__</span></code></a></p></td>
+<td><p>Get the size of the underlying DataLoader.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
-<li><p><strong>device</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(in PyTorch v1.12)"><em>torch.device</em></a><em>]</em>) – </p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – </p></li>
+<li><p><strong>device</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> | </em><a class="reference external" href="https://pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(in PyTorch v1.13)"><em>device</em></a>) – </p></li>
 </ul>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -325,10 +313,10 @@ tensor([6, 7, 8])
                 </div>
                 <div class="title">delu.data.IndexLoader.loader</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="delu.data.make_index_dataloader.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -342,7 +330,7 @@ tensor([6, 7, 8])
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, Yura52
+                Copyright &#169; 2023, Yura52
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -369,13 +357,14 @@ tensor([6, 7, 8])
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            Contents
+            On this page
           </span>
         </div>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">delu.data.IndexLoader</a><ul>
+<li><a class="reference internal" href="#delu.data.IndexLoader"><code class="docutils literal notranslate"><span class="pre">IndexLoader</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -388,9 +377,8 @@ tensor([6, 7, 8])
     </aside>
   </div>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>

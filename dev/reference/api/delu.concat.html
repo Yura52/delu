@@ -1,14 +1,14 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.iter_batches" href="delu.iter_batches.html" /><link rel="prev" title="delu.collate" href="delu.collate.html" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.improve_reproducibility" href="delu.improve_reproducibility.html" /><link rel="prev" title="delu.collate" href="delu.collate.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.2.0, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
         <title>delu.concat - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../_static/furo.css" />
@@ -139,7 +139,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -148,7 +148,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../../_static/logo_120x120.svg" alt="Logo"/>
@@ -156,7 +156,7 @@
   
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -168,9 +168,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../learn.html">Learn</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../delu.html">delu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cuda.html">delu.cuda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data.html">delu.data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hardware.html">delu.hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nn.html">delu.nn</a></li>
@@ -211,209 +212,18 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
           <section id="delu-concat">
-<h1>delu.concat<a class="headerlink" href="#delu-concat" title="Permalink to this headline">#</a></h1>
+<h1>delu.concat<a class="headerlink" href="#delu-concat" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="delu.concat">
-<span class="sig-prename descclassname"><span class="pre">delu.</span></span><span class="sig-name descname"><span class="pre">concat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/data.html#concat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.concat" title="Permalink to this definition">#</a></dt>
-<dd><p>Concatenate items (tensors, numpy-arrays, tuples, dicts etc.) along the first
-dimension.</p>
-<p><a class="reference internal" href="#delu.concat" title="delu.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concat</span></code></a> is a more general version of <code class="code docutils literal notranslate"><span class="pre">torch.cat(...,</span> <span class="pre">dim=0)</span></code>. It works not
-only with sequences of tensors, but also with sequences of containers (tuples,
-dicts etc.) of different types of data (tensors, numpy-arrays, primitive types). See
-the tutorial and the examples below to understand what the function does.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>Iterable</em><em>[</em><em>delu.data.T</em><em>]</em>) – items <strong>of the same structure</strong> (for example, “an iterable of tensors”
-OR “an iterable of tuples of tensors where all the tuples are of the same
-length” OR “an iterable of dicts of tensors and numpy-arrays where all the
-dicts have the same keys” etc.)</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Concatenated items of the iterable.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>delu.data.T</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The concatenation algorithm is fully determined by the first item of the
-iterable. If there are items of different structure, then the function is
-likely to fail or produce incorrect results, hence the requirement of the
-same structure for all items of the iterable.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The function starts with conversion of the iterable to a list. Make sure that
-you have enough memory for such operation, otherwise, memory limit may be
-exceeded. Note that in most cases manual implementation would involve the same
-conversion, just keep this in mind when using the function.</p>
-</div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="delu.iter_batches.html#delu.iter_batches" title="delu.iter_batches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iter_batches</span></code></a></p>
-</div>
-<p class="rubric">Tutorial</p>
-<p>For usage examples, scroll further.</p>
-<p>If you have an iterable that contains/produces batches of some kind (tensors,
-numpy-arrays, tuples/dictionaries thereof and other not-too-specific content), then
-use <a class="reference internal" href="#delu.concat" title="delu.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concat</span></code></a> to concatenate all the items. A prominent case is application of models
-and functions to batches (e.g. to <code class="code docutils literal notranslate"><span class="pre">DataLoader</span></code>):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">whole_result</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">model_or_fn</span><span class="p">,</span> <span class="n">batches</span><span class="p">))</span>
-<span class="c1"># or</span>
-<span class="n">whole_result</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span><span class="n">expression</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">batches</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># PyTorch dataset</span>
-<span class="n">loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span>
-    <span class="k">return</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span>
-
-<span class="n">y_pred</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">loader</span><span class="p">))</span>
-<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
-
-<span class="c1"># or</span>
-<span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;y_pred&#39;</span><span class="p">:</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">}</span>
-
-<span class="n">result</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">loader</span><span class="p">))</span>  <span class="c1"># no changes</span>
-<span class="k">assert</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The function can be used in combination with <a class="reference internal" href="delu.iter_batches.html#delu.iter_batches" title="delu.iter_batches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iter_batches</span></code></a>. For example, this is
-how pairwise dot products can be calculated in a batchwise manner if full matrix
-multiplication does not fit into memory:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_objects</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">n_features</span> <span class="o">=</span> <span class="mi">16</span>
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">20</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_objects</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span>
-    <span class="n">batch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">iter_batches</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">n_objects</span><span class="p">,</span> <span class="n">n_objects</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Or even like this:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_objects</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">n_features</span> <span class="o">=</span> <span class="mi">16</span>
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">20</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_objects</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span>
-    <span class="n">concat</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">iter_batches</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
-    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">iter_batches</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">n_objects</span><span class="p">,</span> <span class="n">n_objects</span><span class="p">)</span>
-</pre></div>
-</div>
-<p class="rubric">Examples</p>
-<p>How to read the examples:</p>
-<ul class="simple">
-<li><p>the mental model for understanding the following examples is “concatenating
-data for 3 batches of sizes (2, 2, 3)”. Note that sizes of batches are
-allowed to vary, but the structure is always the same</p></li>
-<li><p>in all examples there is <code class="code docutils literal notranslate"><span class="pre">data</span></code> - a list of batches; in fact, it can be
-any “iterable of batches”, including iterators and generators; the list is
-chosen to simplify the demonstration</p></li>
-</ul>
-<p>1-D example:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">concat</span><span class="p">([</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
-<span class="p">])</span>
-<span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]))</span>
-</pre></div>
-</div>
-<p>2-D example:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">concat</span><span class="p">([</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span>
-        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="p">]),</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span>
-        <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-    <span class="p">]),</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span>
-        <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
-    <span class="p">]),</span>
-<span class="p">])</span>
-<span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
-    <span class="n">result</span><span class="p">,</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span>
-        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
-    <span class="p">])</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>N-D example: &lt;the same&gt;.</p>
-<p>The following examples demonstrate support for different kinds of input data;
-data is 1-D everywhere just for simplicity (i.e. dimensions can be arbitrary).</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span>
-<span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span>
-<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
-<span class="k">assert</span> <span class="n">concat</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="n">l</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])]</span>
-<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">concat</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">a</span><span class="p">)</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])]</span>
-<span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">concat</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">t</span><span class="p">)</span>
-
-<span class="c1"># If items are not lists, arrays nor tensors, the data is returned in a form</span>
-<span class="c1"># of a list. It makes sense since the list of such items is already</span>
-<span class="c1"># a result for all batches.</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;three batches, hence three items&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
-<span class="k">assert</span> <span class="n">concat</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="n">data</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])),</span>
-    <span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])),</span>
-    <span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]),</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])),</span>
-<span class="p">]</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
-<span class="k">assert</span> <span class="p">(</span>
-    <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">l</span>
-    <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">)</span>
-    <span class="ow">and</span> <span class="n">torch</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">t</span><span class="p">)</span>
-<span class="p">)</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])},</span>
-    <span class="p">{</span><span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])},</span>
-    <span class="p">{</span><span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]),</span> <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])},</span>
-<span class="p">]</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">list</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">]</span>
-<span class="k">assert</span> <span class="p">(</span>
-    <span class="n">result</span><span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">l</span>
-    <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">],</span> <span class="n">a</span><span class="p">)</span>
-    <span class="ow">and</span> <span class="n">torch</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="n">t</span><span class="p">)</span>
-<span class="p">)</span>
-</pre></div>
-</div>
+<span class="sig-prename descclassname"><span class="pre">delu.</span></span><span class="sig-name descname"><span class="pre">concat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/_tensor_ops.html#concat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.concat" title="Permalink to this definition">#</a></dt>
+<dd><p>[<strong>DEPRECATED</strong> | Instead, use <a class="reference internal" href="delu.cat.html#delu.cat" title="delu.cat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.cat</span></code></a>]</p>
 </dd></dl>
 
 </section>
@@ -423,17 +233,17 @@ data is 1-D everywhere just for simplicity (i.e. dimensions can be arbitrary).</
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="delu.iter_batches.html">
+          <a class="next-page" href="delu.improve_reproducibility.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">delu.iter_batches</div>
+                <div class="title">delu.improve_reproducibility</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="delu.collate.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -447,7 +257,7 @@ data is 1-D everywhere just for simplicity (i.e. dimensions can be arbitrary).</
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, Yura52
+                Copyright &#169; 2023, Yura52
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -468,16 +278,34 @@ data is 1-D everywhere just for simplicity (i.e. dimensions can be arbitrary).</
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">delu.concat</a><ul>
+<li><a class="reference internal" href="#delu.concat"><code class="docutils literal notranslate"><span class="pre">concat()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
   </div>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>

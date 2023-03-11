@@ -1,13 +1,13 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.2.0, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
         <title>delu.random - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../_static/furo.css" />
@@ -147,7 +147,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../../_static/logo_120x120.svg" alt="Logo"/>
@@ -155,7 +155,7 @@
   
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -167,9 +167,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../learn.html">Learn</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API REFERENCE</span></p>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/delu.html">delu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/cuda.html">delu.cuda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/data.html">delu.data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/hardware.html">delu.hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/nn.html">delu.nn</a></li>
@@ -221,27 +222,28 @@
 <div class="viewcode-block" id="seed"><a class="viewcode-back" href="../../reference/api/delu.random.seed.html#delu.random.seed">[docs]</a><span class="k">def</span> <span class="nf">seed</span><span class="p">(</span><span class="n">base_seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">one_cuda_seed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Set seeds in `random`, `numpy` and `torch`.</span>
 
-<span class="sd">    For all libraries, different seeds (which are _deterministically_ calculated based</span>
-<span class="sd">    on the :code:`base_seed` argument) are set.</span>
+<span class="sd">    For all libraries, different seeds (which are *deterministically* computed based</span>
+<span class="sd">    on the ``base_seed`` argument) are set (see the note below).</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        Different seed are set to avoid situations where different libraries or devices</span>
-<span class="sd">        generate the same random sequences. For example, see</span>
-<span class="sd">        `this comment &lt;https://github.com/PyTorchLightning/pytorch-lightning/pull/6960#issuecomment-818393659&gt;`_</span>
-<span class="sd">        on setting the same seed for the standard library and NumPy.</span>
 <span class="sd">    Args:</span>
 <span class="sd">        base_seed: the number used to determine random seeds for all libraries and</span>
-<span class="sd">            hardware. Must be a non-negative number less than :code:`2 ** 32 - 10000`.</span>
+<span class="sd">            hardware. Must be a non-negative number less than ``2 ** 32 - 10000``.</span>
 <span class="sd">        one_cuda_seed: if `True`, then the same seed will be set for all cuda devices,</span>
 <span class="sd">            otherwise, different seeds will be set for all cuda devices.</span>
 <span class="sd">    Raises:</span>
 <span class="sd">        AssertionError: if the seed is not within the required interval</span>
 
+<span class="sd">    Note:</span>
+<span class="sd">        Different seeds are set to avoid situations where different libraries or devices</span>
+<span class="sd">        generate the same random sequences. See</span>
+<span class="sd">        `this comment &lt;https://github.com/PyTorchLightning/pytorch-lightning/pull/6960#issuecomment-818393659&gt;`_</span>
+<span class="sd">        for details.</span>
+
 <span class="sd">    Examples:</span>
 <span class="sd">        .. testcode::</span>
 
 <span class="sd">            delu.random.seed(0)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">base_seed</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">**</span><span class="mi">32</span> <span class="o">-</span> <span class="mi">10000</span>
     <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">base_seed</span><span class="p">)</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">base_seed</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -263,31 +265,37 @@
 <div class="viewcode-block" id="get_state"><a class="viewcode-back" href="../../reference/api/delu.random.get_state.html#delu.random.get_state">[docs]</a><span class="k">def</span> <span class="nf">get_state</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Aggregate global random states from `random`, `numpy` and `torch`.</span>
 
-<span class="sd">    The function is useful for creating checkpoints that allow to resume data streams or</span>
-<span class="sd">    other activities dependent on **global** random number generator (see the note below</span>
-<span class="sd">    ). The result of this function can be passed to `set_state`.</span>
+<span class="sd">    The function is useful for creating checkpoints and allows resuming activities</span>
+<span class="sd">    dependent on global random states (e.g. data streams) in a reproducible manner.</span>
+<span class="sd">    Also, see the note below.</span>
+<span class="sd">    The result of this function can be passed to `set_state`.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        state</span>
 
 <span class="sd">    See also:</span>
-<span class="sd">        `set_state`</span>
+<span class="sd">        `delu.random.set_state`</span>
 
-<span class="sd">    Examples:</span>
-<span class="sd">        .. testcode::</span>
+<span class="sd">    Example::</span>
 
-<span class="sd">            model = torch.nn.Linear(1, 1)</span>
-<span class="sd">            optimizer = torch.optim.SGD(model.parameters(), lr=0.01)</span>
+<span class="sd">        # Resuming from a checkpoint:</span>
+<span class="sd">        checkpoint_path = ...</span>
+<span class="sd">        if checkpoint_path.exists():</span>
+<span class="sd">            checkpoint = torch.load(checkpoint_path)</span>
+<span class="sd">            delu.random.set_state(checkpoint[&#39;random_state&#39;])</span>
+<span class="sd">        ...</span>
+<span class="sd">        # Training:</span>
+<span class="sd">        for batch in batches:</span>
 <span class="sd">            ...</span>
-<span class="sd">            checkpoint = {</span>
-<span class="sd">                &#39;model&#39;: model.state_dict(),</span>
-<span class="sd">                &#39;optimizer&#39;: optimizer.state_dict(),</span>
-<span class="sd">                &#39;random_state&#39;: delu.random.get_state(),</span>
-<span class="sd">            }</span>
-<span class="sd">            # later</span>
-<span class="sd">            # torch.save(checkpoint, &#39;checkpoint.pt&#39;)</span>
-<span class="sd">            # ...</span>
-<span class="sd">            # delu.random.set_state(torch.load(&#39;checkpoint.pt&#39;)[&#39;random_state&#39;])</span>
+<span class="sd">            if step % checkpoint_frequency == 0:</span>
+<span class="sd">                torch.save(</span>
+<span class="sd">                    {</span>
+<span class="sd">                        &#39;model&#39;: ...,</span>
+<span class="sd">                        &#39;optimizer&#39;: ...,</span>
+<span class="sd">                        &#39;random_state&#39;: delu.random.get_state(),</span>
+<span class="sd">                    },</span>
+<span class="sd">                    checkpoint_path,</span>
+<span class="sd">                )</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s1">&#39;random&#39;</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">getstate</span><span class="p">(),</span>
@@ -300,16 +308,18 @@
 <div class="viewcode-block" id="set_state"><a class="viewcode-back" href="../../reference/api/delu.random.set_state.html#delu.random.set_state">[docs]</a><span class="k">def</span> <span class="nf">set_state</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Set global random states in `random`, `numpy` and `torch`.</span>
 
+<span class="sd">    See `get_state` for a usage example.</span>
+
 <span class="sd">    Args:</span>
-<span class="sd">        state: global RNG states. Must be produced by `get_state`. The size of the list</span>
-<span class="sd">            :code:`state[&#39;torch.cuda&#39;]` must be equal to the number of available cuda</span>
+<span class="sd">        state: the global RNG states. Must be produced by `get_state`. The size of the</span>
+<span class="sd">            list ``state[&#39;torch.cuda&#39;]`` must be equal to the number of available cuda</span>
 <span class="sd">            devices.</span>
 
 <span class="sd">    See also:</span>
-<span class="sd">        `get_state`</span>
+<span class="sd">        `delu.random.get_state`</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        AssertionError: if :code:`torch.cuda.device_count() != len(state[&#39;torch.cuda&#39;])`</span>
+<span class="sd">        AssertionError: if ``torch.cuda.device_count() != len(state[&#39;torch.cuda&#39;])``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">random</span><span class="o">.</span><span class="n">setstate</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;random&#39;</span><span class="p">])</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;numpy.random&#39;</span><span class="p">])</span>
@@ -320,10 +330,12 @@
 
 <div class="viewcode-block" id="preserve_state"><a class="viewcode-back" href="../../reference/api/delu.random.preserve_state.html#delu.random.preserve_state">[docs]</a><span class="nd">@contextmanager</span>
 <span class="k">def</span> <span class="nf">preserve_state</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Decorator and a context manager for preserving global random state.</span>
+    <span class="sd">&quot;&quot;&quot;Decorator and context manager for preserving global random state.</span>
+
+<span class="sd">    The function saves the global random state when entering the context</span>
+<span class="sd">    and restores it on exit.</span>
 
 <span class="sd">    Examples:</span>
-
 <span class="sd">        .. testcode::</span>
 
 <span class="sd">            import random</span>
@@ -333,18 +345,17 @@
 <span class="sd">                np.random.randint(10),</span>
 <span class="sd">                torch.randint(10, (1,)).item()</span>
 <span class="sd">            )</span>
-<span class="sd">            with preserve_state():</span>
+<span class="sd">            with delu.random.preserve_state():</span>
 <span class="sd">                a = f()</span>
 <span class="sd">            b = f()</span>
 <span class="sd">            assert a == b</span>
 
-<span class="sd">            @preserve_state()</span>
+<span class="sd">            @delu.random.preserve_state()</span>
 <span class="sd">            def g():</span>
 <span class="sd">                return f()</span>
 
-<span class="sd">            with preserve_state():</span>
-<span class="sd">                a = g()</span>
-<span class="sd">            b = g()</span>
+<span class="sd">            a = g()</span>
+<span class="sd">            b = f()</span>
 <span class="sd">            assert a == b</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -365,7 +376,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, Yura52
+                Copyright &#169; 2023, Yura52
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -393,9 +404,8 @@
     </aside>
   </div>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>

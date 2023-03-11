@@ -27,7 +27,6 @@
    
       
       
-      ~IndexLoader.__len__
       
       
       
@@ -35,6 +34,7 @@
       ~IndexLoader.__iter__
       
       
+      ~IndexLoader.__len__
       
       
       

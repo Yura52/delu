@@ -17,19 +17,13 @@
       :toctree: api
    
       ~Timer.__init__
-      ~Timer.add
       ~Timer.format
       ~Timer.pause
       ~Timer.reset
       ~Timer.run
-      ~Timer.sub
    
       
       ~Timer.__call__
-      
-      
-      
-      
       
       
       ~Timer.__enter__
@@ -38,7 +32,11 @@
       ~Timer.__exit__
       
       
+      
       ~Timer.__getstate__
+      
+      
+      
       
       
       ~Timer.__setstate__

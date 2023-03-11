@@ -27,7 +27,6 @@
    
       
       
-      ~Enumerate.__len__
       
       
       ~Enumerate.__getitem__
@@ -35,6 +34,7 @@
       
       
       
+      ~Enumerate.__len__
       
       
       

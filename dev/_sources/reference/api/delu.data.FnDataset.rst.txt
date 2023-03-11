@@ -20,7 +20,6 @@
    
       
       
-      ~FnDataset.__len__
       
       
       ~FnDataset.__getitem__
@@ -28,6 +27,7 @@
       
       
       
+      ~FnDataset.__len__
       
       
       

@@ -20,7 +20,6 @@
    
       
       
-      ~IndexDataset.__len__
       
       
       ~IndexDataset.__getitem__
@@ -28,6 +27,7 @@
       
       
       
+      ~IndexDataset.__len__
       
       
       
