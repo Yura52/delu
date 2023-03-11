@@ -1,0 +1,6 @@
+delu.data.Enumerate.\_\_init\_\_
+================================
+
+.. currentmodule:: delu.data
+
+.. automethod:: Enumerate.__init__

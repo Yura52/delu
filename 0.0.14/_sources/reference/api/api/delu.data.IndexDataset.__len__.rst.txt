@@ -1,0 +1,6 @@
+delu.data.IndexDataset.\_\_len\_\_
+==================================
+
+.. currentmodule:: delu.data
+
+.. automethod:: IndexDataset.__len__

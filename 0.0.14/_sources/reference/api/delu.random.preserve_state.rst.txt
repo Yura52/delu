@@ -1,0 +1,6 @@
+﻿delu.random.preserve\_state
+===========================
+
+.. currentmodule:: delu.random
+
+.. autofunction:: preserve_state

@@ -1,0 +1,34 @@
+﻿delu.data.FnDataset
+===================
+
+.. currentmodule:: delu.data
+
+.. autoclass:: FnDataset
+
+   
+   
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+      :toctree: api
+   
+      ~FnDataset.__init__
+   
+      
+      
+      
+      
+      ~FnDataset.__getitem__
+      
+      
+      
+      
+      ~FnDataset.__len__
+      
+      
+      
+   

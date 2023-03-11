@@ -1,0 +1,41 @@
+﻿delu.data.IndexLoader
+=====================
+
+.. currentmodule:: delu.data
+
+.. autoclass:: IndexLoader
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree: api
+   
+      ~IndexLoader.loader
+   
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+      :toctree: api
+   
+      ~IndexLoader.__init__
+   
+      
+      
+      
+      
+      
+      
+      ~IndexLoader.__iter__
+      
+      
+      ~IndexLoader.__len__
+      
+      
+      
+   
