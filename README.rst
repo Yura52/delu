@@ -14,7 +14,7 @@ DeLU is a toolbox, not a framework:
 - there is no need to "rebuild your project around DeLU": you can start using DeLU by picking individual tools that you find helpful.
 
 DeLU is tested and battle-tested in research projects. The public API is still evolving,
-and backward-incompatible are possible.
+and backward-incompatible changes are possible.
 
 Overview
 --------
