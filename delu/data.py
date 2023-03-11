@@ -64,13 +64,16 @@ class Enumerate(Dataset):
 
 
 class FnDataset(Dataset):
-    """A thin wrapper around a loader function and its arguments.
+    """Create simple PyTorch datasets without classes and inheritance.
 
-    `FnDataset` allows avoiding implementing Dataset-classes (well, at least in simple
-    cases). Below you can find the full tutorial and typical use cases, but here is a
-    quick example:
+    `FnDataset` allows avoiding implementing `~torch.utils.data.Dataset` classes in
+    simple cases.
 
-    Without `FnDataset`::
+    .. rubric:: Tutorial
+
+    First, a quick example. Without `FnDataset`::
+
+        from PIL import Image
 
         class ImagesList(Dataset):
             def __init__(self, filenames, transform):
@@ -88,11 +91,12 @@ class FnDataset(Dataset):
     With `FnDataset`::
 
         dataset = delu.data.FnDataset(Image.open, filenames, transform)
+        # Cache images after the first load:
+        from functools import lru_cache
+        dataset = delu.data.FnDataset(lru_cache(None)(Image.open), filenames)
 
-    .. rubric:: Tutorial
-
-    With the vanilla PyTorch, in order to create a dataset you have to inherit from
-    `torch.utils.data.Dataset` and implement three methods:
+    In other words, with the vanilla PyTorch, in order to create a dataset,
+    you have to inherit from `torch.utils.data.Dataset` and implement three methods:
 
     - ``__init__``
     - ``__len__``
@@ -100,7 +104,7 @@ class FnDataset(Dataset):
 
     With `FnDataset` the only thing you *may* need to implement is the ``fn``
     argument that will power ``__getitem__``. The easiest way to learn
-    `FnDataset` is to go through examples below.
+    `FnDataset` is to go through the examples below.
 
     A list of images::
 
@@ -112,22 +116,19 @@ class FnDataset(Dataset):
         from functools import lru_cache
         dataset = delu.data.FnDataset(lru_cache(None)(Image.open), filenames)
 
-    `pathlib.Path` is very useful when you want to create a dataset that reads from
-    files. For example::
+    `pathlib.Path` is handy for creating datasets that read from files::
 
         images_dir = Path(...)
         dataset = delu.data.FnDataset(Image.open, images_dir.iterdir())
 
-    If there are many files, but you need only those with specific extensions, use
-    `pathlib.Path.glob`::
+    If you only need files with specific extensions::
 
         dataset = delu.data.FnDataset(Image.open, images_dir.glob('*.png'))
 
-    If there are many files in many subfolders, but you need only those with specific
-    extensions and that satisfy some condition, use `pathlib.Path.rglob`::
+    If you only need files with specific extensions located in all subfolders::
 
         dataset = delu.data.FnDataset(
-            Image.open, (x for x in images_dir.rglob('*.png') if condition(x))
+            Image.open, (x for x in images_dir.rglob('**/*.png') if condition(x))
         )
 
     A segmentation dataset::
