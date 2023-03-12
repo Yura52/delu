@@ -11,7 +11,7 @@ class _ProgressStatus(enum.Enum):
 
 
 class ProgressTracker:
-    """Facilitates early stopping and tracks the best metric value.
+    """Helps with early stopping and tracks the best metric value.
 
     For `~ProgressTracker`, **the greater score is the better score**.
     At any moment the tracker is in one of the following states:
