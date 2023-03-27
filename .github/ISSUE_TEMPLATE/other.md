@@ -10,11 +10,8 @@ assignees: ''
 #### Software information (if applicable)
 Please, provide information about your software:
 - Operating System:
-- python==
-- delu==
-- numpy==
-- torch==
-- pynvml==
-- tqdm==
+- `python==`
+- `delu==`
+- (other packages that you think may be important)
 
 #### Describe the issue
