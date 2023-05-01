@@ -1,3 +1,6 @@
+# Contrary to _utils.py, things from here will be imported as
+# a part of public API.
+
 import datetime
 import enum
 import time

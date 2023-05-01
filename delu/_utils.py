@@ -1,3 +1,5 @@
+# This module contains internal private tools imported by other modules.
+
 import functools
 import inspect
 import warnings
