@@ -81,6 +81,7 @@ def test_to():
 
 
 def test_cat():
+    # The function is mostly tested in the doctests.
     with pytest.raises(ValueError):
         delu.cat([])
 
@@ -89,8 +90,6 @@ def test_cat():
 
     with pytest.raises(ValueError):
         delu.cat([[0], [1]])
-
-    # simple cases are alredy tested in the doctests
 
     sequence = [
         Point(torch.tensor([[0, 1]]), torch.tensor([[[0.0, 1.0]]])),

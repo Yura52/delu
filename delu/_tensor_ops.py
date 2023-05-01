@@ -1,6 +1,6 @@
 import dataclasses
 import math
-from typing import Iterable, Iterator, Optional, TypeVar
+from typing import Iterator, List, Optional, TypeVar
 
 import torch
 
@@ -70,49 +70,39 @@ def to(data: T, *args, **kwargs) -> T:
         )
 
 
-def cat(iterable: Iterable[T], dim: int = 0) -> T:
+def cat(data: List[T], dim: int = 0) -> T:
     """Like `torch.cat`, but for collections of tensors.
 
-    The function is especially useful for concatenating outputs of a function or a model
-    that returns not a single tensor, but a (named)tuple/dictionary/dataclass
-    of tensors. For example::
+    A typical use case is concatenating batched outputs of a function or a model
+    to a single output for the whole dataset::
 
         class Model(nn.Module):
-            ...
-            def forward(...) -> tuple[Tensor, Tensor]:
+            def forward(self, ...) -> tuple[Tensor, Tensor]:
                 ...
                 return y_pred, embeddings
 
-        model = Model(...)
-        dataset = Dataset(...)
-        dataloader = DataLoader(...)
+        # Concatenate a sequence of tuples into a single tuple.
+        y_pred, embeddings = delu.cat([model(batch) for batch in dataloader])
 
-        # prediction
-        model.eval()
-        with torch.inference_mode():
-            # Concatenate a sequence of tuples into a single tuple.
-            y_pred, embeddings = delu.cat(model(batch) for batch in dataloader)
-        assert isinstance(y_pred, torch.Tensor) and len(y_pred) == len(dataset)
-        assert isinstance(embeddings, torch.Tensor) and len(embeddings) == len(dataset)
-
-    See other examples below.
+    The function operates recursively, so nested structures are supported as well
+    (e.g. ``tuple[Tensor, dict[str, tuple[Tensor, Tensor]]]``). See other examples below.
 
     Note:
-        Under the hood, roughly speaking, the function "transposes" the sequence of
-        collections to a collection of sequences and applies `torch.cat` to those
-        sequencies.
+        Under the hood, roughly speaking, the function "transposes" the list of
+        collections to a collection of lists and applies `torch.cat` to those
+        lists.
 
     Args:
-        iterable: the iterable of (named)tuples/dictionaries/dataclasses of tensors.
-            All items of the iterable must be of the same type and have the same
+        data: the list of (nested) (named)tuples/dictionaries/dataclasses of tensors.
+            All items of the list must be of the same type and have the same
             structure (tuples must be of the same length, dictionaries must have the
-            same keys, dataclasses must have the same fields). Dataclasses must have
-            only tensor-valued fields.
-        dim: the argument for `torch.cat`.
+            same keys, dataclasses must have the same fields, etc.). All the "leaf"
+            values must be of the type `torch.Tensor`.
+        dim: the dimension over which the tensors are concatenated.
     Returns:
-        Concatenated items of the iterable.
+        Concatenated items of the list.
     Raises:
-        ValueError: if the iterable is empty or contains unsupported collections.
+        ValueError: if ``data`` is empty or contains unsupported collections.
 
     See also:
         `delu.iter_batches`
@@ -125,13 +115,9 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
             tensor = torch.tensor
 
             batches = [
-                # (batch0_x,         batch0_y)
+                # (batch_x, batch_y)
                 (tensor([0.0, 1.0]), tensor([[0], [1]])),
-
-                # (batch1_x,         batch1_y)
                 (tensor([2.0, 3.0]), tensor([[2], [3]])),
-
-                # ...
             ]
             # result = (x, y)
             result = delu.cat(batches)
@@ -140,6 +126,7 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
             assert torch.equal(result[1], tensor([[0], [1], [2], [3]]))
 
             batches = [
+                # {'x': batch_x, 'y': batch_y}
                 {'x': tensor([0.0, 1.0]), 'y': tensor([[0], [1]])},
                 {'x': tensor([2.0, 3.0]), 'y': tensor([[2], [3]])},
             ]
@@ -164,40 +151,49 @@ def cat(iterable: Iterable[T], dim: int = 0) -> T:
             assert torch.equal(result.x, tensor([0.0, 1.0, 2.0, 3.0]))
             assert torch.equal(result.y, tensor([[0], [1], [2], [3]]))
 
+            batches = [
+                {
+                    'x': tensor([0.0, 1.0]),
+                    'y': (tensor([[0], [1]]), tensor([[10], [20]]))
+                },
+                {
+                    'x': tensor([2.0, 3.0]),
+                    'y': (tensor([[2], [3]]), tensor([[30], [40]]))
+                },
+            ]
+            result = delu.cat(batches)
+            assert isinstance(result, dict) and set(result) == {'x', 'y'}
+            assert torch.equal(result['x'], tensor([0.0, 1.0, 2.0, 3.0]))
+            assert torch.equal(result['y'][0], tensor([[0], [1], [2], [3]]))
+            assert torch.equal(result['y'][1], tensor([[10], [20], [30], [40]]))
+
             x = tensor([0.0, 1.0, 2.0, 3.0, 4.0])
             y = tensor([[0], [10], [20], [30], [40]])
             batch_size = 2
-            ab = delu.cat(delu.iter_batches((x, y), batch_size))
+            ab = delu.cat(list(delu.iter_batches((x, y), batch_size)))
             assert torch.equal(ab[0], x)
             assert torch.equal(ab[1], y)
-    """
-    data = iterable if isinstance(iterable, list) else list(iterable)
+    """  # noqa: E501
     if not data:
-        raise ValueError('iterable must be non-empty.')
-
-    def tcat(x):
-        return torch.cat(x, dim=dim)
+        raise ValueError('data must be non-empty.')
 
     first = data[0]
     if isinstance(first, torch.Tensor):
-        raise ValueError(
-            'Use torch.cat instead of delu.cat for concatenating a sequence of tensors.'
-            ' Use delu.cat when concatenating a sequence of collections of tensors.'
-        )
+        return torch.cat(data, dim=dim)  # type: ignore
     elif isinstance(first, tuple):
         constructor = type(first)._make if is_namedtuple(first) else type(first)  # type: ignore  # noqa: E501
-        return constructor(tcat([x[i] for x in data]) for i in range(len(first)))
+        return constructor(
+            cat([x[i] for x in data], dim=dim) for i in range(len(first))  # type: ignore  # noqa: E501
+        )
     elif isinstance(first, dict):
-        return type(first)((key, tcat([x[key] for x in data])) for key in first)  # type: ignore  # noqa: E501
+        return type(first)((key, cat([x[key] for x in data], dim=dim)) for key in first)  # type: ignore  # noqa: E501
     elif dataclasses.is_dataclass(first):
-        fields = {}
-        for field in dataclasses.fields(first):
-            if field.type is not torch.Tensor:
-                raise ValueError(
-                    f'All dataclass fields must be PyTorch Tensors. Found {field.type}'
-                )
-            fields[field.name] = tcat([getattr(x, field.name) for x in data])
-        return type(first)(**fields)
+        return type(first)(
+            **{
+                field.name: cat([getattr(x, field.name) for x in data], dim=dim)
+                for field in dataclasses.fields(first)
+            }
+        )  # type: ignore
     else:
         raise ValueError(f'The collection type {type(first)} is not supported.')
 
@@ -275,7 +271,7 @@ def iter_batches(
             for batch in delu.iter_batches(Data(a, b), batch_size):
                 assert isinstance(batch, Data)
 
-            ab = delu.cat(delu.iter_batches((a, b), batch_size))
+            ab = delu.cat(list(delu.iter_batches((a, b), batch_size)))
             assert torch.equal(ab[0], a)
             assert torch.equal(ab[1], b)
 
