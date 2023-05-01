@@ -34,8 +34,8 @@ skip_string_normalization = true
 
 [tool.coverage.run]
 branch = true
-omit = "delu/tests/*"
-source = "delu"
+omit = ["delu/tests/*"]
+source = ["delu"]
 
 [tool.flit.module]
 name = "delu"

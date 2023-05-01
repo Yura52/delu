@@ -21,7 +21,6 @@ def deprecated(message: str):
             wrapper = item
             wrapper.__doc__ = docstring
         else:
-
             assert inspect.isfunction(item)
 
             @functools.wraps(item)

@@ -32,7 +32,7 @@ def seed(base_seed: int, one_cuda_seed: bool = False) -> None:
         .. testcode::
 
             delu.random.seed(0)
-    """  # noqa: E501
+    """
     assert 0 <= base_seed < 2**32 - 10000
     random.seed(base_seed)
     np.random.seed(base_seed + 1)
