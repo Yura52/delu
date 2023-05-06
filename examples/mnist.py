@@ -3,6 +3,7 @@
 
 # ruff: noqa: F821,E501
 
+import shlex
 import shutil
 import subprocess
 import sys
@@ -90,10 +91,11 @@ def main():
     val_loader = DataLoader(val_dataset, batch_size=8096)
     test_loader = DataLoader(test_dataset, batch_size=8096)
 
-    # Create a timer, see the usage below.
+    # This thing measures time!
     timer = delu.Timer()
-    # Create a progress tracker for tracking the best score and for early stopping.
-    progress = delu.ProgressTracker(args.early_stopping_patience, 0.005)
+    # Early stopping to prevent overfitting.
+    early_stopping = delu.EarlyStopping(args.early_stopping_patience, mode='max')
+    best_val_accuracy = float('-inf')
     checkpoint_path = 'checkpoint.pt'
     if args.from_checkpoint:
         assert args.from_checkpoint != 'checkpoint.pt'
@@ -103,7 +105,8 @@ def main():
         model.load_state_dict(checkpoint['model'])
         optimizer.load_state_dict(checkpoint['optimizer'])
         timer = checkpoint['timer']
-        progress = checkpoint['progress']
+        early_stopping = checkpoint['early_stopping']
+        best_val_accuracy = checkpoint['best_val_accuracy']
         # Restore the global random state for full reproducibility.
         delu.random.set_state(checkpoint['random_state'])
         print('Resuming from the checkpoint.\n')
@@ -113,24 +116,28 @@ def main():
     for epoch in range(start_epoch, args.n_epochs):
         print(f'\nEpoch {epoch} started')
 
-        with timer:
-            model.train()
-            for batch in train_loader:
-                optimizer.zero_grad()
-                F.cross_entropy(*step(batch)).backward()
-                optimizer.step()
+        # or use `with timer:` instead of timer.run/pause
+        timer.run()
+        model.train()
+        for batch in train_loader:
+            optimizer.zero_grad()
+            F.cross_entropy(*step(batch)).backward()
+            optimizer.step()
+        timer.pause()
 
         accuracy = evaluate(val_loader)
-        progress.update(accuracy)
-        if progress.success:
+        early_stopping.update(accuracy)
+        if accuracy > best_val_accuracy:
             print('New best score!')
+            best_val_accuracy = accuracy
             torch.save(
                 {
                     'epoch': epoch,
                     'model': model.state_dict(),
                     'optimizer': optimizer.state_dict(),
                     'timer': timer,
-                    'progress': progress,
+                    'early_stopping': early_stopping,
+                    'best_val_accuracy': best_val_accuracy,
                     # Save the global random state.
                     'random_state': delu.random.get_state(),
                 },
@@ -143,7 +150,7 @@ def main():
             f'Validation accuracy: {accuracy:.4f}.'
         )
         print(msg)
-        if progress.fail:
+        if early_stopping.should_stop():
             break
 
     timer.pause()
@@ -160,12 +167,11 @@ def main():
     delu.cuda.free_memory()
     print('\nDONE.')
     if not args.from_checkpoint:
-        # TODO replace `join` with `shlex.join` in 3.8
         print(
             '\nNow, you can test if the last epochs can be reproduced when the '
             'training is resumed from the last available checkpoint. For that, run:\n'
             'cp checkpoint.pt a.pt\n'
-            f'python {" ".join(sys.argv)} -c a.pt'
+            f'python {shlex.join(sys.argv)} -c a.pt'
         )
 
 

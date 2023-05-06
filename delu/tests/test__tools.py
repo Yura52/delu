@@ -6,58 +6,57 @@ import pytest
 import delu
 
 
-def test_progress_tracker():
-    score = -999999999
+def test_early_stopping():
+    with pytest.raises(ValueError):
+        delu.EarlyStopping(0, mode='max')
+    with pytest.raises(ValueError):
+        delu.EarlyStopping(1, mode='hello')
+    with pytest.raises(ValueError):
+        delu.EarlyStopping(1, mode='min', min_delta=-1.0)
 
-    # test initial state
-    tracker = delu.ProgressTracker(0)
-    assert not tracker.success
-    assert not tracker.fail
+    es = delu.EarlyStopping(1, mode='min')
+    es.update(1.0)
+    assert not es.should_stop()
+    es.update(1.0)
+    assert es.should_stop()
 
-    # test successful update
-    tracker.update(score)
-    assert tracker.best_score == score
-    assert tracker.success
+    es.forget_bad_updates()
+    es.update(1.0)
+    assert es.should_stop()
 
-    # test failed update
-    tracker.update(score)
-    assert tracker.best_score == score
-    assert tracker.fail
+    es.reset()
+    es.update(1.0)
+    assert not es.should_stop()
+    es.update(1.0)
+    assert es.should_stop()
 
-    # test forget_bad_updates, reset
-    tracker.forget_bad_updates()
-    assert tracker.best_score == score
-    tracker.reset()
-    assert tracker.best_score is None
-    assert not tracker.success and not tracker.fail
+    for mode in ['min', 'max']:
+        sign = -1.0 if mode == 'min' else 1.0
 
-    # test positive patience
-    tracker = delu.ProgressTracker(1)
-    tracker.update(score - 1)
-    assert tracker.success
-    tracker.update(score)
-    assert tracker.success
-    tracker.update(score)
-    assert not tracker.success and not tracker.fail
-    tracker.update(score)
-    assert tracker.fail
+        es = delu.EarlyStopping(2, mode=mode)
+        es.update(0.0)
+        assert not es.should_stop()
+        es.update(sign * 1.0)
+        assert not es.should_stop()
+        es.update(sign * 1.0)
+        assert not es.should_stop()
+        es.update(sign * 1.0)
+        assert es.should_stop()
+        es.update(sign * 2.0)
+        assert not es.should_stop()
+        es.update(sign * 2.0)
+        assert not es.should_stop()
+        es.update(sign * 2.0)
+        assert es.should_stop()
 
-    # test positive min_delta
-    tracker = delu.ProgressTracker(0, 2)
-    tracker.update(score - 2)
-    assert tracker.success
-    tracker.update(score)
-    assert tracker.fail
-    tracker.reset()
-    tracker.update(score - 3)
-    tracker.update(score)
-    assert tracker.success
-
-    # patience=None
-    tracker = delu.ProgressTracker(None)
-    for i in range(100):
-        tracker.update(-i)
-        assert not tracker.fail
+        min_delta = 0.1
+        es = delu.EarlyStopping(1, mode=mode, min_delta=min_delta)
+        es.update(0.0)
+        assert not es.should_stop()
+        es.update(sign * 2 * min_delta)
+        assert not es.should_stop()
+        es.update(sign * 2.99 * min_delta)
+        assert es.should_stop()
 
 
 def test_timer():
@@ -143,3 +142,57 @@ def test_timer_format():
     assert str(make_timer(1)) == '0:00:01'
     assert str(make_timer(1.1)) == '0:00:01'
     assert make_timer(7321).format('%Hh %Mm %Ss') == '02h 02m 01s'
+
+
+def test_progress_tracker():
+    score = -999999999
+
+    # test initial state
+    tracker = delu.ProgressTracker(0)
+    assert not tracker.success
+    assert not tracker.fail
+
+    # test successful update
+    tracker.update(score)
+    assert tracker.best_score == score
+    assert tracker.success
+
+    # test failed update
+    tracker.update(score)
+    assert tracker.best_score == score
+    assert tracker.fail
+
+    # test forget_bad_updates, reset
+    tracker.forget_bad_updates()
+    assert tracker.best_score == score
+    tracker.reset()
+    assert tracker.best_score is None
+    assert not tracker.success and not tracker.fail
+
+    # test positive patience
+    tracker = delu.ProgressTracker(1)
+    tracker.update(score - 1)
+    assert tracker.success
+    tracker.update(score)
+    assert tracker.success
+    tracker.update(score)
+    assert not tracker.success and not tracker.fail
+    tracker.update(score)
+    assert tracker.fail
+
+    # test positive min_delta
+    tracker = delu.ProgressTracker(0, 2)
+    tracker.update(score - 2)
+    assert tracker.success
+    tracker.update(score)
+    assert tracker.fail
+    tracker.reset()
+    tracker.update(score - 3)
+    tracker.update(score)
+    assert tracker.success
+
+    # patience=None
+    tracker = delu.ProgressTracker(None)
+    for i in range(100):
+        tracker.update(-i)
+        assert not tracker.fail

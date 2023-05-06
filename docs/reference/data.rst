@@ -18,12 +18,8 @@ delu.data
 
 ----
 
-.. rubric:: Deprecated items
-
-.. raw:: html
-
-   <details>
-   <summary>Show</summary>
+.. warning::
+   The API listed below is deprecated.
 
 .. autosummary::
     :nosignatures:
@@ -37,7 +33,3 @@ delu.data
     :template: class.rst
 
     IndexLoader
-
-.. raw:: html
-
-   </details>
