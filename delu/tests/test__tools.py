@@ -140,7 +140,7 @@ def test_timer_format():
         return timer
 
     assert str(make_timer(1)) == '0:00:01'
-    assert str(make_timer(1.1)) == '0:00:01'
+    assert str(make_timer(1.1)) == '0:00:01.100000'
     assert make_timer(7321).format('%Hh %Mm %Ss') == '02h 02m 01s'
 
 

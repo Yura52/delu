@@ -217,7 +217,7 @@ class Timer:
 
         timer = delu.Timer()
         timer.run()
-        <let's assume that 3661 seconds have passed>
+        <let's assume that exactly 3661.0 seconds have passed>
         print('Time elapsed:', timer)  # prints "Time elapsed: 1:01:01"
         assert str(timer) == f'{timer}' == '1:01:01'
         assert timer.format('%Hh %Mm %Ss') == '01h 01m 01s'
@@ -304,9 +304,9 @@ class Timer:
         """Convert the timer to a string.
 
         Returns:
-            The string representation of the timer's value rounded to seconds.
+            The string representation of the timer's value.
         """
-        return str(datetime.timedelta(seconds=round(self())))
+        return str(datetime.timedelta(seconds=self()))
 
     def format(self, format_str: str) -> str:
         """Format the time elapsed since the start in a human-readable string.
