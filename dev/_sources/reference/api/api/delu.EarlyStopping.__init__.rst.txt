@@ -1,0 +1,6 @@
+delu.EarlyStopping.\_\_init\_\_
+===============================
+
+.. currentmodule:: delu
+
+.. automethod:: EarlyStopping.__init__

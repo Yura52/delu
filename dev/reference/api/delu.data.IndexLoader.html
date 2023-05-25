@@ -3,12 +3,12 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.data.IndexLoader.loader" href="api/delu.data.IndexLoader.loader.html" /><link rel="prev" title="delu.data.make_index_dataloader" href="delu.data.make_index_dataloader.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.data.IndexLoader.loader" href="api/delu.data.IndexLoader.loader.html" /><link rel="prev" title="delu.data.FnDataset.__len__" href="api/delu.data.FnDataset.__len__.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
         <title>delu.data.IndexLoader - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../_static/furo.css" />
@@ -223,7 +223,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="delu.data.IndexLoader">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">delu.data.</span></span><span class="sig-name descname"><span class="pre">IndexLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/data.html#IndexLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.data.IndexLoader" title="Permalink to this definition">#</a></dt>
-<dd><p>[<strong>DEPRECATED</strong> | Instead, use <a class="reference internal" href="delu.data.IndexDataset.html#delu.data.IndexDataset" title="delu.data.IndexDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.data.IndexDataset</span></code></a> and <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataLoader</span></code></a>] Like <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataLoader</span></code></a>, but over indices instead of data.</p>
+<dd><p>[<strong>DEPRECATED</strong> | Instead, use <a class="reference internal" href="delu.data.IndexDataset.html#delu.data.IndexDataset" title="delu.data.IndexDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.data.IndexDataset</span></code></a> and <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataLoader</span></code></a>] Like <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(in PyTorch v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataLoader</span></code></a>, but over indices instead of data.</p>
 <p><strong>The shuffling logic is delegated to the native PyTorch DataLoader</strong>, i.e. no
 custom logic is performed under the hood. The data loader which actually generates
 indices is available as <a class="reference internal" href="api/delu.data.IndexLoader.loader.html#delu.data.IndexLoader.loader" title="delu.data.IndexLoader.loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IndexLoader.loader</span></code></a>.</p>
@@ -293,7 +293,7 @@ tensor([6, 7, 8])
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – </p></li>
-<li><p><strong>device</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> | </em><a class="reference external" href="https://pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(in PyTorch v1.13)"><em>device</em></a>) – </p></li>
+<li><p><strong>device</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> | </em><a class="reference external" href="https://pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(in PyTorch v2.0)"><em>device</em></a>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -315,14 +315,14 @@ tensor([6, 7, 8])
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="delu.data.make_index_dataloader.html">
+          <a class="prev-page" href="api/delu.data.FnDataset.__len__.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">delu.data.make_index_dataloader</div>
+                <div class="title">delu.data.FnDataset.__len__</div>
                 
               </div>
             </a>

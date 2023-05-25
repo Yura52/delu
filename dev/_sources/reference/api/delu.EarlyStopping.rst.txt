@@ -1,0 +1,34 @@
+﻿delu.EarlyStopping
+==================
+
+.. currentmodule:: delu
+
+.. autoclass:: EarlyStopping
+
+   
+   
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+      :toctree: api
+   
+      ~EarlyStopping.__init__
+      ~EarlyStopping.forget_bad_updates
+      ~EarlyStopping.reset
+      ~EarlyStopping.should_stop
+      ~EarlyStopping.update
+   
+      
+      
+      
+      
+      
+      
+      
+      
+      
+   

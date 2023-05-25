@@ -4,10 +4,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
         <title>delu.data - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../_static/furo.css" />
@@ -274,7 +274,67 @@
         <span class="k">return</span> <span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div></div>
 
 
-<div class="viewcode-block" id="FnDataset"><a class="viewcode-back" href="../../reference/api/delu.data.FnDataset.html#delu.data.FnDataset">[docs]</a><span class="k">class</span> <span class="nc">FnDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+<div class="viewcode-block" id="IndexDataset"><a class="viewcode-back" href="../../reference/api/delu.data.IndexDataset.html#delu.data.IndexDataset">[docs]</a><span class="k">class</span> <span class="nc">IndexDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A trivial dataset that yeilds indices back to user (useful for DistributedDataParallel (DDP)).</span>
+
+<span class="sd">    This simple dataset is useful when:</span>
+
+<span class="sd">    1. you need a dataloader that yeilds batches of *indices* instead of *objects*</span>
+<span class="sd">    2. AND you work in the `Distributed Data Parallel &lt;https://pytorch.org/tutorials/intermediate/ddp_tutorial.html&gt;`_ setup</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        If only the first condition is true, consider using the combinatation of</span>
+<span class="sd">        `torch.randperm` and `torch.Tensor.split` instead.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        from torch.utils.data import DataLoader</span>
+<span class="sd">        from torch.utils.data.distributed import DistributedSampler</span>
+
+<span class="sd">        train_size = 123456</span>
+<span class="sd">        batch_size = 123</span>
+<span class="sd">        dataset = delu.data.IndexDataset(dataset_size)</span>
+<span class="sd">        for i in range(train_size):</span>
+<span class="sd">            assert dataset[i] == i</span>
+<span class="sd">        dataloader = DataLoader(</span>
+<span class="sd">            dataset,</span>
+<span class="sd">            batch_size,</span>
+<span class="sd">            sampler=DistributedSampler(dataset)</span>
+<span class="sd">        )</span>
+
+<span class="sd">        for epoch in range(n_epochs):</span>
+<span class="sd">            for batch_indices in dataloader:</span>
+<span class="sd">                ...</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+<div class="viewcode-block" id="IndexDataset.__init__"><a class="viewcode-back" href="../../reference/api/api/delu.data.IndexDataset.__init__.html#delu.data.IndexDataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Initialize self.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            size: the dataset size</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;size must be positive&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span></div>
+
+<div class="viewcode-block" id="IndexDataset.__len__"><a class="viewcode-back" href="../../reference/api/api/delu.data.IndexDataset.__len__.html#delu.data.IndexDataset.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the dataset size.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span></div>
+
+<div class="viewcode-block" id="IndexDataset.__getitem__"><a class="viewcode-back" href="../../reference/api/api/delu.data.IndexDataset.__getitem__.html#delu.data.IndexDataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the same index back.</span>
+
+<span class="sd">        The index must be an integer from ``range(len(self))``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;index </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> is out of range (dataset&#39;s size is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">i</span></div></div>
+
+
+<div class="viewcode-block" id="FnDataset"><a class="viewcode-back" href="../../reference/api/delu.data.FnDataset.html#delu.data.FnDataset">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">FnDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Create simple PyTorch datasets without classes and inheritance.</span>
 
 <span class="sd">    `FnDataset` allows avoiding implementing `~torch.utils.data.Dataset` classes in</span>
@@ -435,65 +495,6 @@
         <span class="k">return</span> <span class="n">x</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="IndexDataset"><a class="viewcode-back" href="../../reference/api/delu.data.IndexDataset.html#delu.data.IndexDataset">[docs]</a><span class="k">class</span> <span class="nc">IndexDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A trivial dataset that yeilds indices back to user (useful for DDP).</span>
-
-<span class="sd">    This simple dataset is useful when:</span>
-
-<span class="sd">    1. you need a dataloader that yeilds batches of *indices* instead of *objects*</span>
-<span class="sd">    2. AND you work in the `Distributed Data Parallel &lt;https://pytorch.org/tutorials/intermediate/ddp_tutorial.html&gt;`_ setup</span>
-
-<span class="sd">    Note:</span>
-<span class="sd">        If only the first condition is true, consider using the combinatation of</span>
-<span class="sd">        `torch.randperm` and `torch.Tensor.split` instead.</span>
-
-<span class="sd">    Example::</span>
-
-<span class="sd">        from torch.utils.data import DataLoader</span>
-<span class="sd">        from torch.utils.data.distributed import DistributedSampler</span>
-
-<span class="sd">        train_size = 123456</span>
-<span class="sd">        batch_size = 123</span>
-<span class="sd">        dataset = delu.data.IndexDataset(dataset_size)</span>
-<span class="sd">        for i in range(train_size):</span>
-<span class="sd">            assert dataset[i] == i</span>
-<span class="sd">        dataloader = DataLoader(</span>
-<span class="sd">            dataset,</span>
-<span class="sd">            batch_size,</span>
-<span class="sd">            sampler=DistributedSampler(dataset)</span>
-<span class="sd">        )</span>
-
-<span class="sd">        for epoch in range(n_epochs):</span>
-<span class="sd">            for batch_indices in dataloader:</span>
-<span class="sd">                ...</span>
-<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-
-<div class="viewcode-block" id="IndexDataset.__init__"><a class="viewcode-back" href="../../reference/api/api/delu.data.IndexDataset.__init__.html#delu.data.IndexDataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Initialize self.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            size: the dataset size</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;size must be positive&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span></div>
-
-<div class="viewcode-block" id="IndexDataset.__len__"><a class="viewcode-back" href="../../reference/api/api/delu.data.IndexDataset.__len__.html#delu.data.IndexDataset.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get the dataset size.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span></div>
-
-<div class="viewcode-block" id="IndexDataset.__getitem__"><a class="viewcode-back" href="../../reference/api/api/delu.data.IndexDataset.__getitem__.html#delu.data.IndexDataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get the same index back.</span>
-
-<span class="sd">        The index must be an integer from ``range(len(self))``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;index </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> is out of range (dataset&#39;s size is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">)&quot;</span>
-            <span class="p">)</span>
-        <span class="k">return</span> <span class="n">i</span></div></div>
-
-
 <div class="viewcode-block" id="make_index_dataloader"><a class="viewcode-back" href="../../reference/api/delu.data.make_index_dataloader.html#delu.data.make_index_dataloader">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;Instead, use `delu.data.IndexDataset` and `~torch.utils.data.DataLoader`&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">make_index_dataloader</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Make `~torch.utils.data.DataLoader` over indices instead of data.</span>
@@ -651,7 +652,7 @@
         <span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="collate"><a class="viewcode-back" href="../../reference/api/delu.collate.html#delu.data.collate">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;Instead, use `torch.utils.data.dataloader.default_collate`&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="collate"><a class="viewcode-back" href="../../reference/api/delu.collate.html#delu.data.collate">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;Instead, use `torch.utils.data.default_collate`&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">collate</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Almost an alias for :code:`torch.utils.data.dataloader.default_collate`.</span>
 <span class="sd">    Namely, the input is allowed to be any kind of iterable, not only a list. Firstly,</span>

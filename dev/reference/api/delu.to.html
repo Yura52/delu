@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.cat" href="delu.cat.html" /><link rel="prev" title="delu" href="../delu.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
         <title>delu.to - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../_static/furo.css" />
@@ -223,18 +223,22 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="delu.to">
 <span class="sig-prename descclassname"><span class="pre">delu.</span></span><span class="sig-name descname"><span class="pre">to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/_tensor_ops.html#to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.to" title="Permalink to this definition">#</a></dt>
-<dd><p>Like <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.Tensor.to.html#torch.Tensor.to" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.to</span></code></a>, but for collections of tensors.</p>
-<p>The function takes a (nested) collection of tensors
-and creates its copy where all the tensors are transformed
-with <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.Tensor.to.html#torch.Tensor.to" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.to</span></code></a>.</p>
+<dd><p>Like <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.Tensor.to.html#torch.Tensor.to" title="(in PyTorch v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.to</span></code></a>, but for collections of tensors.</p>
+<p>The function allows changing devices and data types for (nested) collections of
+tensors similarly to how <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.Tensor.to.html#torch.Tensor.to" title="(in PyTorch v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.to</span></code></a> does this for a single tensor.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Technically, the function simply traverses the input and applies
+<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.Tensor.to.html#torch.Tensor.to" title="(in PyTorch v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.to</span></code></a> to tensors (non-tensor values are not allowed).</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<em>T</em>) – the tensor or the (nested) collection of tensors. Allowed collections
 include: (named)tuples, lists, dictionaries and dataclasses.
 For dataclasses, all their fields must be tensors.</p></li>
-<li><p><strong>args</strong> – the positional arguments for <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.Tensor.to.html#torch.Tensor.to" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.to</span></code></a></p></li>
-<li><p><strong>kwargs</strong> – the key-word arguments for <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.Tensor.to.html#torch.Tensor.to" title="(in PyTorch v1.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.to</span></code></a></p></li>
+<li><p><strong>args</strong> – the positional arguments for <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.Tensor.to.html#torch.Tensor.to" title="(in PyTorch v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.to</span></code></a></p></li>
+<li><p><strong>kwargs</strong> – the key-word arguments for <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.Tensor.to.html#torch.Tensor.to" title="(in PyTorch v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor.to</span></code></a></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

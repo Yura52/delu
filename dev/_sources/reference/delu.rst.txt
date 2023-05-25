@@ -17,14 +17,14 @@ delu
    cat
    iter_batches
 
-.. rubric:: Monitoring
+.. rubric:: Tools
 
 .. autosummary::
    :nosignatures:
    :toctree: api
    :template: class.rst
 
-   ProgressTracker
+   EarlyStopping
    Timer
 
 .. rubric:: Submodules
@@ -33,18 +33,15 @@ See the sidebar on the left.
 
 ----
 
-.. rubric:: Deprecated items
-
-.. raw:: html
-
-   <details>
-   <summary>Show</summary>
+.. warning::
+   The API listed below is deprecated.
 
 .. autosummary::
    :nosignatures:
    :toctree: api
    :template: class.rst
 
+   ProgressTracker
    Stream
 
 .. autosummary::
@@ -61,7 +58,3 @@ See the sidebar on the left.
    :template: class_just_autoclass.rst
 
    evaluation
-
-.. raw:: html
-
-   </details>

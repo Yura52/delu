@@ -7,12 +7,8 @@ delu.hardware
 
 ----
 
-.. rubric:: Deprecated items
-
-.. raw:: html
-
-   <details>
-   <summary>Show</summary>
+.. warning::
+   The API listed below is deprecated.
 
 .. autosummary::
     :nosignatures:
@@ -20,7 +16,3 @@ delu.hardware
 
     free_memory
     get_gpus_info
-
-.. raw:: html
-
-   </details>

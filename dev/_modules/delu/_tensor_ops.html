@@ -4,10 +4,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
         <title>delu._tensor_ops - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../_static/furo.css" />
@@ -211,7 +211,7 @@
           <h1>Source code for delu._tensor_ops</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 
@@ -224,9 +224,12 @@
 <div class="viewcode-block" id="to"><a class="viewcode-back" href="../../reference/api/delu.to.html#delu.to">[docs]</a><span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Like `torch.Tensor.to`, but for collections of tensors.</span>
 
-<span class="sd">    The function takes a (nested) collection of tensors</span>
-<span class="sd">    and creates its copy where all the tensors are transformed</span>
-<span class="sd">    with `torch.Tensor.to`.</span>
+<span class="sd">    The function allows changing devices and data types for (nested) collections of</span>
+<span class="sd">    tensors similarly to how `torch.Tensor.to` does this for a single tensor.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Technically, the function simply traverses the input and applies</span>
+<span class="sd">        `torch.Tensor.to` to tensors (non-tensor values are not allowed).</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        data: the tensor or the (nested) collection of tensors. Allowed collections</span>
@@ -281,49 +284,38 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="cat"><a class="viewcode-back" href="../../reference/api/delu.cat.html#delu.cat">[docs]</a><span class="k">def</span> <span class="nf">cat</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+<div class="viewcode-block" id="cat"><a class="viewcode-back" href="../../reference/api/delu.cat.html#delu.cat">[docs]</a><span class="k">def</span> <span class="nf">cat</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Like `torch.cat`, but for collections of tensors.</span>
 
-<span class="sd">    The function is especially useful for concatenating outputs of a function or a model</span>
-<span class="sd">    that returns not a single tensor, but a (named)tuple/dictionary/dataclass</span>
-<span class="sd">    of tensors. For example::</span>
+<span class="sd">    A typical use case is concatenating a model/function&#39;s outputs for batches</span>
+<span class="sd">    into a single output for the whole dataset::</span>
 
 <span class="sd">        class Model(nn.Module):</span>
-<span class="sd">            ...</span>
-<span class="sd">            def forward(...) -&gt; tuple[Tensor, Tensor]:</span>
+<span class="sd">            def forward(self, ...) -&gt; tuple[Tensor, Tensor]:</span>
 <span class="sd">                ...</span>
 <span class="sd">                return y_pred, embeddings</span>
 
-<span class="sd">        model = Model(...)</span>
-<span class="sd">        dataset = Dataset(...)</span>
-<span class="sd">        dataloader = DataLoader(...)</span>
+<span class="sd">        # Concatenate a sequence of tuples (batch_y_pred, batch_embeddings) into a single tuple.</span>
+<span class="sd">        y_pred, embeddings = delu.cat([model(batch) for batch in dataloader])</span>
 
-<span class="sd">        # prediction</span>
-<span class="sd">        model.eval()</span>
-<span class="sd">        with torch.inference_mode():</span>
-<span class="sd">            # Concatenate a sequence of tuples into a single tuple.</span>
-<span class="sd">            y_pred, embeddings = delu.cat(model(batch) for batch in dataloader)</span>
-<span class="sd">        assert isinstance(y_pred, torch.Tensor) and len(y_pred) == len(dataset)</span>
-<span class="sd">        assert isinstance(embeddings, torch.Tensor) and len(embeddings) == len(dataset)</span>
-
-<span class="sd">    See other examples below.</span>
+<span class="sd">    The function operates recursively, so nested structures are supported as well</span>
+<span class="sd">    (e.g. ``tuple[Tensor, dict[str, tuple[Tensor, Tensor]]]``). See other examples below.</span>
 
 <span class="sd">    Note:</span>
-<span class="sd">        Under the hood, roughly speaking, the function &quot;transposes&quot; the sequence of</span>
-<span class="sd">        collections to a collection of sequences and applies `torch.cat` to those</span>
-<span class="sd">        sequencies.</span>
+<span class="sd">        Technically, roughly speaking, the function &quot;transposes&quot; the list of</span>
+<span class="sd">        collections to a collection of lists and applies `torch.cat` to those lists.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        iterable: the iterable of (named)tuples/dictionaries/dataclasses of tensors.</span>
-<span class="sd">            All items of the iterable must be of the same type and have the same</span>
+<span class="sd">        data: the list of (nested) (named)tuples/dictionaries/dataclasses of tensors.</span>
+<span class="sd">            All items of the list must be of the same type and have the same</span>
 <span class="sd">            structure (tuples must be of the same length, dictionaries must have the</span>
-<span class="sd">            same keys, dataclasses must have the same fields). Dataclasses must have</span>
-<span class="sd">            only tensor-valued fields.</span>
-<span class="sd">        dim: the argument for `torch.cat`.</span>
+<span class="sd">            same keys, dataclasses must have the same fields, etc.). All the &quot;leaf&quot;</span>
+<span class="sd">            values must be of the type `torch.Tensor`.</span>
+<span class="sd">        dim: the dimension over which the tensors are concatenated.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        Concatenated items of the iterable.</span>
+<span class="sd">        Concatenated items of the list.</span>
 <span class="sd">    Raises:</span>
-<span class="sd">        ValueError: if the iterable is empty or contains unsupported collections.</span>
+<span class="sd">        ValueError: if ``data`` is empty or contains unsupported collections.</span>
 
 <span class="sd">    See also:</span>
 <span class="sd">        `delu.iter_batches`</span>
@@ -336,13 +328,9 @@
 <span class="sd">            tensor = torch.tensor</span>
 
 <span class="sd">            batches = [</span>
-<span class="sd">                # (batch0_x,         batch0_y)</span>
+<span class="sd">                # (batch_x, batch_y)</span>
 <span class="sd">                (tensor([0.0, 1.0]), tensor([[0], [1]])),</span>
-
-<span class="sd">                # (batch1_x,         batch1_y)</span>
 <span class="sd">                (tensor([2.0, 3.0]), tensor([[2], [3]])),</span>
-
-<span class="sd">                # ...</span>
 <span class="sd">            ]</span>
 <span class="sd">            # result = (x, y)</span>
 <span class="sd">            result = delu.cat(batches)</span>
@@ -351,6 +339,7 @@
 <span class="sd">            assert torch.equal(result[1], tensor([[0], [1], [2], [3]]))</span>
 
 <span class="sd">            batches = [</span>
+<span class="sd">                # {&#39;x&#39;: batch_x, &#39;y&#39;: batch_y}</span>
 <span class="sd">                {&#39;x&#39;: tensor([0.0, 1.0]), &#39;y&#39;: tensor([[0], [1]])},</span>
 <span class="sd">                {&#39;x&#39;: tensor([2.0, 3.0]), &#39;y&#39;: tensor([[2], [3]])},</span>
 <span class="sd">            ]</span>
@@ -375,40 +364,49 @@
 <span class="sd">            assert torch.equal(result.x, tensor([0.0, 1.0, 2.0, 3.0]))</span>
 <span class="sd">            assert torch.equal(result.y, tensor([[0], [1], [2], [3]]))</span>
 
+<span class="sd">            batches = [</span>
+<span class="sd">                {</span>
+<span class="sd">                    &#39;x&#39;: tensor([0.0, 1.0]),</span>
+<span class="sd">                    &#39;y&#39;: (tensor([[0], [1]]), tensor([[10], [20]]))</span>
+<span class="sd">                },</span>
+<span class="sd">                {</span>
+<span class="sd">                    &#39;x&#39;: tensor([2.0, 3.0]),</span>
+<span class="sd">                    &#39;y&#39;: (tensor([[2], [3]]), tensor([[30], [40]]))</span>
+<span class="sd">                },</span>
+<span class="sd">            ]</span>
+<span class="sd">            result = delu.cat(batches)</span>
+<span class="sd">            assert isinstance(result, dict) and set(result) == {&#39;x&#39;, &#39;y&#39;}</span>
+<span class="sd">            assert torch.equal(result[&#39;x&#39;], tensor([0.0, 1.0, 2.0, 3.0]))</span>
+<span class="sd">            assert torch.equal(result[&#39;y&#39;][0], tensor([[0], [1], [2], [3]]))</span>
+<span class="sd">            assert torch.equal(result[&#39;y&#39;][1], tensor([[10], [20], [30], [40]]))</span>
+
 <span class="sd">            x = tensor([0.0, 1.0, 2.0, 3.0, 4.0])</span>
 <span class="sd">            y = tensor([[0], [10], [20], [30], [40]])</span>
 <span class="sd">            batch_size = 2</span>
-<span class="sd">            ab = delu.cat(delu.iter_batches((x, y), batch_size))</span>
+<span class="sd">            ab = delu.cat(list(delu.iter_batches((x, y), batch_size)))</span>
 <span class="sd">            assert torch.equal(ab[0], x)</span>
 <span class="sd">            assert torch.equal(ab[1], y)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">iterable</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;iterable must be non-empty.&#39;</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">tcat</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;data must be non-empty.&#39;</span><span class="p">)</span>
 
     <span class="n">first</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s1">&#39;Use torch.cat instead of delu.cat for concatenating a sequence of tensors.&#39;</span>
-            <span class="s1">&#39; Use delu.cat when concatenating a sequence of collections of tensors.&#39;</span>
-        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
         <span class="n">constructor</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="o">.</span><span class="n">_make</span> <span class="k">if</span> <span class="n">is_namedtuple</span><span class="p">(</span><span class="n">first</span><span class="p">)</span> <span class="k">else</span> <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>  <span class="c1"># type: ignore  # noqa: E501</span>
-        <span class="k">return</span> <span class="n">constructor</span><span class="p">(</span><span class="n">tcat</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">first</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">constructor</span><span class="p">(</span>
+            <span class="n">cat</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">first</span><span class="p">))</span>  <span class="c1"># type: ignore  # noqa: E501</span>
+        <span class="p">)</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)((</span><span class="n">key</span><span class="p">,</span> <span class="n">tcat</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">first</span><span class="p">)</span>  <span class="c1"># type: ignore  # noqa: E501</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)((</span><span class="n">key</span><span class="p">,</span> <span class="n">cat</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">first</span><span class="p">)</span>  <span class="c1"># type: ignore  # noqa: E501</span>
     <span class="k">elif</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">is_dataclass</span><span class="p">(</span><span class="n">first</span><span class="p">):</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">fields</span><span class="p">(</span><span class="n">first</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s1">&#39;All dataclass fields must be PyTorch Tensors. Found </span><span class="si">{</span><span class="n">field</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s1">&#39;</span>
-                <span class="p">)</span>
-            <span class="n">fields</span><span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">tcat</span><span class="p">([</span><span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">])</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)(</span><span class="o">**</span><span class="n">fields</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)(</span>
+            <span class="o">**</span><span class="p">{</span>
+                <span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">cat</span><span class="p">([</span><span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">fields</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">)</span>  <span class="c1"># type: ignore</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The collection type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="si">}</span><span class="s1"> is not supported.&#39;</span><span class="p">)</span></div>
 
@@ -431,6 +429,18 @@
 
 <span class="sd">    The function makes batches over the first dimension of the tensors in ``data``</span>
 <span class="sd">    and returns an iterator over collections of the same type as the input.</span>
+<span class="sd">    A simple example (see below for more examples):</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            n_objects = 100</span>
+<span class="sd">            n_features = 4</span>
+<span class="sd">            X = torch.randn(n_objects, n_features)</span>
+<span class="sd">            y = torch.randn(n_objects)</span>
+<span class="sd">            for batch_x, batch_y in delu.iter_batches(</span>
+<span class="sd">                (X, y), batch_size=12, shuffle=True</span>
+<span class="sd">            ):</span>
+<span class="sd">                ...  # train(batch_x, batch_y)</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        data: the tensor or the collection ((named)tuple/dict/dataclass) of tensors.</span>
@@ -486,7 +496,7 @@
 <span class="sd">            for batch in delu.iter_batches(Data(a, b), batch_size):</span>
 <span class="sd">                assert isinstance(batch, Data)</span>
 
-<span class="sd">            ab = delu.cat(delu.iter_batches((a, b), batch_size))</span>
+<span class="sd">            ab = delu.cat(list(delu.iter_batches((a, b), batch_size)))</span>
 <span class="sd">            assert torch.equal(ab[0], a)</span>
 <span class="sd">            assert torch.equal(ab[1], b)</span>
 
