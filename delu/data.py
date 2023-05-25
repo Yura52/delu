@@ -225,7 +225,7 @@ class FnDataset(Dataset):
 
 
 class IndexDataset(Dataset):
-    """A trivial dataset that yeilds indices back to user (useful for DDP).
+    """A trivial dataset that yeilds indices back to user (useful for DistributedDataParallel (DDP)).
 
     This simple dataset is useful when:
 

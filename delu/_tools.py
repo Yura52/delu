@@ -20,7 +20,7 @@ class EarlyStopping:
 
     where the method `EarlyStopping.update` is used to submit a new score,
     and the method `EarlyStopping.should_stop` returns `True` if the number
-    of latest consequtive bad updates reaches ``patience``.
+    of the latest consequtive bad updates reaches ``patience``
     (10 in the above example).
     Regardless of the number of the latest consequtive bad updates, if the next
     update is good, then the number of consequtive bad updates is reset to zero.

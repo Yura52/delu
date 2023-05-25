@@ -13,9 +13,10 @@ K = TypeVar('K')
 def to(data: T, *args, **kwargs) -> T:
     """Like `torch.Tensor.to`, but for collections of tensors.
 
-    The function takes a (nested) collection of tensors
-    and creates its copy where all the tensors are transformed
-    with `torch.Tensor.to`.
+    The function allows changing devices and data types for (nested) collections of
+    tensors similarly to how `torch.Tensor.to` does this for a single tensor.
+    Technically, the function simply traverses the input and applies
+    `torch.Tensor.to` to tensors (non-tensor values are not allowed).
 
     Args:
         data: the tensor or the (nested) collection of tensors. Allowed collections
@@ -73,24 +74,22 @@ def to(data: T, *args, **kwargs) -> T:
 def cat(data: List[T], dim: int = 0) -> T:
     """Like `torch.cat`, but for collections of tensors.
 
-    A typical use case is concatenating batched outputs of a function or a model
-    to a single output for the whole dataset::
+    A typical use case is concatenating a model/function's outputs for batches
+    into a single output for the whole dataset::
 
         class Model(nn.Module):
             def forward(self, ...) -> tuple[Tensor, Tensor]:
                 ...
                 return y_pred, embeddings
 
-        # Concatenate a sequence of tuples into a single tuple.
+        # Concatenate a sequence of tuples (batch_y_pred, batch_embeddings) into a single tuple.
         y_pred, embeddings = delu.cat([model(batch) for batch in dataloader])
 
     The function operates recursively, so nested structures are supported as well
     (e.g. ``tuple[Tensor, dict[str, tuple[Tensor, Tensor]]]``). See other examples below.
 
-    Note:
-        Under the hood, roughly speaking, the function "transposes" the list of
-        collections to a collection of lists and applies `torch.cat` to those
-        lists.
+    Technically, roughly speaking, the function "transposes" the list of
+    collections to a collection of lists and applies `torch.cat` to those lists.
 
     Args:
         data: the list of (nested) (named)tuples/dictionaries/dataclasses of tensors.
@@ -216,6 +215,18 @@ def iter_batches(
 
     The function makes batches over the first dimension of the tensors in ``data``
     and returns an iterator over collections of the same type as the input.
+    A simple example (see below for more examples):
+
+        .. testcode::
+
+            n_objects = 100
+            n_features = 4
+            X = torch.randn(n_objects, n_features)
+            y = torch.randn(n_objects)
+            for batch_x, batch_y in delu.iter_batches(
+                (X, y), batch_size=12, shuffle=True
+            ):
+                ...  # train(batch_x, batch_y)
 
     Args:
         data: the tensor or the collection ((named)tuple/dict/dataclass) of tensors.
