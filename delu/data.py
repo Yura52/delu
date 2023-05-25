@@ -63,6 +63,66 @@ class Enumerate(Dataset):
         return index, self._dataset[index]
 
 
+class IndexDataset(Dataset):
+    """A trivial dataset that yeilds indices back to user (useful for DistributedDataParallel (DDP)).
+
+    This simple dataset is useful when:
+
+    1. you need a dataloader that yeilds batches of *indices* instead of *objects*
+    2. AND you work in the `Distributed Data Parallel <https://pytorch.org/tutorials/intermediate/ddp_tutorial.html>`_ setup
+
+    Note:
+        If only the first condition is true, consider using the combinatation of
+        `torch.randperm` and `torch.Tensor.split` instead.
+
+    Example::
+
+        from torch.utils.data import DataLoader
+        from torch.utils.data.distributed import DistributedSampler
+
+        train_size = 123456
+        batch_size = 123
+        dataset = delu.data.IndexDataset(dataset_size)
+        for i in range(train_size):
+            assert dataset[i] == i
+        dataloader = DataLoader(
+            dataset,
+            batch_size,
+            sampler=DistributedSampler(dataset)
+        )
+
+        for epoch in range(n_epochs):
+            for batch_indices in dataloader:
+                ...
+    """  # noqa: E501
+
+    def __init__(self, size: int) -> None:
+        """Initialize self.
+
+        Args:
+            size: the dataset size
+        """
+        if size < 1:
+            raise ValueError('size must be positive')
+        self.size = size
+
+    def __len__(self) -> int:
+        """Get the dataset size."""
+        return self.size
+
+    def __getitem__(self, i: int) -> int:
+        """Get the same index back.
+
+        The index must be an integer from ``range(len(self))``.
+        """
+        if i < 0 or i >= self.size:
+            raise IndexError(
+                f"index {i} is out of range (dataset's size is {self.size})"
+            )
+        return i
+
+
+@deprecated('')
 class FnDataset(Dataset):
     """Create simple PyTorch datasets without classes and inheritance.
 
@@ -224,65 +284,6 @@ class FnDataset(Dataset):
         return x if self._transform is None else self._transform(x)
 
 
-class IndexDataset(Dataset):
-    """A trivial dataset that yeilds indices back to user (useful for DistributedDataParallel (DDP)).
-
-    This simple dataset is useful when:
-
-    1. you need a dataloader that yeilds batches of *indices* instead of *objects*
-    2. AND you work in the `Distributed Data Parallel <https://pytorch.org/tutorials/intermediate/ddp_tutorial.html>`_ setup
-
-    Note:
-        If only the first condition is true, consider using the combinatation of
-        `torch.randperm` and `torch.Tensor.split` instead.
-
-    Example::
-
-        from torch.utils.data import DataLoader
-        from torch.utils.data.distributed import DistributedSampler
-
-        train_size = 123456
-        batch_size = 123
-        dataset = delu.data.IndexDataset(dataset_size)
-        for i in range(train_size):
-            assert dataset[i] == i
-        dataloader = DataLoader(
-            dataset,
-            batch_size,
-            sampler=DistributedSampler(dataset)
-        )
-
-        for epoch in range(n_epochs):
-            for batch_indices in dataloader:
-                ...
-    """  # noqa: E501
-
-    def __init__(self, size: int) -> None:
-        """Initialize self.
-
-        Args:
-            size: the dataset size
-        """
-        if size < 1:
-            raise ValueError('size must be positive')
-        self.size = size
-
-    def __len__(self) -> int:
-        """Get the dataset size."""
-        return self.size
-
-    def __getitem__(self, i: int) -> int:
-        """Get the same index back.
-
-        The index must be an integer from ``range(len(self))``.
-        """
-        if i < 0 or i >= self.size:
-            raise IndexError(
-                f"index {i} is out of range (dataset's size is {self.size})"
-            )
-        return i
-
-
 @deprecated('Instead, use `delu.data.IndexDataset` and `~torch.utils.data.DataLoader`')
 def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
     """Make `~torch.utils.data.DataLoader` over indices instead of data.
@@ -440,7 +441,7 @@ class IndexLoader:
         )
 
 
-@deprecated('Instead, use `torch.utils.data.dataloader.default_collate`')
+@deprecated('Instead, use `torch.utils.data.default_collate`')
 def collate(iterable: Iterable) -> Any:
     """Almost an alias for :code:`torch.utils.data.dataloader.default_collate`.
     Namely, the input is allowed to be any kind of iterable, not only a list. Firstly,

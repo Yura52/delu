@@ -13,7 +13,6 @@ delu.data
     :template: class.rst
 
     Enumerate
-    FnDataset
     IndexDataset
 
 ----
@@ -32,4 +31,5 @@ delu.data
     :toctree: api
     :template: class.rst
 
+    FnDataset
     IndexLoader
