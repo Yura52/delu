@@ -1,0 +1,6 @@
+delu.ProgressTracker.reset
+==========================
+
+.. currentmodule:: delu
+
+.. automethod:: ProgressTracker.reset

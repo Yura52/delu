@@ -1,0 +1,6 @@
+delu.data.IndexDataset.\_\_getitem\_\_
+======================================
+
+.. currentmodule:: delu.data
+
+.. automethod:: IndexDataset.__getitem__

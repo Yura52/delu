@@ -1,0 +1,6 @@
+delu.EarlyStopping.update
+=========================
+
+.. currentmodule:: delu
+
+.. automethod:: EarlyStopping.update

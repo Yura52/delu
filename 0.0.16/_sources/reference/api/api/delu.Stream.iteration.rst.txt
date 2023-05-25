@@ -1,0 +1,6 @@
+delu.Stream.iteration
+=====================
+
+.. currentmodule:: delu
+
+.. autoproperty:: Stream.iteration

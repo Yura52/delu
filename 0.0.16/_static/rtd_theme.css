@@ -1,0 +1,23 @@
+.wy-nav-content-wrap {
+  background: #fcfcfc;
+}
+
+.wy-table-responsive table td,
+.wy-table-responsive table th {
+  white-space: normal;
+}
+
+.longtable {
+  width: 100%;
+}
+
+.longtable tr td:first-child {
+  width: 35%;
+  white-space: nowrap;
+}
+
+.rst-content .linenodiv pre,
+.rst-content div[class^="highlight"] pre,
+.rst-content pre.literal-block {
+  font-size: 13px;
+}

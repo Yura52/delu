@@ -1,0 +1,6 @@
+﻿delu.random.get\_state
+======================
+
+.. currentmodule:: delu.random
+
+.. autofunction:: get_state
