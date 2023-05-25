@@ -15,8 +15,10 @@ def to(data: T, *args, **kwargs) -> T:
 
     The function allows changing devices and data types for (nested) collections of
     tensors similarly to how `torch.Tensor.to` does this for a single tensor.
-    Technically, the function simply traverses the input and applies
-    `torch.Tensor.to` to tensors (non-tensor values are not allowed).
+
+    Note:
+        Technically, the function simply traverses the input and applies
+        `torch.Tensor.to` to tensors (non-tensor values are not allowed).
 
     Args:
         data: the tensor or the (nested) collection of tensors. Allowed collections
@@ -88,8 +90,9 @@ def cat(data: List[T], dim: int = 0) -> T:
     The function operates recursively, so nested structures are supported as well
     (e.g. ``tuple[Tensor, dict[str, tuple[Tensor, Tensor]]]``). See other examples below.
 
-    Technically, roughly speaking, the function "transposes" the list of
-    collections to a collection of lists and applies `torch.cat` to those lists.
+    Note:
+        Technically, roughly speaking, the function "transposes" the list of
+        collections to a collection of lists and applies `torch.cat` to those lists.
 
     Args:
         data: the list of (nested) (named)tuples/dictionaries/dataclasses of tensors.

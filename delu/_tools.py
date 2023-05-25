@@ -179,9 +179,17 @@ class EarlyStopping:
 class Timer:
     """Measures time.
 
-    Measures time elapsed since the first call to `~Timer.run` up to "now" minus pauses.
+    A simple timer with the following features:
+
+    * can measure time :)
+    * can be safely pickled and unpickled (i.e. can be a part of a checkpoint)
+    * can be paused/resumed
+    * can be prettyprinted or formatted with a custom format string
+    * can be a context manager
 
     Note:
+        Technically, the timer measures the time elapsed since the first call to
+        `Timer.run` up to "now" minus pauses.
         Measurements are performed via `time.perf_counter`.
 
     .. rubric:: Tutorial
@@ -190,12 +198,16 @@ class Timer:
 
         import time
 
-        assert delu.Timer()() == 0.0
-
         timer = delu.Timer()
-        timer.run()  # start
+        timer.run()  # run the timer
         time.sleep(0.01)
-        assert timer()  # some time has passed
+        assert timer() > 0.0  # get the elapsed time
+
+        # measure time between two events
+        start = timer()
+        time.sleep(0.01)
+        end = timer()
+        duration = end - start
 
         timer.pause()
         elapsed = timer()
