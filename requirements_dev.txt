@@ -23,4 +23,4 @@ furo==2023.5.20
 torchvision==0.8.2
 
 # other
-jupyterlab==4.0.0
+jupyterlab==4.0.2
