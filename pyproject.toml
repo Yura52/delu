@@ -18,7 +18,7 @@ classifiers = [
 ]
 dependencies = [
     "numpy >=1.18,<2",
-    "torch >=1.7,<2",
+    "torch >=1.7,<3",
 ]
 dynamic = ["version", "description"]
 keywords = [
