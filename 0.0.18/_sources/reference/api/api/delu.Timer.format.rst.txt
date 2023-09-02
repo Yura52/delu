@@ -1,0 +1,6 @@
+delu.Timer.format
+=================
+
+.. currentmodule:: delu
+
+.. automethod:: Timer.format

@@ -1,0 +1,6 @@
+delu.data.IndexLoader.\_\_init\_\_
+==================================
+
+.. currentmodule:: delu.data
+
+.. automethod:: IndexLoader.__init__

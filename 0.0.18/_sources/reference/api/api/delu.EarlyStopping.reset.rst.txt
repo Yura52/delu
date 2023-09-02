@@ -1,0 +1,6 @@
+delu.EarlyStopping.reset
+========================
+
+.. currentmodule:: delu
+
+.. automethod:: EarlyStopping.reset

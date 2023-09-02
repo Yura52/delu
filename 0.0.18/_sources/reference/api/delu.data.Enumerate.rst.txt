@@ -1,0 +1,41 @@
+﻿delu.data.Enumerate
+===================
+
+.. currentmodule:: delu.data
+
+.. autoclass:: Enumerate
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree: api
+   
+      ~Enumerate.dataset
+   
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+      :toctree: api
+   
+      ~Enumerate.__init__
+   
+      
+      
+      
+      
+      ~Enumerate.__getitem__
+      
+      
+      
+      
+      ~Enumerate.__len__
+      
+      
+      
+   

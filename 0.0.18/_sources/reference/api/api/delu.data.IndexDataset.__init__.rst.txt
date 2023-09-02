@@ -1,0 +1,6 @@
+delu.data.IndexDataset.\_\_init\_\_
+===================================
+
+.. currentmodule:: delu.data
+
+.. automethod:: IndexDataset.__init__

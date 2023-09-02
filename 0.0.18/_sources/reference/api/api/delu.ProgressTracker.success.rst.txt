@@ -1,0 +1,6 @@
+delu.ProgressTracker.success
+============================
+
+.. currentmodule:: delu
+
+.. autoproperty:: ProgressTracker.success

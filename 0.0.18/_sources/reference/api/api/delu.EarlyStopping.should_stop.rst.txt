@@ -1,0 +1,6 @@
+delu.EarlyStopping.should\_stop
+===============================
+
+.. currentmodule:: delu
+
+.. automethod:: EarlyStopping.should_stop

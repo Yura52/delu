@@ -1,0 +1,34 @@
+﻿delu.data.IndexDataset
+======================
+
+.. currentmodule:: delu.data
+
+.. autoclass:: IndexDataset
+
+   
+   
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+      :toctree: api
+   
+      ~IndexDataset.__init__
+   
+      
+      
+      
+      
+      ~IndexDataset.__getitem__
+      
+      
+      
+      
+      ~IndexDataset.__len__
+      
+      
+      
+   

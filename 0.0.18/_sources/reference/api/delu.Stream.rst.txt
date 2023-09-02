@@ -1,0 +1,47 @@
+﻿delu.Stream
+===========
+
+.. currentmodule:: delu
+
+.. autoclass:: Stream
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree: api
+   
+      ~Stream.epoch
+      ~Stream.iteration
+      ~Stream.loader
+   
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+      :toctree: api
+   
+      ~Stream.__init__
+      ~Stream.data
+      ~Stream.epochs
+      ~Stream.increment_epoch
+      ~Stream.load_state_dict
+      ~Stream.next
+      ~Stream.reload_iterator
+      ~Stream.set_loader
+      ~Stream.state_dict
+   
+      
+      
+      
+      
+      
+      
+      
+      
+      
+   
