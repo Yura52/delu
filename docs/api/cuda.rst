@@ -9,6 +9,7 @@ delu.cuda
 
 .. autosummary::
    :nosignatures:
-   :toctree: api
+   :toctree: generated
+   :template: function.rst
 
    free_memory

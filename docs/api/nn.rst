@@ -7,7 +7,7 @@ delu.nn
 
 .. autosummary::
     :nosignatures:
-    :toctree: api
-    :template: class_nn.rst
+    :toctree: generated
+    :template: class.rst
 
     Lambda

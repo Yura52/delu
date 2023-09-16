@@ -7,7 +7,7 @@ import torch
 def free_memory() -> None:
     """Free GPU memory: `torch.cuda.synchronize` + `gc.collect` + `torch.cuda.empty_cache`.
 
-    Warning:
+    Note:
         There is a small chunk of GPU-memory (occupied by drivers) that is impossible to
         free. It is a `torch` "limitation", so the function inherits this property.
 

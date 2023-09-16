@@ -190,7 +190,7 @@ class Timer:
     Note:
         Technically, the timer measures the time elapsed since the first call to
         `Timer.run` up to "now" minus pauses.
-        Measurements are performed via `time.perf_counter`.
+        Measurements are performed with `time.perf_counter`.
 
     .. rubric:: Tutorial
 
@@ -346,7 +346,7 @@ class Timer:
             `Timer.__exit__`
 
         Example:
-            ..testcode::
+            .. testcode::
 
                 import time
                 with delu.Timer() as timer:

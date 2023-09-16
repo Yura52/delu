@@ -64,11 +64,11 @@ class Enumerate(Dataset):
 
 
 class IndexDataset(Dataset):
-    """A trivial dataset that yeilds indices back to user (useful for DistributedDataParallel (DDP)).
+    """A trivial dataset that yields indices back to user (useful for DistributedDataParallel (DDP)).
 
     This simple dataset is useful when:
 
-    1. you need a dataloader that yeilds batches of *indices* instead of *objects*
+    1. you need a dataloader that yields batches of *indices* instead of *objects*
     2. AND you work in the `Distributed Data Parallel <https://pytorch.org/tutorials/intermediate/ddp_tutorial.html>`_ setup
 
     Note:

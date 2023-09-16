@@ -7,7 +7,8 @@ delu.random
 
 .. autosummary::
     :nosignatures:
-    :toctree: api
+    :toctree: generated
+    :template: function.rst
 
     seed
     get_state

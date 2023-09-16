@@ -12,7 +12,8 @@ delu.hardware
 
 .. autosummary::
     :nosignatures:
-    :toctree: api
+    :toctree: generated
+    :template: function.rst
 
     free_memory
     get_gpus_info

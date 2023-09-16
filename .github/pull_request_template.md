@@ -10,4 +10,4 @@ Fixes #
 - [ ] `make coverage` shows that new code is covered with tests
 - [ ] docstrings are updated
 - [ ] `__all__` lists are updated
-- [ ] docs/reference/*.rst are updated
+- [ ] docs/api/*.rst are updated

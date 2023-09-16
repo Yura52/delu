@@ -14,12 +14,12 @@ DeLU (Deep Learning Utilities)
    :caption: API & Examples
    :hidden:
 
-   reference/delu
-   reference/cuda
-   reference/data
-   reference/hardware
-   reference/nn
-   reference/random
+   api/delu
+   api/cuda
+   api/data
+   api/hardware
+   api/nn
+   api/random
 
 ----
 

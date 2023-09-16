@@ -9,13 +9,15 @@ delu
 
 .. rubric:: Submodules
 
-*See the sidebar on the left.*
+.. tip::
+   Submodules are listed in the left sidebar.
 
 .. rubric:: Tensor operations
 
 .. autosummary::
    :nosignatures:
-   :toctree: api
+   :toctree: generated
+   :template: function.rst
 
    to
    cat
@@ -25,7 +27,7 @@ delu
 
 .. autosummary::
    :nosignatures:
-   :toctree: api
+   :toctree: generated
    :template: class.rst
 
    EarlyStopping
@@ -38,7 +40,7 @@ delu
 
 .. autosummary::
    :nosignatures:
-   :toctree: api
+   :toctree: generated
    :template: class.rst
 
    ProgressTracker
@@ -46,7 +48,7 @@ delu
 
 .. autosummary::
    :nosignatures:
-   :toctree: api
+   :toctree: generated
 
    collate
    concat
@@ -54,7 +56,7 @@ delu
 
 .. autosummary::
    :nosignatures:
-   :toctree: api
-   :template: class_just_autoclass.rst
+   :toctree: generated
+   :template: class.rst
 
    evaluation

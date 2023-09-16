@@ -15,7 +15,7 @@ clean:
 	rm -rf .pytest_cache
 	rm -rf .ruff_cache
 	rm -rf dist
-	rm -rf $(DOCS_DIR)/reference/api
+	rm -rf $(DOCS_DIR)/api/generated
 	make -C $(DOCS_DIR) clean
 
 coverage:

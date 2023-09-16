@@ -20,10 +20,14 @@ class Lambda(torch.nn.Module):
     """
 
     def __init__(self, fn: Callable):
-        """Initialize self."""
+        """Initialize self.
+
+        Args:
+            fn: the callable.
+        """
         super().__init__()
         self.fn = fn
 
     def forward(self, *args, **kwargs):
-        """Perform the forward pass."""
+        """Do the forward pass."""
         return self.fn(*args, **kwargs)

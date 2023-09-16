@@ -9,7 +9,7 @@ delu.data
 
 .. autosummary::
     :nosignatures:
-    :toctree: api
+    :toctree: generated
     :template: class.rst
 
     Enumerate
@@ -22,13 +22,14 @@ delu.data
 
 .. autosummary::
     :nosignatures:
-    :toctree: api
+    :toctree: generated
+    :template: function.rst
 
     make_index_dataloader
 
 .. autosummary::
     :nosignatures:
-    :toctree: api
+    :toctree: generated
     :template: class.rst
 
     FnDataset
