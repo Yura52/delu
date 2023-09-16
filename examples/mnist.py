@@ -20,8 +20,8 @@ try:
     from torchvision.transforms import ToTensor
 except ImportError:
     print(
-        'Please, install the following packages to proceed:\n'
-        '- torchvision (see https://pytorch.org/get-started)'
+        'This example requires `torchvision` to be installed.'
+        ' See https://pytorch.org/get-started for installation instructions.'
     )
     raise
 
