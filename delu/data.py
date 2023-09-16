@@ -35,13 +35,13 @@ class Enumerate(Dataset):
         """Initialize self.
 
         Args:
-            dataset
+            dataset: the dataset.
         """
         self._dataset = dataset
 
     @property
     def dataset(self) -> Dataset:
-        """Access the underlying dataset.
+        """The original dataset.
 
         Returns:
             The dataset.
@@ -49,14 +49,14 @@ class Enumerate(Dataset):
         return self._dataset
 
     def __len__(self) -> int:
-        """Get the length of the underlying dataset."""
+        """Get the length of the original dataset."""
         return len(self._dataset)  # type: ignore
 
     def __getitem__(self, index) -> Tuple[Any, Any]:
-        """Return index and the corresponding item from the underlying dataset.
+        """Return index and the corresponding item from the original dataset.
 
         Args:
-            index
+            index: the index.
         Returns:
             (index, item)
         """
@@ -407,13 +407,13 @@ class IndexLoader:
 
         Args:
             size: the number of items (for example, :code:`len(dataset)`)
-            *args: positional arguments for `torch.utils.data.DataLoader`
+            args: positional arguments for `torch.utils.data.DataLoader`
             device: if not CPU, then all indices are materialized and moved to the
                 device at the beginning of every loop. It can be useful when the indices
                 are applied to non-CPU data (e.g. CUDA-tensors) and moving data between
                 devices takes non-negligible time (which can happen in the case of
                 simple and fast models like MLPs).
-            **kwargs: keyword arguments for `torch.utils.data.DataLoader`
+            kwargs: keyword arguments for `torch.utils.data.DataLoader`
         Raises:
             AssertionError: if size is not positive
         """
@@ -426,11 +426,11 @@ class IndexLoader:
 
     @property
     def loader(self) -> DataLoader:
-        """The underlying DataLoader."""
+        """The original DataLoader."""
         return self._loader
 
     def __len__(self) -> int:
-        """Get the size of the underlying DataLoader."""
+        """Get the size of the original DataLoader."""
         return len(self.loader)
 
     def __iter__(self):
