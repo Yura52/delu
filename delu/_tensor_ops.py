@@ -209,8 +209,8 @@ def concat(*args, **kwargs):
 def iter_batches(
     data: T,
     batch_size: int,
-    shuffle: bool = False,
     *,
+    shuffle: bool = False,
     generator: Optional[torch.Generator] = None,
     drop_last: bool = False,
 ) -> Iterator[T]:
