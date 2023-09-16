@@ -5,44 +5,52 @@ DeLU (Deep Learning Utilities)
 
   <img src="https://raw.githubusercontent.com/Yura52/delu/main/docs/images/logo.png" width="130px" style="text-align:center;display:block;">
 
+`Documentation <https://yura52.github.io/delu>`_
+
 .. __INCLUDE_0__
 
-DeLU is a general-purpose PyTorch library that simplifes development and training of deep learning models.
-DeLU is a toolbox, not a framework:
+DeLU is a minimalistic PyTorch toolbox (not a "framework"):
 
-- DeLU provides functions and classes that facilitate training loops, reproducibility, tensor manipulations and other typical aspects of deep learning projects.
-- there is no need to "rebuild your project around DeLU": you can start using DeLU by picking individual tools that you find helpful.
+- DeLU provides functions and classes facilitating training loops, reproducibility,
+  tensor manipulations and other typical aspects of PyTorch projects.
+- In DeLU, many things will 🧡 **immediately feel familiar to PyTorch users** 🧡,
+  and the rest is simple and well-documented.
+- There is no need to "rebuild your project around DeLU":
+  you can start using DeLU by picking individual tools that you find helpful.
 
-DeLU is tested and battle-tested in research projects. The public API is still evolving,
-and backward-incompatible changes are possible.
-
-Overview
---------
-
-- `Website <https://yura52.github.io/delu>`_
-- `Learn DeLU <https://yura52.github.io/delu/stable/learn>`_
-- `Classification task example (MNIST) <https://github.com/Yura52/delu/blob/main/examples/mnist.py>`_
-- `Code <https://github.com/Yura52/delu>`_
-
-.. __INCLUDE_1__
+*DeLU is tested and battle-tested in real projects.*
 
 Installation
 ------------
 
-.. code-block:: bash
+.. code-block:: none
 
     pip install delu
 
-**Dependencies:** see `pyproject.toml` in the repository.
+Learn
+-----
+
+*DeLU is a toolbox, not a framework,
+so you can learn things and start using them in any order.*
+
+The `API documentation <https://yura52.github.io/delu/stable/reference/delu.html>`_
+provides usage examples and explanations
+-- this is the main source of knowledge about DeLU.
+
+End-to-end examples
+-------------------
+
+Use ``Ctrl+F "delu"`` to see how DeLU is used in the following examples:
+
+- `Image classification (MNIST) <https://github.com/Yura52/delu/blob/main/examples/mnist.py>`_
 
 How to contribute
 -----------------
 
-- Help to resolve `issues <https://github.com/Yura52/delu/issues>`_
-- Report `bugs and issues <https://github.com/Yura52/delu/issues/new/choose>`_
-- Post `questions, ideas and feedback <https://github.com/Yura52/delu/discussions/new>`_
-
-If your contribution includes pull requests, see `CONTRIBUTING.md <https://github.com/Yura52/delu/blob/main/other/CONTRIBUTING.md>`_
+- Use `issues <https://github.com/Yura52/delu/issues>`_
+  to report bugs, share ideas and feedback.
+- For pull requests, see
+  `CONTRIBUTING.md <https://github.com/Yura52/delu/blob/main/other/CONTRIBUTING.md>`_.
 
 How to cite
 -----------

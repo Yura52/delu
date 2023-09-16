@@ -1,4 +1,8 @@
-### Setup
+# Contributing
+
+This document describes
+how to set up the environment and make pull requests in this project.
+
 1. Fork the repository.
 
 2. Clone your fork
@@ -7,12 +11,12 @@ $ git clone <your fork link>
 $ cd delu
 ```
 
-3. Create a virtual environment with python and the **minimum required versions** of all the depependendices listed in the "dependencies" section of [pyproject.toml](./pyproject.toml). Also, in this environment, run:
+1. Create a virtual environment with python and the **minimum required versions** of all the depependendices listed in the "dependencies" section of [pyproject.toml](./pyproject.toml). Also, in this environment, run:
 ```bash
 pip install -r requirements_dev.txt
 ```
 
-4. Set up the pre-commit hook by putting the following content into `.git/hooks/pre-commit` (use "`git commit -n ...`" to avoid running the hook for unfinished work):
+1. Set up the pre-commit hook by putting the following content into `.git/hooks/pre-commit` (use "`git commit -n ...`" to avoid running the hook for unfinished work):
 ```bash
 #!/bin/sh
 

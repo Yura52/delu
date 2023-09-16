@@ -7,6 +7,10 @@ delu
 
 .. automodule:: delu
 
+.. rubric:: Submodules
+
+*See the sidebar on the left.*
+
 .. rubric:: Tensor operations
 
 .. autosummary::
@@ -26,10 +30,6 @@ delu
 
    EarlyStopping
    Timer
-
-.. rubric:: Submodules
-
-See the sidebar on the left.
 
 ----
 
