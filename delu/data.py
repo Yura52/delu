@@ -120,6 +120,8 @@ class IndexDataset(Dataset):
 class FnDataset(Dataset):
     """Create simple PyTorch datasets without classes and inheritance.
 
+    {DEPRECATION_MESSAGE}
+
     `FnDataset` allows avoiding implementing `~torch.utils.data.Dataset` classes in
     simple cases.
 
@@ -281,6 +283,8 @@ class FnDataset(Dataset):
 def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
     """Make `~torch.utils.data.DataLoader` over indices instead of data.
 
+    {DEPRECATION_MESSAGE}
+
     This is just a shortcut for
     ``torch.utils.data.DataLoader(delu.data.IndexDataset(...), ...)``.
 
@@ -344,6 +348,8 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
 @deprecated('Instead, use `delu.data.IndexDataset` and `~torch.utils.data.DataLoader`')
 class IndexLoader:
     """Like `~torch.utils.data.DataLoader`, but over indices instead of data.
+
+    {DEPRECATION_MESSAGE}
 
     **The shuffling logic is delegated to the native PyTorch DataLoader**, i.e. no
     custom logic is performed under the hood. The data loader which actually generates
@@ -436,6 +442,9 @@ class IndexLoader:
 @deprecated('Instead, use `torch.utils.data.default_collate`')
 def collate(iterable: Iterable) -> Any:
     """Almost an alias for :code:`torch.utils.data.dataloader.default_collate`.
+
+    {DEPRECATION_MESSAGE}
+
     Namely, the input is allowed to be any kind of iterable, not only a list. Firstly,
     if it is not a list, it is transformed to a list. Then, the list is passed to the
     original function and the result is returned as is.

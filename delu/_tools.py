@@ -376,11 +376,12 @@ class _ProgressStatus(enum.Enum):
 
 
 @deprecated(
-    'Instead, use `delu.EarlyStopping`. '
-    'For tracking the best metric value, currently, no alternatives are provided.'
+    'Instead, use `delu.EarlyStopping` (note that it does not track the best score).'
 )
 class ProgressTracker:
     """Helps with early stopping and tracks the best metric value.
+
+    {DEPRECATION_MESSAGE}
 
     For `~ProgressTracker`, **the greater score is the better score**.
     At any moment the tracker is in one of the following states:

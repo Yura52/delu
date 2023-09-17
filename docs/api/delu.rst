@@ -32,31 +32,3 @@ delu
 
    EarlyStopping
    Timer
-
-----
-
-.. warning::
-   The API listed below is deprecated.
-
-.. autosummary::
-   :nosignatures:
-   :toctree: generated
-   :template: class.rst
-
-   ProgressTracker
-   Stream
-
-.. autosummary::
-   :nosignatures:
-   :toctree: generated
-
-   collate
-   concat
-   improve_reproducibility
-
-.. autosummary::
-   :nosignatures:
-   :toctree: generated
-   :template: class.rst
-
-   evaluation

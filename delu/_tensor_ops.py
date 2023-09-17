@@ -200,12 +200,6 @@ def cat(data: List[T], dim: int = 0) -> T:
         raise ValueError(f'The collection type {type(first)} is not supported.')
 
 
-@deprecated('Instead, use `delu.cat`')
-def concat(*args, **kwargs):
-    """"""
-    return cat(*args, **kwargs)
-
-
 def iter_batches(
     data: T,
     batch_size: int,
@@ -346,3 +340,9 @@ def iter_batches(
         if i + 1 == n_batches and len(idx) < batch_size and drop_last:
             return
         yield get_batch(idx)  # type: ignore
+
+
+@deprecated('Instead, use `delu.cat`')
+def concat(*args, **kwargs):
+    """{DEPRECATION_MESSAGE}"""
+    return cat(*args, **kwargs)

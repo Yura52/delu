@@ -14,9 +14,11 @@ def _try_len(x):
         return None
 
 
-@deprecated('Currently, no alternatives are available.')
+@deprecated('')
 class Stream:
     """Smart wrapper for data loaders and iterables.
+
+    {DEPRECATION_MESSAGE}
 
     `Stream` simplifies managing loops, especially in typical Deep Learning scenarios.
     `Stream`:
