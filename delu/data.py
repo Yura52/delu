@@ -32,20 +32,15 @@ class Enumerate(Dataset):
     """
 
     def __init__(self, dataset: Dataset) -> None:
-        """Initialize self.
-
+        """
         Args:
-            dataset: the dataset.
+            dataset: the original dataset to wrap.
         """
         self._dataset = dataset
 
     @property
     def dataset(self) -> Dataset:
-        """The original dataset.
-
-        Returns:
-            The dataset.
-        """
+        """The original dataset."""
         return self._dataset
 
     def __len__(self) -> int:
@@ -97,8 +92,7 @@ class IndexDataset(Dataset):
     """  # noqa: E501
 
     def __init__(self, size: int) -> None:
-        """Initialize self.
-
+        """
         Args:
             size: the dataset size
         """
@@ -226,8 +220,7 @@ class FnDataset(Dataset):
         args: Union[int, Iterable],
         transform: Optional[Callable[[T], Any]] = None,
     ) -> None:
-        """Initialize self.
-
+        """
         Args:
             fn: the function that produces values based on arguments from ``args``
             args: arguments for ``fn``. If an iterable, but not a list, then is
@@ -403,8 +396,7 @@ class IndexLoader:
     def __init__(
         self, size: int, *args, device: Union[int, str, torch.device] = 'cpu', **kwargs
     ) -> None:
-        """Initialize self.
-
+        """
         Args:
             size: the number of items (for example, :code:`len(dataset)`)
             args: positional arguments for `torch.utils.data.DataLoader`

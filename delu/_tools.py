@@ -55,8 +55,7 @@ class EarlyStopping:
     def __init__(
         self, patience: int, *, mode: Literal['min', 'max'], min_delta: float = 0.0
     ) -> None:
-        """Initialize self.
-
+        """
         Args:
             patience: when the number of the latest consequtive bad updates reaches
                 ``patience``, `EarlyStopping.should_stop` starts returning `True`
@@ -150,7 +149,7 @@ class EarlyStopping:
 
         Returns:
             `True` if the number of consequtive bad updates has reached the patience.
-                `False` otherwise.
+            `False` otherwise.
         """
         return self._n_consequtive_bad_updates >= self._patience
 
@@ -177,19 +176,13 @@ class EarlyStopping:
 
 
 class Timer:
-    """Measures time.
+    """A simple pickle-friendly timer.
 
-    A simple timer with the following features:
-
-    * can measure time :)
-    * can be safely pickled and unpickled (i.e. can be a part of a checkpoint)
-    * can be paused/resumed
-    * can be prettyprinted or formatted with a custom format string
-    * can be a context manager
+    - `Timer` measures time, can be paused, resumed and used as a context manager.
+    - `Timer` is pickle-friendly and can be a part of a checkpoint.
+    - `Timer` can report the elapsed time as a (customizable) human-readable string.
 
     Note:
-        Technically, the timer measures the time elapsed since the first call to
-        `Timer.run` up to "now" minus pauses.
         Measurements are performed with `time.perf_counter`.
 
     .. rubric:: Tutorial
@@ -257,8 +250,7 @@ class Timer:
     _shift: float
 
     def __init__(self) -> None:
-        """Initialize self.
-
+        """
         Examples:
             .. testcode::
 
@@ -433,8 +425,7 @@ class ProgressTracker:
     """
 
     def __init__(self, patience: Optional[int], min_delta: float = 0.0) -> None:
-        """Initialize self.
-
+        """
         Args:
             patience: Allowed number of unsuccessfull updates. For example, if patience
                 is 2, then 2 unsuccessfull updates in a row is not a fail,

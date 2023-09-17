@@ -159,8 +159,7 @@ class Stream:
             return self._stream.next()
 
     def __init__(self, loader: Iterable) -> None:
-        """Initialize self.
-
+        """
         Args:
             loader: any kind of iterable (DataLoader, list, iterator, generator, ...)
         Raises:

@@ -37,7 +37,10 @@ if platform.machine() != 'arm64':
     # libenchant is not available for Apple CPUs.
     extensions.append('sphinxcontrib.spelling')
 
-autodoc_typehints = 'description'
+# autodoc_typehints = 'description'
+autodoc_typehints = 'signature'
+autodoc_class_signature = 'separated'
+maximum_signature_line_length = 88
 
 doctest_global_setup = '''
 import numpy as np
@@ -58,7 +61,7 @@ spelling_show_suggestions = True
 
 # >>> HTML >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 html_favicon = 'images/favicon.ico'
-html_logo = 'images/logo_120x120.svg'
+html_logo = 'images/logo.svg'
 html_static_path = ['_static']
 html_title = project
 

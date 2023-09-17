@@ -81,7 +81,7 @@ def main():
     def evaluate(loader):
         model.eval()
         # Concatenate a sequence of tuples `(batch_logits, batch_y)` into a single tuple.
-        logits, y = delu.cat(map(step, loader))
+        logits, y = delu.cat([step(batch) for batch in loader])
         y_pred = torch.argmax(logits, dim=1).to(y)
         return (y_pred == y).int().sum().item() / len(y)
 

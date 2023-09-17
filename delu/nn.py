@@ -20,8 +20,7 @@ class Lambda(torch.nn.Module):
     """
 
     def __init__(self, fn: Callable):
-        """Initialize self.
-
+        """
         Args:
             fn: the callable.
         """

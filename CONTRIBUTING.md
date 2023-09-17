@@ -29,8 +29,7 @@ make pre-commit
 ```
 
 5. Check out the available commands in the [Makefile](../Makefile).
-It contains shortcuts for running linters, code formatters, tests, the pre-commit hook
-and other useful commands. **All commands must be run from the repository root.**
+**All commands must be run from the repository root.**
 
 6. Implement changes and open a
 [pull request](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests).
