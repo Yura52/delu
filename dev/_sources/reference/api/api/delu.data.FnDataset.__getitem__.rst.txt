@@ -1,6 +1,0 @@
-delu.data.FnDataset.\_\_getitem\_\_
-===================================
-
-.. currentmodule:: delu.data
-
-.. automethod:: FnDataset.__getitem__

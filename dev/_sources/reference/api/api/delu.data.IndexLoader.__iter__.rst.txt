@@ -1,6 +1,0 @@
-delu.data.IndexLoader.\_\_iter\_\_
-==================================
-
-.. currentmodule:: delu.data
-
-.. automethod:: IndexLoader.__iter__

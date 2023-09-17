@@ -1,6 +1,0 @@
-delu.Stream.load\_state\_dict
-=============================
-
-.. currentmodule:: delu
-
-.. automethod:: Stream.load_state_dict

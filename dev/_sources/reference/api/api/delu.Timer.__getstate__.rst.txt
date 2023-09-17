@@ -1,6 +1,0 @@
-delu.Timer.\_\_getstate\_\_
-===========================
-
-.. currentmodule:: delu
-
-.. automethod:: Timer.__getstate__

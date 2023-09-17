@@ -1,6 +1,0 @@
-delu.data.IndexLoader.\_\_len\_\_
-=================================
-
-.. currentmodule:: delu.data
-
-.. automethod:: IndexLoader.__len__

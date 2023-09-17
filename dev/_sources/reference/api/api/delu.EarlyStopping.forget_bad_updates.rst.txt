@@ -1,6 +1,0 @@
-delu.EarlyStopping.forget\_bad\_updates
-=======================================
-
-.. currentmodule:: delu
-
-.. automethod:: EarlyStopping.forget_bad_updates

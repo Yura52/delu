@@ -1,6 +1,0 @@
-delu.Timer.\_\_exit\_\_
-=======================
-
-.. currentmodule:: delu
-
-.. automethod:: Timer.__exit__

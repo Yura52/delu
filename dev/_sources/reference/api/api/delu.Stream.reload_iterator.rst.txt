@@ -1,6 +1,0 @@
-delu.Stream.reload\_iterator
-============================
-
-.. currentmodule:: delu
-
-.. automethod:: Stream.reload_iterator

@@ -1,6 +1,0 @@
-delu.Timer.reset
-================
-
-.. currentmodule:: delu
-
-.. automethod:: Timer.reset

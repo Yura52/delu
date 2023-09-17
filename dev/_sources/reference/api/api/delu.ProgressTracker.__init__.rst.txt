@@ -1,6 +1,0 @@
-delu.ProgressTracker.\_\_init\_\_
-=================================
-
-.. currentmodule:: delu
-
-.. automethod:: ProgressTracker.__init__

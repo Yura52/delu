@@ -1,6 +1,0 @@
-delu.Stream.increment\_epoch
-============================
-
-.. currentmodule:: delu
-
-.. automethod:: Stream.increment_epoch

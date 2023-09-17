@@ -1,6 +1,0 @@
-delu.Stream.set\_loader
-=======================
-
-.. currentmodule:: delu
-
-.. automethod:: Stream.set_loader

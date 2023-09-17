@@ -1,6 +1,0 @@
-delu.Timer.run
-==============
-
-.. currentmodule:: delu
-
-.. automethod:: Timer.run

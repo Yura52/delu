@@ -1,6 +1,0 @@
-﻿delu.random.seed
-================
-
-.. currentmodule:: delu.random
-
-.. autofunction:: seed

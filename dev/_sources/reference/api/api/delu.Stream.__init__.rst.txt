@@ -1,6 +1,0 @@
-delu.Stream.\_\_init\_\_
-========================
-
-.. currentmodule:: delu
-
-.. automethod:: Stream.__init__

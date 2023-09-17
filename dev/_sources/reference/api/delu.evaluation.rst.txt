@@ -1,6 +1,0 @@
-﻿delu.evaluation
-===============
-
-.. currentmodule:: delu
-
-.. autoclass:: evaluation

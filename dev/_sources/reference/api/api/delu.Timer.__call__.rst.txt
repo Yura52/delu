@@ -1,6 +1,0 @@
-delu.Timer.\_\_call\_\_
-=======================
-
-.. currentmodule:: delu
-
-.. automethod:: Timer.__call__

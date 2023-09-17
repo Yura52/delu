@@ -1,6 +1,0 @@
-delu.data.Enumerate.dataset
-===========================
-
-.. currentmodule:: delu.data
-
-.. autoproperty:: Enumerate.dataset

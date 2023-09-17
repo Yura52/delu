@@ -1,6 +1,0 @@
-﻿delu.to
-=======
-
-.. currentmodule:: delu
-
-.. autofunction:: to

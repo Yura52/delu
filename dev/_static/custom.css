@@ -1,0 +1,12 @@
+.longtable {
+    width: 100%;
+}
+
+.longtable tr td:first-child {
+    width: 35%;
+    white-space: nowrap;
+}
+
+dl.py.class dd dl.py.method {
+    margin-top: 2em;
+}

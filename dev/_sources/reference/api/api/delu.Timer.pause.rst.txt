@@ -1,6 +1,0 @@
-delu.Timer.pause
-================
-
-.. currentmodule:: delu
-
-.. automethod:: Timer.pause

@@ -1,6 +1,0 @@
-delu.Stream.epoch
-=================
-
-.. currentmodule:: delu
-
-.. autoproperty:: Stream.epoch
