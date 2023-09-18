@@ -1,10 +1,6 @@
 DeLU (Deep Learning Utilities)
 ==============================
 
-.. raw:: html
-
-  <img src="https://raw.githubusercontent.com/Yura52/delu/main/docs/images/logo.png" width="114px" style="text-align:center;display:block;">
-
 `Documentation <https://yura52.github.io/delu>`_
 
 .. __INCLUDE_0__
