@@ -42,11 +42,8 @@ autodoc_typehints = 'signature'
 autodoc_class_signature = 'separated'
 maximum_signature_line_length = 88
 
-doctest_global_setup = '''
-import numpy as np
-import torch
-import delu
-'''
+copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
+copybutton_prompt_is_regexp = True
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),

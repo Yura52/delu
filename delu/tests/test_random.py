@@ -73,5 +73,5 @@ def test_get_set_state():
             delu.random.set_state(state)
     else:
         state['torch.cuda'] = [None]
-        with raises(AssertionError):
+        with raises(RuntimeError):
             delu.random.set_state(state)

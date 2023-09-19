@@ -18,7 +18,7 @@ def _try_len(x):
 class Stream:
     """Smart wrapper for data loaders and iterables.
 
-    {DEPRECATION_MESSAGE}
+    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
 
     `Stream` simplifies managing loops, especially in typical Deep Learning scenarios.
     `Stream`:
@@ -164,8 +164,6 @@ class Stream:
         """
         Args:
             loader: any kind of iterable (DataLoader, list, iterator, generator, ...)
-        Raises:
-            AssertionError: if :code:`loader` is not an iterator and is empty
 
         Examples:
             .. testcode::
@@ -213,8 +211,6 @@ class Stream:
 
         Args:
             loader:
-        Raises:
-            AssertionError: if :code:`loader` is not an iterator and is empty.
 
         Examples:
             .. testcode::
@@ -286,8 +282,6 @@ class Stream:
 
         Returns:
             The next item.
-        Raises:
-            StopIteration: if :code:`loader` is a finite iterator and the data is over
 
         Examples:
             .. testcode::
@@ -335,10 +329,6 @@ class Stream:
             n_items: how many items to produce. If `None`, interpreted as
                 :code:`len(self.loader)`. If `float`, must be :code:`float('inf')` or
                 `math.inf`.
-        Raises:
-            AssertionError: if :code:`n_items` is a finite float or nan.
-            ValueError: if :code:`loader` is an iterator and :code:`n_items` is
-                `None`
 
         Examples:
             .. testcode::
@@ -407,8 +397,6 @@ class Stream:
 
         Returns:
             Iterator over iterators over data from `Stream.loader`.
-        Raises:
-            AssertionError: if :code:`max_epoch` is a finite float or nan.
 
         Examples:
             .. testcode::
@@ -496,9 +484,6 @@ class Stream:
         Returns:
             state
 
-        See also:
-            `Stream.load_state_dict`
-
         Examples:
             .. testcode::
 
@@ -523,9 +508,6 @@ class Stream:
             only sets some "metadata" such as epoch, iteration etc. If you want to
             load the "state of data stream", you have to load the state of corresponding
             random number generators separately.
-
-        See also:
-            `Stream.state_dict`
 
         Examples:
 

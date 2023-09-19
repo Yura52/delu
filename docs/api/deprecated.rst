@@ -1,9 +1,8 @@
-Deprecated API
-==============
+deprecated
+==========
 
-.. warning::
-   - Everything listed below is deprecated and will be removed in future releases.
-   - Use the search, `Ctrl+F` or the right sidebar to find the items you need.
+.. tip::
+    Use the right sidebar, the search widget or `Ctrl+F` to find the items you need.
 
 .. currentmodule:: delu
 
@@ -26,6 +25,7 @@ Deprecated API
 .. autofunction:: improve_reproducibility
 
 .. autoclass:: evaluation
+    :exclude-members: __init__, __new__
 
 .. currentmodule:: delu.data
 
@@ -48,4 +48,3 @@ Deprecated API
 .. autofunction:: free_memory
 
 .. autofunction:: get_gpus_info
-

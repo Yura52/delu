@@ -19,11 +19,6 @@ DeLU (Deep Learning Utilities)
    api/data
    api/nn
    api/random
-
-.. toctree::
-   :caption: Deprecated API
-   :hidden:
-
    api/deprecated
 
 ----

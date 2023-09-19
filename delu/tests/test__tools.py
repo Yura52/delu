@@ -60,8 +60,7 @@ def test_early_stopping():
 
 
 def test_timer():
-    with pytest.raises(AssertionError):
-        delu.Timer().pause()
+    delu.Timer().pause()
 
     # initial state, run
     timer = delu.Timer()

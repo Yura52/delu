@@ -3,25 +3,21 @@ import gc
 
 import torch
 
+__all__ = ['free_memory']
+
 
 def free_memory() -> None:
-    """Free GPU memory: `torch.cuda.synchronize` + `gc.collect` + `torch.cuda.empty_cache`.
+    """Free GPU memory = `torch.cuda.synchronize` + `gc.collect` + `torch.cuda.empty_cache`.
 
-    Note:
+    .. note::
         There is a small chunk of GPU-memory (occupied by drivers) that is impossible to
-        free. It is a `torch` "limitation", so the function inherits this property.
+        free. This is a property of `torch`, so this function inherits this property.
 
-    Example:
-        .. testcode::
+    **Usage**
 
-            delu.cuda.free_memory()
+    >>> delu.cuda.free_memory()
     """  # noqa: E501
-    # Step 1: finish the ongoing computations.
     if torch.cuda.is_available():
-        # torch has wrong .pyi
         torch.cuda.synchronize()  # type: ignore
-    # Step 2: collect unused objects.
     gc.collect()
-    # Step 3: free GPU-cache.
-    if torch.cuda.is_available():
-        torch.cuda.empty_cache()
+    torch.cuda.empty_cache()

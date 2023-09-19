@@ -11,27 +11,54 @@ from ._utils import deprecated
 T = TypeVar('T')
 
 
+__all__ = ['Enumerate', 'IndexDataset']
+
+
 class Enumerate(Dataset):
-    """Make dataset return both indices and items.
+    """Make a PyTorch dataset return indices in addition to items (like `enumerate`, but for datasets).
 
-    .. rubric:: Tutorial
+    **Usage**
 
-    .. testcode::
+    The original ``dataset``:
 
-        from torch.utils.data import DataLoader, TensorDataset
-        X, y = torch.randn(9, 2), torch.randn(9)
-        dataset = TensorDataset(X, y)
-        for batch_idx, batch in DataLoader(delu.data.Enumerate(dataset), batch_size=3):
-            print(batch_idx)
+    >>> from torch.utils.data import DataLoader, TensorDataset
+    >>> X = torch.arange(10).float().view(5, 2)
+    >>> Y = -10 * torch.arange(5)
+    >>> dataset = TensorDataset(X, Y)
 
-    .. testoutput::
+    The enumerated dataset returns indices in addition to items:
 
-        tensor([0, 1, 2])
-        tensor([3, 4, 5])
-        tensor([6, 7, 8])
-    """
+    >>> for x_batch, y_batch in DataLoader(
+    ...     dataset, batch_size=2
+    ... ):
+    ...     ...
+    ...
+    >>> for batch_idx, (x_batch, y_batch) in DataLoader(
+    ...     delu.data.Enumerate(dataset), batch_size=2
+    ... ):
+    ...     print(batch_idx)
+    tensor([0, 1])
+    tensor([2, 3])
+    tensor([4])
 
-    def __init__(self, dataset: Dataset) -> None:
+    Additional technical examples:
+
+    >>> x, y = dataset[2]
+    >>> x, y
+    (tensor([4., 5.]), tensor(-20))
+    >>> edataset = delu.data.Enumerate(dataset)
+    >>> # The original dataset remains accessible.
+    >>> edataset.dataset is dataset
+    True
+    >>> # The size is the same.
+    >>> len(dataset) == len(edataset)
+    True
+    >>> i, (x, y) = edataset[2]
+    >>> i, (x, y)
+    (2, (tensor([4., 5.]), tensor(-20)))
+    """  # noqa: E501
+
+    def __init__(self, dataset: Dataset, /) -> None:
         """
         Args:
             dataset: the original dataset to wrap.
@@ -61,40 +88,42 @@ class Enumerate(Dataset):
 class IndexDataset(Dataset):
     """A trivial dataset that yields indices back to user (useful for DistributedDataParallel (DDP)).
 
-    This simple dataset is useful when:
+    This simple dataset is useful when *both* conditions are true:
 
-    1. you need a dataloader that yields batches of *indices* instead of *objects*
-    2. AND you work in the `Distributed Data Parallel <https://pytorch.org/tutorials/intermediate/ddp_tutorial.html>`_ setup
+    1. A dataloader that yields batches of *indices* instead of *objects* is needed
+    2. The `Distributed Data Parallel
+       <https://pytorch.org/tutorials/intermediate/ddp_tutorial.html>`_ setup is used.
 
-    Note:
+    .. note::
         If only the first condition is true, consider using the combinatation of
         `torch.randperm` and `torch.Tensor.split` instead.
 
-    Example::
+    **Usage**
 
-        from torch.utils.data import DataLoader
-        from torch.utils.data.distributed import DistributedSampler
-
-        train_size = 123456
-        batch_size = 123
-        dataset = delu.data.IndexDataset(dataset_size)
-        for i in range(train_size):
-            assert dataset[i] == i
-        dataloader = DataLoader(
-            dataset,
-            batch_size,
-            sampler=DistributedSampler(dataset)
-        )
-
-        for epoch in range(n_epochs):
-            for batch_indices in dataloader:
-                ...
+    >>> # doctest: +SKIP
+    >>> from torch.utils.data import DataLoader
+    >>> from torch.utils.data.distributed import DistributedSampler
+    >>>
+    >>> train_size = 1000
+    >>> batch_size = 64
+    >>> dataset = delu.data.IndexDataset(train_size)
+    >>> # The dataset is really *that* trivial:
+    >>> for i in range(train_size):
+    ...     assert dataset[i] == i
+    >>> dataloader = DataLoader(
+    ...     dataset,
+    ...     batch_size,
+    ...     sampler=DistributedSampler(dataset),
+    ... )
+    >>> for epoch in range(n_epochs):
+    ...     for batch_indices in dataloader:
+    ...         ...
     """  # noqa: E501
 
     def __init__(self, size: int) -> None:
         """
         Args:
-            size: the dataset size
+            size: the dataset size.
         """
         if size < 1:
             raise ValueError('size must be positive')
@@ -104,23 +133,26 @@ class IndexDataset(Dataset):
         """Get the dataset size."""
         return self.size
 
-    def __getitem__(self, i: int) -> int:
+    def __getitem__(self, index: int) -> int:
         """Get the same index back.
 
         The index must be an integer from ``range(len(self))``.
         """
-        if i < 0 or i >= self.size:
+        # Some datasets support non-integer indices.
+        if not isinstance(index, int):
+            raise ValueError('index must be an integer')
+        if index < 0 or index >= self.size:
             raise IndexError(
-                f"index {i} is out of range (dataset's size is {self.size})"
+                f"The index {index} is out of range (the dataset size is {self.size})"
             )
-        return i
+        return index
 
 
 @deprecated('')
 class FnDataset(Dataset):
     """Create simple PyTorch datasets without classes and inheritance.
 
-    {DEPRECATION_MESSAGE}
+    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
 
     `FnDataset` allows avoiding implementing `~torch.utils.data.Dataset` classes in
     simple cases.
@@ -266,8 +298,6 @@ class FnDataset(Dataset):
             index
         Returns:
             value
-        Raises:
-            IndexError: if ``index >= len(self)``
         """
         if isinstance(self._args, list):
             x = self._args[index]
@@ -283,7 +313,7 @@ class FnDataset(Dataset):
 def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
     """Make `~torch.utils.data.DataLoader` over indices instead of data.
 
-    {DEPRECATION_MESSAGE}
+    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
 
     This is just a shortcut for
     ``torch.utils.data.DataLoader(delu.data.IndexDataset(...), ...)``.
@@ -292,8 +322,6 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
         size: the dataset size
         *args: positional arguments for `torch.utils.data.DataLoader`
         **kwargs: keyword arguments for `torch.utils.data.DataLoader`
-    Raises:
-        ValueError: for invalid inputs
     Examples:
 
         Usage for training:
@@ -339,8 +367,6 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
             tensor([0, 1, 2])
             tensor([3, 4, 5])
             tensor([6, 7, 8])
-    See also:
-        `delu.iter_batches`
     """
     return DataLoader(IndexDataset(size), *args, **kwargs)
 
@@ -349,7 +375,7 @@ def make_index_dataloader(size: int, *args, **kwargs) -> DataLoader:
 class IndexLoader:
     """Like `~torch.utils.data.DataLoader`, but over indices instead of data.
 
-    {DEPRECATION_MESSAGE}
+    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
 
     **The shuffling logic is delegated to the native PyTorch DataLoader**, i.e. no
     custom logic is performed under the hood. The data loader which actually generates
@@ -394,9 +420,6 @@ class IndexLoader:
             tensor([0, 1, 2])
             tensor([3, 4, 5])
             tensor([6, 7, 8])
-
-    See also:
-        `delu.iter_batches`
     """
 
     def __init__(
@@ -412,8 +435,6 @@ class IndexLoader:
                 devices takes non-negligible time (which can happen in the case of
                 simple and fast models like MLPs).
             kwargs: keyword arguments for `torch.utils.data.DataLoader`
-        Raises:
-            AssertionError: if size is not positive
         """
         assert size > 0
         self._batch_size = args[0] if args else kwargs.get('batch_size', 1)
@@ -443,7 +464,7 @@ class IndexLoader:
 def collate(iterable: Iterable) -> Any:
     """Almost an alias for :code:`torch.utils.data.dataloader.default_collate`.
 
-    {DEPRECATION_MESSAGE}
+    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
 
     Namely, the input is allowed to be any kind of iterable, not only a list. Firstly,
     if it is not a list, it is transformed to a list. Then, the list is passed to the

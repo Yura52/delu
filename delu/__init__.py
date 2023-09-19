@@ -9,19 +9,19 @@ from ._utilities import evaluation, improve_reproducibility
 from .data import collate
 
 __all__ = [
+    # Modules.
     'cuda',
     'data',
     'nn',
     'random',
-    #
-    'EarlyStopping',
-    'Timer',
+    # Functions and classes (the order is optimized for pdoc).
+    'to',
     'cat',
     'iter_batches',
-    'to',
-    # DEPRECATED.
+    'EarlyStopping',
+    'Timer',
+    # Deprecated.
     'hardware',
-    #
     'collate',
     'concat',
     'evaluation',

@@ -10,47 +10,79 @@ T = TypeVar('T')
 K = TypeVar('K')
 
 
-def to(data: T, *args, **kwargs) -> T:
+def to(data: T, /, *args, **kwargs) -> T:
     """Like `torch.Tensor.to`, but for collections of tensors.
 
-    The function allows changing devices and data types for (nested) collections of
-    tensors similarly to how `torch.Tensor.to` does this for a single tensor.
+    While `torch.Tensor.to` changes the device and/or data type of a tensor,
+    `delu.to` changes the device and/or data type of a *collection* of tensors
+    (tuples, named tuples, lists, dictionaries, dataclasses
+    and nested combinations thereof).
 
-    Note:
+    **Usage**
+
+    >>> # In practice, the device type can be 'cuda' or anything else.
+    >>> # Also, `delu.to` can be used to change data type.
+    >>> device = torch.device('cpu')
+    >>> batch_size = 64
+    >>> x = torch.randn(batch_size, 10)
+    >>> y = torch.randn(batch_size)
+    >>> z = torch.randn(batch_size, 20, 30)
+
+    `delu.to` can be applied to tuples:
+
+    >>> batch = (x, y, z)
+    >>> batch = delu.to(batch, device)
+
+    `delu.to` can be applied to lists:
+
+    >>> batch = [x, y, z]
+    >>> batch = delu.to(batch, device)
+
+    `delu.to` can be applied to dictionaries:
+
+    >>> batch = {'x': x, 'y': y, 'z': z}
+    >>> batch = delu.to(batch, device)
+
+    `delu.to` can be applied to named tuples:
+
+    >>> from typing import NamedTuple
+    >>> class Data(NamedTuple):
+    ...     x: torch.Tensor
+    ...     y: torch.Tensor
+    ...     z: torch.Tensor
+    >>> batch = Data(x, y, z)
+    >>> batch = delu.to(batch, device)
+    >>> isinstance(batch, Data)
+    True
+
+    `delu.to` can be applied to dataclasses:
+
+    >>> from dataclasses import dataclass
+    >>> @dataclass
+    ... class Data:
+    ...     x: torch.Tensor
+    ...     y: torch.Tensor
+    ...     z: torch.Tensor
+    >>> batch = Data(x, y, z)
+    >>> batch = delu.to(batch, device)
+    >>> isinstance(batch, Data)
+    True
+
+    `delu.to` can be applied to nested collections of tensors:
+
+    >>> batch = ([x], {'hello': {'world': y}}, ((z,),))
+    >>> batch = delu.to(batch, device)
+
+    .. note::
         Technically, the function simply traverses the input and applies
-        `torch.Tensor.to` to tensors (non-tensor values are not allowed).
+        `torch.Tensor.to` to tensors.
 
     Args:
-        data: the tensor or the (nested) collection of tensors. Allowed collections
-            include: (named)tuples, lists, dictionaries and dataclasses.
-            For dataclasses, all their fields must be tensors.
+        data: the collection of tensors. Nested non-tensor values are not allowed.
         args: the positional arguments for `torch.Tensor.to`
-        kwargs: the key-word arguments for `torch.Tensor.to`
+        kwargs: the keyword arguments for `torch.Tensor.to`
     Returns:
-        transformed data.
-
-    Examples:
-        .. testcode::
-
-            # in practice, this can be 'cuda' or any other device
-            device = torch.device('cpu')
-            tensor = torch.tensor
-
-            x = tensor(0)
-            x = delu.to(x, dtype=torch.float, device=device)
-
-            batch = {
-                'x': tensor([0.0, 1.0]),
-                'y': tensor([0, 1]),
-            }
-            batch = delu.to(batch, device)
-
-            x = [
-                tensor(0.0),
-                {'a': tensor(1.0), 'b': tensor(2.0)},
-                (tensor(3.0), tensor(4.0))
-            ]
-            x = delu.to(x, torch.half)
+        the transformed data.
     """
 
     def TO_(x):
@@ -73,111 +105,106 @@ def to(data: T, *args, **kwargs) -> T:
         )
 
 
-def cat(data: List[T], dim: int = 0) -> T:
+def cat(data: List[T], /, dim: int = 0) -> T:
     """Like `torch.cat`, but for collections of tensors.
 
-    A typical use case is concatenating a model/function's outputs for batches
-    into a single output for the whole dataset::
+    While `torch.cat` concatenates a sequence of tensors,
+    `delu.to` concatenates a sequence of *collections* of tensors
+    (tuples, named tuples, dictionaries, dataclasses and nested combinations thereof;
+    **nested lists are not allowed**).
 
-        class Model(nn.Module):
-            def forward(self, ...) -> tuple[Tensor, Tensor]:
-                ...
-                return y_pred, embeddings
+    **Usage**
 
-        # Concatenate a sequence of tuples (batch_y_pred, batch_embeddings) into a single tuple.
-        y_pred, embeddings = delu.cat([model(batch) for batch in dataloader])
+    Common setup:
 
-    The function operates recursively, so nested structures are supported as well
-    (e.g. ``tuple[Tensor, dict[str, tuple[Tensor, Tensor]]]``). See other examples below.
+    >>> # First batch.
+    >>> x1 = torch.randn(64, 10)
+    >>> y1 = torch.randn(64)
+    >>> # Second batch.
+    >>> x2 = torch.randn(64, 10)
+    >>> y2 = torch.randn(64)
+    >>> # The last (incomplete) batch.
+    >>> x3 = torch.randn(7, 10)
+    >>> y3 = torch.randn(7)
+    >>> # Total size.
+    >>> len(x1) + len(x2) + len(x3)
+    135
 
-    Note:
-        Technically, roughly speaking, the function "transposes" the list of
+    `delu.cat` can be applied to tuples:
+
+    >>> batches = [(x1, y1), (x2, y2), (x3, y3)]
+    >>> X, Y = delu.cat(batches)
+    >>> print(len(X), len(Y))
+    135 135
+
+    `delu.cat` can be applied to dictionaries:
+
+    >>> batches = [
+    ...     {'x': x1, 'y': y1},
+    ...     {'x': x2, 'y': y2},
+    ...     {'x': x3, 'y': y3},
+    ... ]
+    >>> result = delu.cat(batches)
+    >>> print(isinstance(result, dict), len(result['x']), len(result['y']))
+    True 135 135
+
+    `delu.cat` can be applied to named tuples:
+
+    >>> from typing import NamedTuple
+    >>> class Data(NamedTuple):
+    ...     x: torch.Tensor
+    ...     y: torch.Tensor
+    >>> batches = [Data(x1, y1), Data(x2, y2), Data(x3, y3)]
+    >>> result = delu.cat(batches)
+    >>> print(isinstance(result, Data), len(result.x), len(result.y))
+    True 135 135
+
+    `delu.cat` can be applied to dataclasses:
+
+    >>> from dataclasses import dataclass
+    >>> @dataclass
+    ... class Data:
+    ...     x: torch.Tensor
+    ...     y: torch.Tensor
+    >>> batches = [Data(x1, y1), Data(x2, y2), Data(x3, y3)]
+    >>> result = delu.cat(batches)
+    >>> print(isinstance(result, Data), len(result.x), len(result.y))
+    True 135 135
+
+    `delu.cat` can be applied to nested collections:
+
+    >>> batches = [
+    ...     (x1, {'a': {'b': y1}}),
+    ...     (x2, {'a': {'b': y2}}),
+    ...     (x3, {'a': {'b': y3}}),
+    ... ]
+    >>> X, Y_nested = delu.cat(batches)
+    >>> print(len(X), len(Y_nested['a']['b']))
+    135 135
+
+    **`delu.cat` cannot be applied to lists:**
+
+    >>> # This does not work. Instead, use tuples.
+    >>> # batches = [[x1, y1], [x2, y2], [x3, y3]]
+    >>> # delu.cat(batches)  # Error
+
+    .. note::
+        Technically, the function "transposes" the list of
         collections to a collection of lists and applies `torch.cat` to those lists.
 
     Args:
-        data: the list of (nested) (named)tuples/dictionaries/dataclasses of tensors.
-            All items of the list must be of the same type and have the same
-            structure (tuples must be of the same length, dictionaries must have the
-            same keys, dataclasses must have the same fields, etc.). All the "leaf"
-            values must be of the type `torch.Tensor`.
+        data: the list of collections of tensors.
+            All items of the list must be of the same type, structure and layout, only
+            the ``dim`` dimension can vary (same as for `torch.cat`).
+            All the "leaf" values must be of the type `torch.Tensor`.
         dim: the dimension over which the tensors are concatenated.
     Returns:
-        Concatenated items of the list.
-    Raises:
-        ValueError: if ``data`` is empty or contains unsupported collections.
-
-    See also:
-        `delu.iter_batches`
-
-    Examples:
-        Below, only one-dimensional data and dim=0 are considered for simplicity.
-
-        .. testcode::
-
-            tensor = torch.tensor
-
-            batches = [
-                # (batch_x, batch_y)
-                (tensor([0.0, 1.0]), tensor([[0], [1]])),
-                (tensor([2.0, 3.0]), tensor([[2], [3]])),
-            ]
-            # result = (x, y)
-            result = delu.cat(batches)
-            assert isinstance(result, tuple) and len(result) == 2
-            assert torch.equal(result[0], tensor([0.0, 1.0, 2.0, 3.0]))
-            assert torch.equal(result[1], tensor([[0], [1], [2], [3]]))
-
-            batches = [
-                # {'x': batch_x, 'y': batch_y}
-                {'x': tensor([0.0, 1.0]), 'y': tensor([[0], [1]])},
-                {'x': tensor([2.0, 3.0]), 'y': tensor([[2], [3]])},
-            ]
-            result = delu.cat(batches)
-            assert isinstance(result, dict) and set(result) == {'x', 'y'}
-            assert torch.equal(result['x'], tensor([0.0, 1.0, 2.0, 3.0]))
-            assert torch.equal(result['y'], tensor([[0], [1], [2], [3]]))
-
-            from dataclasses import dataclass
-            @dataclass
-            class Data:
-                # all fields must be tensors
-                x: torch.Tensor
-                y: torch.Tensor
-
-            batches = [
-                Data(tensor([0.0, 1.0]), tensor([[0], [1]])),
-                Data(tensor([2.0, 3.0]), tensor([[2], [3]])),
-            ]
-            result = delu.cat(batches)
-            assert isinstance(result, Data)
-            assert torch.equal(result.x, tensor([0.0, 1.0, 2.0, 3.0]))
-            assert torch.equal(result.y, tensor([[0], [1], [2], [3]]))
-
-            batches = [
-                {
-                    'x': tensor([0.0, 1.0]),
-                    'y': (tensor([[0], [1]]), tensor([[10], [20]]))
-                },
-                {
-                    'x': tensor([2.0, 3.0]),
-                    'y': (tensor([[2], [3]]), tensor([[30], [40]]))
-                },
-            ]
-            result = delu.cat(batches)
-            assert isinstance(result, dict) and set(result) == {'x', 'y'}
-            assert torch.equal(result['x'], tensor([0.0, 1.0, 2.0, 3.0]))
-            assert torch.equal(result['y'][0], tensor([[0], [1], [2], [3]]))
-            assert torch.equal(result['y'][1], tensor([[10], [20], [30], [40]]))
-
-            x = tensor([0.0, 1.0, 2.0, 3.0, 4.0])
-            y = tensor([[0], [10], [20], [30], [40]])
-            batch_size = 2
-            ab = delu.cat(list(delu.iter_batches((x, y), batch_size)))
-            assert torch.equal(ab[0], x)
-            assert torch.equal(ab[1], y)
-    """  # noqa: E501
+        The concatenated items of the list.
+    """
+    if not isinstance(data, list):
+        raise ValueError('The input must be a list')
     if not data:
-        raise ValueError('data must be non-empty.')
+        raise ValueError('The input must be non-empty')
 
     first = data[0]
     if isinstance(first, torch.Tensor):
@@ -202,91 +229,118 @@ def cat(data: List[T], dim: int = 0) -> T:
 
 def iter_batches(
     data: T,
+    /,
     batch_size: int,
     *,
     shuffle: bool = False,
     generator: Optional[torch.Generator] = None,
     drop_last: bool = False,
 ) -> Iterator[T]:
-    """Iterate over tensor or collection of tensors by (random) batches.
+    """Iterate over a tensor or a collection of tensors by (random) batches.
 
-    The function makes batches over the first dimension of the tensors in ``data``
-    and returns an iterator over collections of the same type as the input.
-    A simple example (see below for more examples):
+    The function makes batches along the first dimension of the tensors in ``data``.
 
-        .. testcode::
+    .. note::
+        `delu.iter_batches` is significantly faster for in-memory tensors
+        than `torch.utils.data.DataLoader`, because, when building batches,
+        it uses batched indexing instead of one-by-one indexing.
 
-            n_objects = 100
-            n_features = 4
-            X = torch.randn(n_objects, n_features)
-            y = torch.randn(n_objects)
-            for batch_x, batch_y in delu.iter_batches(
-                (X, y), batch_size=12, shuffle=True
-            ):
-                ...  # train(batch_x, batch_y)
+    **Usage**
+
+    >>> X = torch.randn(12, 32)
+    >>> Y = torch.randn(12)
+
+    `delu.iter_batches` can be applied to tensors:
+
+    >>> for x in delu.iter_batches(X, batch_size=5):
+    ...     print(len(x))
+    5
+    5
+    2
+
+    `delu.iter_batches` can be applied to tuples:
+
+    >>> # shuffle=True can be useful for training.
+    >>> dataset = (X, Y)
+    >>> for x, y in delu.iter_batches(dataset, batch_size=5, shuffle=True):
+    ...     print(len(x), len(y))
+    5 5
+    5 5
+    2 2
+    >>> # Drop the last incomplete batch.
+    >>> for x, y in delu.iter_batches(
+    ...     dataset, batch_size=5, shuffle=True, drop_last=True
+    ... ):
+    ...     print(len(x), len(y))
+    5 5
+    5 5
+    >>> # The last batch is complete, so drop_last=True does not have any effect.
+    >>> batches = []
+    >>> for x, y in delu.iter_batches(dataset, batch_size=6, drop_last=True):
+    ...     print(len(x), len(y))
+    ...     batches.append((x, y))
+    6 6
+    6 6
+
+    By default, ``shuffle`` is set to `False`, i.e. the order of items is preserved:
+
+    >>> X2, Y2 = delu.cat(list(delu.iter_batches((X, Y), batch_size=5)))
+    >>> print((X == X2).all().item(), (Y == Y2).all().item())
+    True True
+
+    `delu.iter_batches` can be applied to dictionaries:
+
+    >>> dataset = {'x': X, 'y': Y}
+    >>> for batch in delu.iter_batches(dataset, batch_size=5, shuffle=True):
+    ...     print(isinstance(batch, dict), len(batch['x']), len(batch['y']))
+    True 5 5
+    True 5 5
+    True 2 2
+
+    `delu.iter_batches` can be applied to named tuples:
+
+    >>> from typing import NamedTuple
+    >>> class Data(NamedTuple):
+    ...     x: torch.Tensor
+    ...     y: torch.Tensor
+    >>> dataset = Data(X, Y)
+    >>> for batch in delu.iter_batches(dataset, batch_size=5, shuffle=True):
+    ...     # batch is an instance of
+    ...     print(isinstance(batch, Data), len(batch.x), len(batch.y))
+    True 5 5
+    True 5 5
+    True 2 2
+
+    `delu.iter_batches` can be applied to dataclasses:
+
+    >>> from dataclasses import dataclass
+    >>> @dataclass
+    ... class Data:
+    ...     x: torch.Tensor
+    ...     y: torch.Tensor
+    >>> dataset = Data(X, Y)
+    >>> for batch in delu.iter_batches(dataset, batch_size=5, shuffle=True):
+    ...     print(isinstance(batch, Data), len(batch.x), len(batch.y))
+    True 5 5
+    True 5 5
+    True 2 2
 
     Args:
-        data: the tensor or the collection ((named)tuple/dict/dataclass) of tensors.
-            If data is a collection, then the tensors must have the same first
-            dimension. If data is a dataclass, then all its fields must be tensors.
-        batch_size: the batch size. If ``drop_last`` is False, then the last batch can
-            be smaller than ``batch_size``.
+        data: the tensor or the collection of tensors.
+            If data is a collection, then the tensors must be of the same size
+            along the first dimension.
+        batch_size: the batch size. If ``drop_last`` is False,
+            then the last batch can be smaller than ``batch_size``.
         shuffle: if True, iterate over random batches (without replacement),
             not sequentially.
-        generator: the argument for `torch.randperm` when ``shuffle`` is True.
-        drop_last: same as the ``drop_last`` argument for `torch.utils.data.DataLoader`.
-            When True and the last batch is smaller then ``batch_size``, then this last
-            batch is not returned.
+        generator: when ``shuffle`` is True, passing ``generator`` makes the function
+            reproducible.
+        drop_last: when ``True`` and the last batch is smaller then ``batch_size``,
+            then this last batch is not returned
+            (in other words,
+            same as the ``drop_last`` argument for `torch.utils.data.DataLoader`).
     Returns:
-        Iterator over batches.
-    Raises:
-        ValueError: if the data is empty.
-
-    Note:
-        The function lazily indexes to the provided input with batches of indices.
-        This works faster than iterating over the tensors in ``data`` with
-        `torch.utils.data.DataLoader`.
-
-    See also:
-        - `delu.cat`
-
-    Examples:
-        .. code-block::
-
-            for epoch in range(n_epochs):
-                for batch in delu.iter_batches(data, batch_size, shuffle=True)):
-                    ...
-
-        .. testcode::
-
-            a = torch.tensor([0.0, 1.0, 2.0, 3.0, 4.0])
-            b = torch.tensor([[0], [10], [20], [30], [40]])
-            batch_size = 2
-
-            for batch in delu.iter_batches(a, batch_size):
-                assert isinstance(batch, torch.Tensor)
-            for batch in delu.iter_batches((a, b), batch_size):
-                assert isinstance(batch, tuple) and len(batch) == 2
-            for batch in delu.iter_batches({'a': a, 'b': b}, batch_size):
-                assert isinstance(batch, dict) and set(batch) == {'a', 'b'}
-
-            from dataclasses import dataclass
-            @dataclass
-            class Data:
-                a: torch.Tensor
-                b: torch.Tensor
-
-            for batch in delu.iter_batches(Data(a, b), batch_size):
-                assert isinstance(batch, Data)
-
-            ab = delu.cat(list(delu.iter_batches((a, b), batch_size)))
-            assert torch.equal(ab[0], a)
-            assert torch.equal(ab[1], b)
-
-            n_batches = len(list(delu.iter_batches((a, b), batch_size)))
-            assert n_batches == 3
-            n_batches = len(list(delu.iter_batches((a, b), batch_size, drop_last=True)))
-            assert n_batches == 2
+        the iterator over batches.
     """
     if not shuffle and generator is not None:
         raise ValueError('When shuffle is False, generator must be None.')
@@ -342,7 +396,9 @@ def iter_batches(
         yield get_batch(idx)  # type: ignore
 
 
-@deprecated('Instead, use `delu.cat`')
+@deprecated('Instead, use `delu.cat`.')
 def concat(*args, **kwargs):
-    """{DEPRECATION_MESSAGE}"""
+    """
+    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
+    """
     return cat(*args, **kwargs)

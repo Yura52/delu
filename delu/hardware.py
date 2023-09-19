@@ -24,7 +24,9 @@ def _to_str(x):
 
 @deprecated('Instead, use `delu.cuda.free_memory`.')
 def free_memory(*args, **kwargs) -> None:
-    """{DEPRECATION_MESSAGE}"""
+    """
+    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
+    """
     return free_memory_original(*args, **kwargs)
 
 
@@ -32,16 +34,13 @@ def free_memory(*args, **kwargs) -> None:
 def get_gpus_info() -> Dict[str, Any]:
     """Get information about GPU devices: driver version, memory, utilization etc.
 
-    {DEPRECATION_MESSAGE}
+    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
 
     The example below shows what kind of information is returned as the result. All
     figures about memory are given in bytes.
 
     Returns:
         Information about GPU devices.
-    Raises:
-        RuntimeError: if necessary cuda-related libraries are not found. Usually, it
-            means that the function is run on a machine without GPU.
 
     Warning:
         The 'devices' value contains information about *all* gpus regardless of the

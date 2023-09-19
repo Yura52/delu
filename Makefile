@@ -1,4 +1,4 @@
-.PHONY: default clean coverage _docs docs dtest spelling format lint pages pre-commit test typecheck
+.PHONY: default clean coverage _docs docs doctest spelling format lint pages pre-commit test typecheck
 
 PYTEST_CMD = pytest delu
 VIEW_HTML_CMD = open
@@ -39,7 +39,7 @@ pages:
 	git add -A
 
 doctest:
-	make -C $(DOCS_DIR) doctest
+	xdoctest delu --global-exec "import torch; import torch.nn as nn; import delu"
 
 spelling:
 	if [[ $(shell uname -m) != "arm64" ]]; then\

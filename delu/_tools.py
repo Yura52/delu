@@ -7,49 +7,78 @@ from ._utils import deprecated
 
 
 class EarlyStopping:
-    """Performs early stopping after N consequtive bad (non-improving) updates.
+    """Performs early stopping after N consequtive non-improving updates.
 
-    Example of stopping the training after validation loss not improving for
-    ten consequtive epochs::
+    **Usage**
 
-        early_stopping = delu.EarlyStopping(10, mode='min')
-        while epoch < n_epochs and not early_stopping.should_stop():
-            train_epoch()
-            metrics = computer_metrics()
-            early_stopping.update(metrics['val']['loss'])
+    Preventing overfitting by stopping the training
+    when the validation metric stops improving:
 
-    where the method `EarlyStopping.update` is used to submit a new score,
-    and the method `EarlyStopping.should_stop` returns `True` if the number
-    of the latest consequtive bad updates reaches ``patience``
-    (10 in the above example).
-    Regardless of the number of the latest consequtive bad updates, if the next
-    update is good, then the number of consequtive bad updates is reset to zero.
+    >>> def evaluate_model() -> float:
+    ...     # A dummy example.
+    ...     return torch.rand(1).item()
+    ...
+    >>> # If the validation score does not increase (mode='max')
+    >>> # for 10 (patience=10) epochs in a row, stop the training.
+    >>> early_stopping = delu.EarlyStopping(patience=10, mode='max')
+    >>> for epoch in range(1000):
+    ...     # Training.
+    ...     ...
+    ...     # Evaluation
+    ...     validation_score = evaluate_model()
+    ...     ...
+    ...     # Submit the new score.
+    ...     early_stopping.update(validation_score)
+    ...     # Check whether the training should stop.
+    ...     if early_stopping.should_stop():
+    ...         break
 
-    Other examples:
-        .. testcode::
+    Additional technical examples:
 
-            early_stopping = delu.EarlyStopping(2, mode='max')
-            early_stopping.update(1.0)  # the number of bad updates: 0
-            assert not early_stopping.should_stop()
-            early_stopping.update(0.0)  # the number of bad updates: 1
-            assert not early_stopping.should_stop()
-            early_stopping.update(2.0)  # the number of bad updates: 0
-            early_stopping.update(0.0)  # the number of bad updates: 1
-            early_stopping.update(0.0)  # the number of bad updates: 2
-            assert early_stopping.should_stop()
+    >>> early_stopping = delu.EarlyStopping(2, mode='max')
+    >>> # Format: (<the best seen score>, <the number of consequtive fails>)
+    >>> early_stopping.update(1.0)  # (1.0, 0)
+    >>> early_stopping.should_stop()
+    False
+    >>> early_stopping.update(0.0)  # (1.0, 1)
+    >>> early_stopping.should_stop()
+    False
+    >>> early_stopping.update(2.0)  # (2.0, 0)
+    >>> early_stopping.update(1.0)  # (2.0, 1)
+    >>> early_stopping.update(2.0)  # (2.0, 2)
+    >>> early_stopping.should_stop()
+    True
 
-            early_stopping.forget_bad_updates()  # the number of bad updates: 0
-            assert not early_stopping.should_stop()
-            early_stopping.update(0.0)  # the number of bad updates: 1
-            early_stopping.update(0.0)  # the number of bad updates: 2
-            assert early_stopping.should_stop()
+    Resetting the number of consequtive non-improving updates
+    without resetting the best seen score:
 
-            early_stopping.reset()
-            assert not early_stopping.should_stop()
-            early_stopping.update(0.0)  # the number of bad updates: 0
-            early_stopping.update(0.0)  # the number of bad updates: 1
-            early_stopping.update(0.0)  # the number of bad updates: 2
-            assert early_stopping.should_stop()
+    >>> early_stopping.forget_bad_updates()  # (2.0, 0)
+    >>> early_stopping.should_stop()
+    False
+    >>> early_stopping.update(0.0)  # (2.0, 1)
+    >>> early_stopping.update(0.0)  # (2.0, 2)
+    >>> early_stopping.should_stop()
+    True
+
+    The next successfull update resets the number of consequtive fails:
+
+    >>> early_stopping.update(0.0)  # (2.0, 3)
+    >>> early_stopping.should_stop()
+    True
+    >>> early_stopping.update(3.0)  # (3.0, 0)
+    >>> early_stopping.should_stop()
+    False
+
+    It is possible to completely reset the instance:
+
+    >>> early_stopping.reset()  # (-inf, 0)
+    >>> early_stopping.should_stop()
+    False
+    >>> early_stopping.update(-10.0)   # (-10.0, 0)
+    >>> early_stopping.update(-100.0)  # (-10.0, 1)
+    >>> early_stopping.update(-10.0)   # (-10.0, 2)
+    >>> early_stopping.should_stop()
+    True
     """
 
     def __init__(
@@ -64,17 +93,10 @@ class EarlyStopping:
                 value". For "max", it is the opposite.
             min_delta: a new value must differ from the current best value by more
                 than ``min_delta`` to be considered as an improvement.
-        Raises:
-            ValueError: in case of invalid arguments.
-
-        Examples:
-            .. testcode::
-
-                early_stopping = delu.EarlyStopping(10, mode='min')
         """
         if patience < 1:
             raise ValueError(
-                f'patience must be a positive number (the provided value: {patience}).'
+                f'patience must be a positive integer (the provided value: {patience}).'
             )
         if mode not in ('min', 'max'):
             raise ValueError(
@@ -92,58 +114,19 @@ class EarlyStopping:
         self._n_consequtive_bad_updates = 0
 
     def reset(self) -> None:
-        """Reset everything.
-
-        Reset both the counter of consecutive bad updates and the best seen value.
-        To reset only the counter, use `EarlyStopping.forget_bad_updates`.
-
-        See also:
-            `EarlyStopping.forget_bad_updates`
-
-        Examples::
-
-            early_stopping = delu.EarlyStopping(1, mode='max')
-            early_stopping.update(100.0)
-            early_stopping.update(0.0)
-            assert early_stopping.should_stop()
-
-            early_stopping.reset()
-            # counter is reset:
-            assert not early_stopping.should_stop()
-            early_stopping.update(0.0)
-            # the previous best value 100.0 is also reset, so `0.0` is now a good update
-            assert not early_stopping.should_stop()
-        """
+        """Reset everything."""
         self._best_value = None
         self._n_consequtive_bad_updates = 0
 
     def forget_bad_updates(self) -> None:
-        """Reset the counter of consecutive bad updates to zero.
+        """Reset the number of consecutive non-improving updates to zero.
 
-        See examples in `EarlyStopping`.
-
-        Note that this method does NOT reset the best current value. To completely reset
-        the early stopping instance, use `EarlyStopping.reset`.
-
-        See also:
-            `EarlyStopping.reset`
-
-        Examples:
-            .. testcode::
-
-                early_stopping = delu.EarlyStopping(2, mode='max')
-                early_stopping.update(999.0)  # the number of bad updates: 0
-                early_stopping.update(0.0)  # the number of bad updates: 1
-                early_stopping.forget_bad_updates()  # the number of bad updates: 0
-                early_stopping.update(0.0)  # the number of bad updates: 1
-                assert not early_stopping.should_stop()
-                early_stopping.update(0.0)  # the number of bad updates: 2
-                assert early_stopping.should_stop()
+        Note that this method does NOT reset the best seen score.
         """
         self._n_consequtive_bad_updates = 0
 
     def should_stop(self) -> bool:
-        """Check whether early stopping condition is activated.
+        """Check whether the early stopping condition is activated.
 
         See examples in `EarlyStopping`.
 
@@ -155,8 +138,6 @@ class EarlyStopping:
 
     def update(self, value: float) -> None:
         """Submit a new value.
-
-        See examples in `EarlyStopping`.
 
         Args:
             value: the new value.
@@ -179,69 +160,117 @@ class Timer:
     """A simple pickle-friendly timer.
 
     - `Timer` measures time, can be paused, resumed and used as a context manager.
-    - `Timer` is pickle-friendly and can be a part of a checkpoint.
+    - `Timer` **is pickle-friendly and can saved to / loaded from a checkpoint.**
     - `Timer` can report the elapsed time as a (customizable) human-readable string.
 
-    Note:
-        Measurements are performed with `time.perf_counter`.
+    .. note::
+        Time measurements are performed with `time.perf_counter`.
 
-    .. rubric:: Tutorial
+    **Usage**
 
-    .. testcode::
+    Creating and running a timer:
 
-        import time
+    >>> timer = delu.Timer()
+    >>> timer.run()
 
-        timer = delu.Timer()
-        timer.run()  # run the timer
-        time.sleep(0.01)
-        assert timer() > 0.0  # get the elapsed time
+    Call the timer to get the elapsed time. The elapsed time is
+    the time passed since the first ``.run()`` call up to now, minus pauses.
 
-        # measure time between two events
-        start = timer()
-        time.sleep(0.01)
-        end = timer()
-        duration = end - start
+    >>> # elapsed = <now> - <time of the first .run()> - <total pause duration>
+    >>> import time
+    >>> def job():
+    ...     time.sleep(0.01)
+    ...
+    >>> timer = delu.Timer()
+    >>> timer.run()
+    >>> job()
+    >>> # Check that some time has passed.
+    >>> timer() > 0.0
+    True
 
-        timer.pause()
-        elapsed = timer()
-        time.sleep(0.01)
-        assert timer() == elapsed  # time didn't change because the timer is on pause
+    A timer can be paused:
 
-        timer.run()  # resume
-        time.sleep(0.01)
-        assert timer() > elapsed
+    >>> timer.pause()
+    >>> elapsed = timer()
+    >>> job()
+    >>> # The elapsed time has not changed,
+    >>> # because the timer is on pause.
+    >>> timer() == elapsed
+    True
+    >>> # Resume the timer.
+    >>> timer.run()
+    >>> job()
+    >>> timer() > elapsed
+    True
 
-        timer.reset()
-        assert timer() == 0.0
+    Measuring time between two events:
 
-        with delu.Timer() as timer:
-            time.sleep(0.01)
-        # timer is on pause and timer() returns the time elapsed within the context
+    >>> start = timer()
+    >>> job()
+    >>> end = timer()
+    >>> duration = end - start
 
-    `Timer` can be printed and formatted in a human-readable manner::
+    Measuring time of a code block:
 
-        timer = delu.Timer()
-        timer.run()
-        <let's assume that exactly 3661.0 seconds have passed>
-        print('Time elapsed:', timer)  # prints "Time elapsed: 1:01:01"
-        assert str(timer) == f'{timer}' == '1:01:01'
-        assert timer.format('%Hh %Mm %Ss') == '01h 01m 01s'
+    >>> # When entering the context, .run() is automatically called.
+    >>> with delu.Timer() as timer:
+    ...     job()
+    >>> elapsed = timer()
+    >>> elapsed > 0.0
+    True
+    >>> # On exit, the timer is set on pause.
+    >>> job()
+    >>> timer() == elapsed
+    True
 
-    `Timer` is pickle friendly:
+    Resetting the timer:
 
-    .. testcode::
+    >>> timer.reset()
+    >>> timer() == 0.0
+    True
 
-        import pickle
+    Printing and formatting the elapsed time in a human-readable manner:
 
-        timer = delu.Timer()
-        timer.run()
-        time.sleep(0.01)
-        timer.pause()
-        old_value = timer()
-        timer_bytes = pickle.dumps(timer)
-        time.sleep(0.01)
-        new_timer = pickle.loads(timer_bytes)
-        assert new_timer() == old_value
+    >>> timer = delu.Timer()
+    >>> timer.run()
+    >>> time.sleep(2.0)
+    >>> timer.pause()
+    >>> # Instead of '...' there are microseconds,
+    >>> # for example "0:00:02.005158"
+    >>> print(timer)
+    0:00:02...
+    >>> str(timer)
+    '0:00:02...
+    >>> # Equivalent to the above.
+    >>> f'{timer}'
+    '0:00:02...
+    >>> # Custom format string.
+    >>> timer.format('%Hh %Mm %Ss')
+    '00h 00m 02s'
+
+    Saving (pickling) and loading (unpickling) a timer.
+
+    >>> import pickle
+    >>> timer = delu.Timer()
+    >>> timer.run()
+    >>> job()
+    >>> timer.pause()
+    >>> elapsed_before_saving = timer()
+    >>> # Save the timer (typically, as a part of a checkpoint).
+    >>> timer_bytes = pickle.dumps(timer)
+    >>> ...
+    >>> # Some time has passed...
+    >>> ...
+    >>> # The loaded timer remembers the previous elapsed time.
+    >>> loaded_timer = pickle.loads(timer_bytes)
+    >>> loaded_timer() == elapsed_before_saving
+    True
+    >>> # The loaded timer is not running, call .run() to resume it.
+    >>> job()
+    >>> loaded_timer() == elapsed_before_saving
+    >>> loaded_timer.run()
+    >>> loaded_timer() > elapsed_before_saving
+    True
     """
 
     # mypy cannot infer types from .reset(), so they must be given here
@@ -251,17 +280,15 @@ class Timer:
 
     def __init__(self) -> None:
         """
-        Examples:
-            .. testcode::
-
-                timer = delu.Timer()
+        Args:
         """
         self.reset()
 
     def reset(self) -> None:
-        """Reset the timer.
+        """Reset the timer completely.
 
-        Resets the timer to the initial state.
+        To start using the instance again after resetting,
+        the timer must be explicitly run with `Timer.run`.
         """
         self._start_time = None
         self._pause_time = None
@@ -271,8 +298,7 @@ class Timer:
         """Start/resume the timer.
 
         If the timer is on pause, the method resumes the timer.
-        If the timer is running, the method does nothing (i.e. it does NOT overwrite
-        the previous pause time).
+        If the timer is running, the method does nothing.
         """
         if self._start_time is None:
             self._start_time = time.perf_counter()
@@ -284,20 +310,18 @@ class Timer:
         """Pause the timer.
 
         If the timer is running, the method pauses the timer.
-        If the timer is already on pause, the method does nothing.
-
-        Raises:
-            AssertionError: if the timer is just created or just reset.
+        If the timer was never ``.run()`` or is already on pause,
+        the method does nothing.
         """
-        assert self._start_time is not None
-        if self._pause_time is None:
-            self._pause_time = time.perf_counter()
+        if self._start_time is not None:
+            if self._pause_time is None:
+                self._pause_time = time.perf_counter()
 
     def __call__(self) -> float:
-        """Get the time elapsed since the start.
+        """Get the time elapsed.
 
         Returns:
-            Time elapsed.
+            The elapsed time.
         """
         if self._start_time is None:
             return self._shift
@@ -312,53 +336,36 @@ class Timer:
         """
         return str(datetime.timedelta(seconds=self()))
 
-    def format(self, format_str: str) -> str:
+    def format(self, format_str: str, /) -> str:
         """Format the time elapsed since the start in a human-readable string.
 
+        This is a shortcut for ``time.strftime(format_str, time.gmtime(self()))``.
+
         Args:
-            format_str: the format string passed to `time.strftime`
+            format_str: the format string passed to `time.strftime`.
         Returns:
-            Filled ``format_str``.
+            the filled ``format_str``.
 
-        Example::
+        **Usage**
 
-            timer = delu.Timer()
-            <let's assume that 3661 seconds have passed>
-            assert timer.format('%Hh %Mm %Ss') == '01h 01m 01s'
+        >>> # xdoctest: +SKIP
+        >>> timer = delu.Timer()
+        >>> # Let's say that exactly 3661 seconds have passed.
+        >>> assert timer.format('%Hh %Mm %Ss') == '01h 01m 01s'
         """
         return time.strftime(format_str, time.gmtime(self()))
 
     def __enter__(self) -> 'Timer':
         """Measure time within a context.
 
-        The method `Timer.run` is called regardless of the current state. On exit,
-        `Timer.pause` is called.
-
-        See also:
-            `Timer.__exit__`
-
-        Example:
-            .. testcode::
-
-                import time
-                with delu.Timer() as timer:
-                    time.sleep(0.01)
-                elapsed = timer()
-                assert elapsed > 0.01
-                time.sleep(0.01)
-                assert timer() == elapsed  # the timer is paused in __exit__
+        The method `Timer.run` is called regardless of the current state.
+        On exit, `Timer.pause` is called.
         """
         self.run()
         return self
 
     def __exit__(self, *args) -> bool:  # type: ignore
-        """Leave the context and pause the timer.
-
-        See `Timer.__enter__` for details and examples.
-
-        See also:
-            `Timer.__enter__`
-        """
+        """Leave the context and pause the timer."""
         self.pause()
         return False
 
@@ -366,6 +373,11 @@ class Timer:
         return {'_shift': self(), '_start_time': None, '_pause_time': None}
 
     def __setstate__(self, state: Dict[str, Any]) -> None:
+        """Load the state.
+
+        A time with just loaded state is not running (basically, it is a freshly
+        created timer which stores the elapsed time from the loaded state).
+        """
         self.__dict__.update(state)
 
 
@@ -375,13 +387,11 @@ class _ProgressStatus(enum.Enum):
     FAIL = enum.auto()
 
 
-@deprecated(
-    'Instead, use `delu.EarlyStopping` (note that it does not track the best score).'
-)
+@deprecated('Instead, use `delu.EarlyStopping` and manually track the best score.')
 class ProgressTracker:
     """Helps with early stopping and tracks the best metric value.
 
-    {DEPRECATION_MESSAGE}
+    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
 
     For `~ProgressTracker`, **the greater score is the better score**.
     At any moment the tracker is in one of the following states:
@@ -493,18 +503,11 @@ class ProgressTracker:
         """Reset unsuccessfull update counter and set the status to "neutral".
 
         Note that this method does NOT reset the best score.
-
-        See also:
-            `ProgressTracker.reset`
         """
         self._bad_counter = 0
         self._status = _ProgressStatus.NEUTRAL
 
     def reset(self) -> None:
-        """Reset everything.
-
-        See also:
-            `ProgressTracker.forget_bad_updates`
-        """
+        """Reset everything."""
         self.forget_bad_updates()
         self._best_score = None

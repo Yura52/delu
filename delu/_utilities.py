@@ -19,7 +19,7 @@ def improve_reproducibility(
 ) -> int:
     """Set seeds and turn off non-deterministic algorithms.
 
-    {DEPRECATION_MESSAGE}
+    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
 
     Do everything possible to improve reproducibility for code that relies on global
     random number generators. See also the note below.
@@ -63,7 +63,7 @@ def improve_reproducibility(
         base_seed = secrets.randbits(128) % (2**32 - 1024)
     else:
         assert base_seed < (2**32 - 1024)
-    delu_random.seed(base_seed, one_cuda_seed)
+    delu_random.seed(base_seed, one_cuda_seed=one_cuda_seed)
     return base_seed
 
 
@@ -71,7 +71,7 @@ def improve_reproducibility(
 class evaluation(ContextDecorator):
     """Context-manager & decorator for models evaluation.
 
-    {DEPRECATION_MESSAGE}
+    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
 
     This code... ::
 
@@ -139,8 +139,6 @@ class evaluation(ContextDecorator):
 
         Args:
             func
-        Raises:
-            AssertionError: if :code:`func` is a generator
         """
         assert not inspect.isgeneratorfunction(
             func
