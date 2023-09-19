@@ -1,11 +1,13 @@
 """An addition to `torch.nn`."""
 
 import inspect
-from typing import Callable
+from collections import OrderedDict
+from typing import Callable, Tuple
 
 import torch.nn
+import torch.nn as nn
 
-__all__ = ['Lambda']
+__all__ = ['Lambda', 'named_sequential']
 
 
 class Lambda(torch.nn.Module):
@@ -87,3 +89,38 @@ class Lambda(torch.nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Do the forward pass."""
         return self._function(x, **self._function_kwargs)
+
+
+def named_sequential(*names_and_modules: Tuple[str, nn.Module]) -> nn.Sequential:
+    """A shortcut for creating `torch.nn.Sequential` with named modules without using `collections.OrderedDict`.
+
+    The sole purpose of this function is to improve the ergonomics and readability
+    of the common construction.
+
+    **Usage**
+
+    This ...
+
+    >>> m = delu.nn.named_sequential(
+    ...     ('linear1', nn.Linear(10, 20)),
+    ...     ('activation', nn.ReLU()),
+    ...     ('linear2', nn.Linear(20, 1)),
+    ... )
+
+    ... is equivalent to this:
+
+    >>> from collections import OrderedDict
+    >>> m = torch.nn.Sequential(
+    ...     OrderedDict(
+    ...         [
+    ...             ('linear1', nn.Linear(10, 20)),
+    ...             ('activation', nn.ReLU()),
+    ...             ('linear2', nn.Linear(20, 1)),
+    ...         ]
+    ...     )
+    ... )
+
+    Args:
+        names_and_modules: the names and the modules.
+    """  # noqa: E501
+    return nn.Sequential(OrderedDict(names_and_modules))

@@ -11,3 +11,10 @@ delu.nn
     :template: class.rst
 
     Lambda
+
+.. autosummary::
+    :nosignatures:
+    :toctree: generated
+    :template: function.rst
+
+    named_sequential
