@@ -25,13 +25,6 @@ The `API documentation <https://yura52.github.io/delu/stable/api/delu.html>`_
 provides usage examples and explanations
 -- it is the main source of knowledge about DeLU.
 
-End-to-end examples
--------------------
-
-Use ``Ctrl+F "delu"`` to see how DeLU is used in the following examples:
-
-- `Image classification (MNIST) <https://github.com/Yura52/delu/blob/main/examples/mnist.py>`_
-
 How to contribute
 -----------------
 
