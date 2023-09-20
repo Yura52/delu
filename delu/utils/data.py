@@ -18,8 +18,8 @@ class Enumerate(Dataset):
     The original ``dataset``:
 
     >>> from torch.utils.data import DataLoader, TensorDataset
-    >>> X = torch.arange(10).float().view(5, 2)
-    >>> Y = -10 * torch.arange(5)
+    >>> X = torch.randn(5, 2)
+    >>> Y = torch.randn(5)
     >>> dataset = TensorDataset(X, Y)
 
     The enumerated dataset returns indices in addition to items:
@@ -39,9 +39,23 @@ class Enumerate(Dataset):
 
     Additional technical examples:
 
+    >>> # The original dataset
+    >>> X = torch.arange(10).float().view(5, 2)
+    >>> Y = -10 * torch.arange(5)
+    >>> dataset = TensorDataset(X, Y)
+    >>> dataset.tensors[0]  # X
+    tensor([[0., 1.],
+            [2., 3.],
+            [4., 5.],
+            [6., 7.],
+            [8., 9.]])
+    >>> dataset.tensors[1]  # Y
+    tensor([  0, -10, -20, -30, -40])
     >>> x, y = dataset[2]
     >>> x, y
     (tensor([4., 5.]), tensor(-20))
+    >>>
+    >>> # The enumerated dataset
     >>> edataset = delu.data.Enumerate(dataset)
     >>> # The original dataset remains accessible.
     >>> edataset.dataset is dataset

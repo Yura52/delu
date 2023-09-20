@@ -117,17 +117,15 @@ def get_state() -> Dict[str, Any]:
     >>> def f():
     ...     return random.random(), np.random.rand(), torch.rand(1).item()
     ...
-    >>> # Save the current state:
+    >>> # Save the state before the first call
     >>> state = delu.random.get_state()
-    >>>
-    >>> # The first call changes the state,
-    >>> # so the second call produces different results.
     >>> a1, b1, c1 = f()
+    >>> # As expected, the second call produces different results:
     >>> a2, b2, c2 = f()
     >>> print(a1 == a2, b1 == b2, c1 == c2)
     False False False
     >>>
-    >>> # Restore the initial global state:
+    >>> # Restore the state that was before the first call:
     >>> delu.random.set_state(state)
     >>> a3, b3, c3 = f()
     >>> print(a1 == a3, b1 == b3, c1 == c3)
