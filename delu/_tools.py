@@ -391,7 +391,7 @@ class _ProgressStatus(enum.Enum):
 class ProgressTracker:
     """Helps with early stopping and tracks the best metric value.
 
-    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
+    <DEPRECATION MESSAGE>
 
     For `~ProgressTracker`, **the greater score is the better score**.
     At any moment the tracker is in one of the following states:

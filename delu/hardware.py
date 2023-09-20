@@ -25,7 +25,7 @@ def _to_str(x):
 @deprecated('Instead, use `delu.cuda.free_memory`.')
 def free_memory(*args, **kwargs) -> None:
     """
-    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
+    <DEPRECATION MESSAGE>
     """
     return free_memory_original(*args, **kwargs)
 
@@ -34,7 +34,7 @@ def free_memory(*args, **kwargs) -> None:
 def get_gpus_info() -> Dict[str, Any]:
     """Get information about GPU devices: driver version, memory, utilization etc.
 
-    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
+    <DEPRECATION MESSAGE>
 
     The example below shows what kind of information is returned as the result. All
     figures about memory are given in bytes.

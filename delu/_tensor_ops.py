@@ -399,6 +399,6 @@ def iter_batches(
 @deprecated('Instead, use `delu.cat`.')
 def concat(*args, **kwargs):
     """
-    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
+    <DEPRECATION MESSAGE>
     """
     return cat(*args, **kwargs)

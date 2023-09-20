@@ -3,13 +3,14 @@ import torch
 from torch.utils.data import DataLoader, TensorDataset
 
 import delu.data
+import delu.utils.data
 
 from .util import ignore_deprecated_warning
 
 
 def test_enumerate():
     dataset = TensorDataset(torch.arange(10), torch.arange(10))
-    x = delu.data.Enumerate(dataset)
+    x = delu.utils.data.Enumerate(dataset)
     assert x.dataset is dataset
     assert len(x) == 10
     assert x[3] == (3, (torch.tensor(3), torch.tensor(3)))
@@ -43,7 +44,7 @@ def test_fndataset():
 
 def test_index_dataset():
     n = 10
-    d = delu.data.IndexDataset(n)
+    d = delu.utils.data.IndexDataset(n)
     assert len(d) == n
     for i in range(n):
         assert d[i] == i

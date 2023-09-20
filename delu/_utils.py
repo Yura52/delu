@@ -8,14 +8,15 @@ from .exceptions import DeLUDeprecationWarning
 
 
 def deprecated(message: str):
-    if message:
-        message = f'({message})'
+    warning_sign = '**[DEPRECATED]**'
 
     def decorator(item):
         assert item.__doc__ is not None
-        assert '**DEPRECATED**' in item.__doc__
         assert '<DEPRECATION MESSAGE>' in item.__doc__
-        docstring = item.__doc__.replace('<DEPRECATION MESSAGE>', message)
+        docstring = item.__doc__.replace(
+            '<DEPRECATION MESSAGE>',
+            f'{warning_sign} ({message})' if message else warning_sign,
+        )
 
         def warn(item_type):
             warnings.warn(

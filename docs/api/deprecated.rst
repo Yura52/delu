@@ -29,6 +29,18 @@ deprecated
 
 .. currentmodule:: delu.data
 
+.. autoclass:: Enumerate
+    :show-inheritance:
+    :members:
+    :special-members:
+    :exclude-members: __weakref__
+
+.. autoclass:: IndexDataset
+    :show-inheritance:
+    :members:
+    :special-members:
+    :exclude-members: __weakref__
+
 .. autoclass:: FnDataset
     :show-inheritance:
     :members:

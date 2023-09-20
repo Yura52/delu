@@ -19,7 +19,7 @@ def improve_reproducibility(
 ) -> int:
     """Set seeds and turn off non-deterministic algorithms.
 
-    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
+    <DEPRECATION MESSAGE>
 
     Do everything possible to improve reproducibility for code that relies on global
     random number generators. See also the note below.
@@ -71,7 +71,7 @@ def improve_reproducibility(
 class evaluation(ContextDecorator):
     """Context-manager & decorator for models evaluation.
 
-    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
+    <DEPRECATION MESSAGE>
 
     This code... ::
 

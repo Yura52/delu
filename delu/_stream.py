@@ -18,7 +18,7 @@ def _try_len(x):
 class Stream:
     """Smart wrapper for data loaders and iterables.
 
-    ⚠️ **DEPRECATED** ⚠️ <DEPRECATION MESSAGE>
+    <DEPRECATION MESSAGE>
 
     `Stream` simplifies managing loops, especially in typical Deep Learning scenarios.
     `Stream`:
