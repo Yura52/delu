@@ -7,11 +7,6 @@ delu
 
 .. automodule:: delu
 
-.. rubric:: Submodules
-
-.. tip::
-   Submodules are listed in the left sidebar.
-
 .. rubric:: Tensor operations
 
 .. autosummary::

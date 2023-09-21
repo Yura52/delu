@@ -4,6 +4,7 @@ from types import SimpleNamespace
 
 import pytest
 import torch
+import torch.nn as nn
 
 import delu
 
@@ -11,46 +12,50 @@ from .util import Point, PointDC
 
 
 def flatten(data):
-    if isinstance(data, torch.Tensor):
+    if data is None or isinstance(data, (bool, int, float, str, bytes, torch.Tensor)):
         yield data
-    elif isinstance(data, (str, bytes)):
-        # mypy: NaN
-        yield data  # type: ignore
+    elif isinstance(data, nn.Module):
+        yield from data.parameters()
     elif isinstance(data, Sequence):
         for x in data:
             yield from flatten(x)
     elif isinstance(data, Mapping):
         for x in data.values():
             yield from flatten(x)
-    elif isinstance(data, SimpleNamespace):
-        for x in vars(data).values():
-            yield from flatten(x)
     elif dataclasses.is_dataclass(data):
+        for x in dataclasses.fields(data):
+            yield from flatten(getattr(data, x.name))
+    else:
         for x in vars(data).values():
             yield from flatten(x)
-    else:
-        yield data
 
 
 def test_to():
-    with pytest.raises(ValueError):
-        delu.to(None)
-    with pytest.raises(ValueError):
-        delu.to([None, None])
-
-    t = lambda x: torch.tensor(0, dtype=x)  # noqa
     f32 = torch.float32
-    i64 = torch.int64
+    f16 = torch.float16
 
-    for dtype in f32, i64:
-        x = t(dtype)
+    pods = [None, False, -1231231231321312321313, 4.567, 'aaaa', b'bbbbbbbb']
+    for x in pods:
+        assert delu.to(x, f16) is x
+    for x, y in zip(pods, delu.to(pods, f16)):
+        assert x is y
+
+    assert delu.to(pods, f32) is not pods
+    assert delu.to(tuple(pods), f32) is not pods
+    assert delu.to(dict(enumerate(pods)), f32) is not pods
+
+    def make(dtype):
+        return torch.randn(2, 3, dtype=dtype)
+
+    for dtype in f32, f16:
+        x = make(dtype)
         assert delu.to(x, dtype) is x
-    assert delu.to(t(f32), i64).dtype is i64
+    assert delu.to(make(f32), f16).dtype is f16
 
     for Container in tuple, Point, list:
         constructor = Container._make if Container is Point else Container
-        for dtype in [f32, i64]:
-            x = constructor([t(f32), t(f32)])
+        for dtype in [f32, f16]:
+            x = constructor([make(f32), make(f32)])
             out = delu.to(x, dtype)
             assert isinstance(out, Container)
             assert all(x.dtype is dtype for x in out)
@@ -58,26 +63,28 @@ def test_to():
                 for x, y in zip(out, x):
                     assert x is y
 
-    data = [t(f32), t(f32)]
+    data = [make(f32), make(f32)]
     for x, y in zip(delu.to(data, f32), data):
         assert x is y
-    assert all(x.dtype is i64 for x in delu.to(data, i64))
+    assert all(x.dtype is f16 for x in delu.to(data, f16))
 
     @dataclasses.dataclass
     class A:
         a: torch.Tensor
 
     data = {
-        'a': [t(f32), (t(f32), t(f32))],
-        'b': {'c': {'d': [[[t(f32)]]]}},
-        'c': Point(t(f32), {'d': t(f32)}),
-        'f': A(a=t(f32)),
+        'a': [make(f32), (make(f32), make(f32))],
+        'b': {'c': {'d': [[[make(f32)]]]}},
+        'c': Point(make(f32), {'d': make(f32)}),
+        'f': A(a=make(f32)),
+        'g': SimpleNamespace(layer1=[nn.LayerNorm(3)], layer2=nn.Linear(2, 2)),
     }
     for x, y in zip(flatten(delu.to(data, f32)), flatten(data)):
         assert x is y
-    for x, y in zip(flatten(delu.to(data, i64)), flatten(data)):
-        assert x.dtype is i64
+    for x, y in zip(flatten(delu.to(data, f16)), flatten(data)):
         assert type(x) is type(y)
+        if isinstance(x, torch.Tensor):
+            assert x.dtype is f16
 
 
 def test_cat():
@@ -171,22 +178,21 @@ def test_iter_batches_shuffle():
 
 
 def test_iter_batches_bad_input():
-    # empty input
+    # Empty input.
+    @dataclasses.dataclass
+    class Empty:
+        pass
+
     with pytest.raises(ValueError):
         next(delu.iter_batches(torch.empty(0), 1))
     with pytest.raises(ValueError):
         next(delu.iter_batches((), 1))
     with pytest.raises(ValueError):
         next(delu.iter_batches({}, 1))
-
-    @dataclasses.dataclass
-    class BadPoint:
-        pass
-
     with pytest.raises(ValueError):
-        next(delu.iter_batches(BadPoint(), 1))
+        next(delu.iter_batches(Empty(), 1))
 
-    # different lengths
+    # Different lengths.
     a = torch.tensor([0, 1])
     b = torch.tensor([0, 1, 2])
     with pytest.raises(ValueError):
