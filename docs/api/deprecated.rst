@@ -1,10 +1,22 @@
-deprecated
-==========
+[deprecated]
+============
 
 .. tip::
     Use the right sidebar, the search widget or `Ctrl+F` to find the items you need.
 
 .. currentmodule:: delu
+
+.. autoclass:: EarlyStopping
+    :show-inheritance:
+    :members:
+    :special-members:
+    :exclude-members: __weakref__
+
+.. autoclass:: Timer
+    :show-inheritance:
+    :members:
+    :special-members:
+    :exclude-members: __weakref__
 
 .. autoclass:: ProgressTracker
     :show-inheritance:

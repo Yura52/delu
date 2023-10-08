@@ -12,7 +12,7 @@ from ._utils import deprecated
 
 @deprecated(
     'Instead, use `delu.random.seed` and manually set flags mentioned'
-    ' in the `PyTorch docs on reproducibility <https://pytorch.org/docs/stable/notes/randomness.html>`_'  # noqa: E501
+    ' in the `PyTorch docs on reproducibility <https://pytorch.org/docs/stable/notes/randomness.html>`_'
 )
 def improve_reproducibility(
     base_seed: Optional[int], one_cuda_seed: bool = False

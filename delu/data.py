@@ -12,7 +12,7 @@ from .utils import data as utils_data
 T = TypeVar('T')
 
 
-@deprecated('This class was renamed to `delu.utils.data.Enumerate`')
+@deprecated('Renamed to `delu.utils.data.Enumerate`')
 class Enumerate(utils_data.Enumerate):
     """
     <DEPRECATION MESSAGE>

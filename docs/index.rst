@@ -19,6 +19,7 @@ DeLU (Deep Learning Utilities)
    api/nn
    api/random
    api/utils.data
+   api/tools
    api/deprecated
 
 ----

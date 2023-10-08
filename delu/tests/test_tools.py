@@ -4,23 +4,24 @@ from time import perf_counter, sleep
 import pytest
 
 import delu
+import delu.tools
 
 
 def test_early_stopping():
     with pytest.raises(ValueError):
-        delu.EarlyStopping(0, mode='max')
+        delu.tools.EarlyStopping(0, mode='max')
     with pytest.raises(ValueError):
-        delu.EarlyStopping(1, mode='hello')
+        delu.tools.EarlyStopping(1, mode='hello')
     with pytest.raises(ValueError):
-        delu.EarlyStopping(1, mode='min', min_delta=-1.0)
+        delu.tools.EarlyStopping(1, mode='min', min_delta=-1.0)
 
-    es = delu.EarlyStopping(1, mode='min')
+    es = delu.tools.EarlyStopping(1, mode='min')
     es.update(1.0)
     assert not es.should_stop()
     es.update(1.0)
     assert es.should_stop()
 
-    es.forget_bad_updates()
+    es.reset_unsuccessful_updates()
     es.update(1.0)
     assert es.should_stop()
 
@@ -33,7 +34,7 @@ def test_early_stopping():
     for mode in ['min', 'max']:
         sign = -1.0 if mode == 'min' else 1.0
 
-        es = delu.EarlyStopping(2, mode=mode)
+        es = delu.tools.EarlyStopping(2, mode=mode)
         es.update(0.0)
         assert not es.should_stop()
         es.update(sign * 1.0)
@@ -50,7 +51,7 @@ def test_early_stopping():
         assert es.should_stop()
 
         min_delta = 0.1
-        es = delu.EarlyStopping(1, mode=mode, min_delta=min_delta)
+        es = delu.tools.EarlyStopping(1, mode=mode, min_delta=min_delta)
         es.update(0.0)
         assert not es.should_stop()
         es.update(sign * 2 * min_delta)
@@ -60,87 +61,87 @@ def test_early_stopping():
 
 
 def test_timer():
-    delu.Timer().pause()
+    delu.tools.Timer().pause()
 
     # initial state, run
-    timer = delu.Timer()
+    timer = delu.tools.Timer()
     sleep(0.001)
-    assert not timer()
+    assert not timer.elapsed()
     timer.run()
-    assert timer()
+    assert timer.elapsed()
 
     # pause
     timer.pause()
     timer.pause()  # two pauses in a row
-    x = timer()
+    x = timer.elapsed()
     sleep(0.001)
-    assert timer() == x
+    assert timer.elapsed() == x
 
     # run
     timer.pause()
-    x = timer()
+    x = timer.elapsed()
     timer.run()
     timer.run()  # two runs in a row
-    assert timer() != x
+    assert timer.elapsed() != x
     timer.pause()
-    x = timer()
+    x = timer.elapsed()
     sleep(0.001)
-    assert timer() == x
+    assert timer.elapsed() == x
     timer.run()
 
     # reset
     timer.reset()
-    assert not timer()
+    assert not timer.elapsed()
 
 
 def test_timer_measurements():
     x = perf_counter()
     sleep(0.1)
     correct = perf_counter() - x
-    timer = delu.Timer()
+    timer = delu.tools.Timer()
     timer.run()
     sleep(0.1)
-    actual = timer()
+    actual = timer.elapsed()
     # the allowed deviation was obtained from manual runs on my laptop so the test may
     # behave differently on other hardware
     assert actual == pytest.approx(correct, abs=0.01)
 
 
 def test_timer_context():
-    with delu.Timer() as timer:
+    with delu.tools.Timer() as timer:
         sleep(0.01)
-    assert timer() > 0.01
-    assert timer() == timer()
+    assert timer.elapsed() > 0.01
+    assert timer.elapsed() == timer.elapsed()
 
-    timer = delu.Timer()
+    timer = delu.tools.Timer()
     timer.run()
     sleep(0.01)
     timer.pause()
     with timer:
         sleep(0.01)
-    assert timer() > 0.02
-    assert timer() == timer()
+    assert timer.elapsed() > 0.02
+    assert timer.elapsed() == timer.elapsed()
 
 
 def test_timer_pickle():
-    timer = delu.Timer()
+    timer = delu.tools.Timer()
     timer.run()
     sleep(0.01)
     timer.pause()
-    value = timer()
+    value = timer.elapsed()
     sleep(0.01)
-    assert pickle.loads(pickle.dumps(timer))() == timer() == value
+    assert pickle.loads(pickle.dumps(timer)).elapsed() == timer.elapsed() == value
 
 
 def test_timer_format():
     def make_timer(x):
-        timer = delu.Timer()
+        timer = delu.tools.Timer()
         timer._shift = x
         return timer
 
     assert str(make_timer(1)) == '0:00:01'
-    assert str(make_timer(1.1)) == '0:00:01.100000'
-    assert make_timer(7321).format('%Hh %Mm %Ss') == '02h 02m 01s'
+    assert format(make_timer(1.1)) == '0:00:01.100000'
+    assert f'{make_timer(7321):%Hh %Mm %Ss}' == '02h 02m 01s'
 
 
 def test_progress_tracker():

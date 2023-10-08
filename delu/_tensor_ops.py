@@ -23,16 +23,11 @@ K = TypeVar('K')
 def to(obj: T, /, *args, **kwargs) -> T:
     """Change devices and data types of tensors and modules in an arbitrary Python object (like `torch.Tensor.to` / `torch.nn.Module.to`, but for any Python object).
 
-    This function can be used
-    to change the device and/or data types of tensors and/or modules that are a part of:
+    The two primary use cases for this function are changing the device and data types
+    of tensors and modules that are a part of:
 
     - a complex Python object (e.g. a training state, checkpoint, etc.)
     - an object of an unknown type (when implementing generic pipelines)
-
-    .. warning::
-        In simple cases (e.g. changing the device of a tuple/dictionary of tensors),
-        using this function is discouraged: instead, use familiar Python constructions
-        and the native `*.to` methods.
 
     **Usage**
 
@@ -219,11 +214,11 @@ def cat(data: List[T], /, dim: int = 0) -> T:
         constructor = type(first)
         constructor = getattr(constructor, '_make', constructor)  # Handle named tuples.
         return constructor(
-            cat([x[i] for x in data], dim=dim) for i in range(len(first))  # type: ignore  # noqa: E501
+            cat([x[i] for x in data], dim=dim) for i in range(len(first))  # type: ignore
         )
 
     elif isinstance(first, dict):
-        return type(first)((key, cat([x[key] for x in data], dim=dim)) for key in first)  # type: ignore  # noqa: E501
+        return type(first)((key, cat([x[key] for x in data], dim=dim)) for key in first)  # type: ignore
 
     elif dataclasses.is_dataclass(first):
         return type(first)(
@@ -428,7 +423,7 @@ def iter_batches(
         constructor = type(data)  # type: ignore
         for idx in _make_index_batches(item, *args):
             yield constructor(
-                **{field.name: getattr(data, field.name)[idx] for field in fields}  # type: ignore  # noqa: E501
+                **{field.name: getattr(data, field.name)[idx] for field in fields}  # type: ignore
             )
 
     else:

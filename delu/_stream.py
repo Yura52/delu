@@ -459,7 +459,7 @@ class Stream:
                 ),
             }
             all_progress_bar_options.update(progress_bar_config)
-            self._progress_bar = tqdm(**all_progress_bar_options)  # type: ignore  # noqa: F821,E501
+            self._progress_bar = tqdm(**all_progress_bar_options)  # type: ignore  # noqa: F821
             self._should_update_progress_bar = False
         while self.epoch < max_epoch:
             self.increment_epoch()

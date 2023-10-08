@@ -15,63 +15,56 @@ class Enumerate(Dataset):
 
     **Usage**
 
-    The original ``dataset``:
+    Creating the initial non-enumerated ``dataset``:
 
     >>> from torch.utils.data import DataLoader, TensorDataset
-    >>> X = torch.randn(5, 2)
-    >>> Y = torch.randn(5)
+    >>>
+    >>> X = torch.arange(10).float().view(5, 2)
+    >>> X
+    tensor([[0., 1.],
+            [2., 3.],
+            [4., 5.],
+            [6., 7.],
+            [8., 9.]])
+    >>> Y = -10 * torch.arange(5)
+    >>> Y
+    tensor([  0, -10, -20, -30, -40])
+    >>>
     >>> dataset = TensorDataset(X, Y)
+    >>> dataset[2]
+    (tensor([4., 5.]), tensor(-20))
 
     The enumerated dataset returns indices in addition to items:
 
+    >>> enumerated_dataset = delu.utils.data.Enumerate(dataset)
+    >>> enumerated_dataset[2]
+    (2, (tensor([4., 5.]), tensor(-20)))
+    >>>
     >>> for x_batch, y_batch in DataLoader(
     ...     dataset, batch_size=2
     ... ):
     ...     ...
     ...
     >>> for batch_idx, (x_batch, y_batch) in DataLoader(
-    ...     delu.data.Enumerate(dataset), batch_size=2
+    ...     enumerated_dataset, batch_size=2
     ... ):
     ...     print(batch_idx)
     tensor([0, 1])
     tensor([2, 3])
     tensor([4])
 
-    Additional technical examples:
+    The original dataset and its size remain accessible:
 
-    >>> # The original dataset
-    >>> X = torch.arange(10).float().view(5, 2)
-    >>> Y = -10 * torch.arange(5)
-    >>> dataset = TensorDataset(X, Y)
-    >>> dataset.tensors[0]  # X
-    tensor([[0., 1.],
-            [2., 3.],
-            [4., 5.],
-            [6., 7.],
-            [8., 9.]])
-    >>> dataset.tensors[1]  # Y
-    tensor([  0, -10, -20, -30, -40])
-    >>> x, y = dataset[2]
-    >>> x, y
-    (tensor([4., 5.]), tensor(-20))
-    >>>
-    >>> # The enumerated dataset
-    >>> edataset = delu.data.Enumerate(dataset)
-    >>> # The original dataset remains accessible.
-    >>> edataset.dataset is dataset
+    >>> enumerated_dataset.dataset is dataset
     True
-    >>> # The size is the same.
-    >>> len(dataset) == len(edataset)
+    >>> len(enumerated_dataset) == len(dataset)
     True
-    >>> i, (x, y) = edataset[2]
-    >>> i, (x, y)
-    (2, (tensor([4., 5.]), tensor(-20)))
     """  # noqa: E501
 
     def __init__(self, dataset: Dataset, /) -> None:
         """
         Args:
-            dataset: the original dataset to wrap.
+            dataset: the original dataset.
         """
         self._dataset = dataset
 

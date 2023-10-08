@@ -1,13 +1,9 @@
-.. _delu:
-
 delu
 ====
 
 .. currentmodule:: delu
 
 .. automodule:: delu
-
-.. rubric:: Tensor operations
 
 .. autosummary::
    :nosignatures:
@@ -17,13 +13,3 @@ delu
    to
    cat
    iter_batches
-
-.. rubric:: Tools
-
-.. autosummary::
-   :nosignatures:
-   :toctree: generated
-   :template: class.rst
-
-   EarlyStopping
-   Timer

@@ -8,7 +8,7 @@ from .exceptions import DeLUDeprecationWarning
 
 
 def deprecated(message: str):
-    warning_sign = '**[DEPRECATED]**'
+    warning_sign = '⚠️ **[DEPRECATED]** ⚠️'
 
     def decorator(item):
         assert item.__doc__ is not None
