@@ -29,6 +29,11 @@ def test_nlinear():
     m = delu.nn.NLinear(3, 4, 5, bias=False)
     assert m.bias is None
 
+    with pytest.raises(ValueError):
+        m(torch.randn(4))
+    with pytest.raises(ValueError):
+        m(torch.randn(33, 4))
+
     for b in [(), (2,), (2, 3)]:
         for n in [(4,), (4, 5)]:
             x1 = torch.randn(*b, *n, 6)

@@ -22,16 +22,12 @@ class Lambda(torch.nn.Module):
       and return a single `torch.Tensor`
     - the allowed keyword arguments must be of simple types (see the docstring).
 
-    .. note::
-        The above limitations are introduced to guarantee
-        that `delu.nn.Lambda` modules are always simple and serializable.
-
     **Usage**
 
     >>> m = delu.nn.Lambda(torch.squeeze, dim=1)
     >>> m(torch.randn(2, 1, 3, 1)).shape
     torch.Size([2, 3, 1])
-    >>> m = delu.nn.Lambda(torch.Tensor.abs)
+    >>> m = delu.nn.Lambda(torch.Tensor.abs_)
     >>> m(torch.tensor(-1.0))
     tensor(1.)
     >>> # Custom functions are not allowed.
@@ -59,7 +55,7 @@ class Lambda(torch.nn.Module):
             fn not in vars(torch).values()
             and (
                 fn not in (member for _, member in inspect.getmembers(torch.Tensor))
-                or inspect.ismethod(fn)  # Check if fn is a @classmethod.
+                or inspect.ismethod(fn)  # Check if fn is a @classmethod
             )
         ):
             raise ValueError(
@@ -95,24 +91,24 @@ class Lambda(torch.nn.Module):
 class NLinear(nn.Module):
     """N linear layers for N inputs: `(*, *N, D1) -> (*, *N, D2)`
 
-    Intuitively, ``NLinear(N, D1, D2)`` is a collection of ``math.prod(N)``
-    non-shared ``torch.nn.Linear(D1, D2)`` layers.
-
-    Let's consider a tensor ``x`` of the shape ``(*B, *N, D1)``,
+    For a tensor ``x`` of the shape ``(*B, *N, D1)``,
     where ``*B`` are batch dimensions, ``*N`` are object dimensions
     (e.g. a sequence size in NLP, or width & height in computer vision)
-    and ``D1`` is the current embedding size (e.g. the number of features/channels).
+    and ``D1`` is the current embedding size (e.g. the number of features/channels):
 
-    Then, applying ``torch.nn.Linear(D1, D2)`` to ``x`` means applying *the same* linear
-    transformation to each of the ``math.prod(N)`` embeddings.
+    - applying ``torch.nn.Linear(D1, D2)`` to ``x`` means applying *the same* linear
+      transformation to each of the ``math.prod(N)`` embeddings.
 
-    By contrast, applying ``NLinear(N, D1, D2)`` means applying *a separate* linear
-    transformation to each of the ``math.prod(N)`` embeddings.
+    - applying ``NLinear(N, D1, D2)`` to ``x`` means applying *a separate* linear
+      transformation to each of the ``math.prod(N)`` embeddings.
+
+    In other words, ``NLinear(N, D1, D2)`` is a collection of ``math.prod(N)``
+    non-shared ``torch.nn.Linear(D1, D2)`` layers.
 
     **Shape**
 
-    - Input: ``(*, *n, in_features)``
-    - Output: ``(*, *n, out_features)``
+    - Input: ``(*, *n, in_features)``, where ``*`` are batch dimensions.
+    - Output: ``(*, *n, out_features)``.
 
     **Usage**
 
