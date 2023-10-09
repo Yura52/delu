@@ -26,9 +26,8 @@ Usage
 *DeLU is a toolbox, not a framework,
 so you can learn things and start using them in any order.*
 
-The "API & Examples" section is the main source of knowledge about DeLU:
-it provides usage examples, explanation and docstrings
-(see the left sidebar on the website).
+The "API & Examples" section on the website is the main source of knowledge about DeLU:
+it provides usage examples, explanation and docstrings.
 
 How to contribute
 -----------------
