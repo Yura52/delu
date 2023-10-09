@@ -16,11 +16,11 @@ class Lambda(torch.nn.Module):
 
     An important "feature" of this module is that it is intentionally limited:
 
-    - only the functions from the `torch` module and the methods of `torch.Tensor`
-      are allowed
-    - the passed callable must accept a single `torch.Tensor`
-      and return a single `torch.Tensor`
-    - the allowed keyword arguments must be of simple types (see the docstring).
+    - Only the functions from the `torch` module and the methods of `torch.Tensor`
+      are allowed.
+    - The passed callable must accept a single `torch.Tensor`
+      and return a single `torch.Tensor`.
+    - The allowed keyword arguments must be of simple types (see the docstring).
 
     **Usage**
 
@@ -30,12 +30,16 @@ class Lambda(torch.nn.Module):
     >>> m = delu.nn.Lambda(torch.Tensor.abs_)
     >>> m(torch.tensor(-1.0))
     tensor(1.)
-    >>> # Custom functions are not allowed.
+
+    Custom functions are not allowed:
+
     >>> m = delu.nn.Lambda(lambda x: torch.abs(x))
     Traceback (most recent call last):
         ...
     ValueError: fn must be a function from `torch` or a method of `torch.Tensor`, but ...
-    >>> # Non-trivial keyword arguments are not allowed.
+
+    Non-trivial keyword arguments are not allowed:
+
     >>> m = delu.nn.Lambda(torch.mul, other=torch.tensor(2.0))
     Traceback (most recent call last):
         ...
