@@ -11,6 +11,7 @@ delu.nn
     :template: class.rst
 
     Lambda
+    NLinear
 
 .. autosummary::
     :nosignatures:
