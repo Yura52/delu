@@ -11,7 +11,8 @@ DeLU (Deep Learning Utilities)
    aimed at improving the day-to-day experience with PyTorch
    (``delu.nn`` ~ ``torch.nn``, ``delu.random`` ~ ``torch.random``, etc.)
 
-#. ``delu.tools``: other handy tools for PyTorch users
+#. ``delu.tools``: other handy tools for common scenarios
+   (e.g. for implementing training loops)
 
 Installation
 ------------

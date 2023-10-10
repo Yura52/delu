@@ -1,4 +1,4 @@
-"""Handy tools for building deep learning pipelines."""
+"""Handy tools for developing deep learning pipelines."""
 
 import datetime
 import time
