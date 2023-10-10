@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="NLinear" href="delu.nn.NLinear.html" /><link rel="prev" title="delu.nn" href="../nn.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="named_sequential" href="delu.nn.named_sequential.html" /><link rel="prev" title="Lambda" href="delu.nn.Lambda.html" />
 
     <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
-        <title>Lambda - DeLU</title>
+        <title>NLinear - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -178,8 +178,8 @@
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../nn.html">delu.nn</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Lambda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.nn.NLinear.html">NLinear</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delu.nn.Lambda.html">Lambda</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">NLinear</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.nn.named_sequential.html">named_sequential</a></li>
 </ul>
 </li>
@@ -221,7 +221,7 @@
         </a>
         <div class="content-icon-container">
           <div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/Yura52/delu/edit/main/docs/api/generated/delu.nn.Lambda.rst" title="Edit this page">
+  <a class="muted-link" href="https://github.com/Yura52/delu/edit/main/docs/api/generated/delu.nn.NLinear.rst" title="Edit this page">
     <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
@@ -243,63 +243,93 @@
           </label>
         </div>
         <article role="main">
-          <section id="lambda">
-<h1>Lambda<a class="headerlink" href="#lambda" title="Permalink to this heading">#</a></h1>
+          <section id="nlinear">
+<h1>NLinear<a class="headerlink" href="#nlinear" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="delu.nn.Lambda">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">delu.nn.</span></span><span class="sig-name descname"><span class="pre">Lambda</span></span><a class="reference internal" href="../../_modules/delu/nn.html#Lambda"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.Lambda" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="delu.nn.NLinear">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">delu.nn.</span></span><span class="sig-name descname"><span class="pre">NLinear</span></span><a class="reference internal" href="../../_modules/delu/nn.html#NLinear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.NLinear" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
-<p>A wrapper for functions from <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a> and methods of <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>.</p>
-<p>An important “feature” of this module is that it is intentionally limited:</p>
+<p>N linear layers for N inputs: <code class="xref py py-obj docutils literal notranslate"><span class="pre">(*,</span> <span class="pre">*N,</span> <span class="pre">D1)</span> <span class="pre">-&gt;</span> <span class="pre">(*,</span> <span class="pre">*N,</span> <span class="pre">D2)</span></code></p>
+<p>For a tensor <code class="docutils literal notranslate"><span class="pre">x</span></code> of the shape <code class="docutils literal notranslate"><span class="pre">(*B,</span> <span class="pre">*N,</span> <span class="pre">D1)</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">*B</span></code> are batch dimensions, <code class="docutils literal notranslate"><span class="pre">*N</span></code> are object dimensions
+(e.g. a sequence size in NLP, or width &amp; height in computer vision)
+and <code class="docutils literal notranslate"><span class="pre">D1</span></code> is the current embedding size (e.g. the number of features/channels):</p>
 <ul class="simple">
-<li><p>Only the functions from the <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a> module and the methods of <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>
-are allowed.</p></li>
-<li><p>The passed callable must accept a single <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>
-and return a single <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>.</p></li>
-<li><p>The allowed keyword arguments must be of simple types (see the docstring).</p></li>
+<li><p>applying <code class="docutils literal notranslate"><span class="pre">torch.nn.Linear(D1,</span> <span class="pre">D2)</span></code> to <code class="docutils literal notranslate"><span class="pre">x</span></code> means applying <em>the same</em> linear
+transformation to each of the <code class="docutils literal notranslate"><span class="pre">math.prod(N)</span></code> embeddings.</p></li>
+<li><p>applying <code class="docutils literal notranslate"><span class="pre">NLinear(N,</span> <span class="pre">D1,</span> <span class="pre">D2)</span></code> to <code class="docutils literal notranslate"><span class="pre">x</span></code> means applying <em>a separate</em> linear
+transformation to each of the <code class="docutils literal notranslate"><span class="pre">math.prod(N)</span></code> embeddings.</p></li>
+</ul>
+<p>In other words, <code class="docutils literal notranslate"><span class="pre">NLinear(N,</span> <span class="pre">D1,</span> <span class="pre">D2)</span></code> is a collection of <code class="docutils literal notranslate"><span class="pre">math.prod(N)</span></code>
+non-shared <code class="docutils literal notranslate"><span class="pre">torch.nn.Linear(D1,</span> <span class="pre">D2)</span></code> layers.</p>
+<p><strong>Shape</strong></p>
+<ul class="simple">
+<li><p>Input: <code class="docutils literal notranslate"><span class="pre">(*,</span> <span class="pre">*n,</span> <span class="pre">in_features)</span></code>, where <code class="docutils literal notranslate"><span class="pre">*</span></code> are batch dimensions.</p></li>
+<li><p>Output: <code class="docutils literal notranslate"><span class="pre">(*,</span> <span class="pre">*n,</span> <span class="pre">out_features)</span></code>.</p></li>
 </ul>
 <p><strong>Usage</strong></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">shape</span>
-<span class="go">torch.Size([2, 3, 1])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="o">.</span><span class="n">abs_</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">))</span>
-<span class="go">tensor(1.)</span>
+<p>Let’s consider a Transformer-like model that outputs tensors of the shape
+<code class="docutils literal notranslate"><span class="pre">(batch_size,</span> <span class="pre">n_tokens,</span> <span class="pre">d_embedding)</span></code>
+(in terms of NLP, <code class="docutils literal notranslate"><span class="pre">n_tokens</span></code> is the sequence length).
+The following example demonstrates how to train a separate linear transformation
+for each of the <code class="docutils literal notranslate"><span class="pre">n_tokens</span></code> embeddings using <a class="reference internal" href="#delu.nn.NLinear" title="delu.nn.NLinear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NLinear</span></code></a>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_tokens</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d_embedding_in</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d_embedding_out</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">n_tokens</span><span class="p">,</span> <span class="n">d_embedding_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([2, 3, 4])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">NLinear</span><span class="p">(</span><span class="n">n_tokens</span><span class="p">,</span> <span class="n">d_embedding_in</span><span class="p">,</span> <span class="n">d_embedding_out</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([2, 3, 5])</span>
 </pre></div>
 </div>
-<p>Custom functions are not allowed:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="gt">Traceback (most recent call last):</span>
-<span class="w">    </span><span class="o">...</span>
-<span class="gr">ValueError</span>: <span class="n">fn must be a function from `torch` or a method of `torch.Tensor`, but ...</span>
-</pre></div>
-</div>
-<p>Non-trivial keyword arguments are not allowed:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">2.0</span><span class="p">))</span>
-<span class="gt">Traceback (most recent call last):</span>
-<span class="w">    </span><span class="o">...</span>
-<span class="gr">ValueError</span>: <span class="n">For kwargs, the allowed value types include: ...</span>
+<p>Similarly to <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Linear.html#torch.nn.Linear" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Linear</span></code></a>, the input can have any number of batch dimensions.
+The number of layers <code class="docutils literal notranslate"><span class="pre">n</span></code>, in turn, can be also be arbitrary.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Computer vision.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">batch_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">width</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">height</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">in_channels</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out_channels</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="o">*</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([2, 3, 4, 5, 6])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># The number of layers: width * heght = 4 * 5 = 20</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">NLinear</span><span class="p">((</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="n">in_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([2, 3, 4, 5, 7])</span>
 </pre></div>
 </div>
 <dl class="py method">
-<dt class="sig sig-object py" id="delu.nn.Lambda.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.1)"><span class="pre">Tensor</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/nn.html#Lambda.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.Lambda.__init__" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fn</strong> – the callable.</p></li>
-<li><p><strong>kwargs</strong> – the keyword arguments for <code class="docutils literal notranslate"><span class="pre">fn</span></code>. The allowed values types include:
-None, bool, int, float, bytes, str
-and (nested) tuples of these simple types.</p></li>
-</ul>
-</dd>
+<dt class="sig sig-object py" id="delu.nn.NLinear.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span>
+
+<dl>
+<dd><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">in_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">out_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>,</dd>
 </dl>
+
+<span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/nn.html#NLinear.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.NLinear.__init__" title="Permalink to this definition">#</a></dt>
+<dd><p>All arguments are the same as in <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Linear.html#torch.nn.Linear" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Linear</span></code></a> except for <code class="docutils literal notranslate"><span class="pre">n</span></code>,
+which is the expected layout of the input (see the examples in <a class="reference internal" href="#delu.nn.NLinear" title="delu.nn.NLinear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NLinear</span></code></a>).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="delu.nn.Lambda.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.1)"><span class="pre">Tensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.1)"><span class="pre">Tensor</span></a></span></span><a class="reference internal" href="../../_modules/delu/nn.html#Lambda.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.Lambda.forward" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="delu.nn.NLinear.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.1)"><span class="pre">Tensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.1)"><span class="pre">Tensor</span></a></span></span><a class="reference internal" href="../../_modules/delu/nn.html#NLinear.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.NLinear.forward" title="Permalink to this definition">#</a></dt>
 <dd><p>Do the forward pass.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="delu.nn.NLinear.reset_parameters">
+<span class="sig-name descname"><span class="pre">reset_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/nn.html#NLinear.reset_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.NLinear.reset_parameters" title="Permalink to this definition">#</a></dt>
+<dd><p>Reset all parameters.</p>
 </dd></dl>
 
 </dd></dl>
@@ -311,23 +341,23 @@ and (nested) tuples of these simple types.</p></li>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="delu.nn.NLinear.html">
+          <a class="next-page" href="delu.nn.named_sequential.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">NLinear</div>
+                <div class="title">named_sequential</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../nn.html">
+          <a class="prev-page" href="delu.nn.Lambda.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">delu.nn</div>
+                <div class="title">Lambda</div>
                 
               </div>
             </a>
@@ -368,10 +398,11 @@ and (nested) tuples of these simple types.</p></li>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Lambda</a><ul>
-<li><a class="reference internal" href="#delu.nn.Lambda"><code class="docutils literal notranslate"><span class="pre">Lambda</span></code></a><ul>
-<li><a class="reference internal" href="#delu.nn.Lambda.__init__"><code class="docutils literal notranslate"><span class="pre">Lambda.__init__()</span></code></a></li>
-<li><a class="reference internal" href="#delu.nn.Lambda.forward"><code class="docutils literal notranslate"><span class="pre">Lambda.forward()</span></code></a></li>
+<li><a class="reference internal" href="#">NLinear</a><ul>
+<li><a class="reference internal" href="#delu.nn.NLinear"><code class="docutils literal notranslate"><span class="pre">NLinear</span></code></a><ul>
+<li><a class="reference internal" href="#delu.nn.NLinear.__init__"><code class="docutils literal notranslate"><span class="pre">NLinear.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#delu.nn.NLinear.forward"><code class="docutils literal notranslate"><span class="pre">NLinear.forward()</span></code></a></li>
+<li><a class="reference internal" href="#delu.nn.NLinear.reset_parameters"><code class="docutils literal notranslate"><span class="pre">NLinear.reset_parameters()</span></code></a></li>
 </ul>
 </li>
 </ul>

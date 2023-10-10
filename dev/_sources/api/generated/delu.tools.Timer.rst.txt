@@ -1,9 +1,9 @@
-﻿IndexLoader
-===========
+﻿Timer
+=====
 
-.. currentmodule:: delu.data
+.. currentmodule:: delu.tools
 
-.. autoclass:: IndexLoader
+.. autoclass:: Timer
     :show-inheritance:
     :members:
     :special-members:

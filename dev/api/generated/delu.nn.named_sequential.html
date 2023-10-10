@@ -3,15 +3,15 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.nn" href="../nn.html" /><link rel="prev" title="free_memory" href="delu.hardware.free_memory.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.random" href="../random.html" /><link rel="prev" title="NLinear" href="delu.nn.NLinear.html" />
 
     <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
-        <title>get_gpus_info - DeLU</title>
+        <title>named_sequential - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2e88c323" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2f8d3599" />
     
     
 
@@ -151,7 +151,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   <div class="sidebar-logo-container">
-    <img class="sidebar-logo" src="../../_static/logo_120x120.svg" alt="Logo"/>
+    <img class="sidebar-logo" src="../../_static/logo.svg" alt="Logo"/>
   </div>
   
   
@@ -162,7 +162,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../version.html">v0.0.18 ▼</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version.html">v0.0.19 ▼</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/Yura52/delu">Source code</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API &amp; Examples</span></p>
@@ -171,44 +171,36 @@
 <li class="toctree-l2"><a class="reference internal" href="delu.to.html">to</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.cat.html">cat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.iter_batches.html">iter_batches</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.EarlyStopping.html">EarlyStopping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.Timer.html">Timer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.ProgressTracker.html">ProgressTracker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.Stream.html">Stream</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.collate.html">delu.collate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.concat.html">delu.concat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.improve_reproducibility.html">delu.improve_reproducibility</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.evaluation.html">evaluation</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../cuda.html">delu.cuda</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of delu.cuda</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="delu.cuda.free_memory.html">free_memory</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../data.html">delu.data</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.Enumerate.html">Enumerate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.IndexDataset.html">IndexDataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.make_index_dataloader.html">make_index_dataloader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.FnDataset.html">FnDataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.IndexLoader.html">IndexLoader</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../hardware.html">delu.hardware</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.hardware</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="delu.hardware.free_memory.html">free_memory</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">get_gpus_info</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../nn.html">delu.nn</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="delu.nn.Lambda.html">Lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delu.nn.NLinear.html">NLinear</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">named_sequential</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.seed.html">seed</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.get_state.html">get_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.set_state.html">set_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.preserve_state.html">preserve_state</a></li>
 </ul>
 </li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../utils.data.html">delu.utils.data</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.utils.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="delu.utils.data.Enumerate.html">Enumerate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delu.utils.data.IndexDataset.html">IndexDataset</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tools.html"><strong>delu.tools</strong></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of delu.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="delu.tools.EarlyStopping.html">EarlyStopping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delu.tools.Timer.html">Timer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">[deprecated]</a></li>
 </ul>
 
 </div>
@@ -229,7 +221,7 @@
         </a>
         <div class="content-icon-container">
           <div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/Yura52/delu/edit/main/docs/api/generated/delu.hardware.get_gpus_info.rst" title="Edit this page">
+  <a class="muted-link" href="https://github.com/Yura52/delu/edit/main/docs/api/generated/delu.nn.named_sequential.rst" title="Edit this page">
     <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
@@ -251,57 +243,47 @@
           </label>
         </div>
         <article role="main">
-          <section id="get-gpus-info">
-<h1>get_gpus_info<a class="headerlink" href="#get-gpus-info" title="Permalink to this heading">#</a></h1>
+          <section id="named-sequential">
+<h1>named_sequential<a class="headerlink" href="#named-sequential" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="delu.hardware.get_gpus_info">
-<span class="sig-prename descclassname"><span class="pre">delu.hardware.</span></span><span class="sig-name descname"><span class="pre">get_gpus_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/hardware.html#get_gpus_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.hardware.get_gpus_info" title="Permalink to this definition">#</a></dt>
-<dd><p>[<strong>DEPRECATED</strong> | Instead, use functions from <a class="reference external" href="https://pytorch.org/docs/stable/cuda.html#module-torch.cuda" title="(in PyTorch v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda</span></code></a>] Get information about GPU devices: driver version, memory, utilization etc.</p>
-<p>The example below shows what kind of information is returned as the result. All
-figures about memory are given in bytes.</p>
+<dt class="sig sig-object py" id="delu.nn.named_sequential">
+<span class="sig-prename descclassname"><span class="pre">delu.nn.</span></span><span class="sig-name descname"><span class="pre">named_sequential</span></span><span class="sig-paren">(</span>
+
+<dl>
+<dd><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">names_and_modules</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.1)"><span class="pre">Module</span></a><span class="p"><span class="pre">]</span></span></span></em>,</dd>
+</dl>
+
+<span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Sequential.html#torch.nn.Sequential" title="(in PyTorch v2.1)"><span class="pre">Sequential</span></a></span></span><a class="reference internal" href="../../_modules/delu/nn.html#named_sequential"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.named_sequential" title="Permalink to this definition">#</a></dt>
+<dd><p>A shortcut for creating <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Sequential.html#torch.nn.Sequential" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></a> with named modules without using <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a>.</p>
+<p>The sole purpose of this function is to improve the ergonomics and readability
+of the common construction.</p>
+<p><strong>Usage</strong></p>
+<p>This …</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">named_sequential</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;linear1&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;activation&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;linear2&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>… is equivalent to this:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">OrderedDict</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="p">[</span>
+<span class="gp">... </span>            <span class="p">(</span><span class="s1">&#39;linear1&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)),</span>
+<span class="gp">... </span>            <span class="p">(</span><span class="s1">&#39;activation&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()),</span>
+<span class="gp">... </span>            <span class="p">(</span><span class="s1">&#39;linear2&#39;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="p">]</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Information about GPU devices.</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.11)"><strong>RuntimeError</strong></a> – if necessary cuda-related libraries are not found. Usually, it
-    means that the function is run on a machine without GPU.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><em>Dict</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a>]</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>names_and_modules</strong> – the names and the modules.</p>
 </dd>
 </dl>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The ‘devices’ value contains information about <em>all</em> gpus regardless of the
-value of <code class="docutils literal notranslate"><span class="pre">CUDA_VISIBLE_DEVICES</span></code>.</p>
-</div>
-<p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">delu</span><span class="o">.</span><span class="n">hardware</span><span class="o">.</span><span class="n">get_gpu_info</span><span class="p">())</span>
-</pre></div>
-</div>
-<p>Output example (formatted for convenience):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
-    &#39;driver&#39;: &#39;440.33.01&#39;,
-    &#39;devices&#39;: [
-        {
-            &#39;name&#39;: &#39;GeForce RTX 2080 Ti&#39;,
-            &#39;memory_total&#39;: 11554717696,
-            &#39;memory_free&#39;: 11554652160,
-            &#39;memory_used&#39;: 65536,
-            &#39;utilization&#39;: 0,
-        },
-        {
-            &#39;name&#39;: &#39;GeForce RTX 2080 Ti&#39;,
-            &#39;memory_total&#39;: 11552096256,
-            &#39;memory_free&#39;: 11552030720,
-            &#39;memory_used&#39;: 65536,
-            &#39;utilization&#39;: 0,
-        },
-    ],
-}
-</pre></div>
-</div>
 </dd></dl>
 
 </section>
@@ -311,23 +293,23 @@ value of <code class="docutils literal notranslate"><span class="pre">CUDA_VISIB
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../nn.html">
+          <a class="next-page" href="../random.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">delu.nn</div>
+                <div class="title">delu.random</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="delu.hardware.free_memory.html">
+          <a class="prev-page" href="delu.nn.NLinear.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">free_memory</div>
+                <div class="title">NLinear</div>
                 
               </div>
             </a>
@@ -368,8 +350,8 @@ value of <code class="docutils literal notranslate"><span class="pre">CUDA_VISIB
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">get_gpus_info</a><ul>
-<li><a class="reference internal" href="#delu.hardware.get_gpus_info"><code class="docutils literal notranslate"><span class="pre">get_gpus_info()</span></code></a></li>
+<li><a class="reference internal" href="#">named_sequential</a><ul>
+<li><a class="reference internal" href="#delu.nn.named_sequential"><code class="docutils literal notranslate"><span class="pre">named_sequential()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -381,11 +363,11 @@ value of <code class="docutils literal notranslate"><span class="pre">CUDA_VISIB
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=a217521b"></script>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2ca83e85"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/copybutton.js?v=30646c52"></script>
     </body>
 </html>

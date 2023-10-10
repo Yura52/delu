@@ -1,6 +1,0 @@
-﻿free\_memory
-============
-
-.. currentmodule:: delu.hardware
-
-.. autofunction:: free_memory

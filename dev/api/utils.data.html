@@ -3,15 +3,15 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.concat" href="delu.concat.html" /><link rel="prev" title="Stream" href="delu.Stream.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Enumerate" href="generated/delu.utils.data.Enumerate.html" /><link rel="prev" title="preserve_state" href="generated/delu.random.preserve_state.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
-        <title>delu.collate - DeLU</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2e88c323" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
+        <title>delu.utils.data - DeLU</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2f8d3599" />
     
     
 
@@ -128,7 +128,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">DeLU</div></a>
+      <a href="../index.html"><div class="brand">DeLU</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -139,7 +139,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -148,67 +148,59 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   <div class="sidebar-logo-container">
-    <img class="sidebar-logo" src="../../_static/logo_120x120.svg" alt="Logo"/>
+    <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
   
-</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../version.html">v0.0.18 ▼</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../version.html">v0.0.19 ▼</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/Yura52/delu">Source code</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API &amp; Examples</span></p>
 <ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../delu.html">delu</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of delu</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="delu.to.html">to</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.cat.html">cat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.iter_batches.html">iter_batches</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.EarlyStopping.html">EarlyStopping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.Timer.html">Timer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.ProgressTracker.html">ProgressTracker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.Stream.html">Stream</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">delu.collate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.concat.html">delu.concat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.improve_reproducibility.html">delu.improve_reproducibility</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.evaluation.html">evaluation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="delu.html">delu</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of delu</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.to.html">to</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.cat.html">cat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.iter_batches.html">iter_batches</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../cuda.html">delu.cuda</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of delu.cuda</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="delu.cuda.free_memory.html">free_memory</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="cuda.html">delu.cuda</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of delu.cuda</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.cuda.free_memory.html">free_memory</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../data.html">delu.data</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.Enumerate.html">Enumerate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.IndexDataset.html">IndexDataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.make_index_dataloader.html">make_index_dataloader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.FnDataset.html">FnDataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.IndexLoader.html">IndexLoader</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.nn.Lambda.html">Lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.nn.NLinear.html">NLinear</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.nn.named_sequential.html">named_sequential</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../hardware.html">delu.hardware</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.hardware</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="delu.hardware.free_memory.html">free_memory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.hardware.get_gpus_info.html">get_gpus_info</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.random.seed.html">seed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.random.get_state.html">get_state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.random.set_state.html">set_state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.random.preserve_state.html">preserve_state</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="delu.nn.Lambda.html">Lambda</a></li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">delu.utils.data</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.utils.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.utils.data.Enumerate.html">Enumerate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.utils.data.IndexDataset.html">IndexDataset</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="delu.random.seed.html">seed</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.random.get_state.html">get_state</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.random.set_state.html">set_state</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.random.preserve_state.html">preserve_state</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="tools.html"><strong>delu.tools</strong></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of delu.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.tools.EarlyStopping.html">EarlyStopping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/delu.tools.Timer.html">Timer</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="deprecated.html">[deprecated]</a></li>
 </ul>
 
 </div>
@@ -229,7 +221,7 @@
         </a>
         <div class="content-icon-container">
           <div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/Yura52/delu/edit/main/docs/api/generated/delu.collate.rst" title="Edit this page">
+  <a class="muted-link" href="https://github.com/Yura52/delu/edit/main/docs/api/utils.data.rst" title="Edit this page">
     <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
@@ -245,31 +237,27 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="delu-collate">
-<h1>delu.collate<a class="headerlink" href="#delu-collate" title="Permalink to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="delu.collate">
-<span class="sig-prename descclassname"><span class="pre">delu.</span></span><span class="sig-name descname"><span class="pre">collate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/data.html#collate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.collate" title="Permalink to this definition">#</a></dt>
-<dd><p>[<strong>DEPRECATED</strong> | Instead, use <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.default_collate" title="(in PyTorch v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.default_collate</span></code></a>] Almost an alias for <code class="code docutils literal notranslate"><span class="pre">torch.utils.data.dataloader.default_collate</span></code>.
-Namely, the input is allowed to be any kind of iterable, not only a list. Firstly,
-if it is not a list, it is transformed to a list. Then, the list is passed to the
-original function and the result is returned as is.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.11)"><em>Iterable</em></a>) – </p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a></p>
-</dd>
-</dl>
-</dd></dl>
-
+          <section id="module-delu.utils.data">
+<span id="delu-utils-data"></span><span id="data"></span><h1>delu.utils.data<a class="headerlink" href="#module-delu.utils.data" title="Permalink to this heading">#</a></h1>
+<p>An addition to <a class="reference external" href="https://pytorch.org/docs/stable/data.html#module-torch.utils.data" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data</span></code></a>.</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/delu.utils.data.Enumerate.html#delu.utils.data.Enumerate" title="delu.utils.data.Enumerate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Enumerate</span></code></a></p></td>
+<td><p>Make a PyTorch dataset return indices in addition to items (like <a class="reference external" href="https://docs.python.org/3/library/functions.html#enumerate" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enumerate</span></code></a>, but for datasets).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/delu.utils.data.IndexDataset.html#delu.utils.data.IndexDataset" title="delu.utils.data.IndexDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IndexDataset</span></code></a></p></td>
+<td><p>A trivial dataset that yields indices back to user (useful for DistributedDataParallel (DDP)).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 
         </article>
@@ -277,23 +265,23 @@ original function and the result is returned as is.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="delu.concat.html">
+          <a class="next-page" href="generated/delu.utils.data.Enumerate.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">delu.concat</div>
+                <div class="title">Enumerate</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="delu.Stream.html">
+          <a class="prev-page" href="generated/delu.random.preserve_state.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Stream</div>
+                <div class="title">preserve_state</div>
                 
               </div>
             </a>
@@ -322,36 +310,17 @@ original function and the result is returned as is.</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">delu.collate</a><ul>
-<li><a class="reference internal" href="#delu.collate"><code class="docutils literal notranslate"><span class="pre">collate()</span></code></a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=a217521b"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
-    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../_static/copybutton.js?v=f281be69"></script>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2ca83e85"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
     </body>
 </html>

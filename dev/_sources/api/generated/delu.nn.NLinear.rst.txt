@@ -1,9 +1,9 @@
-﻿Enumerate
-=========
+﻿NLinear
+=======
 
-.. currentmodule:: delu.data
+.. currentmodule:: delu.nn
 
-.. autoclass:: Enumerate
+.. autoclass:: NLinear
     :show-inheritance:
     :members:
     :special-members:

@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="preserve_state" href="delu.random.preserve_state.html" /><link rel="prev" title="get_state" href="delu.random.get_state.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="IndexDataset" href="delu.utils.data.IndexDataset.html" /><link rel="prev" title="delu.utils.data" href="../utils.data.html" />
 
     <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
-        <title>set_state - DeLU</title>
+        <title>Enumerate - DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -183,15 +183,15 @@
 <li class="toctree-l2"><a class="reference internal" href="delu.nn.named_sequential.html">named_sequential</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../random.html">delu.random</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.seed.html">seed</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.get_state.html">get_state</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">set_state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delu.random.set_state.html">set_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.preserve_state.html">preserve_state</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../utils.data.html">delu.utils.data</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.utils.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="delu.utils.data.Enumerate.html">Enumerate</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../utils.data.html">delu.utils.data</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.utils.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Enumerate</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.utils.data.IndexDataset.html">IndexDataset</a></li>
 </ul>
 </li>
@@ -221,7 +221,7 @@
         </a>
         <div class="content-icon-container">
           <div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/Yura52/delu/edit/main/docs/api/generated/delu.random.set_state.rst" title="Edit this page">
+  <a class="muted-link" href="https://github.com/Yura52/delu/edit/main/docs/api/generated/delu.utils.data.Enumerate.rst" title="Edit this page">
     <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
@@ -243,24 +243,95 @@
           </label>
         </div>
         <article role="main">
-          <section id="set-state">
-<h1>set_state<a class="headerlink" href="#set-state" title="Permalink to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="delu.random.set_state">
-<span class="sig-prename descclassname"><span class="pre">delu.random.</span></span><span class="sig-name descname"><span class="pre">set_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cuda</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/random.html#set_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.random.set_state" title="Permalink to this definition">#</a></dt>
-<dd><p>Set the global random number generator states in <a class="reference external" href="https://docs.python.org/3/library/random.html#module-random" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.26)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a> and <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a>.</p>
+          <section id="enumerate">
+<h1>Enumerate<a class="headerlink" href="#enumerate" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="delu.utils.data.Enumerate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">delu.utils.data.</span></span><span class="sig-name descname"><span class="pre">Enumerate</span></span><a class="reference internal" href="../../_modules/delu/utils/data.html#Enumerate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.utils.data.Enumerate" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset" title="(in PyTorch v2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a></p>
+<p>Make a PyTorch dataset return indices in addition to items (like <a class="reference external" href="https://docs.python.org/3/library/functions.html#enumerate" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enumerate</span></code></a>, but for datasets).</p>
 <p><strong>Usage</strong></p>
-<p>See <a class="reference internal" href="delu.random.get_state.html#delu.random.get_state" title="delu.random.get_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.random.get_state</span></code></a> for usage examples.</p>
+<p>Creating the initial non-enumerated <code class="docutils literal notranslate"><span class="pre">dataset</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span>
+<span class="go">tensor([[0., 1.],</span>
+<span class="go">        [2., 3.],</span>
+<span class="go">        [4., 5.],</span>
+<span class="go">        [6., 7.],</span>
+<span class="go">        [8., 9.]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span>
+<span class="go">tensor([  0, -10, -20, -30, -40])</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="go">(tensor([4., 5.]), tensor(-20))</span>
+</pre></div>
+</div>
+<p>The enumerated dataset returns indices in addition to items:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enumerated_dataset</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enumerated_dataset</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="go">(2, (tensor([4., 5.]), tensor(-20)))</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">x_batch</span><span class="p">,</span> <span class="n">y_batch</span> <span class="ow">in</span> <span class="n">DataLoader</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2</span>
+<span class="gp">... </span><span class="p">):</span>
+<span class="gp">... </span>    <span class="o">...</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">x_batch</span><span class="p">,</span> <span class="n">y_batch</span><span class="p">)</span> <span class="ow">in</span> <span class="n">DataLoader</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">enumerated_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2</span>
+<span class="gp">... </span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">batch_idx</span><span class="p">)</span>
+<span class="go">tensor([0, 1])</span>
+<span class="go">tensor([2, 3])</span>
+<span class="go">tensor([4])</span>
+</pre></div>
+</div>
+<p>The original dataset and its size remain accessible:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enumerated_dataset</span><span class="o">.</span><span class="n">dataset</span> <span class="ow">is</span> <span class="n">dataset</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">enumerated_dataset</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="delu.utils.data.Enumerate.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/delu/utils/data.html#Enumerate.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.utils.data.Enumerate.__getitem__" title="Permalink to this definition">#</a></dt>
+<dd><p>Return index and the corresponding item from the original dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>state</strong> – the dict with the states produced by <a class="reference internal" href="delu.random.get_state.html#delu.random.get_state" title="delu.random.get_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.random.get_state</span></code></a>.
-If the <code class="xref py py-obj docutils literal notranslate"><span class="pre">'torch.cuda'</span></code> key is presented in <code class="docutils literal notranslate"><span class="pre">state</span></code>, then it must be
-a list of the size equal to the device count as reported by
-<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.cuda.device_count.html#torch.cuda.device_count" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda.device_count</span></code></a>.
-If <code class="xref py py-obj docutils literal notranslate"><span class="pre">'torch.cuda'</span></code> is not presented in <code class="docutils literal notranslate"><span class="pre">state</span></code>, the state of the CUDA
-global RNGs is not set.</p>
+<dd class="field-odd"><p><strong>index</strong> – the index.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(index, item)</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="delu.utils.data.Enumerate.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset" title="(in PyTorch v2.1)"><span class="pre">Dataset</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/utils/data.html#Enumerate.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.utils.data.Enumerate.__init__" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataset</strong> – the original dataset.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="delu.utils.data.Enumerate.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../../_modules/delu/utils/data.html#Enumerate.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.utils.data.Enumerate.__len__" title="Permalink to this definition">#</a></dt>
+<dd><p>Get the length of the original dataset.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="delu.utils.data.Enumerate.dataset">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dataset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset" title="(in PyTorch v2.1)"><span class="pre">Dataset</span></a></em><a class="headerlink" href="#delu.utils.data.Enumerate.dataset" title="Permalink to this definition">#</a></dt>
+<dd><p>The original dataset.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -270,23 +341,23 @@ global RNGs is not set.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="delu.random.preserve_state.html">
+          <a class="next-page" href="delu.utils.data.IndexDataset.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">preserve_state</div>
+                <div class="title">IndexDataset</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="delu.random.get_state.html">
+          <a class="prev-page" href="../utils.data.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">get_state</div>
+                <div class="title">delu.utils.data</div>
                 
               </div>
             </a>
@@ -327,8 +398,14 @@ global RNGs is not set.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">set_state</a><ul>
-<li><a class="reference internal" href="#delu.random.set_state"><code class="docutils literal notranslate"><span class="pre">set_state()</span></code></a></li>
+<li><a class="reference internal" href="#">Enumerate</a><ul>
+<li><a class="reference internal" href="#delu.utils.data.Enumerate"><code class="docutils literal notranslate"><span class="pre">Enumerate</span></code></a><ul>
+<li><a class="reference internal" href="#delu.utils.data.Enumerate.__getitem__"><code class="docutils literal notranslate"><span class="pre">Enumerate.__getitem__()</span></code></a></li>
+<li><a class="reference internal" href="#delu.utils.data.Enumerate.__init__"><code class="docutils literal notranslate"><span class="pre">Enumerate.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#delu.utils.data.Enumerate.__len__"><code class="docutils literal notranslate"><span class="pre">Enumerate.__len__()</span></code></a></li>
+<li><a class="reference internal" href="#delu.utils.data.Enumerate.dataset"><code class="docutils literal notranslate"><span class="pre">Enumerate.dataset</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

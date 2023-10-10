@@ -1,9 +1,9 @@
-﻿Stream
-======
+﻿Enumerate
+=========
 
-.. currentmodule:: delu
+.. currentmodule:: delu.utils.data
 
-.. autoclass:: Stream
+.. autoclass:: Enumerate
     :show-inheritance:
     :members:
     :special-members:

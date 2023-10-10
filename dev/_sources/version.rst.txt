@@ -1,10 +1,11 @@
 .. this page is needed for themes without the version dropdown
 
-v0.0.18 ▼
+v0.0.19 ▼
 ============
 
 - `development <https://yura52.github.io/delu/dev>`_
 - `stable <https://yura52.github.io/delu>`_
+- `v0.0.18 <https://yura52.github.io/delu/0.0.18>`_
 - `v0.0.17 <https://yura52.github.io/delu/0.0.17>`_
 - `v0.0.15 <https://yura52.github.io/delu/0.0.15>`_
 - `v0.0.13 <https://yura52.github.io/delu/0.0.13>`_

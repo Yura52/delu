@@ -1,6 +1,0 @@
-﻿delu.concat
-===========
-
-.. currentmodule:: delu
-
-.. autofunction:: concat

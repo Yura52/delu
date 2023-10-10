@@ -1,9 +1,9 @@
-﻿EarlyStopping
-=============
+﻿IndexDataset
+============
 
-.. currentmodule:: delu
+.. currentmodule:: delu.utils.data
 
-.. autoclass:: EarlyStopping
+.. autoclass:: IndexDataset
     :show-inheritance:
     :members:
     :special-members:

@@ -1,6 +1,0 @@
-﻿get\_gpus\_info
-===============
-
-.. currentmodule:: delu.hardware
-
-.. autofunction:: get_gpus_info

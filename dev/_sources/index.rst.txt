@@ -16,10 +16,11 @@ DeLU (Deep Learning Utilities)
 
    api/delu
    api/cuda
-   api/data
-   api/hardware
    api/nn
    api/random
+   api/utils.data
+   api/tools
+   api/deprecated
 
 ----
 

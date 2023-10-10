@@ -1,6 +1,0 @@
-﻿delu.improve\_reproducibility
-=============================
-
-.. currentmodule:: delu
-
-.. autofunction:: improve_reproducibility

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.data" href="../data.html" /><link rel="prev" title="delu.cuda" href="../cuda.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="delu.nn" href="../nn.html" /><link rel="prev" title="delu.cuda" href="../cuda.html" />
 
     <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
         <title>free_memory - DeLU</title>
@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2e88c323" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2f8d3599" />
     
     
 
@@ -151,7 +151,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   <div class="sidebar-logo-container">
-    <img class="sidebar-logo" src="../../_static/logo_120x120.svg" alt="Logo"/>
+    <img class="sidebar-logo" src="../../_static/logo.svg" alt="Logo"/>
   </div>
   
   
@@ -162,7 +162,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../version.html">v0.0.18 ▼</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version.html">v0.0.19 ▼</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/Yura52/delu">Source code</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API &amp; Examples</span></p>
@@ -171,44 +171,36 @@
 <li class="toctree-l2"><a class="reference internal" href="delu.to.html">to</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.cat.html">cat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.iter_batches.html">iter_batches</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.EarlyStopping.html">EarlyStopping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.Timer.html">Timer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.ProgressTracker.html">ProgressTracker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.Stream.html">Stream</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.collate.html">delu.collate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.concat.html">delu.concat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.improve_reproducibility.html">delu.improve_reproducibility</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.evaluation.html">evaluation</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../cuda.html">delu.cuda</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of delu.cuda</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">free_memory</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../data.html">delu.data</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.Enumerate.html">Enumerate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.IndexDataset.html">IndexDataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.make_index_dataloader.html">make_index_dataloader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.FnDataset.html">FnDataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.data.IndexLoader.html">IndexLoader</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../hardware.html">delu.hardware</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.hardware</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="delu.hardware.free_memory.html">free_memory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.hardware.get_gpus_info.html">get_gpus_info</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="delu.nn.Lambda.html">Lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delu.nn.NLinear.html">NLinear</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delu.nn.named_sequential.html">named_sequential</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.seed.html">seed</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.get_state.html">get_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.set_state.html">set_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.preserve_state.html">preserve_state</a></li>
 </ul>
 </li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../utils.data.html">delu.utils.data</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.utils.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="delu.utils.data.Enumerate.html">Enumerate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delu.utils.data.IndexDataset.html">IndexDataset</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tools.html"><strong>delu.tools</strong></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of delu.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="delu.tools.EarlyStopping.html">EarlyStopping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delu.tools.Timer.html">Timer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">[deprecated]</a></li>
 </ul>
 
 </div>
@@ -255,22 +247,17 @@
 <h1>free_memory<a class="headerlink" href="#free-memory" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="delu.cuda.free_memory">
-<span class="sig-prename descclassname"><span class="pre">delu.cuda.</span></span><span class="sig-name descname"><span class="pre">free_memory</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/delu/cuda.html#free_memory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.cuda.free_memory" title="Permalink to this definition">#</a></dt>
-<dd><p>Free GPU memory: <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.cuda.synchronize.html#torch.cuda.synchronize" title="(in PyTorch v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda.synchronize</span></code></a> + <a class="reference external" href="https://docs.python.org/3/library/gc.html#gc.collect" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gc.collect</span></code></a> + <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.cuda.empty_cache.html#torch.cuda.empty_cache" title="(in PyTorch v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda.empty_cache</span></code></a>.</p>
+<span class="sig-prename descclassname"><span class="pre">delu.cuda.</span></span><span class="sig-name descname"><span class="pre">free_memory</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/cuda.html#free_memory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.cuda.free_memory" title="Permalink to this definition">#</a></dt>
+<dd><p>Free GPU memory = <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.cuda.synchronize.html#torch.cuda.synchronize" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda.synchronize</span></code></a> + <a class="reference external" href="https://docs.python.org/3/library/gc.html#gc.collect" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gc.collect</span></code></a> + <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.cuda.empty_cache.html#torch.cuda.empty_cache" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda.empty_cache</span></code></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>There is a small chunk of GPU-memory (occupied by drivers) that is impossible to
-free. It is a <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch v2.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a> “limitation”, so the function inherits this property.</p>
+free. This is a property of <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a>, so this function inherits this property.</p>
 </div>
-<p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">delu</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">free_memory</span><span class="p">()</span>
+<p><strong>Usage</strong></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">delu</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">free_memory</span><span class="p">()</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None</p>
-</dd>
-</dl>
 </dd></dl>
 
 </section>
@@ -280,12 +267,12 @@ free. It is a <a class="reference external" href="https://pytorch.org/docs/stabl
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../data.html">
+          <a class="next-page" href="../nn.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">delu.data</div>
+                <div class="title">delu.nn</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -350,11 +337,11 @@ free. It is a <a class="reference external" href="https://pytorch.org/docs/stabl
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=a217521b"></script>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2ca83e85"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/copybutton.js?v=30646c52"></script>
     </body>
 </html>
