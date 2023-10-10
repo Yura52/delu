@@ -1,4 +1,4 @@
-# This module contains internal private tools imported by other modules.
+# This module contains internal tools imported by other modules.
 
 import functools
 import inspect
