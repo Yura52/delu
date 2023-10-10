@@ -48,7 +48,7 @@ def to(obj: T, /, *args, **kwargs) -> T:
     ...     [{(False, 1): torch.tensor(1.0)}, 2.0],
     ...     UserDataclass([UserClass(), UserClass()]),
     ... )
-    >>> delu.to(data, device='cpu', dtype=torch.float16)
+    >>> data = delu.to(data, device='cpu', dtype=torch.float16)
 
     .. note::
         Technically, the function traverses the input ``data`` as follows:
