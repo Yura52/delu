@@ -48,6 +48,10 @@ copybutton_prompt_is_regexp = True
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
     'numpy': ('https://numpy.org/doc/stable', None),
+    'sklearn': (
+        'http://scikit-learn.org/stable',
+        (None, './_intersphinx/sklearn-objects.inv'),
+    ),
     'torch': ('https://pytorch.org/docs/stable', None),
 }
 

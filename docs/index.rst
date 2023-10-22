@@ -20,6 +20,7 @@ DeLU (Deep Learning Utilities)
    api/random
    api/utils.data
    api/tools
+   api/delu.tabular.preprocessing
 
 .. toctree::
    :caption: Deprecated API

@@ -7,6 +7,8 @@ dependencies:
 - numpy=1.19.5
 - python=3.8.17
 - pytorch=1.8.0
+- scikit-learn=1.0.2
+- scipy=1.5.3
 # Documentation.
 - furo=2023.9.10
 - pdoc=14.1.0

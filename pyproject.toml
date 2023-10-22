@@ -15,6 +15,10 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = ["numpy >=1.18,<2", "torch >=1.8,<3"]
+optional-dependencies = { tabular = [
+    "scikit-learn >=1.0,<2",
+    "scipy >=1.0,<2",
+] }
 dynamic = ["version", "description"]
 keywords = [
     "artificial intelligence",
@@ -41,14 +45,9 @@ source = ["delu"]
 name = "delu"
 
 [tool.isort]
-combine_as_imports = true
-# all the following settings are taken from the isort5.0's "black" profile
-ensure_newline_before_comments = true
-force_grid_wrap = 0
-include_trailing_comma = true
-line_length = 88
+profile = "black"
 multi_line_output = 3
-use_parentheses = true
+known_first_party = ["rtdl"]
 
 [tool.mypy]
 check_untyped_defs = true
