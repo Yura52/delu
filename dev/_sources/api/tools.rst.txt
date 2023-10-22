@@ -1,5 +1,5 @@
-**delu.tools**
-==============
+delu.tools
+==========
 
 .. currentmodule:: delu.tools
 
