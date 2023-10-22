@@ -7,7 +7,7 @@ DeLU (Deep Learning Utilities)
 .. toctree::
    :hidden:
 
-   v0.0.21 ▼ <https://yura52.github.io/delu/versions.html>
+   v0.0.22.dev0 ▼ <https://yura52.github.io/delu/versions.html>
    Source code <https://github.com/Yura52/delu>
 
 .. toctree::
