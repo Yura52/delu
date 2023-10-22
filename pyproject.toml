@@ -60,5 +60,5 @@ ignore_errors = true
 
 [tool.ruff]
 line-length = 88
-extend-select = ["RUF", "UP"]
+extend-select = ["RUF", "UP", "E501", "E731"]
 target-version = "py38"
