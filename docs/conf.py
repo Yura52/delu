@@ -61,16 +61,13 @@ napoleon_use_admonition_for_examples = False
 spelling_show_suggestions = True
 
 # >>> HTML >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-html_favicon = 'images/favicon.ico'
-html_logo = 'images/logo.svg'
 html_static_path = ['_static']
-html_title = project
+html_title = f'⚫ {project}'
 
 # >>> Furo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 html_css_files = ['custom.css']
 html_theme = 'furo'
 html_theme_options = {
-    'sidebar_hide_name': True,
     'source_repository': 'https://github.com/Yura52/delu/',
     'source_branch': 'main',
     'source_directory': 'docs/',

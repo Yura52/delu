@@ -7,16 +7,21 @@ DeLU (Deep Learning Utilities)
 
 **DeLU is a simple PyTorch toolbox** consisting of the following parts:
 
-#. Extensions to PyTorch submodules (``delu.nn`` ~ ``torch.nn``, ``delu.random`` ~ ``torch.random``, etc.).
+- Extensions to PyTorch submodules:
 
-#. ``delu.tools``: handy tools for common scenarios
-   (e.g. for implementing training loops).
+  - ``delu`` ~ ``torch``
+  - ``delu.cuda`` ~ ``torch.cuda``
+  - ``delu.nn`` ~ ``torch.nn``
+  - ``delu.random`` ~ ``torch.random``
+  - ``delu.utils.data`` ~ ``torch.utils.data``
 
-#. ``delu.tabular``: tools for working on tabular data problems.
+- ``delu.tools``: handy tools for common scenarios
+  (e.g. for implementing training loops).
+- ``delu.tabular``: tools for working on tabular data problems.
 
-**Project status** 🧪 *DeLU is maintained and well-documented,
-however, until the release of v0.1.0 (which is not guaranteed to happen),
-the project should be considered as experimental.*
+**Project status** 🧪 *Until the release of v0.1.0
+(which is not guaranteed to happen), DeLU should be considered as experimental.
+All changes are carefully documented in the GitHub releases.*
 
 Installation
 ------------
