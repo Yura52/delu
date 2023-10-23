@@ -89,14 +89,16 @@ def seed(base_seed: Optional[int], /, *, one_cuda_seed: bool = False) -> int:
 
     torch.manual_seed(int(generate_state(1, dtype=np.uint64)[0]))
 
-    if one_cuda_seed:
-        if not torch.cuda._is_in_bad_fork():
+    if not torch.cuda._is_in_bad_fork():
+        if one_cuda_seed:
             torch.cuda.manual_seed_all(int(generate_state(1, dtype=np.uint64)[0]))
-    else:
-        for i in range(torch.cuda.device_count()):
-            torch.cuda.default_generators[i].manual_seed(
-                int(generate_state(1, dtype=np.uint64)[0])
-            )
+        else:
+            if torch.cuda.is_available():
+                torch.cuda.init()
+                for i in range(torch.cuda.device_count()):
+                    torch.cuda.default_generators[i].manual_seed(
+                        int(generate_state(1, dtype=np.uint64)[0])
+                    )
 
     return base_seed
 
