@@ -18,7 +18,7 @@ consisting of two parts:
      - Handy tools for common scenarios (e.g. for training loops).
 
 **Project status** 🧪
-*Until the release of v0.1.0, DeLU should be considered as experimental.
+*Until the release of the version 0.1.0, DeLU should be considered as experimental.
 All changes are carefully documented in the release notes.*
 
 Installation

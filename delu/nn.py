@@ -1,4 +1,4 @@
-"""An addition to `torch.nn`."""
+"""An extension to `torch.nn`."""
 
 import inspect
 from collections import OrderedDict
@@ -93,18 +93,24 @@ class Lambda(torch.nn.Module):
 
 
 class NLinear(nn.Module):
-    """N linear layers for N inputs: `(*, *N, D1) -> (*, *N, D2)`
+    """N linear layers for N inputs: ``(*, *N, D1) -> (*, *N, D2)``.
 
-    For a tensor ``x`` of the shape ``(*B, *N, D1)``,
-    where ``*B`` are batch dimensions, ``*N`` are object dimensions
-    (e.g. a sequence size in NLP, or width & height in computer vision)
-    and ``D1`` is the current embedding size (e.g. the number of features/channels):
+    Examples of use cases:
 
-    - applying ``torch.nn.Linear(D1, D2)`` to ``x`` means applying *the same* linear
-      transformation to each of the ``math.prod(N)`` embeddings.
+    - NLP: apply a *separate* linear layer to each token embedding in a sequence
+        - Batch: ``(B, S, D)`` (``B`` is the batch size, ``S`` is the sequence length,
+          ``D`` is the embedding size)
+        - Module: ``NLinear(S, D, D)``
+        - By contrast, ``torch.nn.Linear(D, D)`` would apply *the same* linear layer
+          to all token embeddings.
 
-    - applying ``NLinear(N, D1, D2)`` to ``x`` means applying *a separate* linear
-      transformation to each of the ``math.prod(N)`` embeddings.
+    - CV: apply a *separate* linear layer to each the patch embeddings of an image
+        - Batch: ``(B, W, H, C1)`` (``B`` is the batch size,
+          ``W`` and ``H`` are the image dimensions,
+          ``C1`` is the current number of channels)
+        - Module: ``NLinear((W, H), C1, C2)``
+        - By contrast, ``torch.nn.Linear(D, D)`` would apply *the same* linear layer
+          to all patch embeddings.
 
     In other words, ``NLinear(N, D1, D2)`` is a collection of ``math.prod(N)``
     non-shared ``torch.nn.Linear(D1, D2)`` layers.

@@ -1,4 +1,4 @@
-"""An addition to `torch.utils.data`."""
+"""An extension to `torch.utils.data`."""
 
 from typing import Any, Tuple, TypeVar
 
@@ -12,6 +12,11 @@ __all__ = ['Enumerate', 'IndexDataset']
 
 class Enumerate(Dataset):
     """Make a PyTorch dataset return indices in addition to items (like `enumerate`, but for datasets).
+
+    TL;DR:
+
+    - ``dataset[i] -> value``
+    - ``enumerated_dataset[i] -> (i, value)``
 
     **Usage**
 

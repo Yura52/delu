@@ -1,4 +1,4 @@
-"""An addition to `torch.cuda`."""
+"""An extension to `torch.cuda`."""
 import gc
 
 import torch

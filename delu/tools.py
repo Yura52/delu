@@ -7,10 +7,10 @@ from typing import Any, Dict, Literal, Optional
 
 
 class EarlyStopping:
-    """Performs early stopping after N consequtive non-improving metric updates.
+    """Prevents overfitting by stopping training when the validation metric stops improving.
 
-    A non-improving/unsuccessful metric update is an update with a metric value
-    no better than the best seen metric value over the whole run.
+    "Stops improving" means that the best metric value (over the whole training run)
+    does not improve for N (``patience``) consecutive epochs.
 
     **Usage**
 
@@ -18,11 +18,11 @@ class EarlyStopping:
     when the validation metric stops improving:
 
     >>> def evaluate_model() -> float:
-    ...     # A dummy example.
+    ...     # Compute and return the metric for the validation set.
     ...     return torch.rand(1).item()
     ...
     >>> # If the validation score does not increase (mode='max')
-    >>> # for 10 (patience=10) epochs in a row, stop the training.
+    >>> # for patience=10 epochs in a row, stop the training.
     >>> early_stopping = delu.EarlyStopping(patience=10, mode='max')
     >>> for epoch in range(1000):
     ...     # Training.
@@ -40,7 +40,7 @@ class EarlyStopping:
 
     >>> early_stopping = delu.EarlyStopping(2, mode='max')
     >>>
-    >>> # Format: (<the best seen score>, <the number of consequtive fails>)``)
+    >>> # Format: (<the best seen score>, <the number of consequtive fails>)
     >>> early_stopping.update(1.0)  # (1.0, 0)
     >>> early_stopping.should_stop()
     False
@@ -83,7 +83,7 @@ class EarlyStopping:
     >>> early_stopping.update(-10.0)   # (-10.0, 2)
     >>> early_stopping.should_stop()
     True
-    """
+    """  # noqa: E501
 
     def __init__(
         self, patience: int, *, mode: Literal['min', 'max'], min_delta: float = 0.0

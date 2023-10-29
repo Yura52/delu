@@ -1,4 +1,4 @@
-"""Random sampling utilities."""
+"""An extension to `torch.random`."""
 
 import random
 import secrets
@@ -104,7 +104,7 @@ def seed(base_seed: Optional[int], /, *, one_cuda_seed: bool = False) -> int:
 
 
 def get_state() -> Dict[str, Any]:
-    """Aggregate the global random generator states from `random`, `numpy` and `torch`.
+    """Aggregate the global RNG states from `random`, `numpy` and `torch`.
 
     The result of this function can be passed to `delu.random.set_state`.
     An important use case is saving the random states to a checkpoint.
@@ -167,7 +167,7 @@ def get_state() -> Dict[str, Any]:
 
 
 def set_state(state: Dict[str, Any], /, cuda: bool = True) -> None:
-    """Set the global random number generator states in `random`, `numpy` and `torch`.
+    """Set the global RNG states in `random`, `numpy` and `torch`.
 
     **Usage**
 
@@ -197,10 +197,14 @@ def set_state(state: Dict[str, Any], /, cuda: bool = True) -> None:
 
 @contextmanager
 def preserve_state():
-    """A decorator and context manager for preserving the global random generators state.
+    """Save the global RNG states before entering a context/function and restore it on exit.
 
-    The function saves the global random generators state
+    The function saves the global RNG states in `random`, `numpy` and `torch`
     when entering a context/function and restores it on exit/return.
+
+    .. note::
+        Within a context or a function call, random sampling works as usual,
+        i.e. it continues to be "random".
 
     **Usage**
 
@@ -215,8 +219,13 @@ def preserve_state():
     ...
     >>> with delu.random.preserve_state():
     ...     a = f()
-    >>> b = f()
-    >>> a == b
+    ...     # Within the context, random sampling continues to be random:
+    ...     b = f()
+    ...     assert a != b
+    ...
+    >>> # However, now, the state is reset to what it was before the context.
+    >>> c = f()
+    >>> a == c
     True
 
     As a decorator

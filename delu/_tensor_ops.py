@@ -21,7 +21,14 @@ K = TypeVar('K')
 
 
 def to(obj: T, /, *args, **kwargs) -> T:
-    """Change devices and data types of tensors and modules in an arbitrary Python object (like `torch.Tensor.to` / `torch.nn.Module.to`, but for any Python object).
+    """Change devices and data types of tensors and modules in an arbitrary Python object.
+
+    This function is like `torch.Tensor.to`/`torch.nn.Module.to`,
+    but applicable to any Python object.
+
+    .. note::
+        Non-trivial (nested) objects such as user-defined classes or PyTorch modules
+        are modified **in-place**. See the note below for more details.
 
     The two primary use cases for this function are changing the device and data types
     of tensors and modules that are a part of:
@@ -30,6 +37,8 @@ def to(obj: T, /, *args, **kwargs) -> T:
     - an object of an unknown type (when implementing generic pipelines)
 
     **Usage**
+
+    A technical example:
 
     >>> from dataclasses import dataclass
     >>>
@@ -56,13 +65,14 @@ def to(obj: T, /, *args, **kwargs) -> T:
         - for tensors/modules, `torch.Tensor.to`/`torch.nn.Module.to` is applied
           with the provided ``*args`` and ``**kwargs``; in particular, it means
           that tensors will be replaced with new tensors (in terms of Python `id`),
-          but modules will be modified inplace;
+          but modules will be modified in-place;
         - for tuples, named tuples, lists, other sequences (see `typing.Sequence`),
           dictionaries and other mappings (see `typing.Mapping`),
           a new collection of the same type is returned,
           where `delu.to` is recursively applied
           to all values of the original collection;
-        - in all other cases, the original object in terms of Python `id` is returned.
+        - in all other cases, the original object is modified in-place, and
+          the same object in terms of Python `id` is returned.
           If the object has attributes (defined in ``__dict__`` or ``__slots__``),
           then `delu.to` is recursively applied to all the attributes.
 
@@ -109,12 +119,22 @@ def to(obj: T, /, *args, **kwargs) -> T:
 
 
 def cat(data: List[T], /, dim: int = 0) -> T:
-    """Concatenate a sequence of collections of tensors (like `torch.cat`, but for collections of tensors).
+    """Concatenate a sequence of collections of tensors.
 
-    While `torch.cat` concatenates a sequence of tensors,
-    `delu.to` concatenates a sequence of *collections* of tensors
-    (tuples, named tuples, dictionaries, dataclasses and nested combinations thereof;
-    **nested lists are not allowed**).
+    `delu.cat` is a generalized version of `torch.cat`.
+    A typical use case is concatenating a sequence of batches:
+
+    - (think of ``xi`` and ``yi`` as of batches)
+    - ``torch.cat: [x1, x2, ..., xN] -> x``
+    - ``delu.cat:  [x1, x2, ..., xN] -> x``
+    - ``delu.cat:  [(x1, y1), (x2, y2), ..., (xN, yN)] -> (x, y)``
+    - ``delu.cat:  [{'x': x1, 'y': y1}, ..., {'x': xN, 'y': yN}] -> {'x': x, 'y': y}``
+    - Same for named tuples.
+    - Same for dataclasses.
+    - Nested collections are supported.
+
+    In other words, while `torch.cat` concatenates a sequence of tensors,
+    `delu.to` concatenates a sequence of *collections* of tensors.
 
     **Usage**
 
@@ -157,6 +177,7 @@ def cat(data: List[T], /, dim: int = 0) -> T:
     >>> class Data(NamedTuple):
     ...     x: torch.Tensor
     ...     y: torch.Tensor
+    ...
     >>> batches = [Data(x1, y1), Data(x2, y2), Data(x3, y3)]
     >>> result = delu.cat(batches)
     >>> print(isinstance(result, Data), len(result.x), len(result.y))
@@ -169,6 +190,7 @@ def cat(data: List[T], /, dim: int = 0) -> T:
     ... class Data:
     ...     x: torch.Tensor
     ...     y: torch.Tensor
+    ...
     >>> batches = [Data(x1, y1), Data(x2, y2), Data(x3, y3)]
     >>> result = delu.cat(batches)
     >>> print(isinstance(result, Data), len(result.x), len(result.y))
@@ -199,7 +221,7 @@ def cat(data: List[T], /, dim: int = 0) -> T:
         dim: the dimension along which the tensors are concatenated.
     Returns:
         The concatenated items of the list.
-    """  # noqa: E501
+    """
     if not isinstance(data, list):
         raise ValueError('The input must be a list')
     if not data:
@@ -265,7 +287,14 @@ def iter_batches(
 ) -> Iterator[T]:
     """Iterate over a tensor or a collection of tensors by (random) batches.
 
-    The function makes batches along the first dimension of the tensors in ``data``.
+    The function makes batches along the first dimension of the tensors in ``data``:
+
+    - (think of ``xi`` and ``yi`` as of batches)
+    - ``delu.iter_batches: x -> [x1, x2, ..., xN]``
+    - ``delu.iter_batches: (x, y) -> [(x1, y1), (x2, y2), ..., (xN, yN)]``
+    - ``delu.iter_batches: {'x': x, 'y': y} -> [{'x': x1, 'y': y1}, ...]``
+    - Same for named tuples.
+    - Same for dataclasses.
 
     .. note::
         `delu.iter_batches` is significantly faster for in-memory tensors
