@@ -32,6 +32,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'sphinx_copybutton',
+    'sphinx_design',
 ]
 if platform.machine() != 'arm64':
     # libenchant is not available for Apple CPUs.

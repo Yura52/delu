@@ -161,7 +161,7 @@ class EarlyStopping:
 
 
 class Timer:
-    """A simple pickle-friendly timer for measuring execution time.
+    """A simple **pickle-friendly** timer for measuring execution time.
 
     `Timer` is applicable to both long-running activies (e.g. a whole program)
     and limited code regions (e.g. training steps).

@@ -15,10 +15,6 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = ["numpy >=1.18,<2", "torch >=1.8,<3"]
-optional-dependencies = { tabular = [
-    "scikit-learn >=1.0,<2",
-    "scipy >=1.0,<2",
-] }
 dynamic = ["version", "description"]
 keywords = [
     "artificial intelligence",

@@ -1,17 +1,24 @@
 DeLU (Deep Learning Utilities)
 ==============================
 
+:bdg-secondary:`v0.0.22`
+:bdg-link-secondary-line:`Other versions <https://yura52.github.io/delu/versions.html>`
+:bdg-link-secondary-line:`Source code <https://github.com/Yura52/delu>`
+
+.. :bdg-secondary:`v0.0.22`
+.. :bdg-link-primary-line:`Other versions <https://yura52.github.io/delu/versions.html>`
+.. :bdg-link-primary-line:`Source code <https://github.com/Yura52/delu>`
+
 .. include:: ../README.rst
    :start-after: __INCLUDE_0__
 
-.. toctree::
-   :hidden:
+.. .. toctree::
+..    :hidden:
 
-   v0.0.22.dev0 ▼ <https://yura52.github.io/delu/versions.html>
-   Source code <https://github.com/Yura52/delu>
+..    v0.0.22 ▼ <https://yura52.github.io/delu/versions.html>
 
 .. toctree::
-   :caption: API & Examples
+   :caption: Usage & API
    :hidden:
 
    api/delu
@@ -20,13 +27,19 @@ DeLU (Deep Learning Utilities)
    api/random
    api/utils.data
    api/tools
-   api/delu.tabular.preprocessing
 
 .. toctree::
-   :caption: Deprecated API
+   :caption: Other
    :hidden:
 
    api/deprecated
+
+.. .. toctree::
+..    :caption: Deprecated API
+..    :hidden:
+
+
+..    api/deprecated
 
 ----
 
