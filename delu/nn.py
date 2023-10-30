@@ -1,6 +1,7 @@
 """An extension to `torch.nn`."""
 
 import inspect
+import warnings
 from collections import OrderedDict
 from typing import Callable, Tuple, Union
 
@@ -24,6 +25,9 @@ class Lambda(torch.nn.Module):
 
     **Usage**
 
+    >>> m = delu.nn.Lambda(torch.squeeze)
+    >>> m(torch.randn(2, 1, 3, 1)).shape
+    torch.Size([2, 3])
     >>> m = delu.nn.Lambda(torch.squeeze, dim=1)
     >>> m(torch.randn(2, 1, 3, 1)).shape
     torch.Size([2, 3, 1])
@@ -31,8 +35,11 @@ class Lambda(torch.nn.Module):
     >>> m(torch.tensor(-1.0))
     tensor(1.)
 
-    Custom functions are not allowed:
+    Custom functions are not allowed
+    (technically, they are **temporarily** allowed,
+    but this functionality is deprecated and will be removed in future releases):
 
+    >>> # xdoctest: +SKIP
     >>> m = delu.nn.Lambda(lambda x: torch.abs(x))
     Traceback (most recent call last):
         ...
@@ -62,10 +69,18 @@ class Lambda(torch.nn.Module):
                 or inspect.ismethod(fn)  # Check if fn is a @classmethod
             )
         ):
-            raise ValueError(
-                'fn must be a function from `torch` or a method of `torch.Tensor`,'
-                f' but this is not true for the passed {fn=}'
+            warnings.warn(
+                'Passing custom functions to delu.nn.Lambda is deprecated'
+                ' and will be removed in future releases.'
+                ' Only functions from the `torch` module and methods of `torch.Tensor`'
+                ' are allowed',
+                DeprecationWarning,
             )
+            # NOTE: in future releases, replace the above warning with this exception:
+            # raise ValueError(
+            #     'fn must be a function from `torch` or a method of `torch.Tensor`,'
+            #     f' but this is not true for the passed {fn=}'
+            # )
 
         def is_valid_value(x):
             return (

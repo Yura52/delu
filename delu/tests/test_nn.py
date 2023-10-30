@@ -17,8 +17,10 @@ def test_lambda():
     m = delu.nn.Lambda(torch.squeeze, dim=1)
     assert m(torch.zeros(2, 1, 3, 1)).shape == (2, 3, 1)
 
-    with pytest.raises(ValueError):
-        delu.nn.Lambda(lambda x: torch.square(x))()
+    # with pytest.raises(ValueError):
+    with pytest.deprecated_call():
+        m = delu.nn.Lambda(lambda x: torch.square(x))
+    assert torch.allclose(m(torch.tensor(3.0)), torch.tensor(9.0))
 
     with pytest.raises(ValueError):
         delu.nn.Lambda(torch.mul, other=torch.tensor(2.0))()
