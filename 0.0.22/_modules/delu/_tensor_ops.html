@@ -1,0 +1,749 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
+
+    <!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
+        <title>delu._tensor_ops - ⚫ DeLU</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2f8d3599" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --admonition-title-font-size: 90.5%;
+  --admonition-font-size: 90.5%;
+  --code-font-size: var(--font-size--small);
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">⚫ DeLU</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+  <span class="sidebar-brand-text">⚫ DeLU</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Usage &amp; API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/delu.html">delu</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of delu</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.to.html">to</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.cat.html">cat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.iter_batches.html">iter_batches</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/cuda.html">delu.cuda</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of delu.cuda</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.cuda.free_memory.html">free_memory</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.nn.Lambda.html">Lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.nn.NLinear.html">NLinear</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.nn.named_sequential.html">named_sequential</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.random.seed.html">seed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.random.get_state.html">get_state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.random.set_state.html">set_state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.random.preserve_state.html">preserve_state</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/utils.data.html">delu.utils.data</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.utils.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.utils.data.Enumerate.html">Enumerate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.utils.data.IndexDataset.html">IndexDataset</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/tools.html">delu.tools</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of delu.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.tools.EarlyStopping.html">EarlyStopping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.tools.Timer.html">Timer</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/deprecated.html">Deprecated API</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <h1>Source code for delu._tensor_ops</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">Iterator</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Mapping</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Sequence</span><span class="p">,</span>
+    <span class="n">TypeVar</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+
+<span class="kn">from</span> <span class="nn">._utils</span> <span class="kn">import</span> <span class="n">deprecated</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="to"><a class="viewcode-back" href="../../api/generated/delu.to.html#delu.to">[docs]</a><span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Change devices and data types of tensors and modules in an arbitrary Python object.</span>
+
+<span class="sd">    This function is like `torch.Tensor.to`/`torch.nn.Module.to`,</span>
+<span class="sd">    but applicable to any Python object.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        Non-trivial (nested) objects such as user-defined classes or PyTorch modules</span>
+<span class="sd">        are modified **in-place**. See the note below for more details.</span>
+
+<span class="sd">    The two primary use cases for this function are changing the device and data types</span>
+<span class="sd">    of tensors and modules that are a part of:</span>
+
+<span class="sd">    - a complex Python object (e.g. a training state, checkpoint, etc.)</span>
+<span class="sd">    - an object of an unknown type (when implementing generic pipelines)</span>
+
+<span class="sd">    **Usage**</span>
+
+<span class="sd">    A technical example:</span>
+
+<span class="sd">    &gt;&gt;&gt; from dataclasses import dataclass</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; class UserClass:</span>
+<span class="sd">    ...     def __init__(self):</span>
+<span class="sd">    ...         self.a = torch.randn(5)</span>
+<span class="sd">    ...         self.b = (&#39;Hello, world!&#39;, torch.randn(10))</span>
+<span class="sd">    ...         self.c = nn.Linear(4, 7)</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; @dataclass</span>
+<span class="sd">    &gt;&gt;&gt; class UserDataclass:</span>
+<span class="sd">    ...     d: List[UserClass]</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; data = (</span>
+<span class="sd">    ...     torch.rand(3),</span>
+<span class="sd">    ...     [{(False, 1): torch.tensor(1.0)}, 2.0],</span>
+<span class="sd">    ...     UserDataclass([UserClass(), UserClass()]),</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; data = delu.to(data, device=&#39;cpu&#39;, dtype=torch.float16)</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        Technically, the function traverses the input ``data`` as follows:</span>
+
+<span class="sd">        - for tensors/modules, `torch.Tensor.to`/`torch.nn.Module.to` is applied</span>
+<span class="sd">          with the provided ``*args`` and ``**kwargs``; in particular, it means</span>
+<span class="sd">          that tensors will be replaced with new tensors (in terms of Python `id`),</span>
+<span class="sd">          but modules will be modified in-place;</span>
+<span class="sd">        - for tuples, named tuples, lists, other sequences (see `typing.Sequence`),</span>
+<span class="sd">          dictionaries and other mappings (see `typing.Mapping`),</span>
+<span class="sd">          a new collection of the same type is returned,</span>
+<span class="sd">          where `delu.to` is recursively applied</span>
+<span class="sd">          to all values of the original collection;</span>
+<span class="sd">        - in all other cases, the original object is modified in-place, and</span>
+<span class="sd">          the same object in terms of Python `id` is returned.</span>
+<span class="sd">          If the object has attributes (defined in ``__dict__`` or ``__slots__``),</span>
+<span class="sd">          then `delu.to` is recursively applied to all the attributes.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        obj: the input object.</span>
+<span class="sd">        args: the positional arguments for `torch.Tensor.to`/`torch.nn.Module.to`.</span>
+<span class="sd">        kwargs: the keyword arguments for `torch.Tensor.to`/`torch.nn.Module.to`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the transformed object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="c1"># mypy does not understand what is going on here, hence a lot of &quot;type: ignore&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">obj</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
+        <span class="n">constructor</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="c1"># Handle named tuples.</span>
+            <span class="n">constructor</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="s1">&#39;_make&#39;</span><span class="p">,</span> <span class="n">constructor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">constructor</span><span class="p">(</span><span class="n">to</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+        <span class="c1"># Tensors can be keys.</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)(</span>
+            <span class="p">(</span><span class="n">to</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span> <span class="n">to</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__slots__</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__slots__&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">to</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">attr</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;Failed to update the attribute </span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s1">&#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39; of the (perhaps, nested) value of the type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+                    <span class="s1">&#39; with the `delu.to` function&#39;</span>
+                <span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+
+<div class="viewcode-block" id="cat"><a class="viewcode-back" href="../../api/generated/delu.cat.html#delu.cat">[docs]</a><span class="k">def</span> <span class="nf">cat</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="o">/</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Concatenate a sequence of collections of tensors.</span>
+
+<span class="sd">    `delu.cat` is a generalized version of `torch.cat`.</span>
+<span class="sd">    A typical use case is concatenating a sequence of batches:</span>
+
+<span class="sd">    - (think of ``xi`` and ``yi`` as of batches)</span>
+<span class="sd">    - ``torch.cat: [x1, x2, ..., xN] -&gt; x``</span>
+<span class="sd">    - ``delu.cat:  [x1, x2, ..., xN] -&gt; x``</span>
+<span class="sd">    - ``delu.cat:  [(x1, y1), (x2, y2), ..., (xN, yN)] -&gt; (x, y)``</span>
+<span class="sd">    - ``delu.cat:  [{&#39;x&#39;: x1, &#39;y&#39;: y1}, ..., {&#39;x&#39;: xN, &#39;y&#39;: yN}] -&gt; {&#39;x&#39;: x, &#39;y&#39;: y}``</span>
+<span class="sd">    - Same for named tuples.</span>
+<span class="sd">    - Same for dataclasses.</span>
+<span class="sd">    - Nested collections are supported.</span>
+
+<span class="sd">    In other words, while `torch.cat` concatenates a sequence of tensors,</span>
+<span class="sd">    `delu.to` concatenates a sequence of *collections* of tensors.</span>
+
+<span class="sd">    **Usage**</span>
+
+<span class="sd">    Common setup:</span>
+
+<span class="sd">    &gt;&gt;&gt; # First batch.</span>
+<span class="sd">    &gt;&gt;&gt; x1 = torch.randn(64, 10)</span>
+<span class="sd">    &gt;&gt;&gt; y1 = torch.randn(64)</span>
+<span class="sd">    &gt;&gt;&gt; # Second batch.</span>
+<span class="sd">    &gt;&gt;&gt; x2 = torch.randn(64, 10)</span>
+<span class="sd">    &gt;&gt;&gt; y2 = torch.randn(64)</span>
+<span class="sd">    &gt;&gt;&gt; # The last (incomplete) batch.</span>
+<span class="sd">    &gt;&gt;&gt; x3 = torch.randn(7, 10)</span>
+<span class="sd">    &gt;&gt;&gt; y3 = torch.randn(7)</span>
+<span class="sd">    &gt;&gt;&gt; # Total size.</span>
+<span class="sd">    &gt;&gt;&gt; len(x1) + len(x2) + len(x3)</span>
+<span class="sd">    135</span>
+
+<span class="sd">    `delu.cat` can be applied to tuples:</span>
+
+<span class="sd">    &gt;&gt;&gt; batches = [(x1, y1), (x2, y2), (x3, y3)]</span>
+<span class="sd">    &gt;&gt;&gt; X, Y = delu.cat(batches)</span>
+<span class="sd">    &gt;&gt;&gt; print(len(X), len(Y))</span>
+<span class="sd">    135 135</span>
+
+<span class="sd">    `delu.cat` can be applied to dictionaries:</span>
+
+<span class="sd">    &gt;&gt;&gt; batches = [</span>
+<span class="sd">    ...     {&#39;x&#39;: x1, &#39;y&#39;: y1},</span>
+<span class="sd">    ...     {&#39;x&#39;: x2, &#39;y&#39;: y2},</span>
+<span class="sd">    ...     {&#39;x&#39;: x3, &#39;y&#39;: y3},</span>
+<span class="sd">    ... ]</span>
+<span class="sd">    &gt;&gt;&gt; result = delu.cat(batches)</span>
+<span class="sd">    &gt;&gt;&gt; print(isinstance(result, dict), len(result[&#39;x&#39;]), len(result[&#39;y&#39;]))</span>
+<span class="sd">    True 135 135</span>
+
+<span class="sd">    `delu.cat` can be applied to named tuples:</span>
+
+<span class="sd">    &gt;&gt;&gt; from typing import NamedTuple</span>
+<span class="sd">    &gt;&gt;&gt; class Data(NamedTuple):</span>
+<span class="sd">    ...     x: torch.Tensor</span>
+<span class="sd">    ...     y: torch.Tensor</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; batches = [Data(x1, y1), Data(x2, y2), Data(x3, y3)]</span>
+<span class="sd">    &gt;&gt;&gt; result = delu.cat(batches)</span>
+<span class="sd">    &gt;&gt;&gt; print(isinstance(result, Data), len(result.x), len(result.y))</span>
+<span class="sd">    True 135 135</span>
+
+<span class="sd">    `delu.cat` can be applied to dataclasses:</span>
+
+<span class="sd">    &gt;&gt;&gt; from dataclasses import dataclass</span>
+<span class="sd">    &gt;&gt;&gt; @dataclass</span>
+<span class="sd">    ... class Data:</span>
+<span class="sd">    ...     x: torch.Tensor</span>
+<span class="sd">    ...     y: torch.Tensor</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; batches = [Data(x1, y1), Data(x2, y2), Data(x3, y3)]</span>
+<span class="sd">    &gt;&gt;&gt; result = delu.cat(batches)</span>
+<span class="sd">    &gt;&gt;&gt; print(isinstance(result, Data), len(result.x), len(result.y))</span>
+<span class="sd">    True 135 135</span>
+
+<span class="sd">    `delu.cat` can be applied to nested collections:</span>
+
+<span class="sd">    &gt;&gt;&gt; batches = [</span>
+<span class="sd">    ...     (x1, {&#39;a&#39;: {&#39;b&#39;: y1}}),</span>
+<span class="sd">    ...     (x2, {&#39;a&#39;: {&#39;b&#39;: y2}}),</span>
+<span class="sd">    ...     (x3, {&#39;a&#39;: {&#39;b&#39;: y3}}),</span>
+<span class="sd">    ... ]</span>
+<span class="sd">    &gt;&gt;&gt; X, Y_nested = delu.cat(batches)</span>
+<span class="sd">    &gt;&gt;&gt; print(len(X), len(Y_nested[&#39;a&#39;][&#39;b&#39;]))</span>
+<span class="sd">    135 135</span>
+
+<span class="sd">    **`delu.cat` cannot be applied to lists:**</span>
+
+<span class="sd">    &gt;&gt;&gt; # This does not work. Instead, use tuples.</span>
+<span class="sd">    &gt;&gt;&gt; # batches = [[x1, y1], [x2, y2], [x3, y3]]</span>
+<span class="sd">    &gt;&gt;&gt; # delu.cat(batches)  # Error</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: the list of collections of tensors.</span>
+<span class="sd">            All items of the list must be of the same type, structure and layout, only</span>
+<span class="sd">            the ``dim`` dimension can vary (same as for `torch.cat`).</span>
+<span class="sd">            All the &quot;leaf&quot; values must be of the type `torch.Tensor`.</span>
+<span class="sd">        dim: the dimension along which the tensors are concatenated.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        The concatenated items of the list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The input must be a list&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The input must be non-empty&#39;</span><span class="p">)</span>
+
+    <span class="n">first</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="n">constructor</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+        <span class="n">constructor</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="s1">&#39;_make&#39;</span><span class="p">,</span> <span class="n">constructor</span><span class="p">)</span>  <span class="c1"># Handle named tuples.</span>
+        <span class="k">return</span> <span class="n">constructor</span><span class="p">(</span>
+            <span class="n">cat</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">first</span><span class="p">))</span>  <span class="c1"># type: ignore</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)((</span><span class="n">key</span><span class="p">,</span> <span class="n">cat</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">first</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">elif</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">is_dataclass</span><span class="p">(</span><span class="n">first</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)(</span>
+            <span class="o">**</span><span class="p">{</span>
+                <span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">cat</span><span class="p">([</span><span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">fields</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The collection type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="si">}</span><span class="s1"> is not supported.&#39;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_make_index_batches</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">generator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Generator</span><span class="p">],</span>
+    <span class="n">drop_last</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;data must not contain empty tensors&#39;</span><span class="p">)</span>
+    <span class="n">batch_indices</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">randperm</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">generator</span><span class="o">=</span><span class="n">generator</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">shuffle</span>
+        <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">batch_indices</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">batch_indices</span> <span class="ow">and</span> <span class="n">drop_last</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch_indices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">batch_size</span>
+        <span class="k">else</span> <span class="n">batch_indices</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="iter_batches"><a class="viewcode-back" href="../../api/generated/delu.iter_batches.html#delu.iter_batches">[docs]</a><span class="k">def</span> <span class="nf">iter_batches</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">generator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Generator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">drop_last</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Iterate over a tensor or a collection of tensors by (random) batches.</span>
+
+<span class="sd">    The function makes batches along the first dimension of the tensors in ``data``:</span>
+
+<span class="sd">    - (think of ``xi`` and ``yi`` as of batches)</span>
+<span class="sd">    - ``delu.iter_batches: x -&gt; [x1, x2, ..., xN]``</span>
+<span class="sd">    - ``delu.iter_batches: (x, y) -&gt; [(x1, y1), (x2, y2), ..., (xN, yN)]``</span>
+<span class="sd">    - ``delu.iter_batches: {&#39;x&#39;: x, &#39;y&#39;: y} -&gt; [{&#39;x&#39;: x1, &#39;y&#39;: y1}, ...]``</span>
+<span class="sd">    - Same for named tuples.</span>
+<span class="sd">    - Same for dataclasses.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        `delu.iter_batches` is significantly faster for in-memory tensors</span>
+<span class="sd">        than `torch.utils.data.DataLoader`, because, when building batches,</span>
+<span class="sd">        it uses batched indexing instead of one-by-one indexing.</span>
+
+<span class="sd">    **Usage**</span>
+
+<span class="sd">    &gt;&gt;&gt; X = torch.randn(12, 32)</span>
+<span class="sd">    &gt;&gt;&gt; Y = torch.randn(12)</span>
+
+<span class="sd">    `delu.iter_batches` can be applied to tensors:</span>
+
+<span class="sd">    &gt;&gt;&gt; for x in delu.iter_batches(X, batch_size=5):</span>
+<span class="sd">    ...     print(len(x))</span>
+<span class="sd">    5</span>
+<span class="sd">    5</span>
+<span class="sd">    2</span>
+
+<span class="sd">    `delu.iter_batches` can be applied to tuples:</span>
+
+<span class="sd">    &gt;&gt;&gt; # shuffle=True can be useful for training.</span>
+<span class="sd">    &gt;&gt;&gt; dataset = (X, Y)</span>
+<span class="sd">    &gt;&gt;&gt; for x, y in delu.iter_batches(dataset, batch_size=5, shuffle=True):</span>
+<span class="sd">    ...     print(len(x), len(y))</span>
+<span class="sd">    5 5</span>
+<span class="sd">    5 5</span>
+<span class="sd">    2 2</span>
+<span class="sd">    &gt;&gt;&gt; # Drop the last incomplete batch.</span>
+<span class="sd">    &gt;&gt;&gt; for x, y in delu.iter_batches(</span>
+<span class="sd">    ...     dataset, batch_size=5, shuffle=True, drop_last=True</span>
+<span class="sd">    ... ):</span>
+<span class="sd">    ...     print(len(x), len(y))</span>
+<span class="sd">    5 5</span>
+<span class="sd">    5 5</span>
+<span class="sd">    &gt;&gt;&gt; # The last batch is complete, so drop_last=True does not have any effect.</span>
+<span class="sd">    &gt;&gt;&gt; batches = []</span>
+<span class="sd">    &gt;&gt;&gt; for x, y in delu.iter_batches(dataset, batch_size=6, drop_last=True):</span>
+<span class="sd">    ...     print(len(x), len(y))</span>
+<span class="sd">    ...     batches.append((x, y))</span>
+<span class="sd">    6 6</span>
+<span class="sd">    6 6</span>
+
+<span class="sd">    By default, ``shuffle`` is set to `False`, i.e. the order of items is preserved:</span>
+
+<span class="sd">    &gt;&gt;&gt; X2, Y2 = delu.cat(list(delu.iter_batches((X, Y), batch_size=5)))</span>
+<span class="sd">    &gt;&gt;&gt; print((X == X2).all().item(), (Y == Y2).all().item())</span>
+<span class="sd">    True True</span>
+
+<span class="sd">    `delu.iter_batches` can be applied to dictionaries:</span>
+
+<span class="sd">    &gt;&gt;&gt; dataset = {&#39;x&#39;: X, &#39;y&#39;: Y}</span>
+<span class="sd">    &gt;&gt;&gt; for batch in delu.iter_batches(dataset, batch_size=5, shuffle=True):</span>
+<span class="sd">    ...     print(isinstance(batch, dict), len(batch[&#39;x&#39;]), len(batch[&#39;y&#39;]))</span>
+<span class="sd">    True 5 5</span>
+<span class="sd">    True 5 5</span>
+<span class="sd">    True 2 2</span>
+
+<span class="sd">    `delu.iter_batches` can be applied to named tuples:</span>
+
+<span class="sd">    &gt;&gt;&gt; from typing import NamedTuple</span>
+<span class="sd">    &gt;&gt;&gt; class Data(NamedTuple):</span>
+<span class="sd">    ...     x: torch.Tensor</span>
+<span class="sd">    ...     y: torch.Tensor</span>
+<span class="sd">    &gt;&gt;&gt; dataset = Data(X, Y)</span>
+<span class="sd">    &gt;&gt;&gt; for batch in delu.iter_batches(dataset, batch_size=5, shuffle=True):</span>
+<span class="sd">    ...     print(isinstance(batch, Data), len(batch.x), len(batch.y))</span>
+<span class="sd">    True 5 5</span>
+<span class="sd">    True 5 5</span>
+<span class="sd">    True 2 2</span>
+
+<span class="sd">    `delu.iter_batches` can be applied to dataclasses:</span>
+
+<span class="sd">    &gt;&gt;&gt; from dataclasses import dataclass</span>
+<span class="sd">    &gt;&gt;&gt; @dataclass</span>
+<span class="sd">    ... class Data:</span>
+<span class="sd">    ...     x: torch.Tensor</span>
+<span class="sd">    ...     y: torch.Tensor</span>
+<span class="sd">    &gt;&gt;&gt; dataset = Data(X, Y)</span>
+<span class="sd">    &gt;&gt;&gt; for batch in delu.iter_batches(dataset, batch_size=5, shuffle=True):</span>
+<span class="sd">    ...     print(isinstance(batch, Data), len(batch.x), len(batch.y))</span>
+<span class="sd">    True 5 5</span>
+<span class="sd">    True 5 5</span>
+<span class="sd">    True 2 2</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: the tensor or the non-empty collection of tensors.</span>
+<span class="sd">            If data is a collection, then the tensors must be of the same size</span>
+<span class="sd">            along the first dimension.</span>
+<span class="sd">        batch_size: the batch size. If ``drop_last`` is False,</span>
+<span class="sd">            then the last batch can be smaller than ``batch_size``.</span>
+<span class="sd">        shuffle: if True, iterate over random batches (without replacement),</span>
+<span class="sd">            not sequentially.</span>
+<span class="sd">        generator: when ``shuffle`` is True, passing ``generator`` makes the function</span>
+<span class="sd">            reproducible.</span>
+<span class="sd">        drop_last: when ``True`` and the last batch is smaller then ``batch_size``,</span>
+<span class="sd">            then this last batch is not returned</span>
+<span class="sd">            (in other words,</span>
+<span class="sd">            same as the ``drop_last`` argument for `torch.utils.data.DataLoader`).</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        the iterator over batches.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">shuffle</span> <span class="ow">and</span> <span class="n">generator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;When shuffle is False, generator must be None.&#39;</span><span class="p">)</span>
+
+    <span class="n">constructor</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">T</span><span class="p">]</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">,</span> <span class="n">generator</span><span class="p">,</span> <span class="n">drop_last</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">_make_index_batches</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;data must be non-empty&#39;</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;If data is a tuple, it must contain only tensors,&#39;</span>
+                    <span class="s1">&#39; and they must have the same first dimension&#39;</span>
+                <span class="p">)</span>
+        <span class="n">constructor</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="n">constructor</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="s1">&#39;_make&#39;</span><span class="p">,</span> <span class="n">constructor</span><span class="p">)</span>  <span class="c1"># Handle named tuples.</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">_make_index_batches</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">constructor</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;data must be non-empty&#39;</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;If data is a dict, it must contain only tensors,&#39;</span>
+                    <span class="s1">&#39; and they must have the same first dimension&#39;</span>
+                <span class="p">)</span>
+        <span class="n">constructor</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">_make_index_batches</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">constructor</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+
+    <span class="k">elif</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">is_dataclass</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dataclasses</span><span class="o">.</span><span class="n">fields</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;data must be non-empty&#39;</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;All dataclass fields must be tensors.&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;All dataclass tensors must have the same first dimension.&#39;</span>
+                <span class="p">)</span>
+        <span class="n">constructor</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">_make_index_batches</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">constructor</span><span class="p">(</span>
+                <span class="o">**</span><span class="p">{</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">)[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
+            <span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The collection </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s1"> is not supported.&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="concat"><a class="viewcode-back" href="../../api/deprecated.html#delu.concat">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;Instead, use `delu.cat`.&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &lt;DEPRECATION MESSAGE&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">cat</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, Yura52
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/Yura52/delu" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=eec92fe1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    </body>
+</html>

@@ -1,0 +1,6 @@
+﻿set\_state
+==========
+
+.. currentmodule:: delu.random
+
+.. autofunction:: set_state
