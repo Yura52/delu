@@ -5,11 +5,12 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Timer" href="delu.tools.Timer.html" /><link rel="prev" title="delu.tools" href="../tools.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
-        <title>EarlyStopping - DeLU</title>
+    <!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
+        <title>EarlyStopping - ⚫ DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2f8d3599" />
     
@@ -128,7 +129,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">DeLU</div></a>
+      <a href="../../index.html"><div class="brand">⚫ DeLU</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -150,10 +151,8 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <div class="sidebar-logo-container">
-    <img class="sidebar-logo" src="../../_static/logo.svg" alt="Logo"/>
-  </div>
   
+  <span class="sidebar-brand-text">⚫ DeLU</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -161,11 +160,7 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
-<li class="toctree-l1"><a class="reference external" href="https://yura52.github.io/delu/versions.html">v0.0.21 ▼</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/Yura52/delu">Source code</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">API &amp; Examples</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Usage &amp; API</span></p>
 <ul class="current">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../delu.html">delu</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of delu</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="delu.to.html">to</a></li>
@@ -201,9 +196,9 @@
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Deprecated API</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">[deprecated]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated API</a></li>
 </ul>
 
 </div>
@@ -252,18 +247,18 @@
 <dt class="sig sig-object py" id="delu.tools.EarlyStopping">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">delu.tools.</span></span><span class="sig-name descname"><span class="pre">EarlyStopping</span></span><a class="reference internal" href="../../_modules/delu/tools.html#EarlyStopping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.EarlyStopping" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Performs early stopping after N consequtive non-improving metric updates.</p>
-<p>A non-improving/unsuccessful metric update is an update with a metric value
-no better than the best seen metric value over the whole run.</p>
+<p>Prevents overfitting by stopping training when the validation metric stops improving.</p>
+<p>“Stops improving” means that the best metric value (over the whole training run)
+does not improve for N (<code class="docutils literal notranslate"><span class="pre">patience</span></code>) consecutive epochs.</p>
 <p><strong>Usage</strong></p>
 <p>Preventing overfitting by stopping the training
 when the validation metric stops improving:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">evaluate_model</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="c1"># A dummy example.</span>
+<span class="gp">... </span>    <span class="c1"># Compute and return the metric for the validation set.</span>
 <span class="gp">... </span>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># If the validation score does not increase (mode=&#39;max&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># for 10 (patience=10) epochs in a row, stop the training.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># for patience=10 epochs in a row, stop the training.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">early_stopping</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="c1"># Training.</span>
@@ -281,7 +276,7 @@ when the validation metric stops improving:</p>
 <p>Additional technical examples:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">early_stopping</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Format: (&lt;the best seen score&gt;, &lt;the number of consequtive fails&gt;)``)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Format: (&lt;the best seen score&gt;, &lt;the number of consequtive fails&gt;)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">early_stopping</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>  <span class="c1"># (1.0, 0)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">early_stopping</span><span class="o">.</span><span class="n">should_stop</span><span class="p">()</span>
 <span class="go">False</span>
@@ -476,11 +471,12 @@ than <code class="docutils literal notranslate"><span class="pre">min_delta</spa
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=c95c11f0"></script>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=561e856a"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
     </body>
 </html>

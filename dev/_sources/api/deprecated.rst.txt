@@ -1,5 +1,5 @@
-[deprecated]
-============
+Deprecated API
+==============
 
 .. tip::
     Use the right sidebar, the search widget or `Ctrl+F` to find the items you need.

@@ -5,11 +5,12 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="named_sequential" href="delu.nn.named_sequential.html" /><link rel="prev" title="Lambda" href="delu.nn.Lambda.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
-        <title>NLinear - DeLU</title>
+    <!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
+        <title>NLinear - ⚫ DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2f8d3599" />
     
@@ -128,7 +129,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">DeLU</div></a>
+      <a href="../../index.html"><div class="brand">⚫ DeLU</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -150,10 +151,8 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <div class="sidebar-logo-container">
-    <img class="sidebar-logo" src="../../_static/logo.svg" alt="Logo"/>
-  </div>
   
+  <span class="sidebar-brand-text">⚫ DeLU</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -161,11 +160,7 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
-<li class="toctree-l1"><a class="reference external" href="https://yura52.github.io/delu/versions.html">v0.0.21 ▼</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/Yura52/delu">Source code</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">API &amp; Examples</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Usage &amp; API</span></p>
 <ul class="current">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../delu.html">delu</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of delu</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="delu.to.html">to</a></li>
@@ -201,9 +196,9 @@
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Deprecated API</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">[deprecated]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated API</a></li>
 </ul>
 
 </div>
@@ -252,16 +247,32 @@
 <dt class="sig sig-object py" id="delu.nn.NLinear">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">delu.nn.</span></span><span class="sig-name descname"><span class="pre">NLinear</span></span><a class="reference internal" href="../../_modules/delu/nn.html#NLinear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.NLinear" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
-<p>N linear layers for N inputs: <code class="xref py py-obj docutils literal notranslate"><span class="pre">(*,</span> <span class="pre">*N,</span> <span class="pre">D1)</span> <span class="pre">-&gt;</span> <span class="pre">(*,</span> <span class="pre">*N,</span> <span class="pre">D2)</span></code></p>
-<p>For a tensor <code class="docutils literal notranslate"><span class="pre">x</span></code> of the shape <code class="docutils literal notranslate"><span class="pre">(*B,</span> <span class="pre">*N,</span> <span class="pre">D1)</span></code>,
-where <code class="docutils literal notranslate"><span class="pre">*B</span></code> are batch dimensions, <code class="docutils literal notranslate"><span class="pre">*N</span></code> are object dimensions
-(e.g. a sequence size in NLP, or width &amp; height in computer vision)
-and <code class="docutils literal notranslate"><span class="pre">D1</span></code> is the current embedding size (e.g. the number of features/channels):</p>
+<p>N linear layers for N inputs: <code class="docutils literal notranslate"><span class="pre">(*,</span> <span class="pre">*N,</span> <span class="pre">D1)</span> <span class="pre">-&gt;</span> <span class="pre">(*,</span> <span class="pre">*N,</span> <span class="pre">D2)</span></code>.</p>
+<p>Examples of use cases:</p>
 <ul class="simple">
-<li><p>applying <code class="docutils literal notranslate"><span class="pre">torch.nn.Linear(D1,</span> <span class="pre">D2)</span></code> to <code class="docutils literal notranslate"><span class="pre">x</span></code> means applying <em>the same</em> linear
-transformation to each of the <code class="docutils literal notranslate"><span class="pre">math.prod(N)</span></code> embeddings.</p></li>
-<li><p>applying <code class="docutils literal notranslate"><span class="pre">NLinear(N,</span> <span class="pre">D1,</span> <span class="pre">D2)</span></code> to <code class="docutils literal notranslate"><span class="pre">x</span></code> means applying <em>a separate</em> linear
-transformation to each of the <code class="docutils literal notranslate"><span class="pre">math.prod(N)</span></code> embeddings.</p></li>
+<li><dl class="simple">
+<dt>NLP: apply a <em>separate</em> linear layer to each token embedding in a sequence</dt><dd><ul>
+<li><p>Batch: <code class="docutils literal notranslate"><span class="pre">(B,</span> <span class="pre">S,</span> <span class="pre">D)</span></code> (<code class="docutils literal notranslate"><span class="pre">B</span></code> is the batch size, <code class="docutils literal notranslate"><span class="pre">S</span></code> is the sequence length,
+<code class="docutils literal notranslate"><span class="pre">D</span></code> is the embedding size)</p></li>
+<li><p>Module: <code class="docutils literal notranslate"><span class="pre">NLinear(S,</span> <span class="pre">D,</span> <span class="pre">D)</span></code></p></li>
+<li><p>By contrast, <code class="docutils literal notranslate"><span class="pre">torch.nn.Linear(D,</span> <span class="pre">D)</span></code> would apply <em>the same</em> linear layer
+to all token embeddings.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>CV: apply a <em>separate</em> linear layer to each the patch embeddings of an image</dt><dd><ul>
+<li><p>Batch: <code class="docutils literal notranslate"><span class="pre">(B,</span> <span class="pre">W,</span> <span class="pre">H,</span> <span class="pre">C1)</span></code> (<code class="docutils literal notranslate"><span class="pre">B</span></code> is the batch size,
+<code class="docutils literal notranslate"><span class="pre">W</span></code> and <code class="docutils literal notranslate"><span class="pre">H</span></code> are the image dimensions,
+<code class="docutils literal notranslate"><span class="pre">C1</span></code> is the current number of channels)</p></li>
+<li><p>Module: <code class="docutils literal notranslate"><span class="pre">NLinear((W,</span> <span class="pre">H),</span> <span class="pre">C1,</span> <span class="pre">C2)</span></code></p></li>
+<li><p>By contrast, <code class="docutils literal notranslate"><span class="pre">torch.nn.Linear(D,</span> <span class="pre">D)</span></code> would apply <em>the same</em> linear layer
+to all patch embeddings.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 <p>In other words, <code class="docutils literal notranslate"><span class="pre">NLinear(N,</span> <span class="pre">D1,</span> <span class="pre">D2)</span></code> is a collection of <code class="docutils literal notranslate"><span class="pre">math.prod(N)</span></code>
 non-shared <code class="docutils literal notranslate"><span class="pre">torch.nn.Linear(D1,</span> <span class="pre">D2)</span></code> layers.</p>
@@ -419,11 +430,12 @@ which is the expected layout of the input (see the examples in <a class="referen
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=c95c11f0"></script>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=561e856a"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
     </body>
 </html>

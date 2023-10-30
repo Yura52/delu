@@ -4,11 +4,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
-        <title>delu.tools - DeLU</title>
+    <!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
+        <title>delu.tools - ⚫ DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2f8d3599" />
     
@@ -127,7 +128,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">DeLU</div></a>
+      <a href="../../index.html"><div class="brand">⚫ DeLU</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -149,10 +150,8 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <div class="sidebar-logo-container">
-    <img class="sidebar-logo" src="../../_static/logo.svg" alt="Logo"/>
-  </div>
   
+  <span class="sidebar-brand-text">⚫ DeLU</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -160,11 +159,7 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
-<li class="toctree-l1"><a class="reference external" href="https://yura52.github.io/delu/versions.html">v0.0.21 ▼</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/Yura52/delu">Source code</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">API &amp; Examples</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Usage &amp; API</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/delu.html">delu</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of delu</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.to.html">to</a></li>
@@ -200,9 +195,9 @@
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Deprecated API</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../api/deprecated.html">[deprecated]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/deprecated.html">Deprecated API</a></li>
 </ul>
 
 </div>
@@ -246,10 +241,10 @@
 
 
 <div class="viewcode-block" id="EarlyStopping"><a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping">[docs]</a><span class="k">class</span> <span class="nc">EarlyStopping</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs early stopping after N consequtive non-improving metric updates.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prevents overfitting by stopping training when the validation metric stops improving.</span>
 
-<span class="sd">    A non-improving/unsuccessful metric update is an update with a metric value</span>
-<span class="sd">    no better than the best seen metric value over the whole run.</span>
+<span class="sd">    &quot;Stops improving&quot; means that the best metric value (over the whole training run)</span>
+<span class="sd">    does not improve for N (``patience``) consecutive epochs.</span>
 
 <span class="sd">    **Usage**</span>
 
@@ -257,11 +252,11 @@
 <span class="sd">    when the validation metric stops improving:</span>
 
 <span class="sd">    &gt;&gt;&gt; def evaluate_model() -&gt; float:</span>
-<span class="sd">    ...     # A dummy example.</span>
+<span class="sd">    ...     # Compute and return the metric for the validation set.</span>
 <span class="sd">    ...     return torch.rand(1).item()</span>
 <span class="sd">    ...</span>
 <span class="sd">    &gt;&gt;&gt; # If the validation score does not increase (mode=&#39;max&#39;)</span>
-<span class="sd">    &gt;&gt;&gt; # for 10 (patience=10) epochs in a row, stop the training.</span>
+<span class="sd">    &gt;&gt;&gt; # for patience=10 epochs in a row, stop the training.</span>
 <span class="sd">    &gt;&gt;&gt; early_stopping = delu.EarlyStopping(patience=10, mode=&#39;max&#39;)</span>
 <span class="sd">    &gt;&gt;&gt; for epoch in range(1000):</span>
 <span class="sd">    ...     # Training.</span>
@@ -279,7 +274,7 @@
 
 <span class="sd">    &gt;&gt;&gt; early_stopping = delu.EarlyStopping(2, mode=&#39;max&#39;)</span>
 <span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt; # Format: (&lt;the best seen score&gt;, &lt;the number of consequtive fails&gt;)``)</span>
+<span class="sd">    &gt;&gt;&gt; # Format: (&lt;the best seen score&gt;, &lt;the number of consequtive fails&gt;)</span>
 <span class="sd">    &gt;&gt;&gt; early_stopping.update(1.0)  # (1.0, 0)</span>
 <span class="sd">    &gt;&gt;&gt; early_stopping.should_stop()</span>
 <span class="sd">    False</span>
@@ -322,7 +317,7 @@
 <span class="sd">    &gt;&gt;&gt; early_stopping.update(-10.0)   # (-10.0, 2)</span>
 <span class="sd">    &gt;&gt;&gt; early_stopping.should_stop()</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
 <div class="viewcode-block" id="EarlyStopping.__init__"><a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">patience</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">],</span> <span class="n">min_delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -400,7 +395,7 @@
 
 
 <div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer">[docs]</a><span class="k">class</span> <span class="nc">Timer</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A simple pickle-friendly timer for measuring execution time.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A simple **pickle-friendly** timer for measuring execution time.</span>
 
 <span class="sd">    `Timer` is applicable to both long-running activies (e.g. a whole program)</span>
 <span class="sd">    and limited code regions (e.g. training steps).</span>
@@ -725,11 +720,12 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=c95c11f0"></script>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=561e856a"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
     </body>
 </html>
