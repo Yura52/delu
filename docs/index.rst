@@ -13,11 +13,11 @@ DeLU (Deep Learning Utilities)
    :hidden:
 
    api/delu
-   api/cuda
-   api/nn
-   api/random
-   api/utils.data
-   api/tools
+   api/delu.cuda
+   api/delu.nn
+   api/delu.random
+   api/delu.utils.data
+   api/delu.tools
 
 .. toctree::
    :caption: Other
