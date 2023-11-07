@@ -1,0 +1,10 @@
+﻿Lambda
+======
+
+.. currentmodule:: delu.nn
+
+.. autoclass:: Lambda
+    :show-inheritance:
+    :members:
+    :special-members:
+    :exclude-members: __weakref__

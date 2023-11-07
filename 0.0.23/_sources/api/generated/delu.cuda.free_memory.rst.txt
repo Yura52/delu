@@ -1,0 +1,6 @@
+﻿free\_memory
+============
+
+.. currentmodule:: delu.cuda
+
+.. autofunction:: free_memory
