@@ -1,15 +1,6 @@
 import dataclasses
-from typing import (
-    Any,
-    Callable,
-    Iterable,
-    Iterator,
-    List,
-    Mapping,
-    Optional,
-    Sequence,
-    TypeVar,
-)
+import typing
+from typing import Any, Callable, Iterable, Iterator, List, Optional, TypeVar
 
 import torch
 import torch.nn as nn
@@ -33,38 +24,61 @@ def to(obj: T, /, *args, **kwargs) -> T:
         :widths: 30 50
         :header-rows: 1
 
-        * - Input object type
-          - What `delu.to` returns
+        * - ``type(obj)``
+          - What `delu.to(obj, *args, **kwargs)` returns
         * - `bool` `int` `float` `str` `bytes`
-          - The input object is returned as-is.
-        * - `tuple` `list` or any other `typing.Sequence`
+          - ``obj`` is returned as-is.
+        * - `tuple` `list` `set` `frozenset` and all other
+            collections falling under
+            `typing.Sequence` `typing.Set` `typing.FrozenSet`
           - A new collection of the same type where `delu.to`
             is recursively applied to all items.
         * - `dict` or any other `typing.Mapping`
           - A new collection of the same type where `delu.to`
             is recursively applied to all keys and values.
         * - `torch.Tensor`
-          - The result of `torch.Tensor.to` with the provided arguments
-            is applied to the object.
+          - ``obj.to(*args, **kwargs)``
         * - `torch.nn.Module`
-          - ❗️ **The object is modified in-place** by applying
-            `torch.nn.Module.to` with the provided arguments.
-        * - Any other Python object
-          - ❗️ **The object is modified in-place** by updating all its
-            attributes recursively with `delu.to`.
+          - (``obj`` **is modified in-place**)
+            ``obj.to(*args, **kwargs)``
+        * - Any other type (custom classes are allowed)
+          - (``obj`` **is modified in-place**)
+            ``obj`` itself with all attributes recursively updated with `delu.to`.
 
     **Usage**
 
-    Simple examples:
+    Trivial immutable objects are returned as-is:
 
-    >>> from torch import tensor
     >>> kwargs = {'device': 'cpu', 'dtype': torch.half}
     >>>
     >>> x = 0
     >>> x_new = delu.to(x, **kwargs)
-    >>>
-    >>> x = (False, [tensor(1, **kwargs), 2.0], {'three': (nn.Linear(4, 5), tensor(6.0)})
+    >>> x_new is x
+    True
+
+    If a collection is passed, a new one is created.
+    The behavior for the nested values depends on their types:
+
+    >>> x = {
+    ...     # The "unchanged" tensor will not be changed,
+    ...     # because it already has the requested dtype and device.
+    ...     'unchanged': torch.tensor(0, **kwargs),
+    ...     'changed': torch.tensor(1),
+    ...     'module': nn.Linear(2, 3),
+    ...     'other': [False, 1, 2.0, 'hello', b'world']
+    ... }
     >>> x_new = delu.to(x, **kwargs)
+    >>> # The collection itself is a new object:
+    >>> x_new is x
+    False
+    >>> # Tensors change according to `torch.Tensor.to`:
+    >>> x_new['unchanged'] is x['unchanged']
+    True
+    >>> x_new['changed'] is x['changed']
+    False
+    >>> # Modules are modified in-place:
+    >>> x_new['module'] is x['module']
+    True
 
     Complex user-defined types are also allowed:
 
@@ -80,12 +94,12 @@ def to(obj: T, /, *args, **kwargs) -> T:
     >>> class B:
     ...     d: List[A]
     ...
-    >>> x = (
-    ...     torch.rand(3),
-    ...     [{(False, 1): tensor(1.0)}, 2.0],
-    ...     B([A(), A()]),
-    ... )
+    >>> x = B([A(), A()])
     >>> x_new = delu.to(x, **kwargs)
+    >>> # The object is the same in terms of Python `id`,
+    >>> # however, some of its nested attributes changed.
+    >>> x_new is x
+    True
 
     Args:
         obj: the input object.
@@ -103,14 +117,14 @@ def to(obj: T, /, *args, **kwargs) -> T:
     if obj is None or isinstance(obj, (bool, int, float, str, bytes)):
         return obj  # type: ignore
 
-    elif isinstance(obj, Sequence):
+    elif isinstance(obj, (typing.Sequence, typing.Set, typing.FrozenSet)):
         constructor = type(obj)
         if issubclass(constructor, tuple):
             # Handle named tuples.
             constructor = getattr(constructor, '_make', constructor)
         return constructor(to(x, *args, **kwargs) for x in obj)  # type: ignore
 
-    elif isinstance(obj, Mapping):
+    elif isinstance(obj, typing.Mapping):
         # Tensors can be keys.
         return type(obj)(
             (to(k, *args, **kwargs), to(v, *args, **kwargs)) for k, v in obj.items()
@@ -132,24 +146,55 @@ def to(obj: T, /, *args, **kwargs) -> T:
 def cat(data: List[T], /, dim: int = 0) -> T:
     """Concatenate a sequence of collections of tensors.
 
-    `delu.cat` is a generalized version of `torch.cat`.
-    A typical use case is concatenating a sequence of batches:
-
-    - (think of ``xi`` and ``yi`` as of batches)
-    - ``torch.cat: [x1, x2, ..., xN] -> x``
-    - ``delu.cat:  [x1, x2, ..., xN] -> x``
-    - ``delu.cat:  [(x1, y1), (x2, y2), ..., (xN, yN)] -> (x, y)``
-    - ``delu.cat:  [{'x': x1, 'y': y1}, ..., {'x': xN, 'y': yN}] -> {'x': x, 'y': y}``
-    - Same for named tuples.
-    - Same for dataclasses.
-    - Nested collections are supported.
-
-    In other words, while `torch.cat` concatenates a sequence of tensors,
-    `delu.to` concatenates a sequence of *collections* of tensors.
+    `delu.cat` is a generalized version of `torch.cat` for concatenating
+    not only tensors, but also (nested) collections of tensors.
 
     **Usage**
 
-    Common setup:
+    Let's see how a sequence of model outputs for batches can be concatenated
+    into a output tuple for the whole dataset:
+
+    >>> from torch.utils.data import DataLoader, TensorDataset
+    >>> dataset = TensorDataset(torch.randn(320, 24))
+    >>> batch_size = 32
+    >>>
+    >>> # The model returns not only predictions, but also embeddings.
+    >>> def model(x_batch):
+    ...     # A dummy forward pass.
+    ...     embeddings_batch = torch.randn(batch_size, 16)
+    ...     y_pred_batch = torch.randn(batch_size)
+    ...     return (y_pred_batch, embeddings_batch)
+    ...
+    >>> y_pred, embeddings = delu.cat(
+    ...     [model(batch) for batch in DataLoader(dataset, batch_size, shuffle=True)]
+    ... )
+    >>> len(y_pred) == len(dataset)
+    True
+    >>> len(embeddings) == len(dataset)
+    True
+
+    The same works for dictionaries:
+
+    >>> def model(x_batch):
+    ...     return {
+    ...         'y_pred': torch.randn(batch_size),
+    ...         'embeddings': torch.randn(batch_size, 16)
+    ...     }
+    ...
+    >>> outputs = delu.cat(
+    ...     [model(batch) for batch in DataLoader(dataset, batch_size, shuffle=True)]
+    ... )
+    >>> len(outputs['y_pred']) == len(dataset)
+    True
+    >>> len(outputs['embeddings']) == len(dataset)
+    True
+
+    The same works for sequences of named tuples, dataclasses, tensors and
+    nested combinations of all mentioned collection types.
+
+    *Below, additinal technical examples are provided.*
+
+    The common setup:
 
     >>> # First batch.
     >>> x1 = torch.randn(64, 10)
@@ -160,16 +205,14 @@ def cat(data: List[T], /, dim: int = 0) -> T:
     >>> # The last (incomplete) batch.
     >>> x3 = torch.randn(7, 10)
     >>> y3 = torch.randn(7)
-    >>> # Total size.
-    >>> len(x1) + len(x2) + len(x3)
-    135
+    >>> total_size = len(x1) + len(x2) + len(x3)
 
     `delu.cat` can be applied to tuples:
 
     >>> batches = [(x1, y1), (x2, y2), (x3, y3)]
     >>> X, Y = delu.cat(batches)
-    >>> print(len(X), len(Y))
-    135 135
+    >>> len(X) == total_size and len(Y) == total_size
+    True
 
     `delu.cat` can be applied to dictionaries:
 
@@ -179,8 +222,10 @@ def cat(data: List[T], /, dim: int = 0) -> T:
     ...     {'x': x3, 'y': y3},
     ... ]
     >>> result = delu.cat(batches)
-    >>> print(isinstance(result, dict), len(result['x']), len(result['y']))
-    True 135 135
+    >>> isinstance(result, dict)
+    True
+    >>> len(result['x']) == total_size and len(result['y']) == total_size
+    True
 
     `delu.cat` can be applied to named tuples:
 
@@ -191,8 +236,10 @@ def cat(data: List[T], /, dim: int = 0) -> T:
     ...
     >>> batches = [Data(x1, y1), Data(x2, y2), Data(x3, y3)]
     >>> result = delu.cat(batches)
-    >>> print(isinstance(result, Data), len(result.x), len(result.y))
-    True 135 135
+    >>> isinstance(result, Data)
+    True
+    >>> len(result.x) == total_size and len(result.y) == total_size
+    True
 
     `delu.cat` can be applied to dataclasses:
 
@@ -204,8 +251,10 @@ def cat(data: List[T], /, dim: int = 0) -> T:
     ...
     >>> batches = [Data(x1, y1), Data(x2, y2), Data(x3, y3)]
     >>> result = delu.cat(batches)
-    >>> print(isinstance(result, Data), len(result.x), len(result.y))
-    True 135 135
+    >>> isinstance(result, Data)
+    True
+    >>> len(result.x) == total_size and len(result.y) == total_size
+    True
 
     `delu.cat` can be applied to nested collections:
 
@@ -215,10 +264,10 @@ def cat(data: List[T], /, dim: int = 0) -> T:
     ...     (x3, {'a': {'b': y3}}),
     ... ]
     >>> X, Y_nested = delu.cat(batches)
-    >>> print(len(X), len(Y_nested['a']['b']))
-    135 135
+    >>> len(X) == total_size and len(Y_nested['a']['b']) == total_size
+    True
 
-    **`delu.cat` cannot be applied to lists:**
+    **Lists are not supported:**
 
     >>> # This does not work. Instead, use tuples.
     >>> # batches = [[x1, y1], [x2, y2], [x3, y3]]
@@ -298,12 +347,14 @@ def iter_batches(
 ) -> Iterator[T]:
     """Iterate over a tensor or a collection of tensors by (random) batches.
 
-    The function makes batches along the first dimension of the tensors in ``data``:
+    The function makes batches along the first dimension of the tensors in ``data``.
 
-    - (think of ``xi`` and ``yi`` as of batches)
-    - ``delu.iter_batches: x -> [x1, x2, ..., xN]``
-    - ``delu.iter_batches: (x, y) -> [(x1, y1), (x2, y2), ..., (xN, yN)]``
-    - ``delu.iter_batches: {'x': x, 'y': y} -> [{'x': x1, 'y': y1}, ...]``
+    TL;DR (assuming that ``X`` and ``Y`` denote full tensors
+    and ``xi`` and ``yi`` denote batches):
+
+    - ``delu.iter_batches: X -> [x1, x2, ..., xN]``
+    - ``delu.iter_batches: (X, Y) -> [(x1, y1), (x2, y2), ..., (xN, yN)]``
+    - ``delu.iter_batches: {'x': X, 'y': Y} -> [{'x': x1, 'y': y1}, ...]``
     - Same for named tuples.
     - Same for dataclasses.
 

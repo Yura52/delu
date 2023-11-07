@@ -55,6 +55,7 @@ intersphinx_mapping = {
     ),
     'torch': ('https://pytorch.org/docs/stable', None),
 }
+intersphinx_mapping = {}
 
 napoleon_numpy_docstring = False
 napoleon_use_admonition_for_examples = False

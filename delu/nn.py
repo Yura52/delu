@@ -110,27 +110,19 @@ class Lambda(torch.nn.Module):
 
 
 class NLinear(nn.Module):
-    """N linear layers for N inputs: ``(*, *N, D1) -> (*, *N, D2)``.
+    """N *separate* linear layers for N embeddings: ``(*, *N, D1) -> (*, *N, D2)``.
 
-    Examples of use cases:
+    Usage examples covered below:
 
-    - NLP: apply a *separate* linear layer to each token embedding in a sequence
-        - Batch: ``(B, S, D)`` (``B`` is the batch size, ``S`` is the sequence length,
-          ``D`` is the embedding size)
-        - Module: ``NLinear(S, D, D)``
-        - By contrast, ``torch.nn.Linear(D, D)`` would apply *the same* linear layer
-          to all token embeddings.
+    - (NLP) Training a *separate* linear layer for each token embedding in a sequence.
+      By contrast, using `torch.nn.Linear` would mean applying the same linear layer
+      to all tokens.
+    - (CV) Training a *separate* linear layer for each patch embedding in an image.
+      By contrast, using `torch.nn.Linear` would mean applying the same linear layer
+      to all tokens.
 
-    - CV: apply a *separate* linear layer to each the patch embeddings of an image
-        - Batch: ``(B, W, H, C1)`` (``B`` is the batch size,
-          ``W`` and ``H`` are the image dimensions,
-          ``C1`` is the current number of channels)
-        - Module: ``NLinear((W, H), C1, C2)``
-        - By contrast, ``torch.nn.Linear(D, D)`` would apply *the same* linear layer
-          to all patch embeddings.
-
-    In other words, ``NLinear(N, D1, D2)`` is a collection of ``math.prod(N)``
-    non-shared ``torch.nn.Linear(D1, D2)`` layers.
+    Technically, ``NLinear(N, D1, D2)`` is just a layout of ``N``
+    linear layers ``torch.nn.Linear(D1, D2)``.
 
     **Shape**
 
@@ -139,27 +131,24 @@ class NLinear(nn.Module):
 
     **Usage**
 
-    Let's consider a Transformer-like model that outputs tensors of the shape
-    ``(batch_size, n_tokens, d_embedding)``
-    (in terms of NLP, ``n_tokens`` is the sequence length).
-    The following example demonstrates how to train a separate linear transformation
-    for each of the ``n_tokens`` embeddings using `NLinear`.
+    (NLP)
+    Training a separate linear layer for each of the token embeddings in a sequence:
 
     >>> batch_size = 2
-    >>> n_tokens = 3
-    >>> d_embedding_in = 4
-    >>> d_embedding_out = 5
-    >>> x = torch.randn(batch_size, n_tokens, d_embedding_in)
+    >>> sequence_length = 4
+    >>> d_embedding_in = 6
+    >>> d_embedding_out = 7
+    >>> x = torch.randn(batch_size, sequence_length, d_embedding_in)
     >>> x.shape
-    torch.Size([2, 3, 4])
-    >>> m = NLinear(n_tokens, d_embedding_in, d_embedding_out)
+    torch.Size([2, 4, 6])
+    >>> m = NLinear(sequence_length, d_embedding_in, d_embedding_out)
     >>> m(x).shape
-    torch.Size([2, 3, 5])
+    torch.Size([2, 4, 7])
 
-    Similarly to `torch.nn.Linear`, the input can have any number of batch dimensions.
-    The number of layers ``n``, in turn, can be also be arbitrary.
+    (CV)
+    Training a separate linear layer for each of the patch embeddings in an image:
 
-    >>> # Computer vision.
+    >>> # Batch dimensions can also be arbitrarily complex.
     >>> batch_size = (2, 3)
     >>> width = 4
     >>> height = 5
@@ -168,7 +157,7 @@ class NLinear(nn.Module):
     >>> x = torch.randn(*batch_size, width, height, in_channels)
     >>> x.shape
     torch.Size([2, 3, 4, 5, 6])
-    >>> # The number of layers: width * heght = 4 * 5 = 20
+    >>> # N == width * heght == 4 * 5 == 20
     >>> m = NLinear((width, height), in_channels, out_channels)
     >>> m(x).shape
     torch.Size([2, 3, 4, 5, 7])
@@ -252,6 +241,7 @@ def named_sequential(*names_and_modules: Tuple[str, nn.Module]) -> nn.Sequential
 
     This ...
 
+    >>> # xdoctest: +SKIP
     >>> m = delu.nn.named_sequential(
     ...     ('linear1', nn.Linear(10, 20)),
     ...     ('activation', nn.ReLU()),
@@ -260,6 +250,7 @@ def named_sequential(*names_and_modules: Tuple[str, nn.Module]) -> nn.Sequential
 
     ... is equivalent to this:
 
+    >>> # xdoctest: +SKIP
     >>> from collections import OrderedDict
     >>> m = torch.nn.Sequential(
     ...     OrderedDict(

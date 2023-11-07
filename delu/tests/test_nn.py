@@ -6,6 +6,8 @@ import torch.nn as nn
 
 import delu
 
+from .util import ignore_deprecated_warning
+
 
 def test_lambda():
     m = delu.nn.Lambda(torch.square)
@@ -52,6 +54,7 @@ def test_nlinear():
                 assert torch.allclose(actual, expected)
 
 
+@ignore_deprecated_warning
 def test_named_sequential():
     _ = delu.nn.named_sequential()
 
