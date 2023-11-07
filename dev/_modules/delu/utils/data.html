@@ -167,29 +167,23 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../api/generated/delu.iter_batches.html">iter_batches</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/cuda.html">delu.cuda</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of delu.cuda</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/delu.cuda.html">delu.cuda</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of delu.cuda</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/generated/delu.cuda.free_memory.html">free_memory</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/delu.nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/generated/delu.nn.Lambda.html">Lambda</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/generated/delu.nn.NLinear.html">NLinear</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/generated/delu.nn.named_sequential.html">named_sequential</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/delu.random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/generated/delu.random.seed.html">seed</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/generated/delu.random.get_state.html">get_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/generated/delu.random.set_state.html">set_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/generated/delu.random.preserve_state.html">preserve_state</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/utils.data.html">delu.utils.data</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.utils.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/generated/delu.utils.data.Enumerate.html">Enumerate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/generated/delu.utils.data.IndexDataset.html">IndexDataset</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/tools.html">delu.tools</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of delu.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/delu.tools.html">delu.tools</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/generated/delu.tools.EarlyStopping.html">EarlyStopping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/generated/delu.tools.Timer.html">Timer</a></li>
 </ul>
@@ -238,14 +232,19 @@
 
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span>
 
+<span class="kn">from</span> <span class="nn">.._utils</span> <span class="kn">import</span> <span class="n">deprecated</span>
+
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Enumerate&#39;</span><span class="p">,</span> <span class="s1">&#39;IndexDataset&#39;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="Enumerate"><a class="viewcode-back" href="../../../api/generated/delu.utils.data.Enumerate.html#delu.utils.data.Enumerate">[docs]</a><span class="k">class</span> <span class="nc">Enumerate</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+<div class="viewcode-block" id="Enumerate"><a class="viewcode-back" href="../../../api/deprecated.html#delu.utils.data.Enumerate">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Enumerate</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Make a PyTorch dataset return indices in addition to items (like `enumerate`, but for datasets).</span>
+
+<span class="sd">    &lt;DEPRECATION MESSAGE&gt;</span>
 
 <span class="sd">    TL;DR:</span>
 
@@ -300,7 +299,7 @@
 <span class="sd">    True</span>
 <span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
-<div class="viewcode-block" id="Enumerate.__init__"><a class="viewcode-back" href="../../../api/generated/delu.utils.data.Enumerate.html#delu.utils.data.Enumerate.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Enumerate.__init__"><a class="viewcode-back" href="../../../api/deprecated.html#delu.utils.data.Enumerate.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            dataset: the original dataset.</span>
@@ -312,11 +311,11 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The original dataset.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span>
 
-<div class="viewcode-block" id="Enumerate.__len__"><a class="viewcode-back" href="../../../api/generated/delu.utils.data.Enumerate.html#delu.utils.data.Enumerate.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="Enumerate.__len__"><a class="viewcode-back" href="../../../api/deprecated.html#delu.utils.data.Enumerate.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the length of the original dataset.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="p">)</span>  <span class="c1"># type: ignore</span></div>
 
-<div class="viewcode-block" id="Enumerate.__getitem__"><a class="viewcode-back" href="../../../api/generated/delu.utils.data.Enumerate.html#delu.utils.data.Enumerate.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<div class="viewcode-block" id="Enumerate.__getitem__"><a class="viewcode-back" href="../../../api/deprecated.html#delu.utils.data.Enumerate.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return index and the corresponding item from the original dataset.</span>
 
 <span class="sd">        Args:</span>
@@ -327,8 +326,11 @@
         <span class="k">return</span> <span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div></div>
 
 
-<div class="viewcode-block" id="IndexDataset"><a class="viewcode-back" href="../../../api/generated/delu.utils.data.IndexDataset.html#delu.utils.data.IndexDataset">[docs]</a><span class="k">class</span> <span class="nc">IndexDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+<div class="viewcode-block" id="IndexDataset"><a class="viewcode-back" href="../../../api/deprecated.html#delu.utils.data.IndexDataset">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">IndexDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A trivial dataset that yields indices back to user (useful for DistributedDataParallel (DDP)).</span>
+
+<span class="sd">    &lt;DEPRECATION MESSAGE&gt;</span>
 
 <span class="sd">    This simple dataset is useful when *both* conditions are true:</span>
 
@@ -362,7 +364,7 @@
 <span class="sd">    ...         ...</span>
 <span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
-<div class="viewcode-block" id="IndexDataset.__init__"><a class="viewcode-back" href="../../../api/generated/delu.utils.data.IndexDataset.html#delu.utils.data.IndexDataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="IndexDataset.__init__"><a class="viewcode-back" href="../../../api/deprecated.html#delu.utils.data.IndexDataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            size: the dataset size.</span>
@@ -371,11 +373,11 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;size must be positive&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span></div>
 
-<div class="viewcode-block" id="IndexDataset.__len__"><a class="viewcode-back" href="../../../api/generated/delu.utils.data.IndexDataset.html#delu.utils.data.IndexDataset.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="IndexDataset.__len__"><a class="viewcode-back" href="../../../api/deprecated.html#delu.utils.data.IndexDataset.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the dataset size.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span></div>
 
-<div class="viewcode-block" id="IndexDataset.__getitem__"><a class="viewcode-back" href="../../../api/generated/delu.utils.data.IndexDataset.html#delu.utils.data.IndexDataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="IndexDataset.__getitem__"><a class="viewcode-back" href="../../../api/deprecated.html#delu.utils.data.IndexDataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the same index back.</span>
 
 <span class="sd">        The index must be an integer from ``range(len(self))``.</span>
@@ -427,7 +429,7 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=561e856a"></script>
+</div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=3c31662e"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../../_static/scripts/furo.js?v=32e29ea5"></script>

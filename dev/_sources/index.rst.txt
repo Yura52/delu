@@ -1,7 +1,7 @@
 DeLU (Deep Learning Utilities)
 ==============================
 
-:bdg-secondary:`v0.0.22`
+:bdg-secondary:`v0.0.24.dev0`
 :bdg-link-secondary-line:`Other versions <https://yura52.github.io/delu/versions.html>`
 :bdg-link-secondary-line:`Source code <https://github.com/Yura52/delu>`
 
@@ -13,11 +13,10 @@ DeLU (Deep Learning Utilities)
    :hidden:
 
    api/delu
-   api/cuda
-   api/nn
-   api/random
-   api/utils.data
-   api/tools
+   api/delu.cuda
+   api/delu.nn
+   api/delu.random
+   api/delu.tools
 
 .. toctree::
    :caption: Other

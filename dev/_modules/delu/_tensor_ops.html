@@ -167,29 +167,23 @@
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.iter_batches.html">iter_batches</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/cuda.html">delu.cuda</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of delu.cuda</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/delu.cuda.html">delu.cuda</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of delu.cuda</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.cuda.free_memory.html">free_memory</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/delu.nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.nn.Lambda.html">Lambda</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.nn.NLinear.html">NLinear</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.nn.named_sequential.html">named_sequential</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/delu.random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.random.seed.html">seed</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.random.get_state.html">get_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.random.set_state.html">set_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.random.preserve_state.html">preserve_state</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/utils.data.html">delu.utils.data</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.utils.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.utils.data.Enumerate.html">Enumerate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.utils.data.IndexDataset.html">IndexDataset</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/tools.html">delu.tools</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of delu.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/delu.tools.html">delu.tools</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.tools.EarlyStopping.html">EarlyStopping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.tools.Timer.html">Timer</a></li>
 </ul>
@@ -233,17 +227,8 @@
         <article role="main">
           <h1>Source code for delu._tensor_ops</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">Any</span><span class="p">,</span>
-    <span class="n">Callable</span><span class="p">,</span>
-    <span class="n">Iterable</span><span class="p">,</span>
-    <span class="n">Iterator</span><span class="p">,</span>
-    <span class="n">List</span><span class="p">,</span>
-    <span class="n">Mapping</span><span class="p">,</span>
-    <span class="n">Optional</span><span class="p">,</span>
-    <span class="n">Sequence</span><span class="p">,</span>
-    <span class="n">TypeVar</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">import</span> <span class="nn">typing</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
@@ -257,58 +242,92 @@
 <div class="viewcode-block" id="to"><a class="viewcode-back" href="../../api/generated/delu.to.html#delu.to">[docs]</a><span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Change devices and data types of tensors and modules in an arbitrary Python object.</span>
 
-<span class="sd">    This function is like `torch.Tensor.to`/`torch.nn.Module.to`,</span>
-<span class="sd">    but applicable to any Python object.</span>
-
-<span class="sd">    .. note::</span>
-<span class="sd">        Non-trivial (nested) objects such as user-defined classes or PyTorch modules</span>
-<span class="sd">        are modified **in-place**. See the note below for more details.</span>
-
 <span class="sd">    The two primary use cases for this function are changing the device and data types</span>
 <span class="sd">    of tensors and modules that are a part of:</span>
 
 <span class="sd">    - a complex Python object (e.g. a training state, checkpoint, etc.)</span>
 <span class="sd">    - an object of an unknown type (when implementing generic pipelines)</span>
 
+<span class="sd">    .. list-table::</span>
+<span class="sd">        :widths: 30 50</span>
+<span class="sd">        :header-rows: 1</span>
+
+<span class="sd">        * - ``type(obj)``</span>
+<span class="sd">          - What `delu.to(obj, *args, **kwargs)` returns</span>
+<span class="sd">        * - `bool` `int` `float` `str` `bytes`</span>
+<span class="sd">          - ``obj`` is returned as-is.</span>
+<span class="sd">        * - `tuple` `list` `set` `frozenset` and all other</span>
+<span class="sd">            collections falling under</span>
+<span class="sd">            `typing.Sequence` `typing.Set` `typing.FrozenSet`</span>
+<span class="sd">          - A new collection of the same type where `delu.to`</span>
+<span class="sd">            is recursively applied to all items.</span>
+<span class="sd">        * - `dict` or any other `typing.Mapping`</span>
+<span class="sd">          - A new collection of the same type where `delu.to`</span>
+<span class="sd">            is recursively applied to all keys and values.</span>
+<span class="sd">        * - `torch.Tensor`</span>
+<span class="sd">          - ``obj.to(*args, **kwargs)``</span>
+<span class="sd">        * - `torch.nn.Module`</span>
+<span class="sd">          - (``obj`` **is modified in-place**)</span>
+<span class="sd">            ``obj.to(*args, **kwargs)``</span>
+<span class="sd">        * - Any other type (custom classes are allowed)</span>
+<span class="sd">          - (``obj`` **is modified in-place**)</span>
+<span class="sd">            ``obj`` itself with all attributes recursively updated with `delu.to`.</span>
+
 <span class="sd">    **Usage**</span>
 
-<span class="sd">    A technical example:</span>
+<span class="sd">    Trivial immutable objects are returned as-is:</span>
+
+<span class="sd">    &gt;&gt;&gt; kwargs = {&#39;device&#39;: &#39;cpu&#39;, &#39;dtype&#39;: torch.half}</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; x = 0</span>
+<span class="sd">    &gt;&gt;&gt; x_new = delu.to(x, **kwargs)</span>
+<span class="sd">    &gt;&gt;&gt; x_new is x</span>
+<span class="sd">    True</span>
+
+<span class="sd">    If a collection is passed, a new one is created.</span>
+<span class="sd">    The behavior for the nested values depends on their types:</span>
+
+<span class="sd">    &gt;&gt;&gt; x = {</span>
+<span class="sd">    ...     # The &quot;unchanged&quot; tensor will not be changed,</span>
+<span class="sd">    ...     # because it already has the requested dtype and device.</span>
+<span class="sd">    ...     &#39;unchanged&#39;: torch.tensor(0, **kwargs),</span>
+<span class="sd">    ...     &#39;changed&#39;: torch.tensor(1),</span>
+<span class="sd">    ...     &#39;module&#39;: nn.Linear(2, 3),</span>
+<span class="sd">    ...     &#39;other&#39;: [False, 1, 2.0, &#39;hello&#39;, b&#39;world&#39;]</span>
+<span class="sd">    ... }</span>
+<span class="sd">    &gt;&gt;&gt; x_new = delu.to(x, **kwargs)</span>
+<span class="sd">    &gt;&gt;&gt; # The collection itself is a new object:</span>
+<span class="sd">    &gt;&gt;&gt; x_new is x</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; # Tensors change according to `torch.Tensor.to`:</span>
+<span class="sd">    &gt;&gt;&gt; x_new[&#39;unchanged&#39;] is x[&#39;unchanged&#39;]</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; x_new[&#39;changed&#39;] is x[&#39;changed&#39;]</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; # Modules are modified in-place:</span>
+<span class="sd">    &gt;&gt;&gt; x_new[&#39;module&#39;] is x[&#39;module&#39;]</span>
+<span class="sd">    True</span>
+
+<span class="sd">    Complex user-defined types are also allowed:</span>
 
 <span class="sd">    &gt;&gt;&gt; from dataclasses import dataclass</span>
 <span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt; class UserClass:</span>
+<span class="sd">    &gt;&gt;&gt; class A:</span>
 <span class="sd">    ...     def __init__(self):</span>
 <span class="sd">    ...         self.a = torch.randn(5)</span>
 <span class="sd">    ...         self.b = (&#39;Hello, world!&#39;, torch.randn(10))</span>
 <span class="sd">    ...         self.c = nn.Linear(4, 7)</span>
 <span class="sd">    ...</span>
 <span class="sd">    &gt;&gt;&gt; @dataclass</span>
-<span class="sd">    &gt;&gt;&gt; class UserDataclass:</span>
-<span class="sd">    ...     d: List[UserClass]</span>
+<span class="sd">    &gt;&gt;&gt; class B:</span>
+<span class="sd">    ...     d: List[A]</span>
 <span class="sd">    ...</span>
-<span class="sd">    &gt;&gt;&gt; data = (</span>
-<span class="sd">    ...     torch.rand(3),</span>
-<span class="sd">    ...     [{(False, 1): torch.tensor(1.0)}, 2.0],</span>
-<span class="sd">    ...     UserDataclass([UserClass(), UserClass()]),</span>
-<span class="sd">    ... )</span>
-<span class="sd">    &gt;&gt;&gt; data = delu.to(data, device=&#39;cpu&#39;, dtype=torch.float16)</span>
-
-<span class="sd">    .. note::</span>
-<span class="sd">        Technically, the function traverses the input ``data`` as follows:</span>
-
-<span class="sd">        - for tensors/modules, `torch.Tensor.to`/`torch.nn.Module.to` is applied</span>
-<span class="sd">          with the provided ``*args`` and ``**kwargs``; in particular, it means</span>
-<span class="sd">          that tensors will be replaced with new tensors (in terms of Python `id`),</span>
-<span class="sd">          but modules will be modified in-place;</span>
-<span class="sd">        - for tuples, named tuples, lists, other sequences (see `typing.Sequence`),</span>
-<span class="sd">          dictionaries and other mappings (see `typing.Mapping`),</span>
-<span class="sd">          a new collection of the same type is returned,</span>
-<span class="sd">          where `delu.to` is recursively applied</span>
-<span class="sd">          to all values of the original collection;</span>
-<span class="sd">        - in all other cases, the original object is modified in-place, and</span>
-<span class="sd">          the same object in terms of Python `id` is returned.</span>
-<span class="sd">          If the object has attributes (defined in ``__dict__`` or ``__slots__``),</span>
-<span class="sd">          then `delu.to` is recursively applied to all the attributes.</span>
+<span class="sd">    &gt;&gt;&gt; x = B([A(), A()])</span>
+<span class="sd">    &gt;&gt;&gt; x_new = delu.to(x, **kwargs)</span>
+<span class="sd">    &gt;&gt;&gt; # The object is the same in terms of Python `id`,</span>
+<span class="sd">    &gt;&gt;&gt; # however, some of its nested attributes changed.</span>
+<span class="sd">    &gt;&gt;&gt; x_new is x</span>
+<span class="sd">    True</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        obj: the input object.</span>
@@ -326,14 +345,14 @@
     <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)):</span>
         <span class="k">return</span> <span class="n">obj</span>  <span class="c1"># type: ignore</span>
 
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Set</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">FrozenSet</span><span class="p">)):</span>
         <span class="n">constructor</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="c1"># Handle named tuples.</span>
             <span class="n">constructor</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="s1">&#39;_make&#39;</span><span class="p">,</span> <span class="n">constructor</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">constructor</span><span class="p">(</span><span class="n">to</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
 
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">):</span>
         <span class="c1"># Tensors can be keys.</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)(</span>
             <span class="p">(</span><span class="n">to</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span> <span class="n">to</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
@@ -355,24 +374,55 @@
 <div class="viewcode-block" id="cat"><a class="viewcode-back" href="../../api/generated/delu.cat.html#delu.cat">[docs]</a><span class="k">def</span> <span class="nf">cat</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="o">/</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Concatenate a sequence of collections of tensors.</span>
 
-<span class="sd">    `delu.cat` is a generalized version of `torch.cat`.</span>
-<span class="sd">    A typical use case is concatenating a sequence of batches:</span>
-
-<span class="sd">    - (think of ``xi`` and ``yi`` as of batches)</span>
-<span class="sd">    - ``torch.cat: [x1, x2, ..., xN] -&gt; x``</span>
-<span class="sd">    - ``delu.cat:  [x1, x2, ..., xN] -&gt; x``</span>
-<span class="sd">    - ``delu.cat:  [(x1, y1), (x2, y2), ..., (xN, yN)] -&gt; (x, y)``</span>
-<span class="sd">    - ``delu.cat:  [{&#39;x&#39;: x1, &#39;y&#39;: y1}, ..., {&#39;x&#39;: xN, &#39;y&#39;: yN}] -&gt; {&#39;x&#39;: x, &#39;y&#39;: y}``</span>
-<span class="sd">    - Same for named tuples.</span>
-<span class="sd">    - Same for dataclasses.</span>
-<span class="sd">    - Nested collections are supported.</span>
-
-<span class="sd">    In other words, while `torch.cat` concatenates a sequence of tensors,</span>
-<span class="sd">    `delu.to` concatenates a sequence of *collections* of tensors.</span>
+<span class="sd">    `delu.cat` is a generalized version of `torch.cat` for concatenating</span>
+<span class="sd">    not only tensors, but also (nested) collections of tensors.</span>
 
 <span class="sd">    **Usage**</span>
 
-<span class="sd">    Common setup:</span>
+<span class="sd">    Let&#39;s see how a sequence of model outputs for batches can be concatenated</span>
+<span class="sd">    into a output tuple for the whole dataset:</span>
+
+<span class="sd">    &gt;&gt;&gt; from torch.utils.data import DataLoader, TensorDataset</span>
+<span class="sd">    &gt;&gt;&gt; dataset = TensorDataset(torch.randn(320, 24))</span>
+<span class="sd">    &gt;&gt;&gt; batch_size = 32</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # The model returns not only predictions, but also embeddings.</span>
+<span class="sd">    &gt;&gt;&gt; def model(x_batch):</span>
+<span class="sd">    ...     # A dummy forward pass.</span>
+<span class="sd">    ...     embeddings_batch = torch.randn(batch_size, 16)</span>
+<span class="sd">    ...     y_pred_batch = torch.randn(batch_size)</span>
+<span class="sd">    ...     return (y_pred_batch, embeddings_batch)</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; y_pred, embeddings = delu.cat(</span>
+<span class="sd">    ...     [model(batch) for batch in DataLoader(dataset, batch_size, shuffle=True)]</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; len(y_pred) == len(dataset)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; len(embeddings) == len(dataset)</span>
+<span class="sd">    True</span>
+
+<span class="sd">    The same works for dictionaries:</span>
+
+<span class="sd">    &gt;&gt;&gt; def model(x_batch):</span>
+<span class="sd">    ...     return {</span>
+<span class="sd">    ...         &#39;y_pred&#39;: torch.randn(batch_size),</span>
+<span class="sd">    ...         &#39;embeddings&#39;: torch.randn(batch_size, 16)</span>
+<span class="sd">    ...     }</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; outputs = delu.cat(</span>
+<span class="sd">    ...     [model(batch) for batch in DataLoader(dataset, batch_size, shuffle=True)]</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; len(outputs[&#39;y_pred&#39;]) == len(dataset)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; len(outputs[&#39;embeddings&#39;]) == len(dataset)</span>
+<span class="sd">    True</span>
+
+<span class="sd">    The same works for sequences of named tuples, dataclasses, tensors and</span>
+<span class="sd">    nested combinations of all mentioned collection types.</span>
+
+<span class="sd">    *Below, additinal technical examples are provided.*</span>
+
+<span class="sd">    The common setup:</span>
 
 <span class="sd">    &gt;&gt;&gt; # First batch.</span>
 <span class="sd">    &gt;&gt;&gt; x1 = torch.randn(64, 10)</span>
@@ -383,16 +433,14 @@
 <span class="sd">    &gt;&gt;&gt; # The last (incomplete) batch.</span>
 <span class="sd">    &gt;&gt;&gt; x3 = torch.randn(7, 10)</span>
 <span class="sd">    &gt;&gt;&gt; y3 = torch.randn(7)</span>
-<span class="sd">    &gt;&gt;&gt; # Total size.</span>
-<span class="sd">    &gt;&gt;&gt; len(x1) + len(x2) + len(x3)</span>
-<span class="sd">    135</span>
+<span class="sd">    &gt;&gt;&gt; total_size = len(x1) + len(x2) + len(x3)</span>
 
 <span class="sd">    `delu.cat` can be applied to tuples:</span>
 
 <span class="sd">    &gt;&gt;&gt; batches = [(x1, y1), (x2, y2), (x3, y3)]</span>
 <span class="sd">    &gt;&gt;&gt; X, Y = delu.cat(batches)</span>
-<span class="sd">    &gt;&gt;&gt; print(len(X), len(Y))</span>
-<span class="sd">    135 135</span>
+<span class="sd">    &gt;&gt;&gt; len(X) == total_size and len(Y) == total_size</span>
+<span class="sd">    True</span>
 
 <span class="sd">    `delu.cat` can be applied to dictionaries:</span>
 
@@ -402,8 +450,10 @@
 <span class="sd">    ...     {&#39;x&#39;: x3, &#39;y&#39;: y3},</span>
 <span class="sd">    ... ]</span>
 <span class="sd">    &gt;&gt;&gt; result = delu.cat(batches)</span>
-<span class="sd">    &gt;&gt;&gt; print(isinstance(result, dict), len(result[&#39;x&#39;]), len(result[&#39;y&#39;]))</span>
-<span class="sd">    True 135 135</span>
+<span class="sd">    &gt;&gt;&gt; isinstance(result, dict)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; len(result[&#39;x&#39;]) == total_size and len(result[&#39;y&#39;]) == total_size</span>
+<span class="sd">    True</span>
 
 <span class="sd">    `delu.cat` can be applied to named tuples:</span>
 
@@ -414,8 +464,10 @@
 <span class="sd">    ...</span>
 <span class="sd">    &gt;&gt;&gt; batches = [Data(x1, y1), Data(x2, y2), Data(x3, y3)]</span>
 <span class="sd">    &gt;&gt;&gt; result = delu.cat(batches)</span>
-<span class="sd">    &gt;&gt;&gt; print(isinstance(result, Data), len(result.x), len(result.y))</span>
-<span class="sd">    True 135 135</span>
+<span class="sd">    &gt;&gt;&gt; isinstance(result, Data)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; len(result.x) == total_size and len(result.y) == total_size</span>
+<span class="sd">    True</span>
 
 <span class="sd">    `delu.cat` can be applied to dataclasses:</span>
 
@@ -427,8 +479,10 @@
 <span class="sd">    ...</span>
 <span class="sd">    &gt;&gt;&gt; batches = [Data(x1, y1), Data(x2, y2), Data(x3, y3)]</span>
 <span class="sd">    &gt;&gt;&gt; result = delu.cat(batches)</span>
-<span class="sd">    &gt;&gt;&gt; print(isinstance(result, Data), len(result.x), len(result.y))</span>
-<span class="sd">    True 135 135</span>
+<span class="sd">    &gt;&gt;&gt; isinstance(result, Data)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; len(result.x) == total_size and len(result.y) == total_size</span>
+<span class="sd">    True</span>
 
 <span class="sd">    `delu.cat` can be applied to nested collections:</span>
 
@@ -438,10 +492,10 @@
 <span class="sd">    ...     (x3, {&#39;a&#39;: {&#39;b&#39;: y3}}),</span>
 <span class="sd">    ... ]</span>
 <span class="sd">    &gt;&gt;&gt; X, Y_nested = delu.cat(batches)</span>
-<span class="sd">    &gt;&gt;&gt; print(len(X), len(Y_nested[&#39;a&#39;][&#39;b&#39;]))</span>
-<span class="sd">    135 135</span>
+<span class="sd">    &gt;&gt;&gt; len(X) == total_size and len(Y_nested[&#39;a&#39;][&#39;b&#39;]) == total_size</span>
+<span class="sd">    True</span>
 
-<span class="sd">    **`delu.cat` cannot be applied to lists:**</span>
+<span class="sd">    **Lists are not supported:**</span>
 
 <span class="sd">    &gt;&gt;&gt; # This does not work. Instead, use tuples.</span>
 <span class="sd">    &gt;&gt;&gt; # batches = [[x1, y1], [x2, y2], [x3, y3]]</span>
@@ -521,12 +575,14 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Iterate over a tensor or a collection of tensors by (random) batches.</span>
 
-<span class="sd">    The function makes batches along the first dimension of the tensors in ``data``:</span>
+<span class="sd">    The function makes batches along the first dimension of the tensors in ``data``.</span>
 
-<span class="sd">    - (think of ``xi`` and ``yi`` as of batches)</span>
-<span class="sd">    - ``delu.iter_batches: x -&gt; [x1, x2, ..., xN]``</span>
-<span class="sd">    - ``delu.iter_batches: (x, y) -&gt; [(x1, y1), (x2, y2), ..., (xN, yN)]``</span>
-<span class="sd">    - ``delu.iter_batches: {&#39;x&#39;: x, &#39;y&#39;: y} -&gt; [{&#39;x&#39;: x1, &#39;y&#39;: y1}, ...]``</span>
+<span class="sd">    TL;DR (assuming that ``X`` and ``Y`` denote full tensors</span>
+<span class="sd">    and ``xi`` and ``yi`` denote batches):</span>
+
+<span class="sd">    - ``delu.iter_batches: X -&gt; [x1, x2, ..., xN]``</span>
+<span class="sd">    - ``delu.iter_batches: (X, Y) -&gt; [(x1, y1), (x2, y2), ..., (xN, yN)]``</span>
+<span class="sd">    - ``delu.iter_batches: {&#39;x&#39;: X, &#39;y&#39;: Y} -&gt; [{&#39;x&#39;: x1, &#39;y&#39;: y1}, ...]``</span>
 <span class="sd">    - Same for named tuples.</span>
 <span class="sd">    - Same for dataclasses.</span>
 
@@ -738,7 +794,7 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=561e856a"></script>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=3c31662e"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>

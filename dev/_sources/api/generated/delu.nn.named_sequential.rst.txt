@@ -1,6 +1,0 @@
-﻿named\_sequential
-=================
-
-.. currentmodule:: delu.nn
-
-.. autofunction:: named_sequential

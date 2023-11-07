@@ -167,29 +167,23 @@
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.iter_batches.html">iter_batches</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/cuda.html">delu.cuda</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of delu.cuda</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/delu.cuda.html">delu.cuda</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of delu.cuda</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.cuda.free_memory.html">free_memory</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/delu.nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.nn.Lambda.html">Lambda</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.nn.NLinear.html">NLinear</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.nn.named_sequential.html">named_sequential</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/delu.random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.random.seed.html">seed</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.random.get_state.html">get_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.random.set_state.html">set_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.random.preserve_state.html">preserve_state</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/utils.data.html">delu.utils.data</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.utils.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.utils.data.Enumerate.html">Enumerate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.utils.data.IndexDataset.html">IndexDataset</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/tools.html">delu.tools</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of delu.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/delu.tools.html">delu.tools</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.tools.EarlyStopping.html">EarlyStopping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/generated/delu.tools.Timer.html">Timer</a></li>
 </ul>
@@ -242,6 +236,8 @@
 <span class="kn">import</span> <span class="nn">torch.nn</span>
 <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
 <span class="kn">from</span> <span class="nn">torch.nn.parameter</span> <span class="kn">import</span> <span class="n">Parameter</span>
+
+<span class="kn">from</span> <span class="nn">._utils</span> <span class="kn">import</span> <span class="n">deprecated</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Lambda&#39;</span><span class="p">,</span> <span class="s1">&#39;NLinear&#39;</span><span class="p">,</span> <span class="s1">&#39;named_sequential&#39;</span><span class="p">]</span>
 
@@ -342,27 +338,19 @@
 
 
 <div class="viewcode-block" id="NLinear"><a class="viewcode-back" href="../../api/generated/delu.nn.NLinear.html#delu.nn.NLinear">[docs]</a><span class="k">class</span> <span class="nc">NLinear</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;N linear layers for N inputs: ``(*, *N, D1) -&gt; (*, *N, D2)``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;N *separate* linear layers for N embeddings: ``(*, *N, D1) -&gt; (*, *N, D2)``.</span>
 
-<span class="sd">    Examples of use cases:</span>
+<span class="sd">    Usage examples covered below:</span>
 
-<span class="sd">    - NLP: apply a *separate* linear layer to each token embedding in a sequence</span>
-<span class="sd">        - Batch: ``(B, S, D)`` (``B`` is the batch size, ``S`` is the sequence length,</span>
-<span class="sd">          ``D`` is the embedding size)</span>
-<span class="sd">        - Module: ``NLinear(S, D, D)``</span>
-<span class="sd">        - By contrast, ``torch.nn.Linear(D, D)`` would apply *the same* linear layer</span>
-<span class="sd">          to all token embeddings.</span>
+<span class="sd">    - (NLP) Training a *separate* linear layer for each token embedding in a sequence.</span>
+<span class="sd">      By contrast, using `torch.nn.Linear` would mean applying the same linear layer</span>
+<span class="sd">      to all tokens.</span>
+<span class="sd">    - (CV) Training a *separate* linear layer for each patch embedding in an image.</span>
+<span class="sd">      By contrast, using `torch.nn.Linear` would mean applying the same linear layer</span>
+<span class="sd">      to all tokens.</span>
 
-<span class="sd">    - CV: apply a *separate* linear layer to each the patch embeddings of an image</span>
-<span class="sd">        - Batch: ``(B, W, H, C1)`` (``B`` is the batch size,</span>
-<span class="sd">          ``W`` and ``H`` are the image dimensions,</span>
-<span class="sd">          ``C1`` is the current number of channels)</span>
-<span class="sd">        - Module: ``NLinear((W, H), C1, C2)``</span>
-<span class="sd">        - By contrast, ``torch.nn.Linear(D, D)`` would apply *the same* linear layer</span>
-<span class="sd">          to all patch embeddings.</span>
-
-<span class="sd">    In other words, ``NLinear(N, D1, D2)`` is a collection of ``math.prod(N)``</span>
-<span class="sd">    non-shared ``torch.nn.Linear(D1, D2)`` layers.</span>
+<span class="sd">    Technically, ``NLinear(N, D1, D2)`` is just a layout of ``N``</span>
+<span class="sd">    linear layers ``torch.nn.Linear(D1, D2)``.</span>
 
 <span class="sd">    **Shape**</span>
 
@@ -371,27 +359,24 @@
 
 <span class="sd">    **Usage**</span>
 
-<span class="sd">    Let&#39;s consider a Transformer-like model that outputs tensors of the shape</span>
-<span class="sd">    ``(batch_size, n_tokens, d_embedding)``</span>
-<span class="sd">    (in terms of NLP, ``n_tokens`` is the sequence length).</span>
-<span class="sd">    The following example demonstrates how to train a separate linear transformation</span>
-<span class="sd">    for each of the ``n_tokens`` embeddings using `NLinear`.</span>
+<span class="sd">    (NLP)</span>
+<span class="sd">    Training a separate linear layer for each of the token embeddings in a sequence:</span>
 
 <span class="sd">    &gt;&gt;&gt; batch_size = 2</span>
-<span class="sd">    &gt;&gt;&gt; n_tokens = 3</span>
-<span class="sd">    &gt;&gt;&gt; d_embedding_in = 4</span>
-<span class="sd">    &gt;&gt;&gt; d_embedding_out = 5</span>
-<span class="sd">    &gt;&gt;&gt; x = torch.randn(batch_size, n_tokens, d_embedding_in)</span>
+<span class="sd">    &gt;&gt;&gt; sequence_length = 4</span>
+<span class="sd">    &gt;&gt;&gt; d_embedding_in = 6</span>
+<span class="sd">    &gt;&gt;&gt; d_embedding_out = 7</span>
+<span class="sd">    &gt;&gt;&gt; x = torch.randn(batch_size, sequence_length, d_embedding_in)</span>
 <span class="sd">    &gt;&gt;&gt; x.shape</span>
-<span class="sd">    torch.Size([2, 3, 4])</span>
-<span class="sd">    &gt;&gt;&gt; m = NLinear(n_tokens, d_embedding_in, d_embedding_out)</span>
+<span class="sd">    torch.Size([2, 4, 6])</span>
+<span class="sd">    &gt;&gt;&gt; m = NLinear(sequence_length, d_embedding_in, d_embedding_out)</span>
 <span class="sd">    &gt;&gt;&gt; m(x).shape</span>
-<span class="sd">    torch.Size([2, 3, 5])</span>
+<span class="sd">    torch.Size([2, 4, 7])</span>
 
-<span class="sd">    Similarly to `torch.nn.Linear`, the input can have any number of batch dimensions.</span>
-<span class="sd">    The number of layers ``n``, in turn, can be also be arbitrary.</span>
+<span class="sd">    (CV)</span>
+<span class="sd">    Training a separate linear layer for each of the patch embeddings in an image:</span>
 
-<span class="sd">    &gt;&gt;&gt; # Computer vision.</span>
+<span class="sd">    &gt;&gt;&gt; # Batch dimensions can also be arbitrarily complex.</span>
 <span class="sd">    &gt;&gt;&gt; batch_size = (2, 3)</span>
 <span class="sd">    &gt;&gt;&gt; width = 4</span>
 <span class="sd">    &gt;&gt;&gt; height = 5</span>
@@ -400,7 +385,7 @@
 <span class="sd">    &gt;&gt;&gt; x = torch.randn(*batch_size, width, height, in_channels)</span>
 <span class="sd">    &gt;&gt;&gt; x.shape</span>
 <span class="sd">    torch.Size([2, 3, 4, 5, 6])</span>
-<span class="sd">    &gt;&gt;&gt; # The number of layers: width * heght = 4 * 5 = 20</span>
+<span class="sd">    &gt;&gt;&gt; # N == width * heght == 4 * 5 == 20</span>
 <span class="sd">    &gt;&gt;&gt; m = NLinear((width, height), in_channels, out_channels)</span>
 <span class="sd">    &gt;&gt;&gt; m(x).shape</span>
 <span class="sd">    torch.Size([2, 3, 4, 5, 7])</span>
@@ -471,8 +456,11 @@
         <span class="k">return</span> <span class="n">x</span></div></div>
 
 
-<div class="viewcode-block" id="named_sequential"><a class="viewcode-back" href="../../api/generated/delu.nn.named_sequential.html#delu.nn.named_sequential">[docs]</a><span class="k">def</span> <span class="nf">named_sequential</span><span class="p">(</span><span class="o">*</span><span class="n">names_and_modules</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">:</span>
+<div class="viewcode-block" id="named_sequential"><a class="viewcode-back" href="../../api/deprecated.html#delu.nn.named_sequential">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">named_sequential</span><span class="p">(</span><span class="o">*</span><span class="n">names_and_modules</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A shortcut for creating `torch.nn.Sequential` with named modules without using `collections.OrderedDict`.</span>
+
+<span class="sd">    &lt;DEPRECATION MESSAGE&gt;</span>
 
 <span class="sd">    The sole purpose of this function is to improve the ergonomics and readability</span>
 <span class="sd">    of the common construction.</span>
@@ -481,6 +469,7 @@
 
 <span class="sd">    This ...</span>
 
+<span class="sd">    &gt;&gt;&gt; # xdoctest: +SKIP</span>
 <span class="sd">    &gt;&gt;&gt; m = delu.nn.named_sequential(</span>
 <span class="sd">    ...     (&#39;linear1&#39;, nn.Linear(10, 20)),</span>
 <span class="sd">    ...     (&#39;activation&#39;, nn.ReLU()),</span>
@@ -489,6 +478,7 @@
 
 <span class="sd">    ... is equivalent to this:</span>
 
+<span class="sd">    &gt;&gt;&gt; # xdoctest: +SKIP</span>
 <span class="sd">    &gt;&gt;&gt; from collections import OrderedDict</span>
 <span class="sd">    &gt;&gt;&gt; m = torch.nn.Sequential(</span>
 <span class="sd">    ...     OrderedDict(</span>
@@ -543,7 +533,7 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=561e856a"></script>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=3c31662e"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>

@@ -12,10 +12,3 @@ delu.nn
 
     Lambda
     NLinear
-
-.. autosummary::
-    :nosignatures:
-    :toctree: generated
-    :template: function.rst
-
-    named_sequential

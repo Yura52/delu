@@ -168,29 +168,23 @@
 <li class="toctree-l2"><a class="reference internal" href="delu.iter_batches.html">iter_batches</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../cuda.html">delu.cuda</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of delu.cuda</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../delu.cuda.html">delu.cuda</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of delu.cuda</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="delu.cuda.free_memory.html">free_memory</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../delu.nn.html">delu.nn</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of delu.nn</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="delu.nn.Lambda.html">Lambda</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.nn.NLinear.html">NLinear</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.nn.named_sequential.html">named_sequential</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../delu.random.html">delu.random</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of delu.random</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.seed.html">seed</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.get_state.html">get_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.set_state.html">set_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.random.preserve_state.html">preserve_state</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../utils.data.html">delu.utils.data</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.utils.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="delu.utils.data.Enumerate.html">Enumerate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delu.utils.data.IndexDataset.html">IndexDataset</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../tools.html">delu.tools</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of delu.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../delu.tools.html">delu.tools</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of delu.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="delu.tools.EarlyStopping.html">EarlyStopping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delu.tools.Timer.html">Timer</a></li>
 </ul>
@@ -247,22 +241,51 @@
 <dt class="sig sig-object py" id="delu.cat">
 <span class="sig-prename descclassname"><span class="pre">delu.</span></span><span class="sig-name descname"><span class="pre">cat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">T</span></span></span><a class="reference internal" href="../../_modules/delu/_tensor_ops.html#cat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.cat" title="Permalink to this definition">#</a></dt>
 <dd><p>Concatenate a sequence of collections of tensors.</p>
-<p><a class="reference internal" href="#delu.cat" title="delu.cat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.cat</span></code></a> is a generalized version of <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.cat.html#torch.cat" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cat</span></code></a>.
-A typical use case is concatenating a sequence of batches:</p>
-<ul class="simple">
-<li><p>(think of <code class="docutils literal notranslate"><span class="pre">xi</span></code> and <code class="docutils literal notranslate"><span class="pre">yi</span></code> as of batches)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">torch.cat:</span> <span class="pre">[x1,</span> <span class="pre">x2,</span> <span class="pre">...,</span> <span class="pre">xN]</span> <span class="pre">-&gt;</span> <span class="pre">x</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">delu.cat:</span>&#160; <span class="pre">[x1,</span> <span class="pre">x2,</span> <span class="pre">...,</span> <span class="pre">xN]</span> <span class="pre">-&gt;</span> <span class="pre">x</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">delu.cat:</span>&#160; <span class="pre">[(x1,</span> <span class="pre">y1),</span> <span class="pre">(x2,</span> <span class="pre">y2),</span> <span class="pre">...,</span> <span class="pre">(xN,</span> <span class="pre">yN)]</span> <span class="pre">-&gt;</span> <span class="pre">(x,</span> <span class="pre">y)</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">delu.cat:</span>&#160; <span class="pre">[{'x':</span> <span class="pre">x1,</span> <span class="pre">'y':</span> <span class="pre">y1},</span> <span class="pre">...,</span> <span class="pre">{'x':</span> <span class="pre">xN,</span> <span class="pre">'y':</span> <span class="pre">yN}]</span> <span class="pre">-&gt;</span> <span class="pre">{'x':</span> <span class="pre">x,</span> <span class="pre">'y':</span> <span class="pre">y}</span></code></p></li>
-<li><p>Same for named tuples.</p></li>
-<li><p>Same for dataclasses.</p></li>
-<li><p>Nested collections are supported.</p></li>
-</ul>
-<p>In other words, while <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.cat.html#torch.cat" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cat</span></code></a> concatenates a sequence of tensors,
-<a class="reference internal" href="delu.to.html#delu.to" title="delu.to"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.to</span></code></a> concatenates a sequence of <em>collections</em> of tensors.</p>
+<p><a class="reference internal" href="#delu.cat" title="delu.cat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.cat</span></code></a> is a generalized version of <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.cat.html#torch.cat" title="(in PyTorch v2.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cat</span></code></a> for concatenating
+not only tensors, but also (nested) collections of tensors.</p>
 <p><strong>Usage</strong></p>
-<p>Common setup:</p>
+<p>Let’s see how a sequence of model outputs for batches can be concatenated
+into a output tuple for the whole dataset:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">320</span><span class="p">,</span> <span class="mi">24</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># The model returns not only predictions, but also embeddings.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">x_batch</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="c1"># A dummy forward pass.</span>
+<span class="gp">... </span>    <span class="n">embeddings_batch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">y_pred_batch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="p">(</span><span class="n">y_pred_batch</span><span class="p">,</span> <span class="n">embeddings_batch</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span><span class="p">,</span> <span class="n">embeddings</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>The same works for dictionaries:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">x_batch</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s1">&#39;y_pred&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="s1">&#39;embeddings&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">outputs</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;embeddings&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>The same works for sequences of named tuples, dataclasses, tensors and
+nested combinations of all mentioned collection types.</p>
+<p><em>Below, additinal technical examples are provided.</em></p>
+<p>The common setup:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># First batch.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">y1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
@@ -272,16 +295,14 @@ A typical use case is concatenating a sequence of batches:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># The last (incomplete) batch.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x3</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">y3</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Total size.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">x3</span><span class="p">)</span>
-<span class="go">135</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">total_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">x3</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><a class="reference internal" href="#delu.cat" title="delu.cat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.cat</span></code></a> can be applied to tuples:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">batches</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">),</span> <span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">),</span> <span class="p">(</span><span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">batches</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="p">))</span>
-<span class="go">135 135</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="n">total_size</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="o">==</span> <span class="n">total_size</span>
+<span class="go">True</span>
 </pre></div>
 </div>
 <p><a class="reference internal" href="#delu.cat" title="delu.cat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.cat</span></code></a> can be applied to dictionaries:</p>
@@ -291,8 +312,10 @@ A typical use case is concatenating a sequence of batches:</p>
 <span class="gp">... </span>    <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x3</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y3</span><span class="p">},</span>
 <span class="gp">... </span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">batches</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]))</span>
-<span class="go">True 135 135</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">total_size</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">total_size</span>
+<span class="go">True</span>
 </pre></div>
 </div>
 <p><a class="reference internal" href="#delu.cat" title="delu.cat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.cat</span></code></a> can be applied to named tuples:</p>
@@ -303,8 +326,10 @@ A typical use case is concatenating a sequence of batches:</p>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">batches</span> <span class="o">=</span> <span class="p">[</span><span class="n">Data</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">),</span> <span class="n">Data</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">),</span> <span class="n">Data</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">batches</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">Data</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
-<span class="go">True 135 135</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">Data</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="n">total_size</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="n">total_size</span>
+<span class="go">True</span>
 </pre></div>
 </div>
 <p><a class="reference internal" href="#delu.cat" title="delu.cat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.cat</span></code></a> can be applied to dataclasses:</p>
@@ -316,8 +341,10 @@ A typical use case is concatenating a sequence of batches:</p>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">batches</span> <span class="o">=</span> <span class="p">[</span><span class="n">Data</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">),</span> <span class="n">Data</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">),</span> <span class="n">Data</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">batches</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">Data</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
-<span class="go">True 135 135</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">Data</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="n">total_size</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="n">total_size</span>
+<span class="go">True</span>
 </pre></div>
 </div>
 <p><a class="reference internal" href="#delu.cat" title="delu.cat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delu.cat</span></code></a> can be applied to nested collections:</p>
@@ -327,11 +354,11 @@ A typical use case is concatenating a sequence of batches:</p>
 <span class="gp">... </span>    <span class="p">(</span><span class="n">x3</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="n">y3</span><span class="p">}}),</span>
 <span class="gp">... </span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y_nested</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">batches</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">Y_nested</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">][</span><span class="s1">&#39;b&#39;</span><span class="p">]))</span>
-<span class="go">135 135</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="n">total_size</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">Y_nested</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">][</span><span class="s1">&#39;b&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">total_size</span>
+<span class="go">True</span>
 </pre></div>
 </div>
-<p><strong>`delu.cat` cannot be applied to lists:</strong></p>
+<p><strong>Lists are not supported:</strong></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># This does not work. Instead, use tuples.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># batches = [[x1, y1], [x2, y2], [x3, y3]]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># delu.cat(batches)  # Error</span>
@@ -430,7 +457,7 @@ All the “leaf” values must be of the type <a class="reference external" href
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=561e856a"></script>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=3c31662e"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
