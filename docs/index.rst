@@ -16,7 +16,6 @@ DeLU (Deep Learning Utilities)
    api/delu.cuda
    api/delu.nn
    api/delu.random
-   api/delu.utils.data
    api/delu.tools
 
 .. toctree::

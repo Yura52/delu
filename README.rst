@@ -5,17 +5,24 @@
 
 .. __INCLUDE_0__
 
-**DeLU is a simple well-documented PyTorch toolbox**
-consisting of two parts:
+**DeLU is a simple PyTorch toolbox**
+aimed at improving the day-to-day experience with PyTorch.
+DeLU includes the following submodules:
 
 .. list-table::
-   :widths: 20 35
+   :widths: 20 200
    :header-rows: 0
 
-   * - ``delu.{cuda,nn,random,utils.data}``
-     - Extensions to the corresponding ``torch.{...}`` submodules.
+   * - ``delu``
+     - An extension to ``torch``.
+   * - ``delu.cuda``
+     - An extension to ``torch.cuda``.
+   * - ``delu.nn``
+     - An extension to ``torch.nn``.
+   * - ``delu.random``
+     - An extension to ``torch.random``.
    * - ``delu.tools``
-     - Handy tools for common scenarios (e.g. for training loops).
+     - Handy tools for common scenarios (e.g. for implementing training loops).
 
 **Project status** 🧪
 *Until the release of the version 0.1.0, DeLU should be considered as experimental.
@@ -35,8 +42,8 @@ Usage
 so you can learn things and start using them in any order.*
 
 The "Usage & API" section on the website
-is the main source of knowledge about DeLU:
-it provides usage examples, explanations and docstrings.
+provides usage examples, explanations and docstrings
+--- it is the main source of knowledge about DeLU.
 
 How to contribute
 -----------------

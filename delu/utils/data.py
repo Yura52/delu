@@ -4,14 +4,19 @@ from typing import Any, Tuple, TypeVar
 
 from torch.utils.data import Dataset
 
+from .._utils import deprecated
+
 T = TypeVar('T')
 
 
 __all__ = ['Enumerate', 'IndexDataset']
 
 
+@deprecated('')
 class Enumerate(Dataset):
     """Make a PyTorch dataset return indices in addition to items (like `enumerate`, but for datasets).
+
+    <DEPRECATION MESSAGE>
 
     TL;DR:
 
@@ -93,8 +98,11 @@ class Enumerate(Dataset):
         return index, self._dataset[index]
 
 
+@deprecated('')
 class IndexDataset(Dataset):
     """A trivial dataset that yields indices back to user (useful for DistributedDataParallel (DDP)).
+
+    <DEPRECATION MESSAGE>
 
     This simple dataset is useful when *both* conditions are true:
 

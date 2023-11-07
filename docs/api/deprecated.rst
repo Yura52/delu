@@ -39,6 +39,20 @@ Deprecated API
 .. autoclass:: evaluation
     :exclude-members: __init__, __new__
 
+.. currentmodule:: delu.utils.data
+
+.. autoclass:: Enumerate
+    :show-inheritance:
+    :members:
+    :special-members:
+    :exclude-members: __weakref__
+
+.. autoclass:: IndexDataset
+    :show-inheritance:
+    :members:
+    :special-members:
+    :exclude-members: __weakref__
+
 .. currentmodule:: delu.data
 
 .. autoclass:: Enumerate

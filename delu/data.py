@@ -12,7 +12,7 @@ from .utils import data as utils_data
 T = TypeVar('T')
 
 
-@deprecated('Renamed to `delu.utils.data.Enumerate`')
+@deprecated('')
 class Enumerate(utils_data.Enumerate):
     """
     <DEPRECATION MESSAGE>
@@ -21,7 +21,7 @@ class Enumerate(utils_data.Enumerate):
     pass
 
 
-@deprecated('Instead, use `delu.utils.data.IndexDataset`')
+@deprecated('')
 class IndexDataset(utils_data.IndexDataset):
     """
     <DEPRECATION MESSAGE>
