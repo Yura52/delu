@@ -23,58 +23,69 @@ K = TypeVar('K')
 def to(obj: T, /, *args, **kwargs) -> T:
     """Change devices and data types of tensors and modules in an arbitrary Python object.
 
-    This function is like `torch.Tensor.to`/`torch.nn.Module.to`,
-    but applicable to any Python object.
-
-    .. note::
-        Non-trivial (nested) objects such as user-defined classes or PyTorch modules
-        are modified **in-place**. See the note below for more details.
-
     The two primary use cases for this function are changing the device and data types
     of tensors and modules that are a part of:
 
     - a complex Python object (e.g. a training state, checkpoint, etc.)
     - an object of an unknown type (when implementing generic pipelines)
 
+    .. list-table::
+        :widths: 30 50
+        :header-rows: 1
+
+        * - Input object type
+          - What `delu.to` returns
+        * - `bool` `int` `float` `str` `bytes`
+          - The input object is returned as-is.
+        * - `tuple` `list` or any other `typing.Sequence`
+          - A new collection of the same type where `delu.to`
+            is recursively applied to all items.
+        * - `dict` or any other `typing.Mapping`
+          - A new collection of the same type where `delu.to`
+            is recursively applied to all keys and values.
+        * - `torch.Tensor`
+          - The result of `torch.Tensor.to` with the provided arguments
+            is applied to the object.
+        * - `torch.nn.Module`
+          - ❗️ **The object is modified in-place** by applying
+            `torch.nn.Module.to` with the provided arguments.
+        * - Any other Python object
+          - ❗️ **The object is modified in-place** by updating all its
+            attributes recursively with `delu.to`.
+
     **Usage**
 
-    A technical example:
+    Simple examples:
+
+    >>> from torch import tensor
+    >>> kwargs = {'device': 'cpu', 'dtype': torch.half}
+    >>>
+    >>> x = 0
+    >>> x_new = delu.to(x, **kwargs)
+    >>>
+    >>> x = (False, [tensor(1, **kwargs), 2.0], {'three': (nn.Linear(4, 5), tensor(6.0)})
+    >>> x_new = delu.to(x, **kwargs)
+
+    Complex user-defined types are also allowed:
 
     >>> from dataclasses import dataclass
     >>>
-    >>> class UserClass:
+    >>> class A:
     ...     def __init__(self):
     ...         self.a = torch.randn(5)
     ...         self.b = ('Hello, world!', torch.randn(10))
     ...         self.c = nn.Linear(4, 7)
     ...
     >>> @dataclass
-    >>> class UserDataclass:
-    ...     d: List[UserClass]
+    >>> class B:
+    ...     d: List[A]
     ...
-    >>> data = (
+    >>> x = (
     ...     torch.rand(3),
-    ...     [{(False, 1): torch.tensor(1.0)}, 2.0],
-    ...     UserDataclass([UserClass(), UserClass()]),
+    ...     [{(False, 1): tensor(1.0)}, 2.0],
+    ...     B([A(), A()]),
     ... )
-    >>> data = delu.to(data, device='cpu', dtype=torch.float16)
-
-    .. note::
-        Technically, the function traverses the input ``data`` as follows:
-
-        - for tensors/modules, `torch.Tensor.to`/`torch.nn.Module.to` is applied
-          with the provided ``*args`` and ``**kwargs``; in particular, it means
-          that tensors will be replaced with new tensors (in terms of Python `id`),
-          but modules will be modified in-place;
-        - for tuples, named tuples, lists, other sequences (see `typing.Sequence`),
-          dictionaries and other mappings (see `typing.Mapping`),
-          a new collection of the same type is returned,
-          where `delu.to` is recursively applied
-          to all values of the original collection;
-        - in all other cases, the original object is modified in-place, and
-          the same object in terms of Python `id` is returned.
-          If the object has attributes (defined in ``__dict__`` or ``__slots__``),
-          then `delu.to` is recursively applied to all the attributes.
+    >>> x_new = delu.to(x, **kwargs)
 
     Args:
         obj: the input object.

@@ -86,3 +86,8 @@ Deprecated API
 .. autofunction:: free_memory
 
 .. autofunction:: get_gpus_info
+
+.. currentmodule:: delu.nn
+
+.. autofunction:: named_sequential
+

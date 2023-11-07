@@ -7,6 +7,7 @@
 
 **DeLU is a simple PyTorch toolbox**
 aimed at improving the day-to-day experience with PyTorch.
+
 DeLU includes the following submodules:
 
 .. list-table::

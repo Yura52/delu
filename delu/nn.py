@@ -9,6 +9,8 @@ import torch.nn
 import torch.nn as nn
 from torch.nn.parameter import Parameter
 
+from ._utils import deprecated
+
 __all__ = ['Lambda', 'NLinear', 'named_sequential']
 
 
@@ -237,8 +239,11 @@ class NLinear(nn.Module):
         return x
 
 
+@deprecated('')
 def named_sequential(*names_and_modules: Tuple[str, nn.Module]) -> nn.Sequential:
     """A shortcut for creating `torch.nn.Sequential` with named modules without using `collections.OrderedDict`.
+
+    <DEPRECATION MESSAGE>
 
     The sole purpose of this function is to improve the ergonomics and readability
     of the common construction.
