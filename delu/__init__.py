@@ -1,6 +1,6 @@
 """Deep Learning Utilities for PyTorch users."""
 
-__version__ = '0.0.25'
+__version__ = '0.0.26.dev0'
 
 from . import cuda, data, hardware, nn, random, tools, utils
 from ._stream import Stream
