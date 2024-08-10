@@ -52,5 +52,5 @@ def make_model(data):
 
 
 requires_gpu = pytest.mark.skipif(
-    not torch.cuda.is_available(), reason="GPU is required for this test"
+    not torch.cuda.is_available(), reason='GPU is required for this test'
 )

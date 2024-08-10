@@ -296,7 +296,8 @@ def cat(data: List[T], /, dim: int = 0) -> T:
         constructor = type(first)
         constructor = getattr(constructor, '_make', constructor)  # Handle named tuples.
         return constructor(
-            cat([x[i] for x in data], dim=dim) for i in range(len(first))  # type: ignore
+            cat([x[i] for x in data], dim=dim)  # type: ignore
+            for i in range(len(first))
         )
 
     elif isinstance(first, dict):

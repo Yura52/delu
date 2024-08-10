@@ -49,8 +49,7 @@ spelling:
 lint:
 	python -m pre_commit_hooks.debug_statement_hook delu/*.py
 	python -m pre_commit_hooks.debug_statement_hook delu/**/*.py
-	isort delu --check-only
-	black delu --check
+	ruff format --check
 	ruff check .
 
 # The order is important: clean must be first, docs must precede doctest.

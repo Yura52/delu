@@ -29,9 +29,6 @@ name = "delu"
 requires-python = ">=3.8"
 urls = { Documentation = "https://yura52.github.io/delu", Code = "https://github.com/Yura52/delu" }
 
-[tool.black]
-skip_string_normalization = true
-
 [tool.coverage.run]
 branch = true
 omit = ["delu/tests/*"]
@@ -39,11 +36,6 @@ source = ["delu"]
 
 [tool.flit.module]
 name = "delu"
-
-[tool.isort]
-profile = "black"
-multi_line_output = 3
-known_first_party = ["rtdl"]
 
 [tool.mypy]
 check_untyped_defs = true
@@ -54,6 +46,11 @@ module = "delu.*.tests.*"
 ignore_errors = true
 
 [tool.ruff]
-line-length = 88
-extend-select = ["RUF", "UP", "E501", "E731"]
 target-version = "py38"
+line-length = 88
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.ruff.lint]
+extend-select = ["RUF", "UP", "E501", "E731"]

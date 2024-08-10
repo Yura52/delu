@@ -1,6 +1,5 @@
 """Custom warnings and exceptions."""
 
-
 __all__ = ['DeLUDeprecationWarning']
 
 

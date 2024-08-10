@@ -159,6 +159,6 @@ class IndexDataset(Dataset):
             raise ValueError('index must be an integer')
         if index < 0 or index >= self.size:
             raise IndexError(
-                f"The index {index} is out of range (the dataset size is {self.size})"
+                f'The index {index} is out of range (the dataset size is {self.size})'
             )
         return index
