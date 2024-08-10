@@ -1,7 +1,7 @@
 DeLU (Deep Learning Utilities)
 ==============================
 
-:bdg-secondary:`v0.0.24.dev0`
+:bdg-secondary:`v0.0.24`
 :bdg-link-secondary-line:`Other versions <https://yura52.github.io/delu/versions.html>`
 :bdg-link-secondary-line:`Source code <https://github.com/Yura52/delu>`
 
