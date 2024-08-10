@@ -1,0 +1,23 @@
+.longtable {
+    width: 100%;
+}
+
+.longtable tr td:first-child {
+    width: 35%;
+    white-space: nowrap;
+}
+
+dl.py.class dd dl.py {
+    margin-top: 3em;
+}
+
+dl.py dd dl.field-list.simple dt,
+dl.py dd p.rubric {
+    font-weight: 500;
+    margin-top: 1em;
+}
+
+dl.py>dt.sig.sig-object.py {
+    border-bottom: 1px solid;
+    border-radius: 0px;
+}
