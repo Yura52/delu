@@ -127,6 +127,8 @@ class NLinear(nn.Module):
     **Shape**
 
     - Input: ``(*, *n, in_features)``, where the leading ``*`` is batch dimensions.
+             Similarly to `torch.nn.Linear`,
+             the batch dimensions can be arbitrarily complex.
     - Output: ``(*, *n, out_features)``.
 
     **Usage**
@@ -146,51 +148,52 @@ class NLinear(nn.Module):
     torch.Size([2, 4, 7])
 
     (CV)
-    Training a separate linear layer (i.e. Conv1x1) for each location in an image
-    (e.g. location can be a patch or a pixel):
+    Training a separate linear layer (i.e. Conv1x1)
+    for each of the spatial embeddings (patch embeddings, pixel embeddings, etc.)
+    of an image (total count: ``width x height``):
 
     >>> # Batch dimensions can be arbitrarily complex (same as for torch.nn.Linear).
-    >>> batch_size = (2, 3)
+    >>> batch_size = 2
     >>> width = 4
     >>> height = 5
     >>> in_channels = 6
     >>> out_channels = 7
-    >>> x = torch.randn(*batch_size, width, height, in_channels)
+    >>> x = torch.randn(batch_size, width, height, in_channels)
     >>> x.shape
-    torch.Size([2, 3, 4, 5, 6])
-    >>> # N == width * heght == 4 * 5 == 20
+    torch.Size([2, 4, 5, 6])
     >>> m = NLinear((width, height), in_channels, out_channels)
     >>> m(x).shape
-    torch.Size([2, 3, 4, 5, 7])
+    torch.Size([2, 4, 5, 7])
     """
 
     def __init__(
         self,
-        layout: Union[int, Tuple[int, ...]],
+        n: Union[int, Tuple[int, ...]],
         in_features: int,
         out_features: int,
         bias: bool = True,
+        *,
         device=None,
         dtype=None,
     ) -> None:
         """
-        All arguments are the same as in `torch.nn.Linear` except for ``layout``,
-        which is the expected layout of the input (see the examples in `NLinear`).
+        ``n`` is the expected layout of the input (see the examples in `NLinear`).
+        All other arguments are the same as in `torch.nn.Linear`.
         """
         super().__init__()
         factory_kwargs = {'device': device, 'dtype': dtype}
-        layout_tuple = (layout,) if isinstance(layout, int) else layout
-        if not layout_tuple or any(x <= 0 for x in layout_tuple):
+        n_tuple = (n,) if isinstance(n, int) else n
+        if not n_tuple or any(x <= 0 for x in n_tuple):
             raise ValueError(
-                'layout must be a positive integer or a non-empty tuple'
-                f' of positive integers. The provided value: {layout=}'
+                'n must be a positive integer or a non-empty tuple'
+                f' of positive integers. The provided value: {n=}'
             )
         self.weight = Parameter(
-            torch.empty(*layout_tuple, in_features, out_features, **factory_kwargs)
+            torch.empty(*n_tuple, in_features, out_features, **factory_kwargs)
         )
         self.bias = (
             nn.parameter.Parameter(
-                torch.empty(*layout_tuple, out_features, **factory_kwargs)
+                torch.empty(*n_tuple, out_features, **factory_kwargs)
             )
             if bias
             else None
@@ -220,13 +223,14 @@ class NLinear(nn.Module):
                 f' in_features={self.weight.shape[-2]} passed to'
                 f' the constructor of {type(self).__name__}. However: {x.shape[-1]=}'
             )
-        # The non-batch dimensions corresponding to n and in_features must be
-        # exactly equal, it would be incorrect to rely on broadcasting over them.
+        # The layout dimensions must be exactly equal to what was passed
+        # to the constructor. This is checked to avoid accidental broadcasting
+        # which would lead to incorrect results.
         if x.shape[-(self.weight.ndim - 1) :] != self.weight.shape[:-1]:
             raise ValueError(
                 'The input must have a shape like'
-                ' `(*batch_dimensions, *layout, in_features)`,'
-                ' where layout and in_features are the values passed to the constructor'
+                ' `(*batch_dimensions, *n, in_features)`,'
+                ' where n and in_features are the values passed to the constructor'
                 f' of {type(self).__name__}. However: {x.shape=},'
                 f' n={self.weight.shape[:-2]}, in_features={self.weight.shape[-2]}'
             )
@@ -240,15 +244,21 @@ class NLinear(nn.Module):
         else:
             layout_shape = self.weight.shape[:-2]
             batch_shape = x.shape[: -1 - len(layout_shape)]
+            batch_ndim = len(batch_shape)
 
-            # fmt: off
-            # B ~ batch_shape, L ~ layout_shape
-            x = x.flatten(0, len(batch_shape) - 1)  # -> (B, *L, D_IN)
-            x = x.movedim(0, -2)                    # -> (*L, B, D_IN)
-            x = x @ self.weight                     # -> (*L, B, D_OUT)
-            x = x.moveaxis(-2, 0)                   # -> (B, *L, D_OUT)
-            x = x.unflatten(0, batch_shape)         # -> (*B, *L, D_OUT)
-            # fmt: on
+            if batch_ndim > 1:
+                # Flatten the batch dimensions.
+                x = x.flatten(0, batch_ndim - 1)
+            # Align the layout dimensions of x and self.weight.
+            x = x.movedim(0, -2)  # (batch, *n, d) -> (*n, batch, d)
+            x = x @ self.weight
+            # Move the batch dimension back to the front.
+            x = x.movedim(-2, 0)
+            if batch_ndim > 1:
+                # Restore the original batch dimensions
+                # (this operation should be kept under `if`,
+                #  because it can trigger copy even when batch_ndim == 1).
+                x = x.unflatten(0, batch_shape)
 
         if self.bias is not None:
             x = x + self.bias
