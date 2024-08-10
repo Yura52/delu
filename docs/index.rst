@@ -9,7 +9,7 @@ DeLU (Deep Learning Utilities)
    :start-after: __INCLUDE_0__
 
 .. toctree::
-   :caption: Usage & API
+   :caption: API
    :hidden:
 
    api/delu
