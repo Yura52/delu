@@ -14,7 +14,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-dependencies = ["numpy >=1.18,<2", "torch >=1.8,<3"]
+dependencies = ["numpy >=1.21,<3", "torch >=1.9,<3"]
 dynamic = ["version", "description"]
 keywords = [
     "artificial intelligence",
@@ -26,8 +26,34 @@ keywords = [
 ]
 license = { file = "LICENSE" }
 name = "delu"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 urls = { Documentation = "https://yura52.github.io/delu", Code = "https://github.com/Yura52/delu" }
+
+[dependency-groups]
+dev = [
+    # Documentation
+    "furo ==2024.8.6",
+    "pdoc ==14.4.0",
+    "sphinx ==7.1.2",
+    "sphinxcontrib-spelling ==8.0.0",
+    "sphinx-copybutton ==0.5.2",
+    "sphinx-design ==0.5.0",
+    "sphinx-remove-toctrees ==0.0.3",
+    # Development
+    "coverage ==7.6.1",
+    "flit ==3.9.0",
+    "mypy ==1.11.1",
+    "pip ==24.2",
+    "pre-commit-hooks ==4.6.0",
+    "pytest ==8.3.2",
+    "ruff ==0.5.7",
+    "xdoctest ==1.1.6",
+    # Other
+    "jupyterlab ==4.2.4",
+]
+
+[tool.uv]
+resolution = "lowest-direct"
 
 [tool.coverage.run]
 branch = true
@@ -46,7 +72,7 @@ module = "delu.*.tests.*"
 ignore_errors = true
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 line-length = 88
 
 [tool.ruff.format]

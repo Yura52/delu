@@ -3,7 +3,7 @@
 import inspect
 import warnings
 from collections import OrderedDict
-from typing import Callable, Tuple, Union
+from typing import Callable, Union
 
 import torch.nn
 import torch.nn as nn
@@ -168,7 +168,7 @@ class NLinear(nn.Module):
 
     def __init__(
         self,
-        n: Union[int, Tuple[int, ...]],
+        n: Union[int, tuple[int, ...]],
         in_features: int,
         out_features: int,
         bias: bool = True,
@@ -266,7 +266,7 @@ class NLinear(nn.Module):
 
 
 @deprecated('')
-def named_sequential(*names_and_modules: Tuple[str, nn.Module]) -> nn.Sequential:
+def named_sequential(*names_and_modules: tuple[str, nn.Module]) -> nn.Sequential:
     """A shortcut for creating `torch.nn.Sequential` with named modules without using `collections.OrderedDict`.
 
     <DEPRECATION MESSAGE>

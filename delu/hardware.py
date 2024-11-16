@@ -1,6 +1,6 @@
 """Tools related to devices, memory, etc."""
 
-from typing import Any, Dict
+from typing import Any
 
 from ._utils import deprecated
 from .cuda import free_memory as free_memory_original
@@ -31,7 +31,7 @@ def free_memory(*args, **kwargs) -> None:
 
 
 @deprecated('Instead, use functions from `torch.cuda`')
-def get_gpus_info() -> Dict[str, Any]:
+def get_gpus_info() -> dict[str, Any]:
     """Get information about GPU devices: driver version, memory, utilization etc.
 
     <DEPRECATION MESSAGE>

@@ -1,10 +1,11 @@
 import math
+from collections.abc import Iterable, Iterator, Sized
 from copy import deepcopy
-from typing import Any, Dict, Iterable, Iterator, Optional, Sized, Union
+from typing import Any, Optional, Union
 
 from ._utils import deprecated
 
-_DEFAULT_PROGRESS_BAR_CONFIG: Dict[str, Any] = {}
+_DEFAULT_PROGRESS_BAR_CONFIG: dict[str, Any] = {}
 
 
 def _try_len(x):
@@ -360,7 +361,7 @@ class Stream:
         self,
         max_epoch: Union[int, float],
         epoch_size: Optional[Union[int, float]] = None,
-        progress_bar_config: Optional[Dict[str, Any]] = _DEFAULT_PROGRESS_BAR_CONFIG,
+        progress_bar_config: Optional[dict[str, Any]] = _DEFAULT_PROGRESS_BAR_CONFIG,
     ) -> Iterator[Iterator[Any]]:
         """Iterate over data epochs.
 
@@ -468,7 +469,7 @@ class Stream:
             assert self._progress_bar is not None
             self._progress_bar.update()
 
-    def state_dict(self) -> Dict[str, Any]:
+    def state_dict(self) -> dict[str, Any]:
         """Get the stream's state.
 
         The result can be passed to `Stream.load_state_dict`. The result includes:
@@ -496,7 +497,7 @@ class Stream:
         """
         return {'iteration': self.iteration, 'epoch': self.epoch}
 
-    def load_state_dict(self, state_dict: Dict[str, Any]) -> None:
+    def load_state_dict(self, state_dict: dict[str, Any]) -> None:
         """Load state dictionary.
 
         Args:

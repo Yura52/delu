@@ -1,6 +1,7 @@
 """An addition to `torch.utils.data`."""
 
-from typing import Any, Callable, Iterable, Optional, TypeVar, Union
+from collections.abc import Iterable
+from typing import Any, Callable, Optional, TypeVar, Union
 
 import torch
 from torch.utils.data import DataLoader, Dataset

@@ -3,7 +3,7 @@
 import datetime
 import time
 from copy import deepcopy
-from typing import Any, Dict, Literal, Optional
+from typing import Any, Literal, Optional
 
 
 class EarlyStopping:
@@ -433,14 +433,14 @@ class Timer:
         self.pause()
         return False
 
-    def __getstate__(self) -> Dict[str, Any]:
+    def __getstate__(self) -> dict[str, Any]:
         state = deepcopy(self.__dict__)
         state['_shift'] = self.elapsed()
         state['_start_time'] = None
         state['_pause_time'] = None
         return state
 
-    def __setstate__(self, state: Dict[str, Any]) -> None:
+    def __setstate__(self, state: dict[str, Any]) -> None:
         """Load the state.
 
         A time with just loaded state is not running (basically, it is a freshly

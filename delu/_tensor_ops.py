@@ -1,6 +1,7 @@
 import dataclasses
 import typing
-from typing import Any, Callable, Iterable, Iterator, List, Optional, TypeVar
+from collections.abc import Iterable, Iterator
+from typing import Any, Callable, Optional, TypeVar
 
 import torch
 import torch.nn as nn
@@ -92,7 +93,7 @@ def to(obj: T, /, *args, **kwargs) -> T:
     ...
     >>> @dataclass
     >>> class B:
-    ...     d: List[A]
+    ...     d: list[A]
     ...
     >>> x = B([A(), A()])
     >>> x_new = delu.to(x, **kwargs)
@@ -117,7 +118,7 @@ def to(obj: T, /, *args, **kwargs) -> T:
     if obj is None or isinstance(obj, (bool, int, float, str, bytes)):
         return obj  # type: ignore
 
-    elif isinstance(obj, (typing.Sequence, typing.Set, typing.FrozenSet)):
+    elif isinstance(obj, (typing.Sequence, set, frozenset)):
         constructor = type(obj)
         if issubclass(constructor, tuple):
             # Handle named tuples.
@@ -143,7 +144,7 @@ def to(obj: T, /, *args, **kwargs) -> T:
         return obj
 
 
-def cat(data: List[T], /, dim: int = 0) -> T:
+def cat(data: list[T], /, dim: int = 0) -> T:
     """Concatenate a sequence of collections of tensors.
 
     `delu.cat` is a generalized version of `torch.cat` for concatenating

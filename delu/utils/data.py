@@ -1,6 +1,6 @@
 """An extension to `torch.utils.data`."""
 
-from typing import Any, Tuple, TypeVar
+from typing import Any, TypeVar
 
 from torch.utils.data import Dataset
 
@@ -87,7 +87,7 @@ class Enumerate(Dataset):
         """Get the length of the original dataset."""
         return len(self._dataset)  # type: ignore
 
-    def __getitem__(self, index) -> Tuple[Any, Any]:
+    def __getitem__(self, index) -> tuple[Any, Any]:
         """Return index and the corresponding item from the original dataset.
 
         Args:

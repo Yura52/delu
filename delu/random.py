@@ -3,7 +3,7 @@
 import random
 import secrets
 from contextlib import contextmanager
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 import numpy as np
 import torch
@@ -103,7 +103,7 @@ def seed(base_seed: Optional[int], /, *, one_cuda_seed: bool = False) -> int:
     return base_seed
 
 
-def get_state() -> Dict[str, Any]:
+def get_state() -> dict[str, Any]:
     """Aggregate the global RNG states from `random`, `numpy` and `torch`.
 
     The result of this function can be passed to `delu.random.set_state`.
@@ -166,7 +166,7 @@ def get_state() -> Dict[str, Any]:
     }
 
 
-def set_state(state: Dict[str, Any], /, cuda: bool = True) -> None:
+def set_state(state: dict[str, Any], /, cuda: bool = True) -> None:
     """Set the global RNG states in `random`, `numpy` and `torch`.
 
     **Usage**
