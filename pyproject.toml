@@ -33,23 +33,23 @@ urls = { Documentation = "https://yura52.github.io/delu", Code = "https://github
 dev = [
     # Documentation
     "furo ==2024.8.6",
-    "pdoc ==14.4.0",
-    "sphinx ==7.1.2",
+    "pdoc ==15.0.0",
+    "sphinx ==7.4.7",
     "sphinxcontrib-spelling ==8.0.0",
     "sphinx-copybutton ==0.5.2",
-    "sphinx-design ==0.5.0",
-    "sphinx-remove-toctrees ==0.0.3",
+    "sphinx-design ==0.6.1",
+    "sphinx-remove-toctrees ==1.0.0.post1",
     # Development
-    "coverage ==7.6.1",
-    "flit ==3.9.0",
-    "mypy ==1.11.1",
-    "pip ==24.2",
-    "pre-commit-hooks ==4.6.0",
-    "pytest ==8.3.2",
-    "ruff ==0.5.7",
-    "xdoctest ==1.1.6",
+    "coverage ==7.6.7",
+    "flit ==3.10.1",
+    "mypy ==1.13.0",
+    "pip ==24.3.1",
+    "pre-commit-hooks ==5.0.0",
+    "pytest ==8.3.3",
+    "ruff ==0.7.4",
+    "xdoctest ==1.2.0",
     # Other
-    "jupyterlab ==4.2.4",
+    "jupyterlab ==4.3.1",
 ]
 
 [tool.uv]
