@@ -63,6 +63,9 @@ source = ["delu"]
 [tool.flit.module]
 name = "delu"
 
+[tool.flit.sdist]
+exclude = ["**/.DS_Store"]
+
 [tool.mypy]
 check_untyped_defs = true
 ignore_missing_imports = true
