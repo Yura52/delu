@@ -450,7 +450,7 @@ wheels = [
 
 [[package]]
 name = "delu"
-version = "0.0.26"
+version = "0.0.27.dev0"
 source = { editable = "." }
 dependencies = [
     { name = "numpy" },
