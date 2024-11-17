@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
         <title>delu.data - ⚫ DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2f8d3599" />
     
@@ -273,7 +273,8 @@
           <h1>Source code for delu.data</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;An addition to `torch.utils.data`.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">Dataset</span>
@@ -285,7 +286,9 @@
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Enumerate"><a class="viewcode-back" href="../../api/deprecated.html#delu.Enumerate">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Enumerate">
+<a class="viewcode-back" href="../../api/deprecated.html#delu.Enumerate">[docs]</a>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Enumerate</span><span class="p">(</span><span class="n">utils_data</span><span class="o">.</span><span class="n">Enumerate</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    &lt;DEPRECATION MESSAGE&gt;</span>
@@ -294,7 +297,10 @@
     <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="IndexDataset"><a class="viewcode-back" href="../../api/deprecated.html#delu.IndexDataset">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="IndexDataset">
+<a class="viewcode-back" href="../../api/deprecated.html#delu.IndexDataset">[docs]</a>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">IndexDataset</span><span class="p">(</span><span class="n">utils_data</span><span class="o">.</span><span class="n">IndexDataset</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    &lt;DEPRECATION MESSAGE&gt;</span>
@@ -303,7 +309,10 @@
     <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="FnDataset"><a class="viewcode-back" href="../../api/deprecated.html#delu.FnDataset">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FnDataset">
+<a class="viewcode-back" href="../../api/deprecated.html#delu.FnDataset">[docs]</a>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">FnDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create simple PyTorch datasets without classes and inheritance.</span>
 
@@ -403,7 +412,9 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="FnDataset.__init__"><a class="viewcode-back" href="../../api/deprecated.html#delu.FnDataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<div class="viewcode-block" id="FnDataset.__init__">
+<a class="viewcode-back" href="../../api/deprecated.html#delu.FnDataset.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">T</span><span class="p">],</span>
         <span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">],</span>
@@ -434,7 +445,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="n">args</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span> <span class="o">=</span> <span class="n">transform</span></div>
 
-<div class="viewcode-block" id="FnDataset.__len__"><a class="viewcode-back" href="../../api/deprecated.html#delu.FnDataset.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+
+<div class="viewcode-block" id="FnDataset.__len__">
+<a class="viewcode-back" href="../../api/deprecated.html#delu.FnDataset.__len__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the dataset size.</span>
 
 <span class="sd">        See `FnDataset` for details.</span>
@@ -444,7 +458,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span></div>
 
-<div class="viewcode-block" id="FnDataset.__getitem__"><a class="viewcode-back" href="../../api/deprecated.html#delu.FnDataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+
+<div class="viewcode-block" id="FnDataset.__getitem__">
+<a class="viewcode-back" href="../../api/deprecated.html#delu.FnDataset.__getitem__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get value by index.</span>
 
 <span class="sd">        See `FnDataset` for details.</span>
@@ -461,10 +478,14 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Index </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s1"> is out of range&#39;</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">x</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">x</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="make_index_dataloader"><a class="viewcode-back" href="../../api/deprecated.html#delu.make_index_dataloader">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;Instead, use `delu.data.IndexDataset` and `~torch.utils.data.DataLoader`&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="make_index_dataloader">
+<a class="viewcode-back" href="../../api/deprecated.html#delu.make_index_dataloader">[docs]</a>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;Instead, use `delu.data.IndexDataset` and `~torch.utils.data.DataLoader`&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">make_index_dataloader</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Make `~torch.utils.data.DataLoader` over indices instead of data.</span>
 
@@ -526,7 +547,10 @@
     <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">IndexDataset</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="IndexLoader"><a class="viewcode-back" href="../../api/deprecated.html#delu.IndexLoader">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;Instead, use `delu.data.IndexDataset` and `~torch.utils.data.DataLoader`&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="IndexLoader">
+<a class="viewcode-back" href="../../api/deprecated.html#delu.IndexLoader">[docs]</a>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;Instead, use `delu.data.IndexDataset` and `~torch.utils.data.DataLoader`&#39;</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">IndexLoader</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Like `~torch.utils.data.DataLoader`, but over indices instead of data.</span>
 
@@ -577,7 +601,9 @@
 <span class="sd">            tensor([6, 7, 8])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="IndexLoader.__init__"><a class="viewcode-back" href="../../api/deprecated.html#delu.IndexLoader.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<div class="viewcode-block" id="IndexLoader.__init__">
+<a class="viewcode-back" href="../../api/deprecated.html#delu.IndexLoader.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -598,14 +624,18 @@
             <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_device</span> <span class="o">=</span> <span class="n">device</span></div>
 
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">loader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The original DataLoader.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span>
 
-<div class="viewcode-block" id="IndexLoader.__len__"><a class="viewcode-back" href="../../api/deprecated.html#delu.IndexLoader.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="IndexLoader.__len__">
+<a class="viewcode-back" href="../../api/deprecated.html#delu.IndexLoader.__len__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the size of the original DataLoader.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">)</span></div>
+
 
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span>
@@ -615,7 +645,10 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="collate"><a class="viewcode-back" href="../../api/deprecated.html#delu.collate">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;Instead, use `torch.utils.data.default_collate`&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="collate">
+<a class="viewcode-back" href="../../api/deprecated.html#delu.collate">[docs]</a>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;Instead, use `torch.utils.data.default_collate`&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">collate</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Almost an alias for :code:`torch.utils.data.dataloader.default_collate`.</span>
 
@@ -629,6 +662,7 @@
         <span class="n">iterable</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
     <span class="c1"># &gt; Module has no attribute &quot;default_collate&quot;</span>
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dataloader</span><span class="o">.</span><span class="n">default_collate</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>  <span class="c1"># type: ignore</span></div>
+
 </pre></div>
         </article>
       </div>
@@ -668,12 +702,12 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=d9c5495b"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../../_static/documentation_options.js?v=9c720d4f"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=30646c52"></script>
-    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>

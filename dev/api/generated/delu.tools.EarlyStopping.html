@@ -1,16 +1,16 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Timer" href="delu.tools.Timer.html" /><link rel="prev" title="delu.tools" href="../delu.tools.html" />
 
-    <!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
         <title>EarlyStopping - ⚫ DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2f8d3599" />
     
@@ -282,11 +282,11 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="earlystopping">
-<h1>EarlyStopping<a class="headerlink" href="#earlystopping" title="Permalink to this heading">¶</a></h1>
+<h1>EarlyStopping<a class="headerlink" href="#earlystopping" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="delu.tools.EarlyStopping">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">delu.tools.</span></span><span class="sig-name descname"><span class="pre">EarlyStopping</span></span><a class="reference internal" href="../../_modules/delu/tools.html#EarlyStopping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.EarlyStopping" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">delu.tools.</span></span><span class="sig-name descname"><span class="pre">EarlyStopping</span></span><a class="reference internal" href="../../_modules/delu/tools.html#EarlyStopping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.EarlyStopping" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Prevents overfitting by stopping training when the validation metric stops improving.</p>
 <p>“Stops improving” means that the best metric value (over the whole training run)
 does not improve for N (<code class="docutils literal notranslate"><span class="pre">patience</span></code>) consecutive epochs.</p>
@@ -366,19 +366,19 @@ without resetting the best seen score:</p>
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span>
 
 <dl>
-<dd><em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>,</dd>
 <dd><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>,</dd>
-<dd><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'min'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'max'</span></span><span class="p"><span class="pre">]</span></span></span></em>,</dd>
-<dd><em class="sig-param"><span class="n"><span class="pre">min_delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'min'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'max'</span></span><span class="p"><span class="pre">]</span></span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">min_delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>,</dd>
 </dl>
 
-<span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#EarlyStopping.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.EarlyStopping.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#EarlyStopping.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.EarlyStopping.__init__" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>patience</strong> – when the number of the latest consequtive non-improving updates
 reaches <code class="docutils literal notranslate"><span class="pre">patience</span></code>, <a class="reference internal" href="#delu.tools.EarlyStopping.should_stop" title="delu.tools.EarlyStopping.should_stop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EarlyStopping.should_stop</span></code></a> starts returning
-<a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a> until the next improving update.</p></li>
+<a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a> until the next improving update.</p></li>
 <li><p><strong>mode</strong> – if “min”, then the update rule is “the lower value is the better
 value”. For “max”, it is the opposite.</p></li>
 <li><p><strong>min_delta</strong> – a new value must differ from the current best value by more
@@ -390,33 +390,33 @@ than <code class="docutils literal notranslate"><span class="pre">min_delta</spa
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.EarlyStopping.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#EarlyStopping.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.EarlyStopping.reset" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#EarlyStopping.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.EarlyStopping.reset" title="Link to this definition">¶</a></dt>
 <dd><p>Reset the instance completely.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.EarlyStopping.reset_unsuccessful_updates">
-<span class="sig-name descname"><span class="pre">reset_unsuccessful_updates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#EarlyStopping.reset_unsuccessful_updates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.EarlyStopping.reset_unsuccessful_updates" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reset_unsuccessful_updates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#EarlyStopping.reset_unsuccessful_updates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.EarlyStopping.reset_unsuccessful_updates" title="Link to this definition">¶</a></dt>
 <dd><p>Reset the number of the latest consecutive non-improving updates to zero.</p>
 <p>Note that this method does NOT reset the best seen score.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.EarlyStopping.should_stop">
-<span class="sig-name descname"><span class="pre">should_stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#EarlyStopping.should_stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.EarlyStopping.should_stop" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">should_stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#EarlyStopping.should_stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.EarlyStopping.should_stop" title="Link to this definition">¶</a></dt>
 <dd><p>Check whether the early stopping condition is activated.</p>
 <p>See examples in <a class="reference internal" href="#delu.tools.EarlyStopping" title="delu.tools.EarlyStopping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a> if the number of consequtive bad updates has reached the patience.
-<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a> otherwise.</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a> if the number of consequtive bad updates has reached the patience.
+<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a> otherwise.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.EarlyStopping.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#EarlyStopping.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.EarlyStopping.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#EarlyStopping.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.EarlyStopping.update" title="Link to this definition">¶</a></dt>
 <dd><p>Submit a new value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -511,12 +511,12 @@ than <code class="docutils literal notranslate"><span class="pre">min_delta</spa
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=d9c5495b"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../../_static/documentation_options.js?v=9c720d4f"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=30646c52"></script>
-    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>

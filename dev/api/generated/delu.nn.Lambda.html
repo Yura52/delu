@@ -1,16 +1,16 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="NLinear" href="delu.nn.NLinear.html" /><link rel="prev" title="delu.nn" href="../delu.nn.html" />
 
-    <!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
         <title>Lambda - ⚫ DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2f8d3599" />
     
@@ -282,18 +282,18 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="lambda">
-<h1>Lambda<a class="headerlink" href="#lambda" title="Permalink to this heading">¶</a></h1>
+<h1>Lambda<a class="headerlink" href="#lambda" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="delu.nn.Lambda">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">delu.nn.</span></span><span class="sig-name descname"><span class="pre">Lambda</span></span><a class="reference internal" href="../../_modules/delu/nn.html#Lambda"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.Lambda" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
-<p>A wrapper for functions from <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch v2.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a> and methods of <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">delu.nn.</span></span><span class="sig-name descname"><span class="pre">Lambda</span></span><a class="reference internal" href="../../_modules/delu/nn.html#Lambda"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.Lambda" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
+<p>A wrapper for functions from <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a> and methods of <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>.</p>
 <p>An important “feature” of this module is that it is intentionally limited:</p>
 <ul class="simple">
-<li><p>Only the functions from the <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch v2.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a> module and the methods of <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>
+<li><p>Only the functions from the <a class="reference external" href="https://pytorch.org/docs/stable/torch.html#module-torch" title="(in PyTorch v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a> module and the methods of <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>
 are allowed.</p></li>
-<li><p>The passed callable must accept a single <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>
-and return a single <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>.</p></li>
+<li><p>The passed callable must accept a single <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>
+and return a single <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>.</p></li>
 <li><p>The allowed keyword arguments must be of simple types (see the docstring).</p></li>
 </ul>
 <p><strong>Usage</strong></p>
@@ -327,7 +327,7 @@ but this functionality is deprecated and will be removed in future releases):</p
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.nn.Lambda.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.4)"><span class="pre">Tensor</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/nn.html#Lambda.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.Lambda.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.5)"><span class="pre">Tensor</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/nn.html#Lambda.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.Lambda.__init__" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -342,7 +342,7 @@ and (nested) tuples of these simple types.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.nn.Lambda.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.4)"><span class="pre">Tensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.4)"><span class="pre">Tensor</span></a></span></span><a class="reference internal" href="../../_modules/delu/nn.html#Lambda.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.Lambda.forward" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.5)"><span class="pre">Tensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.5)"><span class="pre">Tensor</span></a></span></span><a class="reference internal" href="../../_modules/delu/nn.html#Lambda.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.nn.Lambda.forward" title="Link to this definition">¶</a></dt>
 <dd><p>Do the forward pass.</p>
 </dd></dl>
 
@@ -429,12 +429,12 @@ and (nested) tuples of these simple types.</p></li>
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=d9c5495b"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../../_static/documentation_options.js?v=9c720d4f"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=30646c52"></script>
-    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>

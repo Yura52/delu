@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
         <title>delu._tensor_ops - ⚫ DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2f8d3599" />
     
@@ -273,7 +273,8 @@
           <h1>Source code for delu._tensor_ops</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
 <span class="kn">import</span> <span class="nn">typing</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
@@ -284,7 +285,9 @@
 <span class="n">K</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="to"><a class="viewcode-back" href="../../api/generated/delu.to.html#delu.to">[docs]</a><span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+<div class="viewcode-block" id="to">
+<a class="viewcode-back" href="../../api/generated/delu.to.html#delu.to">[docs]</a>
+<span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Change devices and data types of tensors and modules in an arbitrary Python object.</span>
 
 <span class="sd">    The two primary use cases for this function are changing the device and data types</span>
@@ -365,7 +368,7 @@
 <span class="sd">    ...</span>
 <span class="sd">    &gt;&gt;&gt; @dataclass</span>
 <span class="sd">    &gt;&gt;&gt; class B:</span>
-<span class="sd">    ...     d: List[A]</span>
+<span class="sd">    ...     d: list[A]</span>
 <span class="sd">    ...</span>
 <span class="sd">    &gt;&gt;&gt; x = B([A(), A()])</span>
 <span class="sd">    &gt;&gt;&gt; x_new = delu.to(x, **kwargs)</span>
@@ -390,7 +393,7 @@
     <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)):</span>
         <span class="k">return</span> <span class="n">obj</span>  <span class="c1"># type: ignore</span>
 
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Set</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">FrozenSet</span><span class="p">)):</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">,</span> <span class="nb">set</span><span class="p">,</span> <span class="nb">frozenset</span><span class="p">)):</span>
         <span class="n">constructor</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="c1"># Handle named tuples.</span>
@@ -416,7 +419,10 @@
         <span class="k">return</span> <span class="n">obj</span></div>
 
 
-<div class="viewcode-block" id="cat"><a class="viewcode-back" href="../../api/generated/delu.cat.html#delu.cat">[docs]</a><span class="k">def</span> <span class="nf">cat</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="o">/</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+
+<div class="viewcode-block" id="cat">
+<a class="viewcode-back" href="../../api/generated/delu.cat.html#delu.cat">[docs]</a>
+<span class="k">def</span> <span class="nf">cat</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="o">/</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Concatenate a sequence of collections of tensors.</span>
 
 <span class="sd">    `delu.cat` is a generalized version of `torch.cat` for concatenating</span>
@@ -588,6 +594,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The collection type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="si">}</span><span class="s1"> is not supported.&#39;</span><span class="p">)</span></div>
 
 
+
 <span class="k">def</span> <span class="nf">_make_index_batches</span><span class="p">(</span>
     <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -610,7 +617,9 @@
     <span class="p">)</span>
 
 
-<div class="viewcode-block" id="iter_batches"><a class="viewcode-back" href="../../api/generated/delu.iter_batches.html#delu.iter_batches">[docs]</a><span class="k">def</span> <span class="nf">iter_batches</span><span class="p">(</span>
+<div class="viewcode-block" id="iter_batches">
+<a class="viewcode-back" href="../../api/generated/delu.iter_batches.html#delu.iter_batches">[docs]</a>
+<span class="k">def</span> <span class="nf">iter_batches</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -795,12 +804,16 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The collection </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s1"> is not supported.&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="concat"><a class="viewcode-back" href="../../api/deprecated.html#delu.concat">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;Instead, use `delu.cat`.&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="concat">
+<a class="viewcode-back" href="../../api/deprecated.html#delu.concat">[docs]</a>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;Instead, use `delu.cat`.&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    &lt;DEPRECATION MESSAGE&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">cat</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 </pre></div>
         </article>
       </div>
@@ -840,12 +853,12 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=d9c5495b"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../../_static/documentation_options.js?v=9c720d4f"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=30646c52"></script>
-    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>

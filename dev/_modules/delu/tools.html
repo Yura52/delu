@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
         <title>delu.tools - ⚫ DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2f8d3599" />
     
@@ -276,10 +276,12 @@
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span>
 
 
-<div class="viewcode-block" id="EarlyStopping"><a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping">[docs]</a><span class="k">class</span> <span class="nc">EarlyStopping</span><span class="p">:</span>
+<div class="viewcode-block" id="EarlyStopping">
+<a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping">[docs]</a>
+<span class="k">class</span> <span class="nc">EarlyStopping</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Prevents overfitting by stopping training when the validation metric stops improving.</span>
 
 <span class="sd">    &quot;Stops improving&quot; means that the best metric value (over the whole training run)</span>
@@ -358,7 +360,9 @@
 <span class="sd">    True</span>
 <span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
-<div class="viewcode-block" id="EarlyStopping.__init__"><a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<div class="viewcode-block" id="EarlyStopping.__init__">
+<a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">patience</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">],</span> <span class="n">min_delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -390,19 +394,28 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_best_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_n_consequtive_bad_updates</span> <span class="o">=</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="EarlyStopping.reset"><a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+<div class="viewcode-block" id="EarlyStopping.reset">
+<a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset the instance completely.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_best_value</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_n_consequtive_bad_updates</span> <span class="o">=</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="EarlyStopping.reset_unsuccessful_updates"><a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping.reset_unsuccessful_updates">[docs]</a>    <span class="k">def</span> <span class="nf">reset_unsuccessful_updates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+<div class="viewcode-block" id="EarlyStopping.reset_unsuccessful_updates">
+<a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping.reset_unsuccessful_updates">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset_unsuccessful_updates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset the number of the latest consecutive non-improving updates to zero.</span>
 
 <span class="sd">        Note that this method does NOT reset the best seen score.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_n_consequtive_bad_updates</span> <span class="o">=</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="EarlyStopping.should_stop"><a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping.should_stop">[docs]</a>    <span class="k">def</span> <span class="nf">should_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+
+<div class="viewcode-block" id="EarlyStopping.should_stop">
+<a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping.should_stop">[docs]</a>
+    <span class="k">def</span> <span class="nf">should_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check whether the early stopping condition is activated.</span>
 
 <span class="sd">        See examples in `EarlyStopping`.</span>
@@ -413,7 +426,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_consequtive_bad_updates</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_patience</span></div>
 
-<div class="viewcode-block" id="EarlyStopping.update"><a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+<div class="viewcode-block" id="EarlyStopping.update">
+<a class="viewcode-back" href="../../api/generated/delu.tools.EarlyStopping.html#delu.tools.EarlyStopping.update">[docs]</a>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Submit a new value.</span>
 
 <span class="sd">        Args:</span>
@@ -430,10 +446,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_best_value</span> <span class="o">=</span> <span class="n">value</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_n_consequtive_bad_updates</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_n_consequtive_bad_updates</span> <span class="o">+=</span> <span class="mi">1</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_n_consequtive_bad_updates</span> <span class="o">+=</span> <span class="mi">1</span></div>
+</div>
 
 
-<div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer">[docs]</a><span class="k">class</span> <span class="nc">Timer</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Timer">
+<a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer">[docs]</a>
+<span class="k">class</span> <span class="nc">Timer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A simple **pickle-friendly** timer for measuring execution time.</span>
 
 <span class="sd">    `Timer` is applicable to both long-running activies (e.g. a whole program)</span>
@@ -601,13 +621,18 @@
     <span class="n">_pause_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
     <span class="n">_shift</span><span class="p">:</span> <span class="nb">float</span>
 
-<div class="viewcode-block" id="Timer.__init__"><a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.__init__">
+<a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Timer.reset"><a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Timer.reset">
+<a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset the timer completely.</span>
 
 <span class="sd">        To start using the instance again after resetting,</span>
@@ -617,12 +642,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span> <span class="o">=</span> <span class="mf">0.0</span></div>
 
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_running</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if the timer is running.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">is</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Timer.run"><a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.run">
+<a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.run">[docs]</a>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Start/resume the timer.</span>
 
 <span class="sd">        If the timer is on pause, the method resumes the timer.</span>
@@ -634,7 +662,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span> <span class="o">-=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Timer.pause"><a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.pause">[docs]</a>    <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Timer.pause">
+<a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.pause">[docs]</a>
+    <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Pause the timer.</span>
 
 <span class="sd">        If the timer is running, the method pauses the timer.</span>
@@ -645,7 +676,10 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Timer.elapsed"><a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.elapsed">[docs]</a>    <span class="k">def</span> <span class="nf">elapsed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Timer.elapsed">
+<a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.elapsed">[docs]</a>
+    <span class="k">def</span> <span class="nf">elapsed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the time elapsed.</span>
 
 <span class="sd">        The elapsed time is the time (in seconds) passed since the first ``.run()``</span>
@@ -659,7 +693,10 @@
         <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pause_time</span>
         <span class="k">return</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shift</span></div>
 
-<div class="viewcode-block" id="Timer.__format__"><a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.__format__">[docs]</a>    <span class="k">def</span> <span class="fm">__format__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_spec</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Timer.__format__">
+<a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.__format__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__format__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_spec</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Format the time elapsed since the start in a human-readable string.</span>
 
 <span class="sd">        This is a shortcut for ``time.strftime(format_str, time.gmtime(self()))``.</span>
@@ -682,10 +719,16 @@
             <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">elapsed</span><span class="p">()))</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Timer.__str__"><a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Timer.__str__">
+<a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.__str__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__format__</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Timer.__enter__"><a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.__enter__">[docs]</a>    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Timer&#39;</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Timer.__enter__">
+<a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.__enter__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Timer&#39;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Measure time within a context.</span>
 
 <span class="sd">        **The timer must not be running when entering the context.**</span>
@@ -701,25 +744,33 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="Timer.__exit__"><a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.__exit__">[docs]</a>    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
+
+<div class="viewcode-block" id="Timer.__exit__">
+<a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.__exit__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Leave the context and pause the timer.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pause</span><span class="p">()</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+
+    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="n">state</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
         <span class="n">state</span><span class="p">[</span><span class="s1">&#39;_shift&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elapsed</span><span class="p">()</span>
         <span class="n">state</span><span class="p">[</span><span class="s1">&#39;_start_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">state</span><span class="p">[</span><span class="s1">&#39;_pause_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">state</span>
 
-<div class="viewcode-block" id="Timer.__setstate__"><a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.__setstate__">[docs]</a>    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer.__setstate__">
+<a class="viewcode-back" href="../../api/generated/delu.tools.Timer.html#delu.tools.Timer.__setstate__">[docs]</a>
+    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Load the state.</span>
 
 <span class="sd">        A time with just loaded state is not running (basically, it is a freshly</span>
 <span class="sd">        created timer which stores the elapsed time from the loaded state).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
         </article>
       </div>
@@ -759,12 +810,12 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=d9c5495b"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../../_static/documentation_options.js?v=9c720d4f"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=30646c52"></script>
-    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>

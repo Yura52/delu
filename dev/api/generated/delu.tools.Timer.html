@@ -1,16 +1,16 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Deprecated API" href="../deprecated.html" /><link rel="prev" title="EarlyStopping" href="delu.tools.EarlyStopping.html" />
 
-    <!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
         <title>Timer - ⚫ DeLU</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2f8d3599" />
     
@@ -282,11 +282,11 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="timer">
-<h1>Timer<a class="headerlink" href="#timer" title="Permalink to this heading">¶</a></h1>
+<h1>Timer<a class="headerlink" href="#timer" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="delu.tools.Timer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">delu.tools.</span></span><span class="sig-name descname"><span class="pre">Timer</span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">delu.tools.</span></span><span class="sig-name descname"><span class="pre">Timer</span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A simple <strong>pickle-friendly</strong> timer for measuring execution time.</p>
 <p><a class="reference internal" href="#delu.tools.Timer" title="delu.tools.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer</span></code></a> is applicable to both long-running activies (e.g. a whole program)
 and limited code regions (e.g. training steps).</p>
@@ -296,13 +296,13 @@ to measure execution time of only relevant activities.</p></li>
 <li><p><a class="reference internal" href="#delu.tools.Timer" title="delu.tools.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer</span></code></a> can be used as a context manager.</p></li>
 <li><p><a class="reference internal" href="#delu.tools.Timer" title="delu.tools.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer</span></code></a> <strong>is pickle-friendly and can be saved to / loaded from a checkpoint.</strong></p></li>
 <li><p><a class="reference internal" href="#delu.tools.Timer" title="delu.tools.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer</span></code></a> can report the elapsed time as a human-readable string
-with <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#format" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format</span></code></a> and f-strings.</p></li>
+with <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#format" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format</span></code></a> and f-strings.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>Under the hood, <a class="reference internal" href="#delu.tools.Timer" title="delu.tools.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer</span></code></a> uses <a class="reference external" href="https://docs.python.org/3/library/time.html#time.perf_counter" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time.perf_counter</span></code></a> to perform time measurements.</p></li>
-<li><p><a class="reference internal" href="#delu.tools.Timer" title="delu.tools.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer</span></code></a> is not aware of CUDA, so things like <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.cuda.synchronize.html#torch.cuda.synchronize" title="(in PyTorch v2.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda.synchronize</span></code></a> must
+<li><p>Under the hood, <a class="reference internal" href="#delu.tools.Timer" title="delu.tools.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer</span></code></a> uses <a class="reference external" href="https://docs.python.org/3/library/time.html#time.perf_counter" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time.perf_counter</span></code></a> to perform time measurements.</p></li>
+<li><p><a class="reference internal" href="#delu.tools.Timer" title="delu.tools.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer</span></code></a> is not aware of CUDA, so things like <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.cuda.synchronize.html#torch.cuda.synchronize" title="(in PyTorch v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.cuda.synchronize</span></code></a> must
 be called explicitly if needed.</p></li>
 </ul>
 </div>
@@ -369,7 +369,7 @@ be called explicitly if needed.</p></li>
 </pre></div>
 </div>
 <p>Using the timer as a global timer
-(the difference with using <a class="reference external" href="https://docs.python.org/3/library/time.html#time.perf_counter" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time.perf_counter</span></code></a> directly is that
+(the difference with using <a class="reference external" href="https://docs.python.org/3/library/time.html#time.perf_counter" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time.perf_counter</span></code></a> directly is that
 the <code class="docutils literal notranslate"><span class="pre">start</span></code> variable below can be safely saved to / loaded from a checkpoint):</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">timer</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">Timer</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">timer</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
@@ -388,7 +388,7 @@ the <code class="docutils literal notranslate"><span class="pre">start</span></c
 </pre></div>
 </div>
 <p>Reporting the elapsed time in a human-readable format
-(the default format is the same as for <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime.timedelta</span></code></a>:
+(the default format is the same as for <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime.timedelta</span></code></a>:
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">[days</span> <span class="pre">&quot;days&quot;</span> <span class="pre">if</span> <span class="pre">&gt;0]</span> <span class="pre">hours:minutes:seconds[.microseconds</span> <span class="pre">if</span> <span class="pre">&gt;0]</span></code>):</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">timer</span> <span class="o">=</span> <span class="n">delu</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">Timer</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">timer</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
@@ -407,8 +407,8 @@ the <code class="docutils literal notranslate"><span class="pre">start</span></c
 <span class="go">&#39;00h 00m 02s&#39;</span>
 </pre></div>
 </div>
-<p>A timer can be saved with <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.save.html#torch.save" title="(in PyTorch v2.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.save</span></code></a>/<a class="reference external" href="https://docs.python.org/3/library/pickle.html#pickle.dump" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pickle.dump</span></code></a>
-and loaded with <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.load.html#torch.load" title="(in PyTorch v2.4)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.load</span></code></a>/<a class="reference external" href="https://docs.python.org/3/library/pickle.html#pickle.load" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pickle.load</span></code></a> together with other objects:</p>
+<p>A timer can be saved with <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.save.html#torch.save" title="(in PyTorch v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.save</span></code></a>/<a class="reference external" href="https://docs.python.org/3/library/pickle.html#pickle.dump" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pickle.dump</span></code></a>
+and loaded with <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.load.html#torch.load" title="(in PyTorch v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.load</span></code></a>/<a class="reference external" href="https://docs.python.org/3/library/pickle.html#pickle.load" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pickle.load</span></code></a> together with other objects:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="gp">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -450,7 +450,7 @@ and loaded with <a class="reference external" href="https://pytorch.org/docs/sta
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.Timer.__enter__">
-<span class="sig-name descname"><span class="pre">__enter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#delu.tools.Timer" title="delu.tools.Timer"><span class="pre">Timer</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.__enter__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.__enter__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__enter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#delu.tools.Timer" title="delu.tools.Timer"><span class="pre">Timer</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.__enter__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.__enter__" title="Link to this definition">¶</a></dt>
 <dd><p>Measure time within a context.</p>
 <p><strong>The timer must not be running when entering the context.</strong></p>
 <ul class="simple">
@@ -461,18 +461,18 @@ and loaded with <a class="reference external" href="https://pytorch.org/docs/sta
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.Timer.__exit__">
-<span class="sig-name descname"><span class="pre">__exit__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.__exit__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.__exit__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__exit__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.__exit__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.__exit__" title="Link to this definition">¶</a></dt>
 <dd><p>Leave the context and pause the timer.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.Timer.__format__">
-<span class="sig-name descname"><span class="pre">__format__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format_spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.__format__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.__format__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__format__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format_spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.__format__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.__format__" title="Link to this definition">¶</a></dt>
 <dd><p>Format the time elapsed since the start in a human-readable string.</p>
 <p>This is a shortcut for <code class="docutils literal notranslate"><span class="pre">time.strftime(format_str,</span> <span class="pre">time.gmtime(self()))</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>format_str</strong> – the format string passed to <a class="reference external" href="https://docs.python.org/3/library/time.html#time.strftime" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time.strftime</span></code></a>.</p>
+<dd class="field-odd"><p><strong>format_str</strong> – the format string passed to <a class="reference external" href="https://docs.python.org/3/library/time.html#time.strftime" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time.strftime</span></code></a>.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the filled <code class="docutils literal notranslate"><span class="pre">format_str</span></code>.</p>
@@ -489,13 +489,13 @@ and loaded with <a class="reference external" href="https://pytorch.org/docs/sta
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.Timer.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.__init__" title="Link to this definition">¶</a></dt>
 <dd><p>Args:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.Timer.__setstate__">
-<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.__setstate__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.__setstate__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.__setstate__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.__setstate__" title="Link to this definition">¶</a></dt>
 <dd><p>Load the state.</p>
 <p>A time with just loaded state is not running (basically, it is a freshly
 created timer which stores the elapsed time from the loaded state).</p>
@@ -503,13 +503,13 @@ created timer which stores the elapsed time from the loaded state).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.Timer.__str__">
-<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.__str__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.__str__" title="Link to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.Timer.elapsed">
-<span class="sig-name descname"><span class="pre">elapsed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.elapsed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.elapsed" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">elapsed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.elapsed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.elapsed" title="Link to this definition">¶</a></dt>
 <dd><p>Get the time elapsed.</p>
 <p>The elapsed time is the time (in seconds) passed since the first <code class="docutils literal notranslate"><span class="pre">.run()</span></code>
 call up to the <code class="docutils literal notranslate"><span class="pre">.elapsed()</span></code> call, minus pauses.</p>
@@ -522,13 +522,13 @@ call up to the <code class="docutils literal notranslate"><span class="pre">.ela
 
 <dl class="py property">
 <dt class="sig sig-object py" id="delu.tools.Timer.is_running">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_running</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#delu.tools.Timer.is_running" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_running</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#delu.tools.Timer.is_running" title="Link to this definition">¶</a></dt>
 <dd><p>Check if the timer is running.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.Timer.pause">
-<span class="sig-name descname"><span class="pre">pause</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.pause"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.pause" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">pause</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.pause"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.pause" title="Link to this definition">¶</a></dt>
 <dd><p>Pause the timer.</p>
 <p>If the timer is running, the method pauses the timer.
 If the timer was never <code class="docutils literal notranslate"><span class="pre">.run()</span></code> or is already on pause,
@@ -537,7 +537,7 @@ the method does nothing.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.Timer.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.reset" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.reset" title="Link to this definition">¶</a></dt>
 <dd><p>Reset the timer completely.</p>
 <p>To start using the instance again after resetting,
 the timer must be explicitly run with <a class="reference internal" href="#delu.tools.Timer.run" title="delu.tools.Timer.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer.run</span></code></a>.</p>
@@ -545,7 +545,7 @@ the timer must be explicitly run with <a class="reference internal" href="#delu.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="delu.tools.Timer.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.run" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/delu/tools.html#Timer.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#delu.tools.Timer.run" title="Link to this definition">¶</a></dt>
 <dd><p>Start/resume the timer.</p>
 <p>If the timer is on pause, the method resumes the timer.
 If the timer is running, the method does nothing.</p>
@@ -643,12 +643,12 @@ If the timer is running, the method does nothing.</p>
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=d9c5495b"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../../_static/documentation_options.js?v=9c720d4f"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=30646c52"></script>
-    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>
