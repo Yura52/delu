@@ -9,7 +9,7 @@ import numpy as np
 import torch
 import torch.cuda
 
-__all__ = ['seed', 'get_state', 'set_state', 'preserve_state']
+__all__ = ['get_state', 'preserve_state', 'seed', 'set_state']
 
 _2_pow_64 = 1 << 64
 

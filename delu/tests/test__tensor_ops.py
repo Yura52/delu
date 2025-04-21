@@ -119,10 +119,8 @@ def test_iter_batches(batch_size):
     def check(batches, correct):
         sizes = list(map(len, batches))
         assert sum(sizes) == len(correct)
-        assert (
-            set(sizes) == {batch_size}
-            or set(sizes[:-1]) == {batch_size}
-            and sizes[-1] == len(correct) % batch_size
+        assert set(sizes) == {batch_size} or (
+            set(sizes[:-1]) == {batch_size} and sizes[-1] == len(correct) % batch_size
         )
         assert torch.equal(torch.cat(batches), correct)
 

@@ -1,5 +1,5 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
+requires = ["flit_core >=3.11,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
@@ -32,28 +32,27 @@ urls = { Documentation = "https://yura52.github.io/delu", Code = "https://github
 [dependency-groups]
 dev = [
     # Documentation
-    "furo ==2024.8.6",
-    "pdoc ==15.0.0",
-    "sphinx ==7.4.7",
-    "sphinxcontrib-spelling ==8.0.0",
-    "sphinx-copybutton ==0.5.2",
-    "sphinx-design ==0.6.1",
-    "sphinx-remove-toctrees ==1.0.0.post1",
+    "furo >=2024.8.6",
+    "pdoc >=15.0.2",
+    "sphinx >=7.4.7",
+    "sphinxcontrib-spelling >=8.0.0",
+    "sphinx-copybutton >=0.5.2",
+    "sphinx-design >=0.6.1",
+    "sphinx-remove-toctrees >=1.0.0.post1",
     # Development
-    "coverage ==7.6.7",
-    "flit ==3.10.1",
-    "mypy ==1.13.0",
-    "pip ==24.3.1",
-    "pre-commit-hooks ==5.0.0",
-    "pytest ==8.3.3",
-    "ruff ==0.7.4",
-    "xdoctest ==1.2.0",
+    "coverage >=7.6.7",
+    "flit >=3.12.0",
+    "mypy >=1.15.0",
+    "pip >=24.3.1",
+    "pre-commit-hooks >=5.0.0",
+    "pytest >=8.3.3",
+    "ruff >=0.7.4",
+    "xdoctest >=1.2.0",
     # Other
-    "jupyterlab ==4.3.1",
+    "ipython >=8.18.1,<10",
+    "jupyterlab >=4.4.0,<5",
+    "notebook >=7.4.0,<8",
 ]
-
-[tool.uv]
-resolution = "lowest-direct"
 
 [tool.coverage.run]
 branch = true
@@ -69,13 +68,25 @@ exclude = ["**/.DS_Store"]
 [tool.mypy]
 check_untyped_defs = true
 ignore_missing_imports = true
+exclude = ["^local/*"]
 
 [[tool.mypy.overrides]]
 module = "delu.*.tests.*"
 ignore_errors = true
 
+[tool.pyright]
+exclude = [
+    # Default rules
+    '**/node_modules',
+    '**/__pycache__',
+    '**/.*',
+    # Custom rules
+    "local",
+]
+venv = ".venv"
+venvPath = "."
+
 [tool.ruff]
-target-version = "py39"
 line-length = 88
 
 [tool.ruff.format]
@@ -83,3 +94,7 @@ quote-style = "single"
 
 [tool.ruff.lint]
 extend-select = ["RUF", "UP", "E501", "E731"]
+
+[tool.uv]
+constraint-dependencies = ["numpy ==1.21", "torch ==1.9"]
+package = true

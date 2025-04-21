@@ -10,7 +10,7 @@ from ._utilities import evaluation, improve_reproducibility
 from .data import collate
 
 # The order is optimized for pdoc.
-__all__ = [
+__all__ = [  # noqa: RUF022
     # >>> modules
     'cuda',
     'nn',

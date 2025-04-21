@@ -140,9 +140,9 @@ class evaluation(ContextDecorator):
         Args:
             func
         """
-        assert not inspect.isgeneratorfunction(
-            func
-        ), f'{self.__class__} cannot be used to decorate generators.'
+        assert not inspect.isgeneratorfunction(func), (
+            f'{self.__class__} cannot be used to decorate generators.'
+        )
         return super().__call__(func)
 
     def __enter__(self) -> None:

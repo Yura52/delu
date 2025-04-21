@@ -16,14 +16,14 @@ clean:
 	rm -rf .ruff_cache
 	rm -rf dist
 	rm -rf $(DOCS_DIR)/api/generated
-	make -C $(DOCS_DIR) clean
+	uv run make -C $(DOCS_DIR) clean
 
 coverage:
-	coverage run -m $(PYTEST_CMD)
-	coverage report -m
+	uv run coverage run -m $(PYTEST_CMD)
+	uv run coverage report -m
 
 docs:
-	make -C $(DOCS_DIR) html
+	uv run make -C $(DOCS_DIR) html
 
 _docs: docs
 	$(VIEW_HTML_CMD) $(DOCS_DIR)/build/html/index.html
@@ -39,24 +39,24 @@ pages:
 	git add -A
 
 doctest:
-	xdoctest delu --global-exec "import torch; import torch.nn as nn; import delu"
+	uv run xdoctest delu --global-exec "import torch; import torch.nn as nn; import delu"
 
 spelling:
 	if [[ $(shell uname -m) != "arm64" ]]; then\
-		make -C $(DOCS_DIR) docs SPHINXOPTS="-W -b spelling";\
+		uv run make -C $(DOCS_DIR) docs SPHINXOPTS="-W -b spelling";\
 	fi
 
 lint:
-	python -m pre_commit_hooks.debug_statement_hook delu/*.py
-	python -m pre_commit_hooks.debug_statement_hook delu/**/*.py
-	ruff format --check
-	ruff check .
+	uv run -m pre_commit_hooks.debug_statement_hook delu/*.py
+	uv run -m pre_commit_hooks.debug_statement_hook delu/**/*.py
+	uv run ruff format --check
+	uv run ruff check .
 
 # The order is important: clean must be first, docs must precede doctest.
 pre-commit: clean lint test docs doctest spelling typecheck
 
 test:
-	PYTHONPATH='.' $(PYTEST_CMD) $(ARGV)
+	uv run $(PYTEST_CMD) $(ARGV)
 
 typecheck:
-	mypy delu
+	uv run mypy delu

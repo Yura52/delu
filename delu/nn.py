@@ -88,8 +88,7 @@ class Lambda(torch.nn.Module):
             return (
                 x is None
                 or isinstance(x, (bool, int, float, bytes, str))
-                or isinstance(x, tuple)
-                and all(map(is_valid_value, x))
+                or (isinstance(x, tuple) and all(map(is_valid_value, x)))
             )
 
         for k, v in kwargs.items():
